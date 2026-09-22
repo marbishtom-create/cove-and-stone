@@ -28,8 +28,8 @@ export default function Layout({ children }: { children: ReactNode }) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'bg-background/90 backdrop-blur-md border-b border-border py-4' 
-            : 'bg-transparent py-6'
+            ? 'bg-background/90 backdrop-blur-md border-b border-border py-2' 
+            : 'bg-transparent py-2'
         }`}
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
