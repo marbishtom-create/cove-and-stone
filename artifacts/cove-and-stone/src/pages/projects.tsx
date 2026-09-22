@@ -62,7 +62,7 @@ export default function Projects() {
             Explore illustrative concept directions for pools and complete outdoor environments across Northeast Florida. Completed case studies will be added as approved project photography and details become available.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
-            Concept / Demo Gallery
+             Concept + Completed Gallery
           </div>
         </div>
       </header>
