@@ -26,6 +26,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground">
       {/* Header */}
       <header
+        data-testid="site-header"
+        data-header-state={isScrolled ? 'scrolled' : 'hero'}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled 
             ? 'bg-background/90 backdrop-blur-md border-b border-border py-2' 
