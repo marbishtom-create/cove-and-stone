@@ -35,10 +35,15 @@ export default function Layout({ children }: { children: ReactNode }) {
         }`}
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-           <Logo
-             variant={isScrolled ? 'light' : 'default'}
-             className="lg:mr-8"
-           />
+           <div className="relative shrink-0 lg:mr-8">
+             <Logo variant={isScrolled ? 'light' : 'default'} />
+             <Link
+               href="/contact"
+               className="absolute left-2 top-full z-10 mt-0.5 hidden whitespace-nowrap text-[10px] font-medium tracking-[0.12em] text-primary transition-colors hover:text-secondary lg:flex lg:items-center lg:gap-1"
+             >
+               Design consultations <ArrowRight size={12} />
+             </Link>
+           </div>
           
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -55,10 +60,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-6">
-            <Link href="/contact" className="text-sm font-medium flex items-center gap-2 hover:text-secondary transition-colors">
-              Design consultations <ArrowRight size={16} />
-            </Link>
+           <div className="hidden lg:flex items-center">
             <Link 
               href="/contact" 
               className="bg-primary text-primary-foreground px-6 py-3 text-sm tracking-widest uppercase hover:bg-secondary hover:text-secondary-foreground transition-all duration-300"
