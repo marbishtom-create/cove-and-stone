@@ -16,14 +16,24 @@ export default function ProjectDetail() {
     );
   }
 
+  const isCompletedProject = project.status === "completed";
+
   return (
     <div className="w-full pt-20 bg-background">
       {/* Hero Image */}
       <div className="w-full h-[60dvh] relative">
-        <img src={project.media.render.src} alt={project.media.render.alt} className="w-full h-full object-cover" />
+        <img
+          src={isCompletedProject && project.media.completedDay
+            ? project.media.completedDay.src
+            : project.media.render.src}
+          alt={isCompletedProject && project.media.completedDay
+            ? project.media.completedDay.alt
+            : project.media.render.alt}
+          className="w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute bottom-8 right-8 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-          Concept rendering
+          {isCompletedProject ? "Completed photography" : "Concept rendering"}
         </div>
         <div className="absolute top-8 left-8">
           <Link href="/projects" className="inline-flex items-center gap-2 bg-background/80 backdrop-blur px-4 py-2 text-sm uppercase tracking-widest text-primary hover:bg-secondary hover:text-secondary-foreground transition-colors">
@@ -41,7 +51,9 @@ export default function ProjectDetail() {
               {project.desc}
             </p>
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
-              Concept visualization · project details to be confirmed · not completed photography
+              {isCompletedProject
+                ? "Completed project · approved photography"
+                : "Concept visualization · project details to be confirmed · not completed photography"}
             </div>
           </div>
           
@@ -60,7 +72,9 @@ export default function ProjectDetail() {
             </div>
             <div>
               <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Status</div>
-              <div className="font-medium text-primary text-base">Illustrative concept direction</div>
+              <div className="font-medium text-primary text-base">
+                {isCompletedProject ? "Completed project" : "Illustrative concept direction"}
+              </div>
             </div>
             <div>
               <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Timeline</div>
@@ -71,16 +85,24 @@ export default function ProjectDetail() {
 
         {/* Transformation Section */}
         <div className="mb-24">
-          <h2 className="text-3xl font-serif text-primary mb-10 text-center">The Transformation</h2>
+          <h2 className="text-3xl font-serif text-primary mb-10 text-center">
+            {isCompletedProject ? "The Transformation" : "The Design Direction"}
+          </h2>
           <div className="shadow-2xl max-w-5xl mx-auto">
             {project.media.before ? (
               <BeforeAfter
                 beforeImage={project.media.before.src}
-                afterImage={project.media.render.src}
+                afterImage={isCompletedProject && project.media.completedDay
+                  ? project.media.completedDay.src
+                  : project.media.render.src}
                 beforeAlt={project.media.before.alt}
-                afterAlt={project.media.render.alt}
+                afterAlt={isCompletedProject && project.media.completedDay
+                  ? project.media.completedDay.alt
+                  : project.media.render.alt}
                 beforeLabel={project.media.before.label}
-                afterLabel={project.media.render.label}
+                afterLabel={isCompletedProject && project.media.completedDay
+                  ? project.media.completedDay.label
+                  : project.media.render.label}
               />
             ) : (
               <div className="border border-border bg-card p-10 text-center text-muted-foreground">
@@ -89,7 +111,9 @@ export default function ProjectDetail() {
             )}
           </div>
           <p className="max-w-3xl mx-auto mt-5 text-center text-xs uppercase tracking-widest text-muted-foreground">
-            Concept preview · this visual does not represent a completed Cove & Stone project
+            {isCompletedProject
+              ? "Approved before photo paired with completed project photography"
+              : "Concept preview · this visual does not represent a completed Cove & Stone project"}
           </p>
         </div>
 
@@ -101,14 +125,16 @@ export default function ProjectDetail() {
               <h2 className="text-3xl font-serif text-primary">From reference to completion</h2>
             </div>
             <p className="max-w-md text-sm text-muted-foreground">
-              Completed day, night and video assets will appear here after they are approved for publication.
+              {isCompletedProject
+                ? "Approved photography and a project walkthrough document the completed environment."
+                : "Completed day, night and video assets will appear here after they are approved for publication."}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <MediaCard
               icon={<ImageIcon className="w-5 h-5" />}
               title={project.media.render.label}
-              copy="Supplied concept visualization"
+              copy={isCompletedProject ? "Original design visualization" : "Supplied concept visualization"}
               src={project.media.render.src}
               alt={project.media.render.alt}
             />
@@ -116,7 +142,9 @@ export default function ProjectDetail() {
               <MediaCard
                 icon={<ImageIcon className="w-5 h-5" />}
                 title={project.media.before.label}
-                copy="Reference image · not a project completion photo"
+                copy={isCompletedProject
+                  ? "Approved before photography"
+                  : "Reference image · not a project completion photo"}
                 src={project.media.before.src}
                 alt={project.media.before.alt}
               />

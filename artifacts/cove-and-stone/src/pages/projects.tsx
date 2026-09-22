@@ -1,9 +1,11 @@
 import { Link } from 'wouter';
 import beforePool from '@assets/generated_images/before-pool.jpg';
+import p2 from '@assets/generated_images/project-2.jpg';
 import p4 from '@assets/generated_images/project-4.jpg';
-import conceptWaterfrontDay from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
+import completedPonteVedraDay from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import conceptModernDay from '@assets/7A3E70EF-56DC-4766-A259-B49AF0985941_1790113686673.png';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import ponteVedraVideo from '@assets/ponte-vedra-modern-walkthrough.mp4';
 
 export interface CaseStudyAsset {
   src: string;
@@ -35,7 +37,7 @@ export interface CaseStudy {
   timeline: string;
   image: string;
   desc: string;
-  status: "concept";
+  status: "concept" | "completed";
   media: CaseStudyMedia;
 }
 
@@ -44,25 +46,40 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "ponte-vedra-modern",
     title: "Ponte Vedra Modern",
     location: "Ponte Vedra Beach, FL",
-    type: "Concept direction",
+    type: "Completed project",
     size: "800 sq ft pool",
-    materials: "Illustrative limestone, glass tile and turf palette",
-    features: "Zero Edge, Sun Shelf, Modern Pergola",
+    materials: "Stone deck, dark waterline detailing and integrated landscape",
+    features: "Zero edge, Sun shelf, modern pergola",
     timeline: "14 Weeks",
     image: conceptModernDay,
-    desc: "An illustrative coastal-modern direction with clean lines, charcoal tile details and lush turf accents for a contemporary architectural home."
-    ,
-    status: "concept",
+    desc: "A completed Ponte Vedra outdoor environment photographed with the Jacksonville skyline and riverfront in the background.",
+    status: "completed",
     media: {
       before: {
         src: beforePool,
-        alt: "Reference backyard before a pool transformation",
-        label: "Before reference",
+        alt: "Ponte Vedra Modern backyard before construction",
+        label: "Before photo",
       },
       render: {
         src: conceptModernDay,
         alt: "Concept visualization of the Ponte Vedra Modern pool",
         label: "Concept rendering",
+      },
+      completedDay: {
+        src: completedPonteVedraDay,
+        alt: "Completed Ponte Vedra Modern pool and riverfront view during the day",
+        label: "Completed · day",
+      },
+      completedNight: {
+        src: conceptNight,
+        alt: "Completed Ponte Vedra Modern pool and outdoor living space at night",
+        label: "Completed · night",
+      },
+      video: {
+        src: ponteVedraVideo,
+        poster: completedPonteVedraDay,
+        alt: "Ponte Vedra Modern completed project walkthrough video",
+        label: "Project walkthrough video",
       },
     },
   },
@@ -75,13 +92,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     materials: "Illustrative travertine and dark-water palette",
     features: "Raised Spa, Fire Bowls, River Views",
     timeline: "20 Weeks",
-    image: conceptWaterfrontDay,
+    image: p2,
     desc: "An illustrative waterfront direction with a curved pool, raised spa and fire elements inspired by the calm waters of the St. Johns River."
     ,
     status: "concept",
     media: {
       render: {
-        src: conceptWaterfrontDay,
+        src: p2,
         alt: "Concept visualization of the Jacksonville Waterfront pool",
         label: "Concept rendering",
       },
@@ -131,6 +148,8 @@ export const CASE_STUDIES: CaseStudy[] = [
 ];
 
 export default function Projects() {
+  const completedProjectCount = CASE_STUDIES.filter(project => project.status === "completed").length;
+
   return (
     <div className="w-full pt-20">
       <header className="bg-card py-20 text-center border-b border-border">
@@ -138,10 +157,10 @@ export default function Projects() {
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Case Studies</span>
           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Selected Works</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore illustrative concept directions for pools and complete outdoor environments across Northeast Florida. Approved completed photography and project details will be added as they become available.
+            Explore completed outdoor environments and illustrative concept directions for pools across Northeast Florida.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
-            Concept / demo gallery · completed photography pending
+            {completedProjectCount} completed case study · concept directions also included
           </div>
         </div>
       </header>
@@ -152,14 +171,18 @@ export default function Projects() {
             {CASE_STUDIES.map((project, i) => (
               <Link key={project.slug} href={`/projects/${project.slug}`} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                  <img 
-                    src={project.media.render.src}
-                    alt={project.media.render.alt}
+                  <img
+                    src={project.status === "completed" && project.media.completedDay
+                      ? project.media.completedDay.src
+                      : project.media.render.src}
+                    alt={project.status === "completed" && project.media.completedDay
+                      ? project.media.completedDay.alt
+                      : project.media.render.alt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-                    Concept rendering
+                    {project.status === "completed" ? "Completed photography" : "Concept rendering"}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
