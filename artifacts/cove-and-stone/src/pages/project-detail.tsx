@@ -17,6 +17,8 @@ export default function ProjectDetail() {
     );
   }
 
+  const isCompletedProject = project.status === "Completed project";
+
   return (
     <div className="w-full pt-20 bg-background">
       {/* Hero Image */}
@@ -39,7 +41,7 @@ export default function ProjectDetail() {
               {project.desc}
             </p>
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
-              Concept visualization · project details to be confirmed
+              {project.status}
             </div>
           </div>
           
@@ -58,26 +60,38 @@ export default function ProjectDetail() {
             </div>
             <div>
               <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Status</div>
-              <div className="font-medium text-primary text-base">Illustrative concept direction</div>
+              <div className="font-medium text-primary text-base">{project.status}</div>
             </div>
           </div>
         </div>
 
-        {/* Transformation Section */}
-        <div className="mb-24">
-          <h2 className="text-3xl font-serif text-primary mb-4 text-center">The Design Direction</h2>
-          <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
-            This visual is an illustrative concept comparison. It is not presented as a completed Cove & Stone project.
-          </p>
-          <div className="shadow-2xl max-w-5xl mx-auto">
-            <BeforeAfter 
-              beforeImage={beforeImg} 
-              afterImage={project.image}
-              beforeAlt="Original property"
-              afterAlt={`Concept visualization for ${project.title}`}
-            />
+        {/* Transformation / Photography Section */}
+        {isCompletedProject ? (
+          <div className="mb-24">
+            <h2 className="text-3xl font-serif text-primary mb-4 text-center">Completed project photography</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+              Approved photography of the completed Ponte Vedra Modern environment, including the Jacksonville skyline and riverfront setting.
+            </p>
+            <div className="shadow-2xl max-w-5xl mx-auto">
+              <img src={project.image} alt={`Completed photography of ${project.title}`} className="w-full aspect-[16/9] object-cover" />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="mb-24">
+            <h2 className="text-3xl font-serif text-primary mb-4 text-center">The Design Direction</h2>
+            <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+              This visual is an illustrative concept comparison. It is not presented as a completed Cove & Stone project.
+            </p>
+            <div className="shadow-2xl max-w-5xl mx-auto">
+              <BeforeAfter 
+                beforeImage={beforeImg} 
+                afterImage={project.image}
+                beforeAlt="Illustrative existing property"
+                afterAlt={`Concept visualization for ${project.title}`}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Features list */}
         <div className="max-w-3xl mx-auto bg-card border border-border p-12">

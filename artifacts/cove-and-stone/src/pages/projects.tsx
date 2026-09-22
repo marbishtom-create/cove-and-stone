@@ -1,25 +1,27 @@
 import { Link } from 'wouter';
-import p1 from '@assets/generated_images/project-1.jpg';
 import p2 from '@assets/generated_images/project-2.jpg';
 import p3 from '@assets/generated_images/project-3.jpg';
 import p4 from '@assets/generated_images/project-4.jpg';
+import ponteVedraPhoto from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 
 export const CASE_STUDIES = [
   {
     slug: "ponte-vedra-modern",
     title: "Ponte Vedra Modern",
     location: "Ponte Vedra Beach, FL",
-    type: "Concept direction",
-    materials: "Illustrative limestone, glass tile and turf palette",
+    type: "Completed project",
+    status: "Completed project",
+    materials: "Stone deck, dark waterline detailing and integrated landscape",
     features: "Zero edge, sun shelf, modern pergola",
-    image: p1,
-    desc: "An illustrative coastal-modern direction with clean lines, charcoal tile details and lush turf accents for a contemporary architectural home."
+    image: ponteVedraPhoto,
+    desc: "A completed Ponte Vedra outdoor environment photographed with the Jacksonville skyline and riverfront in the background."
   },
   {
     slug: "jacksonville-waterfront",
     title: "Jacksonville Waterfront",
     location: "Jacksonville, FL",
     type: "Concept direction",
+    status: "Concept visualization",
     materials: "Illustrative travertine and dark-water palette",
     features: "Raised spa, fire bowls, river views",
     image: p2,
@@ -30,6 +32,7 @@ export const CASE_STUDIES = [
     title: "Nocatee Resort Backyard",
     location: "Nocatee, FL",
     type: "Concept direction",
+    status: "Concept visualization",
     materials: "Illustrative porcelain, quartz and architectural shade palette",
     features: "Built-in cabana, summer kitchen, tanning ledge",
     image: p3,
@@ -40,6 +43,7 @@ export const CASE_STUDIES = [
     title: "Atlantic Beach Minimalist",
     location: "Atlantic Beach, FL",
     type: "Concept direction",
+    status: "Concept visualization",
     materials: "Illustrative polished concrete and aqua mosaic palette",
     features: "Plunge pool, linear fire pit",
     image: p4,
@@ -76,7 +80,7 @@ export default function Projects() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
-                    Concept visualization
+                    {project.status}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
