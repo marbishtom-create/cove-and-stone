@@ -18,6 +18,7 @@ import About from '@/pages/about';
 import Contact from '@/pages/contact';
 import LocationPage from '@/pages/location';
 import Layout from '@/components/layout/layout';
+import { SiteMetadata } from '@/components/seo/site-metadata';
 import {
   Route,
   Switch,
@@ -62,6 +63,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <SiteMetadata />
           <Router />
         </WouterRouter>
         <Toaster />
