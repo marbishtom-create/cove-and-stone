@@ -19,6 +19,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setIsScrolled(false);
     window.scrollTo(0, 0);
   }, [location]);
 
