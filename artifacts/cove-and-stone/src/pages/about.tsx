@@ -1,7 +1,7 @@
 import { ArrowRight, Shield, Users, ClipboardCheck, HardHat } from 'lucide-react';
 import { Link } from 'wouter';
 import { THEME_CONFIG } from '@/config/theme';
-import brandBoard from '@assets/FF41F34E-CA05-48D8-BA9E-FD14AC71C6AB_1790114954311.png';
+import brandBoard from '@assets/B0C8B75A-36FB-47AE-A56D-4FE4ABFA6B52_1790116656470.png';
 
 export default function About() {
   return (
