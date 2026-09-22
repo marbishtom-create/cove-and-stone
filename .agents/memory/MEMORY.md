@@ -1,0 +1,1 @@
+- [Approved logo lockup](approved-logo-lockup.md) — keep the complete monogram, wordmark, and descriptor together as one image.
