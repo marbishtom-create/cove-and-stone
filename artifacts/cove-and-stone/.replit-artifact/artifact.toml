@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Cove & Stone"
+description = "A premium responsive website for Cove & Stone, a Jacksonville and Ponte Vedra architectural outdoor-living design-build brand specializing in custom pools, spas, complete backyard environments, renovations, and commercial outdoor projects."
+version = "1.0.0"
+id = "artifacts/cove-and-stone"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23978
+
+[services.development]
+run = "pnpm --filter @workspace/cove-and-stone run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cove-and-stone", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cove-and-stone/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23978"
+BASE_PATH = "/"
