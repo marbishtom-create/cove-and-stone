@@ -1,8 +1,6 @@
 import { useParams, Link } from 'wouter';
 import { CASE_STUDIES } from './projects';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import beforeImg from '@assets/generated_images/before-pool.jpg';
-import { BeforeAfter } from '@/components/ui/before-after';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -80,15 +78,10 @@ export default function ProjectDetail() {
           <div className="mb-24">
             <h2 className="text-3xl font-serif text-primary mb-4 text-center">The Design Direction</h2>
             <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
-              This visual is an illustrative concept comparison. It is not presented as a completed Cove & Stone project.
+              This visual is an illustrative concept direction. It is not presented as a completed Cove & Stone project or a same-property before-and-after comparison.
             </p>
             <div className="shadow-2xl max-w-5xl mx-auto">
-              <BeforeAfter 
-                beforeImage={beforeImg} 
-                afterImage={project.image}
-                beforeAlt="Illustrative existing property"
-                afterAlt={`Concept visualization for ${project.title}`}
-              />
+              <img src={project.image} alt={`Concept visualization for ${project.title}`} className="w-full aspect-[16/9] object-cover" />
             </div>
           </div>
         )}

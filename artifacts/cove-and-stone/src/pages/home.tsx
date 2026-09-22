@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import beforePool from '@assets/generated_images/before-pool.jpg';
+import beforePool from '@assets/generated_images/matched-before-pool.jpg';
 import afterPool from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
@@ -161,7 +161,7 @@ export default function Home() {
             )}
           </div>
           <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mt-6">
-            Illustrative transformation example · completed-project photography will be added as approved
+            Illustrative same-property transformation · completed-project photography will be added as approved
           </p>
         </div>
       </section>

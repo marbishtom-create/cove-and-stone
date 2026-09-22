@@ -1,7 +1,7 @@
 import { Wrench, RefreshCw, Zap, ShieldAlert } from 'lucide-react';
 import { Link } from 'wouter';
 import { BeforeAfter } from '@/components/ui/before-after';
-import beforeImg from '@assets/generated_images/before-pool.jpg';
+import beforeImg from '@assets/generated_images/matched-before-pool.jpg';
 import afterImg from '@assets/generated_images/after-pool.jpg';
 
 export default function Renovations() {
@@ -27,13 +27,13 @@ export default function Renovations() {
               <BeforeAfter 
                 beforeImage={beforeImg} 
                 afterImage={afterImg} 
-                beforeAlt="Illustrative existing pool condition"
+                beforeAlt="Illustrative unfinished yard at the same property"
                 afterAlt="Concept visualization for a modern geometric renovation"
               />
             )}
           </div>
           <div className="text-center mt-12">
-            <p className="text-sm uppercase tracking-widest text-muted-foreground">Illustrative transformation example · drag to explore the design direction</p>
+            <p className="text-sm uppercase tracking-widest text-muted-foreground">Illustrative same-property transformation · drag to explore the design direction</p>
           </div>
         </div>
       </section>
