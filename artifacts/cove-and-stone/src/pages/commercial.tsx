@@ -26,7 +26,7 @@ export default function Commercial() {
                   Commercial pools require a fundamentally different approach to engineering, plumbing, and health department compliance. Our commercial division brings the aesthetic sensibility of our luxury residential work to large-scale community amenities.
                 </p>
                 <p>
-                  Backed by Urban Green Energy LLC, we have the bonding capacity, commercial licensing, and operational scale to execute complex multi-phase developments on schedule.
+                  Our in-house GC and construction structure, Urban Green Energy, LLC, supports project coordination and delivery. Regulated pool work is aligned with the appropriately licensed pool contractor or qualifier for the applicable scope.
                 </p>
               </div>
 
@@ -41,8 +41,8 @@ export default function Commercial() {
                 <div className="flex gap-4">
                   <HardHat className="w-8 h-8 text-secondary shrink-0" />
                   <div>
-                    <h4 className="font-bold text-primary mb-1">General Contracting</h4>
-                    <p className="text-sm text-muted-foreground">In-house GC capabilities for complete facility builds.</p>
+                  <h4 className="font-bold text-primary mb-1">Construction support</h4>
+                  <p className="text-sm text-muted-foreground">In-house GC coordination for complete outdoor environments, with regulated scopes aligned appropriately.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">

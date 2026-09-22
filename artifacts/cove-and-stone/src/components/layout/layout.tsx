@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
-import { Menu, X, ChevronRight, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
@@ -51,10 +51,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="hidden lg:flex items-center gap-6">
-            <a href="tel:904-555-0199" className="text-sm font-medium flex items-center gap-2 hover:text-secondary transition-colors">
-              <Phone size={16} />
-              (904) 555-0199
-            </a>
+            <Link href="/contact" className="text-sm font-medium flex items-center gap-2 hover:text-secondary transition-colors">
+              Design consultations <ArrowRight size={16} />
+            </Link>
             <Link 
               href="/contact" 
               className="bg-primary text-primary-foreground px-6 py-3 text-sm tracking-widest uppercase hover:bg-secondary hover:text-secondary-foreground transition-all duration-300"
@@ -100,10 +99,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           >
             Start Your Project
           </Link>
-          <a href="tel:904-555-0199" className="text-center font-medium flex items-center justify-center gap-2">
-            <Phone size={18} />
-            (904) 555-0199
-          </a>
+          <Link href="/contact" className="text-center font-medium flex items-center justify-center gap-2">
+            Book a design consultation <ArrowRight size={18} />
+          </Link>
         </div>
       </div>
 
@@ -119,7 +117,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <div className="flex flex-col gap-6">
               <Logo className="invert brightness-0" />
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mt-4">
-                Jacksonville and Ponte Vedra's premier architectural outdoor-living design-build house. We create custom pools, spas, and complete backyard environments that elevate coastal living.
+                COVE & STONE is a Jacksonville design-build brand for modern pools and complete outdoor environments across Northeast Florida.
               </p>
             </div>
             
@@ -153,8 +151,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <p className="mt-4">{THEME_CONFIG.showroom.hours}</p>
               </address>
               <div className="mt-8 flex flex-col gap-2 text-sm text-muted-foreground">
-                <p>Construction: In-house GC Urban Green Energy LLC</p>
-                <p>Financing through Lyon Financial (Subject to lender approval)</p>
+                <p>Construction support: Urban Green Energy, LLC</p>
+                <p>Flexible financing options, including Lyon Financial and other partners</p>
               </div>
             </div>
           </div>

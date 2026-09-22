@@ -33,9 +33,9 @@ export default function About() {
           <div className="my-12 p-8 bg-card border border-border flex items-start gap-6 not-prose">
             <Shield className="w-12 h-12 text-secondary shrink-0" />
             <div>
-              <h4 className="text-xl font-serif text-primary mb-2">Licensed & Insured</h4>
+              <h4 className="text-xl font-serif text-primary mb-2">Construction support & coordination</h4>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Construction operations are backed by our in-house General Contractor, Urban Green Energy LLC. This allows us to handle complex structural work, cabanas, and extensive hardscaping legally and safely, far beyond the scope of a standard pool license.
+                Our in-house GC and construction structure, Urban Green Energy, LLC, supports construction coordination across the complete outdoor environment. Regulated pool work is coordinated with the appropriately licensed pool contractor or qualifier for the applicable scope.
               </p>
             </div>
           </div>

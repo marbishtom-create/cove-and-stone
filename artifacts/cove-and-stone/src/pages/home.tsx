@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { Link } from 'wouter';
 import beforePool from '@assets/generated_images/before-pool.jpg';
 import afterPool from '@assets/generated_images/after-pool.jpg';
-import heroPool from '@assets/generated_images/hero-pool.jpg';
-import outdoorLiving from '@assets/generated_images/outdoor-living.jpg';
-import showroom from '@assets/generated_images/showroom.jpg';
-import project1 from '@assets/generated_images/project-1.jpg';
-import project3 from '@assets/generated_images/project-3.jpg';
+import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
+import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
@@ -47,11 +44,14 @@ export default function Home() {
       <section className="relative h-[100dvh] w-full flex items-center justify-center pt-20">
         <div className="absolute inset-0 z-0">
           <img 
-            src={heroPool} 
-            alt="Luxury custom pool at twilight" 
+              src={jacksonvilleDayPool} 
+              alt="Concept visualization of a modern Jacksonville waterfront pool with infinity edges and raised water features" 
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+            <div className="absolute bottom-8 right-6 z-10 border border-white/30 bg-black/20 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-white/80 backdrop-blur-sm">
+              Concept visualization · Jacksonville waterfront
+            </div>
         </div>
         
         <div className="relative z-10 container mx-auto px-6 max-w-7xl flex flex-col items-start justify-center h-full pb-20">
@@ -60,12 +60,11 @@ export default function Home() {
               Jacksonville & Ponte Vedra
             </span>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8">
-              Transform Your <br />
-              <span className="italic font-light opacity-90">Everyday</span>.
+              Modern Pools. <br />
+              <span className="italic font-light opacity-90">Elevated Outdoor Living.</span>
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-12 font-light leading-relaxed">
-              We design and build bespoke pools, spas, and complete outdoor living environments. 
-              Elevate your home with a cinematic private retreat.
+              Cove & Stone designs and builds bespoke pools, spas, and complete outdoor environments across Jacksonville and Northeast Florida.
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
@@ -102,15 +101,14 @@ export default function Home() {
                 <p>
                   Specializing in the coastal aesthetic of Northeast Florida, our in-house team 
                   handles everything from photorealistic 3D visualization to complex engineering 
-                  and final luxury finishes. Backed by our licensed general contractor, Urban Green Energy LLC, 
-                  your project is executed with precision.
+                  and final luxury finishes. Our in-house GC and construction structure, Urban Green Energy, LLC, supports the work while regulated pool scopes are coordinated with the appropriately licensed pool contractor or qualifier.
                 </p>
               </div>
               
               <div className="grid grid-cols-2 gap-8 mt-12 border-t border-border pt-12">
                 <div>
                   <div className="text-4xl font-serif text-primary mb-2">24/7</div>
-                  <div className="text-sm uppercase tracking-widest text-muted-foreground">Showroom Access</div>
+                  <div className="text-sm uppercase tracking-widest text-muted-foreground">Design Studio Access</div>
                 </div>
                 <div>
                   <div className="text-4xl font-serif text-primary mb-2">100%</div>
@@ -120,11 +118,12 @@ export default function Home() {
             </div>
             
             <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-              <img 
-                src={outdoorLiving} 
-                alt="Sophisticated outdoor living space" 
-                className="w-full h-full object-cover"
-              />
+                <img 
+                  src={jacksonvilleNightPool} 
+                  alt="Concept visualization of a dramatic Jacksonville outdoor living environment with pool, fire and water features" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">Concept visualization</div>
               <div className="absolute -bottom-6 -left-6 w-3/4 h-3/4 border border-secondary -z-10" />
             </div>
           </div>
@@ -220,7 +219,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <Link href="/projects/ponte-vedra-modern" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={project1} alt="Ponte Vedra Modern" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={jacksonvilleDayPool} alt="Concept visualization for Ponte Vedra Modern" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Ponte Vedra Modern</h3>
@@ -229,7 +228,7 @@ export default function Home() {
             
             <Link href="/projects/nocatee-resort" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={project3} alt="Nocatee Resort Backyard" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={jacksonvilleNightPool} alt="Concept visualization for Nocatee Resort Backyard" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Nocatee Resort Backyard</h3>
@@ -417,7 +416,7 @@ export default function Home() {
             <div className="bg-card p-12 border border-border flex flex-col justify-center items-center text-center">
                <h3 className="text-2xl font-serif text-primary mb-6">Explore the Materials</h3>
                <p className="text-muted-foreground mb-8 text-sm">
-                 Visit our 24/7 design showroom in Jacksonville to experience stone textures, glass tiles, and plaster watercolor examples in person.
+                  Visit our 24/7 Jacksonville Design Studio & Showroom to see pool finishes, waterline tile, marble, porcelain, pavers, coping, turf, outdoor kitchens, fire and water features, and lighting in person.
                </p>
                <div className="text-sm font-medium">
                  {THEME_CONFIG.showroom.address}<br />
@@ -475,10 +474,10 @@ export default function Home() {
               <div className="relative z-10">
                 <h3 className="text-2xl font-serif text-primary mb-4">Project Funding</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                  A luxury outdoor space is a major asset improvement. We partner with Lyon Financial to provide specialized loan programs with terms up to 30 years and no home equity requirement.
+                  Flexible financing options may be available for your outdoor project, including programs through Lyon Financial and other financing partners. We can help you explore the path that fits your project and qualifications.
                 </p>
                 <div className="bg-card p-4 text-xs text-muted-foreground border border-border leading-relaxed mb-6">
-                  Financing provided by Lyon Financial. Subject to lender approval. Cove & Stone does not guarantee terms or approval.
+                  Financing is subject to credit approval, lender terms, current programs and availability. Cove & Stone does not guarantee approval, rates, monthly payments or loan terms.
                 </div>
                 <Link href="/financing" className="text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors inline-flex items-center gap-2">
                   Learn about financing <ArrowRight size={14} />

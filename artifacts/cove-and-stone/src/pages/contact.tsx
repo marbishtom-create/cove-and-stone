@@ -33,7 +33,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Call Us</div>
-                  <div className="font-serif text-xl text-primary">(904) 555-0199</div>
+                  <div className="font-serif text-xl text-primary">Design consultations</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -42,7 +42,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Email</div>
-                  <div className="font-serif text-xl text-primary">hello@coveandstone.com</div>
+                  <div className="font-serif text-xl text-primary">By request</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">

@@ -1,7 +1,7 @@
 import { Flame, Trees, ChefHat, Sofa } from 'lucide-react';
 import { Link } from 'wouter';
-import heroImage from '@assets/generated_images/outdoor-living.jpg';
-import projectImage from '@assets/generated_images/project-3.jpg';
+import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 
 export default function OutdoorLiving() {
   return (
@@ -10,7 +10,7 @@ export default function OutdoorLiving() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Luxury outdoor living space" 
+            alt="Concept visualization of a dramatic Jacksonville outdoor living environment with fire and water features" 
             className="w-full h-full object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
@@ -54,7 +54,7 @@ export default function OutdoorLiving() {
               <Trees className="w-12 h-12 text-secondary mb-6 mx-auto md:mx-0" />
               <h3 className="text-2xl font-serif text-primary mb-4">Hardscape & Turf</h3>
               <p className="text-muted-foreground">
-                Flawless installations of imported limestone, travertine, and porcelain pavers, contrasted with ultra-premium artificial turf for zero-maintenance luxury.
+                 Flawless installations of porcelain, travertine, marble, natural stone and concrete pavers, contrasted with artificial turf, turf between oversized pavers and putting-green or lifestyle-turf applications.
               </p>
             </div>
           </div>

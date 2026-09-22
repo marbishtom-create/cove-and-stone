@@ -1,7 +1,7 @@
 import { ArrowRight, Box, Ruler, CheckCircle2, Droplet, Layers } from 'lucide-react';
 import { Link } from 'wouter';
-import heroImage from '@assets/generated_images/project-1.jpg';
-import projectImage from '@assets/generated_images/project-4.jpg';
+import heroImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
+import projectImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
 
 export default function Pools() {
   return (
@@ -11,10 +11,13 @@ export default function Pools() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Modern custom pool" 
+            alt="Concept visualization of a modern Jacksonville waterfront pool" 
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
+          <div className="absolute bottom-6 right-6 border border-white/30 bg-black/20 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+            Concept visualization
+          </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-white">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">Custom Concrete Pools</span>
@@ -47,8 +50,8 @@ export default function Pools() {
             <div>
               <h2 className="text-3xl md:text-5xl font-serif mb-8 text-primary">Uncompromising Construction.</h2>
               <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
-                <p>
-                  A Cove & Stone pool is built differently. By utilizing advanced engineering, commercial-grade equipment, and premium materials like glass tile and imported limestone coping, we ensure your pool looks stunning and operates flawlessly for decades.
+                  <p>
+                   A Cove & Stone pool is built differently. We combine architectural design, thoughtful engineering coordination and premium materials such as porcelain, marble, natural stone and glass tile to create a pool that belongs to the home.
                 </p>
                 <p>
                   We don't build cookie-cutter shapes. Every pool is a custom architectural response to your home's geometry and your family's needs.
@@ -57,12 +60,12 @@ export default function Pools() {
 
               <ul className="mt-10 space-y-4">
                 {[
-                  "Gunite / Shotcrete Construction",
-                  "Vanishing Edge & Perimeter Overflow",
-                  "Elevated Custom Spas",
-                  "Glass Tile Interiors",
-                  "Advanced Water Chemistry (Salt / Ozone / UV)",
-                  "Smart Automation Systems"
+                  "Modern geometric pool construction",
+                  "Infinity-edge, zero-edge and perimeter-overflow concepts",
+                  "Raised spas and integrated sun shelves",
+                  "Waterfalls, sheer descents, bubblers and fire-water features",
+                  "Pool lighting, equipment upgrades and automation",
+                  "Porcelain, marble, travertine and premium interior finishes"
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-primary font-medium">
                     <CheckCircle2 className="text-secondary w-5 h-5 flex-shrink-0" />
