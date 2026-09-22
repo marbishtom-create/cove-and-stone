@@ -1,7 +1,7 @@
 import { ArrowRight, MapPin, Clock, Building, Eye, PencilRuler, WalletCards, Hammer } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Link } from 'wouter';
-import showroomPhoto from '@assets/0_IMG_7080_1790117937906.jpeg';
+import showroomPhoto from '@assets/0_IMG_7080_1790117937906-high-res.jpeg';
 
 export default function Showroom() {
   return (
