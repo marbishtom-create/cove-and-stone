@@ -36,19 +36,22 @@ export default function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <div className="relative shrink-0 lg:mr-8">
-             <Logo variant={isScrolled ? 'light' : 'default'} />
-             <div className="absolute left-2 top-full z-10 mt-0.5 hidden flex-col items-start gap-1 lg:flex">
+             <Logo
+               variant={isScrolled ? 'light' : 'default'}
+               imageClassName="w-[100px] md:w-[116px]"
+             />
+             <div className="absolute left-2 top-full z-10 mt-1 hidden flex-col items-start gap-1.5 lg:flex">
                <Link
                  href="/contact"
-                 className="whitespace-nowrap text-[10px] font-medium tracking-[0.12em] text-primary transition-colors hover:text-secondary"
+                 className="whitespace-nowrap text-[11px] font-medium tracking-[0.12em] text-primary transition-colors hover:text-secondary"
                >
-                 Design consultations
+                 Design Consultations
                </Link>
                <Link
                  href="/contact"
-                 className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.16em] text-primary transition-colors hover:text-secondary"
+                 className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] text-primary transition-colors hover:text-secondary"
                >
-                 Start your project
+                 Start Your Project
                </Link>
              </div>
            </div>

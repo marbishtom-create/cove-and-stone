@@ -1,6 +1,14 @@
 import { Link } from 'wouter';
 
-export const Logo = ({ className = "", variant = "default" }: { className?: string; variant?: "default" | "light" }) => {
+export const Logo = ({
+  className = "",
+  variant = "default",
+  imageClassName = "",
+}: {
+  className?: string;
+  variant?: "default" | "light";
+  imageClassName?: string;
+}) => {
   return (
     <Link
       href="/"
@@ -13,7 +21,7 @@ export const Logo = ({ className = "", variant = "default" }: { className?: stri
         data-testid="site-logo-image"
         src="/brand/cove-and-stone-approved.png"
         alt="Cove & Stone Pools"
-        className="block w-[92px] h-auto object-contain md:w-[104px] transition-opacity duration-300 group-hover:opacity-85"
+        className={`block w-[92px] h-auto object-contain md:w-[104px] transition-opacity duration-300 group-hover:opacity-85 ${imageClassName}`}
       />
     </Link>
   );
