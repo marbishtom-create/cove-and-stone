@@ -1,6 +1,7 @@
 import { ArrowRight, Shield, Users, ClipboardCheck, HardHat } from 'lucide-react';
 import { Link } from 'wouter';
 import { THEME_CONFIG } from '@/config/theme';
+import brandBoard from '@assets/FF41F34E-CA05-48D8-BA9E-FD14AC71C6AB_1790114954311.png';
 
 export default function About() {
   return (
@@ -15,6 +16,17 @@ export default function About() {
             "A pool should not be an afterthought placed in a yard. It should be the architectural anchor of the exterior environment."
           </p>
         </div>
+
+        <figure className="mb-20 bg-primary p-3 md:p-5 shadow-2xl">
+          <img
+            src={brandBoard}
+            alt="Cove & Stone brand direction board showing modern pools, water, fire, stone and outdoor living"
+            className="w-full h-auto"
+          />
+          <figcaption className="px-3 pt-4 pb-1 text-center text-[10px] uppercase tracking-[0.25em] text-white/60">
+            Brand direction · water, fire, stone, living
+          </figcaption>
+        </figure>
 
         <div className="prose prose-lg max-w-none text-muted-foreground prose-headings:font-serif prose-headings:text-primary prose-p:leading-relaxed">
           <p>
