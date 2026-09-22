@@ -4,7 +4,7 @@ import p2 from '@assets/generated_images/project-2.jpg';
 import p4 from '@assets/generated_images/project-4.jpg';
 import completedPonteVedraDay from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import conceptModernDay from '@assets/7A3E70EF-56DC-4766-A259-B49AF0985941_1790113686673.png';
-import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import ponteVedraVideo from '@assets/ponte-vedra-modern-walkthrough.mp4';
 
 export interface CaseStudyAsset {

@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import beforePool from '@assets/generated_images/matched-before-pool.jpg';
 import afterPool from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
-import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
