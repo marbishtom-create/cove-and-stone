@@ -53,7 +53,7 @@ export default function ProjectDetail() {
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
               {isCompletedProject
                 ? "Completed project · approved photography"
-                : "Concept visualization · project details to be confirmed · not completed photography"}
+                 : "Project direction · details to be confirmed · not completed photography"}
             </div>
           </div>
           
@@ -134,7 +134,7 @@ export default function ProjectDetail() {
             <MediaCard
               icon={<ImageIcon className="w-5 h-5" />}
               title={project.media.render.label}
-              copy={isCompletedProject ? "Original design visualization" : "Supplied concept visualization"}
+               copy={isCompletedProject ? "Original design visualization" : "Supplied concept direction"}
               src={project.media.render.src}
               alt={project.media.render.alt}
             />

@@ -129,7 +129,6 @@ export default function Home() {
                   alt="Concept visualization of a dramatic Jacksonville outdoor living environment with pool, fire and water features" 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">Concept visualization</div>
               <div className="absolute -bottom-6 -left-6 w-3/4 h-3/4 border border-secondary -z-10" />
             </div>
           </div>
@@ -244,9 +243,6 @@ export default function Home() {
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                 <img src={jacksonvilleNightPool} alt="Concept visualization for Nocatee Resort Backyard" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
-                  Concept visualization
-                </div>
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Nocatee Resort Backyard</h3>
               <p className="text-muted-foreground text-sm uppercase tracking-widest">Nocatee, FL</p>
