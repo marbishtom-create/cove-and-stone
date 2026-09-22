@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <Logo
-             variant={location === '/' && !isScrolled ? 'light' : 'default'}
+             variant={isScrolled ? 'light' : 'default'}
              className="lg:mr-8"
            />
           
