@@ -6,9 +6,18 @@ interface BeforeAfterProps {
   afterImage: string;
   beforeAlt?: string;
   afterAlt?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
 }
 
-export function BeforeAfter({ beforeImage, afterImage, beforeAlt = "Before", afterAlt = "After" }: BeforeAfterProps) {
+export function BeforeAfter({
+  beforeImage,
+  afterImage,
+  beforeAlt = "Before",
+  afterAlt = "After",
+  beforeLabel = "Before",
+  afterLabel = "After",
+}: BeforeAfterProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,8 +82,8 @@ export function BeforeAfter({ beforeImage, afterImage, beforeAlt = "Before", aft
           className="w-full h-full object-cover" 
           draggable="false"
         />
-        <div className="absolute top-6 right-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest">
-          After
+          <div className="absolute top-6 right-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest">
+           {afterLabel}
         </div>
       </div>
 
@@ -90,8 +99,8 @@ export function BeforeAfter({ beforeImage, afterImage, beforeAlt = "Before", aft
           style={{ width: `${100 / (sliderPosition / 100)}%`, maxWidth: 'none' }}
           draggable="false"
         />
-        <div className="absolute top-6 left-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest whitespace-nowrap">
-          Before
+          <div className="absolute top-6 left-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest whitespace-nowrap">
+           {beforeLabel}
         </div>
       </div>
 

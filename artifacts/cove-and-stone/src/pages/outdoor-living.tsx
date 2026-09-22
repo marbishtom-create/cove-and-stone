@@ -14,6 +14,9 @@ export default function OutdoorLiving() {
             className="w-full h-full object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <div className="absolute bottom-6 right-6 border border-border bg-background/80 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-sm">
+            Concept visualization
+          </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-foreground pt-32">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Complete Backyards</span>
@@ -84,9 +87,12 @@ export default function OutdoorLiving() {
             <div className="relative aspect-square">
               <img 
                 src={projectImage} 
-                alt="Cohesive resort backyard" 
+                alt="Concept visualization of a cohesive resort backyard"
                 className="w-full h-full object-cover"
               />
+              <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+                Concept visualization
+              </div>
             </div>
           </div>
         </div>

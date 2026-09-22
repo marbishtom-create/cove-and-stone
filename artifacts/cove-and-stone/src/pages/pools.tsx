@@ -37,9 +37,12 @@ export default function Pools() {
             <div className="aspect-square relative">
               <img 
                 src={projectImage} 
-                alt="Minimalist coastal pool detail" 
+                alt="Concept visualization of a minimalist coastal pool detail"
                 className="w-full h-full object-cover"
               />
+              <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+                Concept visualization
+              </div>
               <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-card border border-border p-8 flex flex-col justify-center hidden md:flex">
                 <Droplet className="text-secondary w-8 h-8 mb-4" />
                 <h4 className="font-serif text-xl mb-2">Purity of Form</h4>

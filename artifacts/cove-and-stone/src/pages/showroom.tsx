@@ -1,5 +1,4 @@
 import { ArrowRight, MapPin, Clock, Building, Eye, PencilRuler, WalletCards, Hammer } from 'lucide-react';
-import showroomImg from '@assets/generated_images/showroom.jpg';
 import { THEME_CONFIG } from '@/config/theme';
 import { Link } from 'wouter';
 
@@ -18,13 +17,16 @@ export default function Showroom() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
-            <img 
-              src={showroomImg} 
-              alt="Concept visualization of the Cove & Stone Jacksonville Design Studio and Showroom"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-              Studio preview · replace with original showroom photography
+            <div className="w-full h-full bg-card flex flex-col items-center justify-center text-center p-10">
+              <Building className="w-12 h-12 text-secondary mb-6" />
+              <span className="text-secondary uppercase tracking-[0.25em] text-xs mb-4">Jacksonville Design Studio & Showroom</span>
+              <h2 className="text-2xl md:text-3xl font-serif text-primary mb-4">Original showroom photography coming soon</h2>
+              <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+                This space is reserved for the original Jacksonville showroom photo. No concept or unrelated stock image is being presented as the Cove & Stone studio.
+              </p>
+            </div>
+            <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Original photo not supplied
             </div>
           </div>
 
