@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         }`}
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-          <Logo />
+           <Logo variant={location === '/' && !isScrolled ? 'light' : 'default'} />
           
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -115,7 +115,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8 mb-16">
             <div className="flex flex-col gap-6">
-              <Logo className="invert brightness-0" />
+              <Logo variant="light" />
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mt-4">
                 COVE & STONE is a Jacksonville design-build brand for modern pools and complete outdoor environments across Northeast Florida.
               </p>
