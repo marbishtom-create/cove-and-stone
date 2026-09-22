@@ -9,49 +9,41 @@ export const CASE_STUDIES = [
     slug: "ponte-vedra-modern",
     title: "Ponte Vedra Modern",
     location: "Ponte Vedra Beach, FL",
-    type: "New Construction",
-    size: "800 sq ft pool",
-    materials: "Imported Limestone, Glass Tile",
-    features: "Zero Edge, Sun Shelf, Modern Pergola",
-    timeline: "14 Weeks",
+    type: "Concept direction",
+    materials: "Illustrative limestone, glass tile and turf palette",
+    features: "Zero edge, sun shelf, modern pergola",
     image: p1,
-    desc: "A minimalist coastal modern pool with clean lines, charcoal tile details, and lush turf accents designed for a contemporary architectural home."
+    desc: "An illustrative coastal-modern direction with clean lines, charcoal tile details and lush turf accents for a contemporary architectural home."
   },
   {
     slug: "jacksonville-waterfront",
     title: "Jacksonville Waterfront",
     location: "Jacksonville, FL",
-    type: "Estate Backyard",
-    size: "1,200 sq ft pool",
-    materials: "Travertine, Dark Plaster",
-    features: "Raised Spa, Fire Bowls, River Views",
-    timeline: "20 Weeks",
+    type: "Concept direction",
+    materials: "Illustrative travertine and dark-water palette",
+    features: "Raised spa, fire bowls, river views",
     image: p2,
-    desc: "An expansive curved custom pool with a raised spa and fire elements, designed to reflect the calm waters of the St. Johns River."
+    desc: "An illustrative waterfront direction with a curved pool, raised spa and fire elements inspired by the calm waters of the St. Johns River."
   },
   {
     slug: "nocatee-resort",
     title: "Nocatee Resort Backyard",
     location: "Nocatee, FL",
-    type: "Complete Environment",
-    size: "950 sq ft pool",
-    materials: "Porcelain Pavers, Quartz Finish",
-    features: "Built-in Cabana, Summer Kitchen, Tanning Ledge",
-    timeline: "18 Weeks",
+    type: "Concept direction",
+    materials: "Illustrative porcelain, quartz and architectural shade palette",
+    features: "Built-in cabana, summer kitchen, tanning ledge",
     image: p3,
-    desc: "A total backyard transformation featuring a massive resort-style pool paired with a fully equipped cabana and outdoor kitchen."
+    desc: "An illustrative total-backyard direction pairing a resort-style pool with a cabana, outdoor kitchen and connected living areas."
   },
   {
     slug: "atlantic-beach-minimalist",
     title: "Atlantic Beach Minimalist",
     location: "Atlantic Beach, FL",
-    type: "Courtyard Pool",
-    size: "450 sq ft pool",
-    materials: "Polished Concrete, Aqua Mosaics",
-    features: "Plunge Pool, Linear Fire Pit",
-    timeline: "12 Weeks",
+    type: "Concept direction",
+    materials: "Illustrative polished concrete and aqua mosaic palette",
+    features: "Plunge pool, linear fire pit",
     image: p4,
-    desc: "A small-footprint masterpiece that maximizes a tight coastal lot with a sleek plunge pool and integrated entertaining space."
+    desc: "An illustrative small-footprint direction that maximizes a tight coastal lot with a sleek plunge pool and integrated entertaining space."
   }
 ];
 
@@ -63,7 +55,7 @@ export default function Projects() {
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Case Studies</span>
           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Selected Works</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our portfolio of concept and completed environments across Northeast Florida. Each project represents our commitment to architectural integrity.
+            Explore illustrative concept directions for pools and complete outdoor environments across Northeast Florida. Completed case studies will be added as approved project photography and details become available.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
             Concept / Demo Gallery
@@ -83,6 +75,9 @@ export default function Projects() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                  <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
+                    Concept visualization
+                  </div>
                 </div>
                 <div className="flex justify-between items-start">
                   <div>

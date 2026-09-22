@@ -39,7 +39,7 @@ export default function ProjectDetail() {
               {project.desc}
             </p>
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
-              Concept Case Study
+              Concept visualization · project details to be confirmed
             </div>
           </div>
           
@@ -57,21 +57,24 @@ export default function ProjectDetail() {
               <div className="font-medium text-primary text-base">{project.materials}</div>
             </div>
             <div>
-              <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Timeline</div>
-              <div className="font-medium text-primary text-base">{project.timeline}</div>
+              <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Status</div>
+              <div className="font-medium text-primary text-base">Illustrative concept direction</div>
             </div>
           </div>
         </div>
 
         {/* Transformation Section */}
         <div className="mb-24">
-          <h2 className="text-3xl font-serif text-primary mb-10 text-center">The Transformation</h2>
+          <h2 className="text-3xl font-serif text-primary mb-4 text-center">The Design Direction</h2>
+          <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+            This visual is an illustrative concept comparison. It is not presented as a completed Cove & Stone project.
+          </p>
           <div className="shadow-2xl max-w-5xl mx-auto">
             <BeforeAfter 
               beforeImage={beforeImg} 
               afterImage={project.image}
               beforeAlt="Original property"
-              afterAlt={`Completed ${project.title}`}
+              afterAlt={`Concept visualization for ${project.title}`}
             />
           </div>
         </div>

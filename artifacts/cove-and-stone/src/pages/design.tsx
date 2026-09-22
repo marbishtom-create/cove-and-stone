@@ -144,7 +144,7 @@ export default function Design() {
                   <div>
                     <label className="block text-sm font-bold uppercase tracking-widest text-primary mb-4">Project Budget</label>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {['$100k - $150k', '$150k - $250k', '$250k+'].map(budget => (
+                      {['Exploring the right scope', 'I have a working investment range', 'Let’s discuss the full transformation'].map(budget => (
                         <div 
                           key={budget}
                           onClick={() => setPreferences({...preferences, budget})}
@@ -208,7 +208,7 @@ export default function Design() {
                 </div>
                 <h3 className="text-3xl font-serif text-primary mb-4">Vision Received</h3>
                 <p className="text-muted-foreground max-w-md mx-auto">
-                  Thank you. Our design team is reviewing your photo and preferences. We will contact you within 24 hours to schedule your initial consultation.
+                   Thank you. Our design team is reviewing your photo and preferences. We will follow up to schedule your initial consultation.
                 </p>
               </div>
             )}

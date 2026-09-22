@@ -57,27 +57,33 @@ export default function Home() {
         <div className="relative z-10 container mx-auto px-6 max-w-7xl flex flex-col items-start justify-center h-full pb-20">
           <div className="max-w-3xl animate-in slide-in-from-bottom-8 duration-1000 ease-out fade-in fill-mode-both">
             <span className="text-secondary uppercase tracking-[0.3em] text-sm md:text-base font-medium mb-6 block drop-shadow-sm">
-              Jacksonville & Ponte Vedra
+              Jacksonville Outdoor Living, Reimagined.
             </span>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8">
               Modern Pools. <br />
               <span className="italic font-light opacity-90">Elevated Outdoor Living.</span>
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-12 font-light leading-relaxed">
-              Cove & Stone designs and builds bespoke pools, spas, and complete outdoor environments across Jacksonville and Northeast Florida.
+              Modern custom pools inspired by Los Angeles design, Miami living and European architecture—built for Northeast Florida.
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
                 href="/contact" 
                 className="bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary transition-all duration-300 text-center"
               >
-                Start Your Project
+                Design My Backyard
               </Link>
               <Link 
                 href="/projects" 
                 className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
               >
-                View Case Studies
+                Visit the Showroom
+              </Link>
+              <Link
+                href="/financing"
+                className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
+              >
+                Explore Financing
               </Link>
             </div>
           </div>
@@ -111,8 +117,8 @@ export default function Home() {
                   <div className="text-sm uppercase tracking-widest text-muted-foreground">Design Studio Access</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-serif text-primary mb-2">100%</div>
-                  <div className="text-sm uppercase tracking-widest text-muted-foreground">In-House Design</div>
+                  <div className="text-4xl font-serif text-primary mb-2">1</div>
+                  <div className="text-sm uppercase tracking-widest text-muted-foreground">Coordinated Experience</div>
                 </div>
               </div>
             </div>
@@ -145,8 +151,8 @@ export default function Home() {
               <BeforeAfter 
                 beforeImage={beforePool} 
                 afterImage={afterPool} 
-                beforeAlt="Outdated backyard"
-                afterAlt="Luxury modern pool transformation"
+                beforeAlt="Illustrative outdated backyard"
+                afterAlt="Illustrative luxury modern pool concept"
               />
             ) : (
               <div className="aspect-video bg-muted flex items-center justify-center">
@@ -154,6 +160,9 @@ export default function Home() {
               </div>
             )}
           </div>
+          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mt-6">
+            Illustrative transformation example · completed-project photography will be added as approved
+          </p>
         </div>
       </section>
 
@@ -238,8 +247,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Interactive Design Your Backyard */}
-      <section className="py-32 bg-card border-y border-border relative">
+      {/* 6. Project Levels */}
+      <section className="py-24 bg-background border-y border-border">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="max-w-3xl mb-14">
+            <span className="text-secondary uppercase tracking-widest text-sm mb-4 block">Project direction</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-primary mb-6">Choose the scale of your transformation.</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Cove, Stone and Signature are design and sales concepts that help us frame the conversation. Your final scope, materials and proposal are developed around your property and priorities—not a rigid package or fixed price.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {THEME_CONFIG.levels.map((level, i) => (
+              <div key={level.name} className={`p-8 border ${i === 1 ? 'border-secondary bg-card' : 'border-border bg-card/50'}`}>
+                <div className="text-xs uppercase tracking-[0.3em] text-secondary mb-6">{level.name}</div>
+                <h3 className="text-2xl font-serif text-primary mb-4">{level.summary}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{level.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Customer Experience */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
+            <div className="max-w-3xl">
+              <span className="text-secondary uppercase tracking-widest text-sm mb-4 block">From dream to delivery</span>
+              <h2 className="text-3xl md:text-5xl font-serif text-primary mb-6">One clear path from backyard idea to finished environment.</h2>
+              <p className="text-muted-foreground leading-relaxed">Every phase is designed to keep the vision, selections, proposal and construction coordinated.</p>
+            </div>
+            <Link href="/contact" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-colors whitespace-nowrap">
+              Start with your address <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+            {THEME_CONFIG.salesProcess.map((phase) => (
+              <div key={phase.name} className="bg-card p-7 min-h-[190px]">
+                <div className="text-3xl font-serif text-secondary/70 mb-5">{phase.label}</div>
+                <h3 className="text-lg font-serif text-primary mb-3">{phase.name}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{phase.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Interactive Design Your Backyard */}
+      <section className="py-32 bg-background border-y border-border relative" id="design">
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <div className="text-center mb-16">
             <Monitor className="w-12 h-12 text-secondary mx-auto mb-6" />
@@ -325,7 +381,7 @@ export default function Home() {
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-widest text-primary mb-4">Budget Scope</label>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {['$100k - $150k', '$150k - $250k', '$250k+'].map(budget => (
+                      {['Exploring the right scope', 'I have a working investment range', 'Let’s discuss the full transformation'].map(budget => (
                         <div 
                           key={budget}
                           onClick={() => setPreferences({...preferences, budget})}
@@ -397,7 +453,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Full Backyard Story & 8. Showroom */}
+      {/* 9. Full Backyard Story & 10. Showroom */}
       <section className="py-24 bg-background overflow-hidden">
         <div className="container mx-auto px-6 max-w-7xl relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-24">
@@ -430,7 +486,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. Three Consultation Modes & 10. Financing */}
+      {/* 11. Three Consultation Modes & 12. Financing */}
       <section className="py-24 bg-card border-t border-border">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -488,10 +544,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 11. Reviews */}
+      {/* 13. Reviews */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
-          <h2 className="text-3xl font-serif text-primary mb-12 text-center">Client Sentiments</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-serif text-primary mb-4">Client Sentiments</h2>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">Sample review layout · approved client reviews to be added</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { text: "The attention to detail and 3D visualization process made us completely confident. The final pool looks exactly like the render, only better.", author: "M. Thompson", loc: "Ponte Vedra Beach" },
@@ -515,7 +574,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 12. Commercial Content Teaser */}
+      {/* 14. Commercial Content Teaser */}
       <section className="py-20 bg-primary text-primary-foreground border-b border-primary/20">
         <div className="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
@@ -528,18 +587,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 13. Closing CTA */}
+      {/* 15. Closing CTA */}
       <section className="py-32 bg-primary text-primary-foreground text-center">
         <div className="container mx-auto px-6 max-w-3xl">
-          <h2 className="text-4xl md:text-6xl font-serif mb-6 text-white">Let's build your oasis.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif mb-6 text-white">Don't build another Florida pool.</h2>
           <p className="text-lg text-white/70 mb-10 font-light">
-            Contact us today to schedule your initial consultation.
+            Build an outdoor experience designed around the way you live in Jacksonville.
           </p>
           <Link 
             href="/contact" 
             className="inline-flex items-center justify-center bg-secondary text-secondary-foreground px-10 py-5 text-sm uppercase tracking-widest hover:bg-white hover:text-primary transition-all duration-300"
           >
-            Start Your Project
+            Design My Backyard
           </Link>
         </div>
       </section>

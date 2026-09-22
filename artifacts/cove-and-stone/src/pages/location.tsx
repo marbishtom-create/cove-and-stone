@@ -45,7 +45,7 @@ export default function LocationPage() {
               As a premier design-build house serving {locationInfo.name}, Cove & Stone understands the specific architectural nuances and environmental requirements of the area. We design outdoor living spaces that complement the local aesthetic—whether it's a coastal modern retreat or a classic resort-style estate.
             </p>
             <p>
-              Our process is entirely in-house. From initial 3D visualization tailored to your {locationInfo.name} lot, to engineering, permitting, and final construction by our general contractor, we deliver uncompromising quality without the typical delays of segmented subcontractors.
+              From initial 3D visualization tailored to your {locationInfo.name} lot through material selection, engineering, permitting and construction coordination, Cove & Stone keeps the experience organized around one design direction. Urban Green Energy, LLC supports the in-house GC and construction structure, while regulated pool work is coordinated with the appropriately licensed pool contractor or qualifier for the applicable scope.
             </p>
           </div>
           

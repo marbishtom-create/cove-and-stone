@@ -27,13 +27,13 @@ export default function Renovations() {
               <BeforeAfter 
                 beforeImage={beforeImg} 
                 afterImage={afterImg} 
-                beforeAlt="Aging 90s pool"
-                afterAlt="Modern geometric renovation"
+                beforeAlt="Illustrative existing pool condition"
+                afterAlt="Concept visualization for a modern geometric renovation"
               />
             )}
           </div>
           <div className="text-center mt-12">
-            <p className="text-sm uppercase tracking-widest text-muted-foreground">Interactive Slider: Drag to see the transformation</p>
+            <p className="text-sm uppercase tracking-widest text-muted-foreground">Illustrative transformation example · drag to explore the design direction</p>
           </div>
         </div>
       </section>

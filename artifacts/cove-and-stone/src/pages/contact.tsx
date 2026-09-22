@@ -75,7 +75,7 @@ export default function Contact() {
                   <CheckCircle2 className="w-20 h-20 text-secondary mx-auto mb-6" />
                   <h3 className="text-3xl font-serif text-primary mb-4">Inquiry Received</h3>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Thank you for reaching out to Cove & Stone. A design specialist will contact you within one business day to discuss your project.
+                     Thank you for reaching out to Cove & Stone. A design specialist will follow up to discuss your project and next steps.
                   </p>
                 </div>
               ) : (
@@ -118,10 +118,9 @@ export default function Contact() {
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Approximate Budget</label>
                       <select className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary text-primary">
-                        <option>Under $100k</option>
-                        <option>$100k - $150k</option>
-                        <option>$150k - $250k</option>
-                        <option>$250k+</option>
+                         <option>Exploring the right scope</option>
+                         <option>I have a working investment range</option>
+                         <option>Let’s discuss the full transformation</option>
                       </select>
                     </div>
                   </div>
