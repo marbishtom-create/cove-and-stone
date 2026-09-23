@@ -139,15 +139,15 @@ export default function Projects() {
     <div className="w-full pt-24 lg:pt-40">
       <header className="bg-card py-20 text-center border-b border-border">
         <div className="container mx-auto px-6 max-w-4xl">
-          <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Case Studies</span>
-          <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Selected Works</h1>
+           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Pool design concepts</span>
+           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Pool Design Concepts & Projects</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore completed outdoor environments and illustrative concept directions for pools across Northeast Florida.
+             Explore illustrative pool and backyard design directions across Northeast Florida. These entries are visual concepts, not completed-project photography; future case studies will be identified separately when approved.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
              {completedProjectCount > 0
-               ? `${completedProjectCount} completed case study · concept directions also included`
-               : "Concept directions only · completed photography will be added as approved"}
+               ? `${completedProjectCount} approved completed case study · illustrative concepts also included`
+               : "Illustrative concept directions only · completed photography will be added as approved"}
           </div>
         </div>
       </header>
@@ -174,7 +174,7 @@ export default function Projects() {
                   </picture>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-                    {cardMedia.label}
+                     {project.status === "completed" ? cardMedia.label : "Illustrative concept"}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">

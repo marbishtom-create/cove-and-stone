@@ -3,6 +3,7 @@ import { Upload, Check, Monitor, Image as ImageIcon, Camera } from 'lucide-react
 import { THEME_CONFIG } from '@/config/theme';
 import designImage from '@assets/generated_images/design-3d.jpg';
 import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
 
 export default function Design() {
   const [step, setStep] = useState(1);
@@ -28,7 +29,7 @@ export default function Design() {
             <div className="flex-1">
               <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Design Process</span>
               <h1 className="text-4xl md:text-6xl font-serif mb-6 text-primary leading-tight">
-                See it before <br/>we build it.
+                3D Pool & Backyard Design in Jacksonville, FL
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Our in-house design studio uses photorealistic 3D rendering to bring your concepts to life. Walk through your new backyard digitally before any ground is broken.
@@ -53,6 +54,30 @@ export default function Design() {
                   {(i + 1).toString().padStart(2, '0')}
                 </div>
                 <h4 className="font-medium text-primary text-sm uppercase tracking-widest">{stepName}</h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="max-w-4xl mx-auto text-center mb-14">
+            <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">A shared visual direction</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-primary mb-6">Bring the property into the conversation.</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Property photos, a survey if available, inspiration and the priorities you want the backyard to support give the design studio useful starting context. The direction can then coordinate pool and spa geometry, outdoor kitchens, pergolas, decking, stone, turf, lighting and landscape relationships.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              ['Share the inputs', 'Upload property photos and describe the way you want to use the space. A survey is useful when available.'],
+              ['Shape the environment', 'Review how the pool, spa, outdoor rooms, materials, lighting and landscape direction can work together.'],
+              ['Review the scope', 'Showroom selections and proposal development follow as the property, priorities and design direction become clearer.'],
+            ].map(([title, copy]) => (
+              <div key={title} className="bg-card border border-border p-8 text-left">
+                <h3 className="text-xl font-serif text-primary mb-4">{title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{copy}</p>
               </div>
             ))}
           </div>
@@ -214,6 +239,44 @@ export default function Design() {
             )}
 
           </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="mb-12">
+            <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Design questions</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-primary mb-5">Before the first line is drawn.</h2>
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              A useful design conversation starts with the property, the intended use and the decisions that still need to be made.
+            </p>
+          </div>
+          <div className="border-t border-border">
+            {[
+              ['What information helps begin a custom 3D pool design?', 'Property photos, a survey if available, inspiration images and the priorities you want the backyard to support can help establish the initial design direction.'],
+              ['Can a pool design be revised as the direction develops?', 'The design direction can be reviewed and refined as the property, priorities, materials and intended use become clearer. The appropriate scope is confirmed during the design conversation.'],
+              ['How does the design connect to pricing and material selections?', 'The pool, spa, outdoor rooms, hardscape and material palette help define the project scope. Showroom selections and an organized proposal can then support a more specific conversation about the work.'],
+              ['Is a property survey useful for 3D pool design?', 'A survey can be useful when available because it provides additional property information for reviewing layout, setbacks and the relationship between the home and outdoor environment.'],
+            ].map(([question, answer]) => (
+              <details key={question} className="group border-b border-border">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-serif text-primary marker:hidden">
+                  {question}
+                  <span className="text-secondary text-2xl font-light transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="max-w-3xl pb-6 pr-10 text-muted-foreground leading-relaxed">{answer}</p>
+              </details>
+            ))}
+          </div>
+          <nav aria-label="Continue planning your 3D pool and backyard design" className="mt-12 pt-8 border-t border-border">
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+              <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View concepts</Link>
+              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+            </div>
+          </nav>
         </div>
       </section>
     </div>

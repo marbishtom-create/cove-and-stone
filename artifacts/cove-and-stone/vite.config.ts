@@ -27,9 +27,40 @@ if (!basePath) {
   );
 }
 
+function canonicalHostRedirect() {
+  const redirectIfWww = (req: any, res: any, next: any) => {
+    const host = String(req.headers.host ?? '').split(':')[0].toLowerCase();
+
+    if (host !== 'www.coveandstonepools.com') {
+      next();
+      return;
+    }
+
+    const requestUrl = new URL(req.url || '/', 'https://www.coveandstonepools.com');
+    const canonicalUrl = new URL('https://coveandstonepools.com');
+    canonicalUrl.pathname = requestUrl.pathname;
+    canonicalUrl.search = requestUrl.search;
+
+    res.statusCode = 301;
+    res.setHeader('Location', canonicalUrl.toString());
+    res.end();
+  };
+
+  return {
+    name: 'canonical-host-redirect',
+    configureServer(server: any) {
+      server.middlewares.use(redirectIfWww);
+    },
+    configurePreviewServer(server: any) {
+      server.middlewares.use(redirectIfWww);
+    },
+  };
+}
+
 export default defineConfig({
   base: basePath,
   plugins: [
+    canonicalHostRedirect(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),

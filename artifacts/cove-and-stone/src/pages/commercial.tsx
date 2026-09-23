@@ -8,10 +8,10 @@ export default function Commercial() {
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Commercial Division</span>
           <h1 className="text-4xl md:text-6xl font-serif mb-8 leading-tight">
-            Amenity centers that <br className="hidden md:block" />define the development.
+            Commercial pool & outdoor environment design
           </h1>
           <p className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Partnering with developers, HOAs, and architects to construct commercial aquatics facilities across Northeast Florida.
+            Planning pool and outdoor environments with developers, HOAs and architects across Northeast Florida.
           </p>
         </div>
       </header>
@@ -20,10 +20,10 @@ export default function Commercial() {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-3xl font-serif text-primary mb-6">Built for volume, designed for luxury.</h2>
+               <h2 className="text-3xl font-serif text-primary mb-6">Shared amenities, planned with clarity.</h2>
               <div className="space-y-6 text-muted-foreground mb-12">
                 <p>
-                  Commercial pools require a fundamentally different approach to engineering, plumbing, and health department compliance. Our commercial division brings the aesthetic sensibility of our luxury residential work to large-scale community amenities.
+                   Commercial pools and outdoor environments involve engineering, plumbing, public-health and permitting requirements that depend on the property, scope and jurisdiction. Those coordination requirements can be reviewed alongside the visual direction for the amenity.
                 </p>
                 <p>
                   Our in-house GC and construction structure, Urban Green Energy, LLC, supports project coordination and delivery. Regulated pool work is aligned with the appropriately licensed pool contractor or qualifier for the applicable scope.
@@ -34,29 +34,29 @@ export default function Commercial() {
                 <div className="flex gap-4">
                   <FileCheck2 className="w-8 h-8 text-secondary shrink-0" />
                   <div>
-                    <h4 className="font-bold text-primary mb-1">DOH Compliance</h4>
-                    <p className="text-sm text-muted-foreground">Expert navigation of Florida Department of Health codes.</p>
+                     <h4 className="font-bold text-primary mb-1">Code and permitting coordination</h4>
+                     <p className="text-sm text-muted-foreground">Florida Department of Health, engineering and permitting requirements are reviewed with the appropriate project participants and regulated professionals as applicable.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <HardHat className="w-8 h-8 text-secondary shrink-0" />
                   <div>
-                  <h4 className="font-bold text-primary mb-1">Construction support</h4>
-                  <p className="text-sm text-muted-foreground">In-house GC coordination for complete outdoor environments, with regulated scopes aligned appropriately.</p>
+                    <h4 className="font-bold text-primary mb-1">Scope coordination</h4>
+                   <p className="text-sm text-muted-foreground">Pool, hardscape, shade structures and related outdoor environments can be organized around one project scope, with regulated work aligned appropriately.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <Building2 className="w-8 h-8 text-secondary shrink-0" />
                   <div>
-                    <h4 className="font-bold text-primary mb-1">Turnkey Amenity</h4>
-                    <p className="text-sm text-muted-foreground">Pools, splash pads, clubhouses, and hardscaping.</p>
+                     <h4 className="font-bold text-primary mb-1">Amenity planning</h4>
+                     <p className="text-sm text-muted-foreground">Potential scope may include pools, splash pads, clubhouses, hardscaping and connected outdoor areas.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <CalendarClock className="w-8 h-8 text-secondary shrink-0" />
                   <div>
-                    <h4 className="font-bold text-primary mb-1">Schedule Strict</h4>
-                    <p className="text-sm text-muted-foreground">Reliable execution to align with your sales phases.</p>
+                     <h4 className="font-bold text-primary mb-1">Project phases</h4>
+                     <p className="text-sm text-muted-foreground">Scope, design, engineering and permitting milestones are reviewed as the project develops.</p>
                   </div>
                 </div>
               </div>
@@ -86,6 +86,15 @@ export default function Commercial() {
               </form>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-card border-t border-border">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <nav aria-label="Commercial project information" className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Discuss a development</Link>
+            <Link href="/about" className="text-primary hover:text-secondary transition-colors">About Cove & Stone</Link>
+          </nav>
         </div>
       </section>
     </div>

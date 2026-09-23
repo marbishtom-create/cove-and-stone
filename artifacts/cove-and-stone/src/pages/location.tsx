@@ -4,6 +4,92 @@ import { getRouteSeo } from '@/config/seo-routes';
 import { MapPin, ArrowRight } from 'lucide-react';
 import heroImg from '@assets/generated_images/hero-pool.jpg';
 
+type LowerLocationContent = {
+  h1: string;
+  hero: string;
+  introHeading: string;
+  intro: string[];
+  cards: { title: string; text: string }[];
+};
+
+const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
+  'queens-harbour': {
+    h1: 'Queens Harbour Pool & Outdoor Living Design',
+    hero: 'Waterfront-oriented outdoor living concepts shaped around the harbour and lagoon setting associated with Queens Harbour in Jacksonville.',
+    introHeading: 'Let the setting guide the outdoor room.',
+    intro: [
+      'Queens Harbour is associated with a yacht and country-club community and a harbour and lagoon lock setting. That context can inform how a backyard is composed: where views are held, how circulation moves between the home and pool, and how shade and gathering areas frame the water-oriented experience.',
+      'Cove & Stone can explore a custom pool and spa, outdoor kitchen, pergola, fire feature and material palette as one design direction. The imagery and language on this page are design guidance, not a claim of completed work in Queens Harbour.',
+    ],
+    cards: [
+      { title: 'View-led geometry', text: 'Pool proportions, spa placement and sight lines can be considered around the home, outdoor rooms and available views.' },
+      { title: 'Harbour-side atmosphere', text: 'Shade, seating, lighting and fire features can shape a comfortable setting for gathering near the water.' },
+      { title: 'Material continuity', text: 'Pavers, porcelain, marble, natural stone and artificial turf can be reviewed as one palette for pool edges, paths and living areas.' },
+      { title: 'Connected entertaining', text: 'An outdoor kitchen, pergola or cabana can be coordinated with the pool, spa and movement through the backyard.' },
+    ],
+  },
+  'deerwood': {
+    h1: 'Refined Pool & Outdoor Living Design for Deerwood',
+    hero: 'Estate-style pool and outdoor-living concepts considered for Deerwood’s established, gated Jacksonville setting and mature residential character.',
+    introHeading: 'A composed setting for established homes.',
+    intro: [
+      'Deerwood is an established gated Jacksonville community associated with Deerwood Country Club, mature residential character and larger homes. Those facts provide general design context for an outdoor environment that should feel proportional to the architecture and settled into its surroundings.',
+      'The direction can bring together a custom pool, spa, stone or porcelain decking, turf, an outdoor kitchen, pergola, cabana, fire feature and lighting. Each element is reviewed for the specific property; this page does not claim completed work or local project history.',
+    ],
+    cards: [
+      { title: 'Estate-scale proportions', text: 'Pool geometry, spa placement and outdoor rooms can be composed to relate to a larger home and its existing landscape.' },
+      { title: 'Mature landscape setting', text: 'Paths, planting areas, shade and lighting can be coordinated so new work sits comfortably within the established backyard.' },
+      { title: 'Layered materials', text: 'Marble, porcelain, natural stone and pavers can be reviewed with coping, tile and artificial turf for a measured palette.' },
+      { title: 'Entertaining with restraint', text: 'Kitchens, pergolas, cabanas and fire features can support gatherings while keeping the pool environment visually cohesive.' },
+    ],
+  },
+  'e-town': {
+    h1: 'Clean Contemporary Pool Design for eTown',
+    hero: 'Contemporary pool and outdoor-living concepts shaped around eTown’s modern master-planned Jacksonville setting and emphasis on thoughtful design.',
+    introHeading: 'A clean direction for connected outdoor living.',
+    intro: [
+      'eTown is associated with a modern master-planned Jacksonville community that emphasizes thoughtful design, technology, convenience and sustainability. Those public characteristics can provide a general lens for a backyard with clear geometry, useful circulation and a deliberate relationship between the home and landscape.',
+      'A custom pool and spa can be planned with outdoor kitchens, pergolas, pavers, porcelain, marble, turf, fire features and lighting. The final scope depends on the property and priorities, and this page describes a design approach rather than completed local work.',
+    ],
+    cards: [
+      { title: 'Clean geometry', text: 'Pool, spa and sun-shelf proportions can be organized around the home, sight lines and the way the backyard will be used.' },
+      { title: 'Practical connections', text: 'Paths, shade, seating and outdoor kitchens can support an easy transition between indoor and outdoor spaces.' },
+      { title: 'Material discipline', text: 'Porcelain, pavers, marble, natural stone and artificial turf can be compared for a consistent contemporary palette.' },
+      { title: 'Lighting and landscape', text: 'Lighting and planting direction can be considered with the pool and outdoor rooms instead of treated as late additions.' },
+    ],
+  },
+  'tamaya': {
+    h1: 'Tamaya Pool & Outdoor Living Design',
+    hero: 'Cohesive pool and outdoor-living concepts for Tamaya’s gated Jacksonville setting, with material direction shaped by its Spanish, Tuscan and Mediterranean-influenced architecture.',
+    introHeading: 'Let the architecture carry outside.',
+    intro: [
+      'Tamaya is a gated and master-planned Jacksonville community known for Spanish, Tuscan and Mediterranean-influenced residential architecture and a location between the city and the beaches. That architectural context can guide the relationship between pool geometry, shade, materials and the home.',
+      'Cove & Stone can develop a complete direction around a custom pool or renovation, spa, pavers, porcelain, marble, turf, outdoor kitchen, pergola, fire feature and lighting. The concepts shown here are general design guidance and do not represent completed Tamaya projects.',
+    ],
+    cards: [
+      { title: 'Architectural alignment', text: 'Pool edges, coping, shade structures and outdoor rooms can echo the home’s proportions and material language.' },
+      { title: 'Warm material palette', text: 'Pavers, porcelain, marble and natural stone can be reviewed with tile and turf to balance texture, tone and use.' },
+      { title: 'Pool and spa composition', text: 'A custom pool, integrated or raised spa and sun shelf can be planned as one connected architectural element.' },
+      { title: 'Outdoor rooms', text: 'Kitchens, pergolas, cabanas, fire features and lighting can extend the home’s living pattern into the backyard.' },
+    ],
+  },
+  'julington-creek': {
+    h1: 'Julington Creek Pool & Outdoor Living Design',
+    hero: 'Family-focused pool and outdoor-living concepts shaped around the lakes, nature-preserve and recreation setting associated with Julington Creek Plantation.',
+    introHeading: 'A backyard that supports everyday life.',
+    intro: [
+      'Julington Creek Plantation is a large community in northwest St. Johns County associated with lakes, nature-preserve areas and recreation. That broader setting can inform a family-focused backyard with clear zones for swimming, gathering, shade, play and connection to the landscape.',
+      'A custom pool or renovation can be coordinated with a spa, pavers, porcelain, marble, artificial turf, outdoor kitchen, pergola, fire feature and lighting. The property and intended use determine the final direction; this page makes no claim of completed work in the community.',
+    ],
+    cards: [
+      { title: 'Family flow', text: 'Pool geometry, sun shelves and seating can be arranged around the ways the backyard will support everyday use and gatherings.' },
+      { title: 'Landscape relationship', text: 'Paths, planting areas, shade and lighting can connect the pool environment to the broader landscape setting.' },
+      { title: 'Durable visual rhythm', text: 'Pavers, porcelain, marble, natural stone and artificial turf can distinguish activity areas while keeping the palette unified.' },
+      { title: 'Flexible gathering', text: 'Outdoor kitchens, pergolas, cabanas and fire features can create spaces for meals, shade and evening use.' },
+    ],
+  },
+};
+
 export default function LocationPage() {
   const { slug } = useParams();
   const locationInfo = THEME_CONFIG.locations.find(l => l.slug === slug);
@@ -23,6 +109,10 @@ export default function LocationPage() {
   const ponteSeo = getRouteSeo('/locations/ponte-vedra-beach');
   const stJohnsSeo = getRouteSeo('/locations/st-johns');
   const jacksonvilleBeachesSeo = getRouteSeo('/locations/jacksonville-beaches');
+  const lowerLocationContent = LOWER_LOCATION_CONTENT[locationInfo.slug];
+  const lowerLocationSeo = lowerLocationContent
+    ? getRouteSeo(`/locations/${locationInfo.slug}`)
+    : undefined;
 
   return (
     <div className="w-full pt-24 lg:pt-40">
@@ -30,7 +120,7 @@ export default function LocationPage() {
         <div className="absolute inset-0">
           <img 
             src={heroImg} 
-            alt={isPonteVedraBeach || isStJohns || isJacksonvilleBeaches
+            alt={isPonteVedraBeach || isStJohns || isJacksonvilleBeaches || lowerLocationContent
               ? 'Concept visualization of a modern pool and outdoor-living environment'
               : `Custom pools in ${locationInfo.name}`} 
             className="w-full h-full object-cover opacity-40 grayscale-[30%]"
@@ -48,6 +138,8 @@ export default function LocationPage() {
                 ? 'St. Johns Pool Builder'
                 : isJacksonvilleBeaches
                   ? 'Custom Pools & Outdoor Living for the Jacksonville Beaches'
+                : lowerLocationContent
+                  ? lowerLocationContent.h1
                 : <>{locationInfo.name} <br/> Pool Builder</>}
           </h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto font-light drop-shadow-md">
@@ -57,6 +149,8 @@ export default function LocationPage() {
                 ? 'Luxury custom pools, spas and complete outdoor living environments shaped around St. Johns, Florida homes.'
                 : isJacksonvilleBeaches
                   ? 'Coastal-style outdoor living can be designed as one connected environment for Atlantic Beach, Jacksonville Beach, Neptune Beach, nearby Ponte Vedra Beach and the surrounding Jacksonville Beaches.'
+                : lowerLocationContent
+                  ? lowerLocationContent.hero
               : `Luxury custom pools, spas, and outdoor living environments designed exclusively for ${locationInfo.name} properties.`}
           </p>
         </div>
