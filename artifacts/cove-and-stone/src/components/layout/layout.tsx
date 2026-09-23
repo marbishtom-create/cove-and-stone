@@ -68,10 +68,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <div className="relative shrink-0 lg:mr-8">
-             <Logo
-               variant={isScrolled ? 'light' : 'default'}
-                 imageClassName="w-[122px] md:w-[160px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)]"
-             />
+             <Logo variant={isScrolled ? 'light' : 'default'} imageClassName="w-[96px] md:w-[128px]" />
            </div>
 
           {/* Desktop Nav */}
