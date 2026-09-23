@@ -1,0 +1,88 @@
+{
+  "pages": {
+    "/": {
+      "title": "Cove & Stone Pools | Modern Pools. Elevated Outdoor Living.",
+      "description": "Jacksonville and Ponte Vedra architectural outdoor-living design-build house specializing in custom pools, spas, and complete backyard environments."
+    },
+    "/pools": {
+      "title": "Custom Pools & Spas | Cove & Stone Pools",
+      "description": "Explore modern custom pools, spas, water features and architectural finishes designed for Jacksonville and Northeast Florida outdoor living.",
+      "service": {
+        "name": "Custom Pools & Spas",
+        "serviceType": "Custom pool and spa design-build"
+      }
+    },
+    "/renovations": {
+      "title": "Pool Renovations & Corrections | Cove & Stone Pools",
+      "description": "Resurface, modernize and reimagine an outdated pool with Cove & Stone's coordinated renovation and outdoor-living design process.",
+      "service": {
+        "name": "Pool Renovations & Corrections",
+        "serviceType": "Pool renovation and correction design-build"
+      }
+    },
+    "/outdoor-living": {
+      "title": "Outdoor Living Design | Cove & Stone Pools",
+      "description": "Design a complete Jacksonville outdoor environment with pergolas, kitchens, fire and water features, lighting, stone and landscape coordination.",
+      "service": {
+        "name": "Outdoor Living Design",
+        "serviceType": "Outdoor-living design-build"
+      }
+    },
+    "/projects": {
+      "title": "Selected Pool & Outdoor-Living Projects | Cove & Stone",
+      "description": "View Cove & Stone concept directions and approved completed project photography for pools and complete outdoor environments across Northeast Florida."
+    },
+    "/design": {
+      "title": "Design Your Backyard | Cove & Stone Pools",
+      "description": "Share your property and preferences with the Cove & Stone design studio to begin a custom pool and outdoor-living concept.",
+      "service": {
+        "name": "Backyard Design Studio",
+        "serviceType": "Custom pool and outdoor-living design"
+      }
+    },
+    "/showroom": {
+      "title": "Jacksonville Design Studio & Showroom | Cove & Stone",
+      "description": "Visit the Cove & Stone Jacksonville showroom to explore pool finishes, stone, pavers, outdoor kitchens, fire features and lighting."
+    },
+    "/financing": {
+      "title": "Pool & Outdoor-Living Financing | Cove & Stone",
+      "description": "Explore flexible financing options for a Cove & Stone custom pool, renovation or complete outdoor-living transformation."
+    },
+    "/commercial": {
+      "title": "Commercial Pool & Outdoor Environments | Cove & Stone",
+      "description": "Coordinate architectural pools and outdoor environments for hospitality, multifamily, commercial and development projects in Northeast Florida.",
+      "service": {
+        "name": "Commercial Pool & Outdoor Environments",
+        "serviceType": "Commercial pool and outdoor-environment design-build"
+      }
+    },
+    "/about": {
+      "title": "About Cove & Stone Pools | Jacksonville Outdoor Living",
+      "description": "Learn how Cove & Stone coordinates modern pools, materials, outdoor rooms and construction support for homeowners across Northeast Florida."
+    },
+    "/contact": {
+      "title": "Start Your Project | Cove & Stone Pools",
+      "description": "Start a conversation about a custom pool, renovation or complete outdoor-living project with Cove & Stone in Jacksonville and Northeast Florida."
+    }
+  },
+  "projectNames": {
+    "ponte-vedra-modern": "Ponte Vedra Modern",
+    "jacksonville-waterfront": "Jacksonville Waterfront",
+    "nocatee-resort": "Nocatee Resort Backyard",
+    "atlantic-beach-minimalist": "Atlantic Beach Minimalist"
+  },
+  "locationNames": {
+    "jacksonville": "Jacksonville",
+    "ponte-vedra-beach": "Ponte Vedra Beach",
+    "nocatee": "Nocatee",
+    "st-johns": "St. Johns",
+    "atlantic-beach": "Atlantic Beach",
+    "jacksonville-beach": "Jacksonville Beach",
+    "neptune-beach": "Neptune Beach",
+    "queens-harbour": "Queens Harbour",
+    "deerwood": "Deerwood",
+    "e-town": "E-Town",
+    "tamaya": "Tamaya",
+    "julington-creek": "Julington Creek"
+  }
+}
