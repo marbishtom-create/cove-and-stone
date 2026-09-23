@@ -19,7 +19,7 @@ export const Logo = ({
     >
       <img
         data-testid="site-logo-image"
-        src="/brand/cove-and-stone-approved.png"
+        src="/brand/cove-and-stone-readable.png"
         alt="Cove & Stone Pools"
         className={`block w-[92px] h-auto object-contain md:w-[104px] transition-opacity duration-300 group-hover:opacity-85 ${imageClassName}`}
       />
