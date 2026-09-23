@@ -176,6 +176,7 @@
 }
 
 .pool-visualizer__upload-button,
+.pool-visualizer__camera-button,
 .pool-visualizer__clear-button,
 .pool-visualizer__text-button,
 .pool-visualizer__export-button,
@@ -202,8 +203,26 @@
   transition: background-color .2s ease, border-color .2s ease;
 }
 
+.pool-visualizer__camera-button {
+  align-items: center;
+  background: #edf3ed;
+  border: 1px solid #9cafaa;
+  color: var(--pv-aqua-dark);
+  display: flex;
+  flex: 1;
+  font-size: .72rem;
+  gap: .5rem;
+  justify-content: center;
+  letter-spacing: .04em;
+  min-height: 2.65rem;
+  padding: .65rem .8rem;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+
 .pool-visualizer__upload-button:hover,
-.pool-visualizer__upload-button:focus-visible {
+.pool-visualizer__upload-button:focus-visible,
+.pool-visualizer__camera-button:hover,
+.pool-visualizer__camera-button:focus-visible {
   background: #e9f0eb;
   border-color: var(--pv-aqua-dark);
 }

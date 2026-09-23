@@ -37,6 +37,11 @@ test("keeps every requested pool configuration in the generated state", () => {
   assert.match(component, /data-testid="input-pool-width"/);
   assert.match(component, /data-testid="input-pool-length"/);
   assert.match(component, /data-testid="select-waterline-tile"/);
+  assert.match(component, /data-testid="button-load-backyard"/);
+  assert.match(component, /data-testid="button-take-backyard"/);
+  assert.match(component, /data-testid="input-backyard-photo"/);
+  assert.match(component, /data-testid="input-backyard-camera"/);
+  assert.match(component, /capture="environment"/);
   assert.match(component, /data-testid=\{`toggle-\$\{feature\.key\}`\}/);
   assert.match(component, /key: 'lights'/);
   assert.match(component, /key: 'waterfall'/);

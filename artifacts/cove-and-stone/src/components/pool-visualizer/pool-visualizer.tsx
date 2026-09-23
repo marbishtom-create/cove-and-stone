@@ -252,6 +252,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [uploadError, setUploadError] = useState('');
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     onConfigurationChange?.(configuration);
