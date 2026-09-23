@@ -55,31 +55,54 @@ function readImageDimensions(buffer) {
   return readJpegDimensions(buffer);
 }
 
-function getShowroomAssetPath() {
+function getShowroomAssetPath(importName) {
   const importMatch = showroomSource.match(
-    /import showroomPhoto from '@assets\/([^']+)';/,
+    new RegExp(`import ${importName} from '@assets/([^']+)';`),
   );
-  assert.ok(importMatch, 'showroom page must import the showroom photo');
+  assert.ok(importMatch, `showroom page must import ${importName}`);
   return resolve(artifactRoot, '..', '..', 'attached_assets', importMatch[1]);
 }
 
-test('imports an available showroom photo at the intended desktop resolution', async () => {
-  const assetPath = getShowroomAssetPath();
+test('serves the approved showroom photo at mobile and desktop resolutions', async () => {
+  const desktopAssetPath = getShowroomAssetPath('showroomPhotoDesktop');
+  const mobileAssetPath = getShowroomAssetPath('showroomPhotoMobile');
 
   await assert.doesNotReject(
-    () => access(assetPath),
-    `showroom asset is missing: ${assetPath}`,
+    () => access(desktopAssetPath),
+    `desktop showroom asset is missing: ${desktopAssetPath}`,
+  );
+  await assert.doesNotReject(
+    () => access(mobileAssetPath),
+    `mobile showroom asset is missing: ${mobileAssetPath}`,
   );
 
-  const dimensions = readImageDimensions(await readFile(assetPath));
+  const desktopDimensions = readImageDimensions(await readFile(desktopAssetPath));
   assert.ok(
-    dimensions.width >= minimumDesktopWidth,
-    `showroom asset width must be at least ${minimumDesktopWidth}px, got ${dimensions.width}px`,
+    desktopDimensions.width >= minimumDesktopWidth,
+    `desktop showroom asset width must be at least ${minimumDesktopWidth}px, got ${desktopDimensions.width}px`,
   );
   assert.ok(
-    dimensions.height >= minimumDesktopHeight,
-    `showroom asset height must be at least ${minimumDesktopHeight}px, got ${dimensions.height}px`,
+    desktopDimensions.height >= minimumDesktopHeight,
+    `desktop showroom asset height must be at least ${minimumDesktopHeight}px, got ${desktopDimensions.height}px`,
   );
+
+  const mobileDimensions = readImageDimensions(await readFile(mobileAssetPath));
+  assert.ok(
+    mobileDimensions.width < minimumDesktopWidth,
+    `mobile showroom asset should be smaller than ${minimumDesktopWidth}px, got ${mobileDimensions.width}px`,
+  );
+  assert.ok(
+    mobileDimensions.width >= 320,
+    `mobile showroom asset should remain readable at 320px wide, got ${mobileDimensions.width}px`,
+  );
+});
+
+test('uses the mobile showroom source below the desktop breakpoint', () => {
+  assert.match(
+    showroomSource,
+    /<picture>\s*<source media="\(max-width: 767px\)" srcSet=\{showroomPhotoMobile\}/,
+  );
+  assert.match(showroomSource, /<img\s+src=\{showroomPhotoDesktop\}/);
 });
 
 test('keeps the approved showroom accessibility text and visible caption', () => {

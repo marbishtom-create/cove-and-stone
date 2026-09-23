@@ -1,7 +1,8 @@
 import { ArrowRight, MapPin, Clock, Building, Eye, PencilRuler, WalletCards, Hammer } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Link } from 'wouter';
-import showroomPhoto from '@assets/0_IMG_7080_1790117937906-high-res.jpeg';
+import showroomPhotoDesktop from '@assets/0_IMG_7080_1790117937906-high-res.jpeg';
+import showroomPhotoMobile from '@assets/0_IMG_7080_1790117937906.jpeg';
 
 export default function Showroom() {
   return (
@@ -18,11 +19,14 @@ export default function Showroom() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
-            <img
-              src={showroomPhoto}
-              alt="Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source media="(max-width: 767px)" srcSet={showroomPhotoMobile} />
+              <img
+                src={showroomPhotoDesktop}
+                alt="Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays"
+                className="w-full h-full object-cover"
+              />
+            </picture>
             <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               Cove & Stone Jacksonville showroom
             </div>
