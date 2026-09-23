@@ -47,3 +47,4 @@ export const EmailDesignConceptResponse = zod.object({
   "status": zod.enum(['sent'])
 })
 
+

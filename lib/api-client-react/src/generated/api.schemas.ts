@@ -71,3 +71,4 @@ export const DesignConceptEmailResponseStatus = {
 export interface DesignConceptEmailResponse {
   status: DesignConceptEmailResponseStatus;
 }
+

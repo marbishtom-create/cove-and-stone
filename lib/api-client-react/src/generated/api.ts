@@ -218,3 +218,4 @@ export const useEmailDesignConcept = <TError = ErrorType<void>,
       > => {
       return useMutation(getEmailDesignConceptMutationOptions(options));
     }
+
