@@ -17,20 +17,18 @@ export default function ProjectDetail() {
   }
 
   const isCompletedProject = project.status === "completed";
+  const heroMedia = isCompletedProject && project.media.completedDay
+    ? project.media.completedDay
+    : project.media.render;
 
   return (
     <div className="w-full pt-24 lg:pt-40 bg-background">
       {/* Hero Image */}
       <div className="w-full h-[52dvh] min-h-[420px] lg:h-[60dvh] relative">
-        <img
-          src={isCompletedProject && project.media.completedDay
-            ? project.media.completedDay.src
-            : project.media.render.src}
-          alt={isCompletedProject && project.media.completedDay
-            ? project.media.completedDay.alt
-            : project.media.render.alt}
-          className="w-full h-full object-cover"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={heroMedia.mobileSrc} />
+          <img src={heroMedia.src} alt={heroMedia.alt} className="w-full h-full object-cover" />
+        </picture>
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 max-w-[calc(100%-2rem)] border border-white/30 bg-black/35 px-3 py-2 text-[9px] lg:text-[10px] uppercase tracking-[0.14em] lg:tracking-[0.2em] text-white/90 backdrop-blur-sm">
           {isCompletedProject ? "Completed photography" : "Concept rendering"}
@@ -92,9 +90,13 @@ export default function ProjectDetail() {
             {project.media.before ? (
               <BeforeAfter
                 beforeImage={project.media.before.src}
+                beforeMobileImage={project.media.before.mobileSrc}
                 afterImage={isCompletedProject && project.media.completedDay
                   ? project.media.completedDay.src
                   : project.media.render.src}
+                afterMobileImage={isCompletedProject && project.media.completedDay
+                  ? project.media.completedDay.mobileSrc
+                  : project.media.render.mobileSrc}
                 beforeAlt={project.media.before.alt}
                 afterAlt={isCompletedProject && project.media.completedDay
                   ? project.media.completedDay.alt
@@ -138,6 +140,7 @@ export default function ProjectDetail() {
               title={project.media.render.label}
                 copy={isCompletedProject ? "Original design visualization" : "Private Ponte Vedra concept direction"}
               src={project.media.render.src}
+               mobileSrc={project.media.render.mobileSrc}
               alt={project.media.render.alt}
             />
             {project.media.before ? (
@@ -148,6 +151,7 @@ export default function ProjectDetail() {
                   ? "Approved before photography"
                   : "Reference image · not a project completion photo"}
                 src={project.media.before.src}
+                 mobileSrc={project.media.before.mobileSrc}
                 alt={project.media.before.alt}
               />
             ) : isCompletedProject ? (
@@ -159,6 +163,7 @@ export default function ProjectDetail() {
                 title="Completed · day"
                 copy="Approved completed photography"
                 src={project.media.completedDay.src}
+                 mobileSrc={project.media.completedDay.mobileSrc}
                 alt={project.media.completedDay.alt}
               />
             ) : isCompletedProject ? (
@@ -170,6 +175,7 @@ export default function ProjectDetail() {
                 title="Completed · night"
                 copy="Approved completed photography"
                 src={project.media.completedNight.src}
+                 mobileSrc={project.media.completedNight.mobileSrc}
                 alt={project.media.completedNight.alt}
               />
             ) : isCompletedProject ? (
@@ -230,18 +236,23 @@ function MediaCard({
   title,
   copy,
   src,
+  mobileSrc,
   alt,
 }: {
   icon: React.ReactNode;
   title: string;
   copy: string;
   src: string;
+  mobileSrc: string;
   alt: string;
 }) {
   return (
     <div className="border border-border bg-card overflow-hidden">
       <div className="aspect-[4/3] bg-muted">
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={mobileSrc} />
+          <img src={src} alt={alt} loading="lazy" className="w-full h-full object-cover" />
+        </picture>
       </div>
       <div className="p-5">
         <div className="flex items-center gap-3 text-primary">

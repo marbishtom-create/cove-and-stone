@@ -1,3 +1,4 @@
 - [Approved logo lockup](approved-logo-lockup.md) — keep the complete monogram, wordmark, and descriptor together as one image.
 - [Ponte Vedra media standard](ponte-vedra-media.md) — never present mismatched or fabricated before/after photography as a completed project.
 - [Prerender metadata validation](prerender-metadata-validation.md) — decode HTML entities before comparing generated title and meta-attribute values.
+- [Responsive project media](responsive-project-media.md) — derive smaller mobile variants from approved originals while preserving source copy and accessibility text.

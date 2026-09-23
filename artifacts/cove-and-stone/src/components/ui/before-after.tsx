@@ -3,7 +3,9 @@ import { GripVertical } from 'lucide-react';
 
 interface BeforeAfterProps {
   beforeImage: string;
+  beforeMobileImage?: string;
   afterImage: string;
+  afterMobileImage?: string;
   beforeAlt?: string;
   afterAlt?: string;
   beforeLabel?: string;
@@ -12,7 +14,9 @@ interface BeforeAfterProps {
 
 export function BeforeAfter({
   beforeImage,
+  beforeMobileImage,
   afterImage,
+  afterMobileImage,
   beforeAlt = "Before",
   afterAlt = "After",
   beforeLabel = "Before",
@@ -76,12 +80,17 @@ export function BeforeAfter({
     >
       {/* After Image (Background) */}
       <div className="absolute inset-0">
-        <img 
-          src={afterImage} 
-          alt={afterAlt} 
-          className="w-full h-full object-cover" 
-          draggable="false"
-        />
+        <picture>
+          {afterMobileImage ? (
+            <source media="(max-width: 767px)" srcSet={afterMobileImage} />
+          ) : null}
+          <img
+            src={afterImage}
+            alt={afterAlt}
+            className="w-full h-full object-cover"
+            draggable="false"
+          />
+        </picture>
            <div className="absolute top-3 right-3 md:top-6 md:right-6 bg-primary/80 backdrop-blur text-primary-foreground px-2 md:px-4 py-2 text-[9px] md:text-xs uppercase tracking-[0.08em] md:tracking-widest whitespace-nowrap">
            {afterLabel}
         </div>
@@ -92,13 +101,18 @@ export function BeforeAfter({
         className="absolute inset-0 overflow-hidden"
         style={{ width: `${sliderPosition}%` }}
       >
-        <img 
-          src={beforeImage} 
-          alt={beforeAlt} 
-          className="absolute inset-0 w-full h-full object-cover" 
-          style={{ width: `${100 / (sliderPosition / 100)}%`, maxWidth: 'none' }}
-          draggable="false"
-        />
+        <picture>
+          {beforeMobileImage ? (
+            <source media="(max-width: 767px)" srcSet={beforeMobileImage} />
+          ) : null}
+          <img
+            src={beforeImage}
+            alt={beforeAlt}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ width: `${100 / (sliderPosition / 100)}%`, maxWidth: 'none' }}
+            draggable="false"
+          />
+        </picture>
           <div className="absolute top-3 left-3 md:top-6 md:left-6 bg-primary/80 backdrop-blur text-primary-foreground px-2 md:px-4 py-2 text-[9px] md:text-xs uppercase tracking-[0.08em] md:tracking-widest whitespace-nowrap">
            {beforeLabel}
         </div>

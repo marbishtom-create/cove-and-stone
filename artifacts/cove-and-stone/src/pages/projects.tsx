@@ -1,11 +1,16 @@
 import { Link } from 'wouter';
 import p2 from '@assets/generated_images/project-2.jpg';
+import p2Mobile from '@assets/generated_images/project-2-mobile.jpg';
 import p4 from '@assets/generated_images/project-4.jpg';
+import p4Mobile from '@assets/generated_images/project-4-mobile.jpg';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
+import ponteVedraRetreatMobile from '@assets/generated_images/ponte-vedra-private-retreat-mobile.jpg';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
+import conceptNightMobile from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed-mobile.jpg';
 
 export interface CaseStudyAsset {
   src: string;
+  mobileSrc: string;
   alt: string;
   label: string;
 }
@@ -54,6 +59,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     media: {
       render: {
         src: ponteVedraRetreat,
+        mobileSrc: ponteVedraRetreatMobile,
         alt: "Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak",
         label: "Concept rendering",
       },
@@ -75,6 +81,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     media: {
       render: {
         src: p2,
+        mobileSrc: p2Mobile,
         alt: "Concept visualization of the Jacksonville Waterfront pool",
         label: "Concept rendering",
       },
@@ -96,6 +103,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     media: {
       render: {
         src: conceptNight,
+        mobileSrc: conceptNightMobile,
         alt: "Concept visualization of the Nocatee Resort Backyard",
         label: "Concept rendering",
       },
@@ -116,6 +124,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     media: {
       render: {
         src: p4,
+        mobileSrc: p4Mobile,
         alt: "Concept visualization of the Atlantic Beach Minimalist pool",
         label: "Concept rendering",
       },
@@ -154,11 +163,15 @@ export default function Projects() {
               return (
               <Link key={project.slug} href={`/projects/${project.slug}`} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                  <img
-                    src={cardMedia.src}
-                    alt={cardMedia.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  <picture>
+                    <source media="(max-width: 767px)" srcSet={cardMedia.mobileSrc} />
+                    <img
+                      src={cardMedia.src}
+                      alt={cardMedia.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </picture>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
                     {cardMedia.label}
