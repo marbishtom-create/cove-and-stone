@@ -58,8 +58,8 @@ export default function Home() {
               Jacksonville Outdoor Living, Reimagined.
             </span>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8">
-              Modern Pools. <br />
-              <span className="italic font-light opacity-90">Elevated Outdoor Living.</span>
+              Custom Pools. <br />
+              <span className="italic font-light opacity-90">Elevated Outdoor Living in Jacksonville.</span>
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-12 font-light leading-relaxed">
               Modern custom pools inspired by Los Angeles design, Miami living and European architecture—built for Northeast Florida.
@@ -546,30 +546,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 13. Reviews */}
+      {/* 13. Trust through process */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif text-primary mb-4">Client Sentiments</h2>
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Sample review layout · approved client reviews to be added</p>
+            <h2 className="text-3xl font-serif text-primary mb-4">Trust through process.</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              A considered outdoor environment is easier to shape when the decisions stay visible, coordinated and grounded in your property.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { text: "The attention to detail and 3D visualization process made us completely confident. The final pool looks exactly like the render, only better.", author: "M. Thompson", loc: "Ponte Vedra Beach" },
-              { text: "Cove & Stone transformed our dirt backyard into a luxury resort. Their in-house team was professional and the material quality is outstanding.", author: "J. Reynolds", loc: "Nocatee" },
-              { text: "We wanted a modern aesthetic that matched our home. They delivered a stunning geometric design with limestone decking that exceeded expectations.", author: "S. Davis", loc: "Jacksonville" },
-            ].map((review, i) => (
-              <div key={i} className="bg-card border border-border p-8 flex flex-col">
-                <div className="flex text-secondary mb-6">
-                  {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" />)}
-                </div>
-                <p className="font-serif text-lg text-primary leading-relaxed mb-8 flex-1 italic">
-                  "{review.text}"
-                </p>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-primary">{review.author}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{review.loc}</div>
-                </div>
+              {
+                icon: Monitor,
+                title: "See the direction",
+                text: "Share your property, preferences and priorities. Our design studio develops a photorealistic 3D visualization before construction begins.",
+              },
+              {
+                icon: Building2,
+                title: "Evaluate the materials",
+                text: "Visit the Jacksonville showroom to compare pool finishes, stone, pavers, coping, turf, outdoor kitchens, fire and water features, and lighting.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Keep the scope coordinated",
+                text: "Design, selections, proposal scope, engineering and construction coordination stay organized around one clear outdoor-living vision.",
+              },
+            ].map(({ icon: Icon, title, text }) => (
+              <div key={title} className="bg-card border border-border p-8">
+                <Icon className="w-8 h-8 text-secondary mb-6" />
+                <h3 className="text-xl font-serif text-primary mb-4">{title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{text}</p>
               </div>
             ))}
           </div>
