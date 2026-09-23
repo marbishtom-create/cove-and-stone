@@ -127,6 +127,19 @@ test('closes the mobile menu with Escape and restores focus to the toggle', () =
   );
 });
 
+test('locks document scrolling only while the mobile menu is open', () => {
+  assert.match(
+    layoutSource,
+    /const previousBodyOverflow = document\.body\.style\.overflow;\s*document\.body\.style\.overflow = 'hidden';/,
+    'opening the mobile menu should prevent the page from scrolling behind it',
+  );
+  assert.match(
+    layoutSource,
+    /return \(\) => \{[\s\S]*?document\.body\.style\.overflow = previousBodyOverflow;[\s\S]*?document\.removeEventListener\('keydown', handleKeyDown\);[\s\S]*?\};/,
+    'closing the mobile menu should restore the previous body overflow value',
+  );
+});
+
 test('resets the header state when navigating between interior routes', () => {
   assert.match(
     layoutSource,
