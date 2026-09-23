@@ -137,6 +137,9 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
   const tile = TILE_OPTIONS.find((item) => item.id === configuration.waterlineTile) ?? TILE_OPTIONS[0];
   const poolPath = getPoolPath(configuration.shape);
   const poolId = `pool-${configuration.shape}`;
+  const poolScaleX = clamp(0.72 + ((configuration.width - 8) / 52) * 0.58, 0.72, 1.3);
+  const poolScaleY = clamp(0.7 + ((configuration.length - 12) / 88) * 0.58, 0.7, 1.28);
+  const poolTransform = `translate(380 220) scale(${poolScaleX} ${poolScaleY}) translate(-380 -220)`;
 
   return (
     <svg
@@ -182,34 +185,36 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
         <rect x="58" y="78" width="122" height="62" /><path d="M48 78l72-47 77 47Z" />
         <rect x="83" y="99" width="35" height="41" fill="#7c9290" /><rect x="130" y="99" width="31" height="20" fill="#a1b4ae" />
       </g>
-      <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
-      <path d={poolPath} fill="#d1c4ac" stroke="#eee4ce" strokeWidth="8" />
-      <path d={poolPath} fill={`url(#${poolId})`} stroke="url(#tile-grain)" strokeWidth="13" />
-      <path d={poolPath} fill="none" stroke={`url(#${poolId})`} strokeWidth="2" opacity=".8" />
-      <g clipPath="url(#pool-clip)" opacity=".24" fill="none" stroke="#d8f5ed" strokeWidth="3">
-        <path d="M122 188 C240 158 309 215 424 178 S638 158 677 191" />
-        <path d="M87 233 C217 201 327 258 456 220 S635 204 689 241" />
-        <path d="M158 283 C262 249 351 301 488 265 S612 252 660 277" />
+      <g transform={poolTransform}>
+        <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
+        <path d={poolPath} fill="#d1c4ac" stroke="#eee4ce" strokeWidth="8" />
+        <path d={poolPath} fill={`url(#${poolId})`} stroke="url(#tile-grain)" strokeWidth="13" />
+        <path d={poolPath} fill="none" stroke={`url(#${poolId})`} strokeWidth="2" opacity=".8" />
+        <g clipPath="url(#pool-clip)" opacity=".24" fill="none" stroke="#d8f5ed" strokeWidth="3">
+          <path d="M122 188 C240 158 309 215 424 178 S638 158 677 191" />
+          <path d="M87 233 C217 201 327 258 456 220 S635 204 689 241" />
+          <path d="M158 283 C262 249 351 301 488 265 S612 252 660 277" />
+        </g>
+        <path d={poolPath} fill="none" stroke={`url(#tile-grain)`} strokeWidth="9" opacity=".95" />
+        {configuration.sunShelf && (
+          <g>
+            <path d="M213 153 H330 Q345 153 345 168 V205 H198 V168 Q198 153 213 153Z" fill="#a7d0c7" opacity=".84" />
+            <path d="M209 157 H329" stroke="#dff5e9" strokeWidth="3" opacity=".8" />
+          </g>
+        )}
+        {configuration.waterfall && (
+          <g>
+            <path d="M489 126h49v13h-49z" fill="#d8d0bd" />
+            <path d="M496 139 C496 170 500 186 504 212 M514 139 C514 169 518 185 522 212 M532 139 C532 165 536 181 540 202" stroke="#d3f4ee" strokeWidth="5" opacity=".75" />
+            <path d="M489 129h49" stroke="#fff7e6" strokeWidth="3" />
+          </g>
+        )}
+        {configuration.lights && (
+          <g fill="#f4e8b4" stroke="#fff9dd" strokeWidth="3">
+            <circle cx="254" cy="280" r="6" /><circle cx="370" cy="292" r="6" /><circle cx="493" cy="278" r="6" />
+          </g>
+        )}
       </g>
-      <path d={poolPath} fill="none" stroke={`url(#tile-grain)`} strokeWidth="9" opacity=".95" />
-      {configuration.sunShelf && (
-        <g>
-          <path d="M213 153 H330 Q345 153 345 168 V205 H198 V168 Q198 153 213 153Z" fill="#a7d0c7" opacity=".84" />
-          <path d="M209 157 H329" stroke="#dff5e9" strokeWidth="3" opacity=".8" />
-        </g>
-      )}
-      {configuration.waterfall && (
-        <g>
-          <path d="M489 126h49v13h-49z" fill="#d8d0bd" />
-          <path d="M496 139 C496 170 500 186 504 212 M514 139 C514 169 518 185 522 212 M532 139 C532 165 536 181 540 202" stroke="#d3f4ee" strokeWidth="5" opacity=".75" />
-          <path d="M489 129h49" stroke="#fff7e6" strokeWidth="3" />
-        </g>
-      )}
-      {configuration.lights && (
-        <g fill="#f4e8b4" stroke="#fff9dd" strokeWidth="3">
-          <circle cx="254" cy="280" r="6" /><circle cx="370" cy="292" r="6" /><circle cx="493" cy="278" r="6" />
-        </g>
-      )}
       <path d="M0 381 C160 356 267 390 391 371 C535 348 649 389 760 365 V430 H0Z" fill="#405c54" opacity=".48" />
       <g fill="#c7bb9f" opacity=".9">
         <path d="M38 353h46v20H38z" /><path d="M92 346h27v27H92z" /><path d="M613 354h58v18H613z" />
@@ -353,6 +358,10 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     anchor.remove();
     URL.revokeObjectURL(url);
   };
+
+  const beforeImageWidth = configuration.comparisonPosition > 0
+    ? 100 / (configuration.comparisonPosition / 100)
+    : 100;
 
   return (
     <section className="pool-visualizer" aria-labelledby="pool-visualizer-title">
@@ -560,7 +569,12 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             </div>
             <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%` }}>
               {configuration.photoUrl ? (
-                <img src={configuration.photoUrl} alt="Your uploaded backyard, before the pool concept" draggable="false" />
+                <img
+                  src={configuration.photoUrl}
+                  alt="Your uploaded backyard, before the pool concept"
+                  draggable="false"
+                  style={{ width: `${beforeImageWidth}%` }}
+                />
               ) : (
                 <BackyardFallback />
               )}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'wouter';
 import beforePool from '@assets/generated_images/matched-before-pool.jpg';
 import afterPool from '@assets/generated_images/after-pool.jpg';
@@ -6,18 +5,15 @@ import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_17
 import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import { BeforeAfter } from '@/components/ui/before-after';
+import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { THEME_CONFIG } from '@/config/theme';
-import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, 
   Star, 
   Droplet, 
   Sun, 
   Wind, 
-  Check, 
-  Monitor, 
-  Camera, 
-  Image as ImageIcon,
+  Monitor,
   Building2,
   Video,
   Home as HomeIcon,
@@ -25,20 +21,6 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  const [step, setStep] = useState(1);
-  const [photoUploaded, setPhotoUploaded] = useState(false);
-  const [preferences, setPreferences] = useState({ style: '', budget: '' });
-
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setPhotoUploaded(true);
-    }
-  };
-
-  const submitLead = () => {
-    setStep(4);
-  };
-
   return (
     <div className="w-full overflow-hidden">
       {/* 1. Cinematic Hero */}
@@ -296,163 +278,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Interactive Design Your Backyard */}
-      <section className="py-32 bg-background border-y border-border relative" id="design">
-        <div className="container mx-auto px-6 max-w-4xl relative z-10">
-          <div className="text-center mb-16">
-            <Monitor className="w-12 h-12 text-secondary mx-auto mb-6" />
-            <h2 className="text-4xl md:text-5xl font-serif mb-4 text-primary">Design Your Backyard</h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Upload a photo of your property and share your preferences. Our design studio will build a 3D visualization of your potential oasis.
-            </p>
-          </div>
-
-          <div className="bg-background border border-border shadow-2xl p-8 md:p-12 relative overflow-hidden">
-            {/* Stepper */}
-            <div className="flex justify-between mb-12 relative z-10">
-              <div className="absolute top-1/2 left-0 w-full h-px bg-border -z-10" />
-              {[1, 2, 3].map(num => (
-                <div 
-                  key={num} 
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 bg-background transition-colors ${
-                    step > num ? 'border-secondary text-secondary' : 
-                    step === num ? 'border-primary text-primary' : 'border-border text-muted-foreground'
-                  }`}
-                >
-                  {step > num ? <Check size={16} /> : num}
-                </div>
-              ))}
-            </div>
-
-            {/* Step 1: Upload */}
-            {step === 1 && (
-              <div className="space-y-8 animate-in fade-in slide-in-from-right-4">
-                <div className="border-2 border-dashed border-border rounded-lg p-12 text-center hover:border-secondary transition-colors relative bg-card">
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleUpload}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
-                  />
-                  {!photoUploaded ? (
-                    <>
-                      <Camera className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <h4 className="text-lg font-medium text-primary mb-2">Upload property photo</h4>
-                      <p className="text-sm text-muted-foreground">Drag and drop or click to browse</p>
-                    </>
-                  ) : (
-                    <>
-                      <ImageIcon className="w-12 h-12 text-secondary mx-auto mb-4" />
-                      <h4 className="text-lg font-medium text-primary mb-2">Photo attached successfully</h4>
-                      <p className="text-sm text-secondary">Ready for design analysis</p>
-                    </>
-                  )}
-                </div>
-                <div className="flex justify-end">
-                  <Button 
-                    className="bg-primary text-primary-foreground hover:bg-secondary rounded-none px-8 py-6 uppercase tracking-widest text-xs"
-                    disabled={!photoUploaded}
-                    onClick={() => setStep(2)}
-                  >
-                    Next Step
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Preferences */}
-            {step === 2 && (
-              <div className="space-y-8 animate-in fade-in slide-in-from-right-4">
-                <div className="space-y-8">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-primary mb-4">Aesthetic</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {['Geometric Modern', 'Freeform Coastal', 'Resort Classic'].map(style => (
-                        <div 
-                          key={style}
-                          onClick={() => setPreferences({...preferences, style})}
-                          className={`p-4 border cursor-pointer transition-colors text-center text-sm ${
-                            preferences.style === style ? 'border-secondary bg-secondary/5 text-secondary' : 'border-border text-muted-foreground hover:border-primary'
-                          }`}
-                        >
-                          {style}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-widest text-primary mb-4">Budget Scope</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {['Exploring the right scope', 'I have a working investment range', 'Let’s discuss the full transformation'].map(budget => (
-                        <div 
-                          key={budget}
-                          onClick={() => setPreferences({...preferences, budget})}
-                          className={`p-4 border cursor-pointer transition-colors text-center text-sm ${
-                            preferences.budget === budget ? 'border-secondary bg-secondary/5 text-secondary' : 'border-border text-muted-foreground hover:border-primary'
-                          }`}
-                        >
-                          {budget}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-between">
-                  <Button variant="outline" className="rounded-none px-8 py-6 uppercase tracking-widest text-xs" onClick={() => setStep(1)}>Back</Button>
-                  <Button 
-                    className="bg-primary text-primary-foreground hover:bg-secondary rounded-none px-8 py-6 uppercase tracking-widest text-xs"
-                    disabled={!preferences.style || !preferences.budget}
-                    onClick={() => setStep(3)}
-                  >
-                    Next Step
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Confirmation Form */}
-            {step === 3 && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Name</label>
-                    <input type="text" className="w-full bg-card border border-border p-4 text-primary focus:outline-none focus:border-secondary" />
-                  </div>
-                  <div>
-                    <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Email</label>
-                    <input type="email" className="w-full bg-card border border-border p-4 text-primary focus:outline-none focus:border-secondary" />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Project Address (Jacksonville area)</label>
-                    <input type="text" className="w-full bg-card border border-border p-4 text-primary focus:outline-none focus:border-secondary" />
-                  </div>
-                </div>
-                <div className="flex justify-between mt-8">
-                  <Button variant="outline" className="rounded-none px-8 py-6 uppercase tracking-widest text-xs" onClick={() => setStep(2)}>Back</Button>
-                  <Button 
-                    className="bg-secondary text-secondary-foreground hover:bg-primary rounded-none px-8 py-6 uppercase tracking-widest text-xs"
-                    onClick={submitLead}
-                  >
-                    Request Consultation
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Success */}
-            {step === 4 && (
-              <div className="text-center py-12 animate-in fade-in zoom-in-95">
-                <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Check size={40} />
-                </div>
-                <h3 className="text-3xl font-serif text-primary mb-4">Vision Received</h3>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  Your property photo and design profile have been securely sent to our studio. We will contact you shortly to schedule an extensive review.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+      <section className="border-y border-border" id="design">
+        <PoolVisualizer />
       </section>
 
       {/* 9. Full Backyard Story & 10. Showroom */}
