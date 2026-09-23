@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { absoluteUrl, SITE_IMAGE, SITE_NAME } from "@/config/site";
+import { absoluteUrl, SITE_IMAGE, SITE_NAME, SITE_URL } from "@/config/site";
 import { buildStructuredData, getRouteSeo } from "@/config/seo-routes";
 
 function setMeta(attribute: "name" | "property", value: string, content: string) {
