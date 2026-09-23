@@ -19,7 +19,7 @@ export default function ProjectDetail() {
   const isCompletedProject = project.status === "completed";
 
   return (
-    <div className="w-full pt-24 lg:pt-20 bg-background">
+    <div className="w-full pt-24 lg:pt-32 bg-background">
       {/* Hero Image */}
       <div className="w-full h-[52dvh] min-h-[420px] lg:h-[60dvh] relative">
         <img
@@ -106,7 +106,9 @@ export default function ProjectDetail() {
               />
             ) : (
               <div className="border border-border bg-card p-10 text-center text-muted-foreground">
-                A project-specific before photo will be added when supplied.
+                {isCompletedProject
+                  ? "A project-specific before photo will be added when supplied."
+                  : "A matched before-and-after set will be added when real project photography is supplied."}
               </div>
             )}
           </div>
@@ -127,14 +129,14 @@ export default function ProjectDetail() {
             <p className="max-w-md text-sm text-muted-foreground">
               {isCompletedProject
                 ? "Approved photography and a project walkthrough document the completed environment."
-                : "Completed day, night and video assets will appear here after they are approved for publication."}
+                : "This concept is shown on its own until a real, same-property before-and-after set is approved."}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <MediaCard
               icon={<ImageIcon className="w-5 h-5" />}
               title={project.media.render.label}
-               copy={isCompletedProject ? "Original design visualization" : "Supplied concept direction"}
+                copy={isCompletedProject ? "Original design visualization" : "Private Ponte Vedra concept direction"}
               src={project.media.render.src}
               alt={project.media.render.alt}
             />
@@ -148,9 +150,9 @@ export default function ProjectDetail() {
                 src={project.media.before.src}
                 alt={project.media.before.alt}
               />
-            ) : (
+            ) : isCompletedProject ? (
               <PendingMediaCard icon={<ImageIcon className="w-5 h-5" />} title="Before photo" />
-            )}
+            ) : null}
             {project.media.completedDay ? (
               <MediaCard
                 icon={<Sun className="w-5 h-5" />}
@@ -159,9 +161,9 @@ export default function ProjectDetail() {
                 src={project.media.completedDay.src}
                 alt={project.media.completedDay.alt}
               />
-            ) : (
+            ) : isCompletedProject ? (
               <PendingMediaCard icon={<Sun className="w-5 h-5" />} title="Completed · day" />
-            )}
+            ) : null}
             {project.media.completedNight ? (
               <MediaCard
                 icon={<Moon className="w-5 h-5" />}
@@ -170,9 +172,9 @@ export default function ProjectDetail() {
                 src={project.media.completedNight.src}
                 alt={project.media.completedNight.alt}
               />
-            ) : (
+            ) : isCompletedProject ? (
               <PendingMediaCard icon={<Moon className="w-5 h-5" />} title="Completed · night" />
-            )}
+            ) : null}
             {project.media.video ? (
               <div className="md:col-span-2 border border-border bg-card overflow-hidden">
                 <video
@@ -190,11 +192,11 @@ export default function ProjectDetail() {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : isCompletedProject ? (
               <div className="md:col-span-2">
                 <PendingMediaCard icon={<Video className="w-5 h-5" />} title="Project video" />
               </div>
-            )}
+            ) : null}
           </div>
         </section>
 

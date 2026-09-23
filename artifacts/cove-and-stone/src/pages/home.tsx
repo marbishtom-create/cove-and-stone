@@ -4,6 +4,7 @@ import beforePool from '@assets/generated_images/matched-before-pool.jpg';
 import afterPool from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
+import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
@@ -229,7 +230,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <Link href="/projects/ponte-vedra-modern" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={jacksonvilleDayPool} alt="Concept visualization for Ponte Vedra Modern" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={ponteVedraRetreat} alt="Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                 <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
                   Concept rendering

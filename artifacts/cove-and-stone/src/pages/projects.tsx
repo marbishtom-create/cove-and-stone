@@ -1,11 +1,8 @@
 import { Link } from 'wouter';
-import beforePool from '@assets/generated_images/before-pool.jpg';
 import p2 from '@assets/generated_images/project-2.jpg';
 import p4 from '@assets/generated_images/project-4.jpg';
-import completedPonteVedraDay from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
-import conceptModernDay from '@assets/7A3E70EF-56DC-4766-A259-B49AF0985941_1790113686673.png';
+import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
-import ponteVedraVideo from '@assets/ponte-vedra-modern-walkthrough.mp4';
 
 export interface CaseStudyAsset {
   src: string;
@@ -46,40 +43,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "ponte-vedra-modern",
     title: "Ponte Vedra Modern",
     location: "Ponte Vedra Beach, FL",
-    type: "Completed project",
+    type: "Concept direction",
     size: "800 sq ft pool",
-    materials: "Stone deck, dark waterline detailing and integrated landscape",
-    features: "Zero edge, Sun shelf, modern pergola",
-    timeline: "14 Weeks",
-    image: conceptModernDay,
-    desc: "A completed Ponte Vedra outdoor environment photographed with the Jacksonville skyline and riverfront in the background.",
-    status: "completed",
+    materials: "Light limestone, deep-blue waterline tile and native coastal planting",
+    features: "Linear pool, Integrated spa, Private cabana",
+    timeline: "Design development",
+    image: ponteVedraRetreat,
+    desc: "A private Ponte Vedra Beach backyard direction with a linear pool, integrated spa and enclosed outdoor living pavilion—without a skyline or waterfront backdrop.",
+    status: "concept",
     media: {
-      before: {
-        src: beforePool,
-        alt: "Ponte Vedra Modern backyard before construction",
-        label: "Before photo",
-      },
       render: {
-        src: conceptModernDay,
-        alt: "Concept visualization of the Ponte Vedra Modern pool",
+        src: ponteVedraRetreat,
+        alt: "Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak",
         label: "Concept rendering",
-      },
-      completedDay: {
-        src: completedPonteVedraDay,
-        alt: "Completed Ponte Vedra Modern pool and riverfront view during the day",
-        label: "Completed · day",
-      },
-      completedNight: {
-        src: conceptNight,
-        alt: "Completed Ponte Vedra Modern pool and outdoor living space at night",
-        label: "Completed · night",
-      },
-      video: {
-        src: ponteVedraVideo,
-        poster: completedPonteVedraDay,
-        alt: "Ponte Vedra Modern completed project walkthrough video",
-        label: "Project walkthrough video",
       },
     },
   },
@@ -151,7 +127,7 @@ export default function Projects() {
   const completedProjectCount = CASE_STUDIES.filter(project => project.status === "completed").length;
 
   return (
-    <div className="w-full pt-24 lg:pt-20">
+    <div className="w-full pt-24 lg:pt-32">
       <header className="bg-card py-20 text-center border-b border-border">
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Case Studies</span>
@@ -160,7 +136,9 @@ export default function Projects() {
             Explore completed outdoor environments and illustrative concept directions for pools across Northeast Florida.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
-            {completedProjectCount} completed case study · concept directions also included
+             {completedProjectCount > 0
+               ? `${completedProjectCount} completed case study · concept directions also included`
+               : "Concept directions only · completed photography will be added as approved"}
           </div>
         </div>
       </header>

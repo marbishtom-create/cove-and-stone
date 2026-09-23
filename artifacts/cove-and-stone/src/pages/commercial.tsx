@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 
 export default function Commercial() {
   return (
-    <div className="w-full pt-24 lg:pt-20">
+    <div className="w-full pt-24 lg:pt-32">
       <header className="bg-primary text-primary-foreground py-24 md:py-32 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Commercial Division</span>
