@@ -99,6 +99,34 @@ test('keeps the complete logo readable while the mobile menu opens and closes', 
   );
 });
 
+test('closes the mobile menu with Escape and restores focus to the toggle', () => {
+  assert.match(
+    layoutSource,
+    /wasMobileMenuOpenRef\.current = true;[\s\S]*?firstMobileLinkRef\.current\?\.focus\(\{ preventScroll: true \}\);/,
+    'opening the menu should move focus into the navigation',
+  );
+  assert.match(
+    layoutSource,
+    /const handleKeyDown = \(event: KeyboardEvent\) => \{[\s\S]*?if \(event\.key === 'Escape'\) \{[\s\S]*?setMobileMenuOpen\(false\);/,
+    'Escape should close the mobile menu',
+  );
+  assert.match(
+    layoutSource,
+    /document\.addEventListener\('keydown', handleKeyDown\);[\s\S]*?document\.removeEventListener\('keydown', handleKeyDown\);/,
+    'the Escape listener should only be active while the menu is open',
+  );
+  assert.match(
+    layoutSource,
+    /if \(!mobileMenuOpen\) \{[\s\S]*?if \(wasMobileMenuOpenRef\.current\) \{[\s\S]*?mobileMenuToggleRef\.current\?\.focus\(\{ preventScroll: true \}\);/,
+    'closing the menu should return focus to its toggle',
+  );
+  assert.match(
+    layoutSource,
+    /mobileMenuOpen \? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'/,
+    'the closed state should hide and disable the overlay',
+  );
+});
+
 test('resets the header state when navigating between interior routes', () => {
   assert.match(
     layoutSource,
