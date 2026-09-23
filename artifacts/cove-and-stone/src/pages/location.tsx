@@ -120,9 +120,7 @@ export default function LocationPage() {
         <div className="absolute inset-0">
           <img 
             src={heroImg} 
-            alt={isPonteVedraBeach || isStJohns || isJacksonvilleBeaches || lowerLocationContent
-              ? 'Concept visualization of a modern pool and outdoor-living environment'
-              : `Custom pools in ${locationInfo.name}`} 
+            alt="Concept visualization of a modern pool and outdoor-living environment"
             className="w-full h-full object-cover opacity-40 grayscale-[30%]"
             width={1600}
             height={900}

@@ -60,7 +60,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       render: {
         src: ponteVedraRetreat,
         mobileSrc: ponteVedraRetreatMobile,
-        alt: "Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak",
+        alt: "Illustrative pool concept with a privacy wall, palms and live oak",
         label: "Concept rendering",
       },
     },
@@ -82,7 +82,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       render: {
         src: p2,
         mobileSrc: p2Mobile,
-        alt: "Concept visualization of the Jacksonville Waterfront pool",
+        alt: "Illustrative curved pool concept with a raised spa and fire features",
         label: "Concept rendering",
       },
     },
@@ -104,7 +104,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       render: {
         src: conceptNight,
         mobileSrc: conceptNightMobile,
-        alt: "Concept visualization of the Nocatee Resort Backyard",
+        alt: "Illustrative resort-style backyard concept with a cabana and pool",
         label: "Concept rendering",
       },
     },
@@ -125,7 +125,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       render: {
         src: p4,
         mobileSrc: p4Mobile,
-        alt: "Concept visualization of the Atlantic Beach Minimalist pool",
+        alt: "Illustrative compact plunge-pool concept with a linear fire feature",
         label: "Concept rendering",
       },
     },

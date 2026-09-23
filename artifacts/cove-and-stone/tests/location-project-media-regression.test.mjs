@@ -25,7 +25,8 @@ const beforeAfterSource = await readFile(
 const minimumFeatureImageWidth = 1024;
 const minimumFeatureImageHeight = 768;
 const approvedLocationAsset = 'generated_images/hero-pool.jpg';
-const approvedLocationAltTemplate = 'Custom pools in ${locationInfo.name}';
+const approvedLocationConceptAlt =
+  'Concept visualization of a modern pool and outdoor-living environment';
 const approvedLocationLabel = 'Pool Builder';
 const approvedProjectMedia = [
   {
@@ -158,9 +159,14 @@ test('keeps the location hero asset, approved accessibility text, and visible la
   assert.match(locationSource, /<img\s+[\s\S]*src=\{heroImg\}/);
   assert.match(
     locationSource,
-    new RegExp(
-      `alt=\\{\\\`${approvedLocationAltTemplate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\\`\\}`,
-    ),
+     new RegExp(
+       `alt="\\${approvedLocationConceptAlt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`,
+     ),
+  );
+  assert.doesNotMatch(
+    locationSource,
+    /Custom pools in \$\{locationInfo\.name\}/,
+    'generic concept imagery must not claim a location-specific completed project',
   );
   assert.match(
     locationSource,
@@ -194,9 +200,9 @@ test('keeps every project card asset at its approved resolution and copy', async
 
     assert.match(
       projectsSource,
-      new RegExp(
-        `alt: "${projectMedia.alt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`,
-      ),
+     new RegExp(
+       `alt: "${projectMedia.alt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`,
+     ),
       `${projectMedia.importName} must keep its approved alt text`,
     );
     assert.match(
@@ -216,7 +222,16 @@ test('renders the approved project media copy on each card', () => {
   );
   assert.match(projectsSource, /src=\{cardMedia\.src\}/);
   assert.match(projectsSource, /alt=\{cardMedia\.alt\}/);
-  assert.match(projectsSource, /\{cardMedia\.label\}/);
+   assert.match(
+     projectsSource,
+     /\{project\.status === "completed" \? cardMedia\.label : "Illustrative concept"\}/,
+   );
+   assert.match(projectsSource, /label: "Concept rendering"/);
+   assert.doesNotMatch(
+     projectsSource,
+     /copy: "Private Ponte Vedra concept direction"/,
+     'project media must not reuse a mismatched location label',
+   );
 });
 
 test('uses responsive sources for project cards and detail-page media', () => {
