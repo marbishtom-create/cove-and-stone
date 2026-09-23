@@ -1,11 +1,17 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const artifactRoot = path.resolve(scriptDirectory, "..");
 const outputRoot = path.join(artifactRoot, "dist", "public");
 const templatePath = path.join(outputRoot, "index.html");
+const serverEntryPath = path.join(
+  artifactRoot,
+  "dist",
+  "server",
+  "entry-server.js",
+);
 const sitemapPath = path.join(artifactRoot, "public", "sitemap.xml");
 const routeDataPath = path.join(
   artifactRoot,
@@ -34,6 +40,7 @@ const SERVICE_AREA_NAMES = [
 const routeData = JSON.parse(await readFile(routeDataPath, "utf8"));
 const template = await readFile(templatePath, "utf8");
 const sitemap = await readFile(sitemapPath, "utf8");
+const { renderApp } = await import(pathToFileURL(serverEntryPath).href);
 
 function absoluteUrl(pathname = "/") {
   return `${SITE_URL}${canonicalPathname(pathname)}`;
@@ -284,14 +291,28 @@ function replaceOrInsert(html, pattern, replacement) {
   return html.replace("</head>", `    ${replacement}\n  </head>`);
 }
 
+function replaceRootContent(html, renderedRoute) {
+  const rootPlaceholder = '<div id="root"></div>';
+
+  if (!html.includes(rootPlaceholder)) {
+    throw new Error("Prerender template is missing the empty root container.");
+  }
+
+  return html.replace(
+    rootPlaceholder,
+    `<div id="root">${renderedRoute}</div>`,
+  );
+}
+
 function renderRouteHtml(pathname) {
   const canonicalPath = canonicalPathname(pathname);
   const seo = getRouteSeo(canonicalPath);
   const canonicalUrl = absoluteUrl(canonicalPath);
+  let html = replaceRootContent(template, renderApp(canonicalPath));
   const structuredData = JSON.stringify(buildStructuredData(pathname, seo), null, 2)
     .replaceAll("</", "<\\/");
 
-  let html = template.replace(
+  html = html.replace(
     /<title>[\s\S]*?<\/title>/,
     `<title>${escapeHtml(seo.title)}</title>`,
   );

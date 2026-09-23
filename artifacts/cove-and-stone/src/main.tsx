@@ -1,4 +1,4 @@
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -25,13 +25,21 @@ if (
   normalizeBrowserPath();
 }
 
-createRoot(document.getElementById('root')!, {
+const root = document.getElementById('root')!;
+const app = (
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+);
+const rootOptions = {
   // Keeps caught errors off reportError(), which would raise the dev overlay.
   onCaughtError: (error, errorInfo) => {
     console.error(error, errorInfo.componentStack);
   },
-}).render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>,
-);
+};
+
+if (root.hasChildNodes()) {
+  hydrateRoot(root, app, rootOptions);
+} else {
+  createRoot(root, rootOptions).render(app);
+}
