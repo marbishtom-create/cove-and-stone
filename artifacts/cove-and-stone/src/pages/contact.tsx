@@ -42,7 +42,12 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Email</div>
-                  <div className="font-serif text-xl text-primary">By request</div>
+                  <a
+                    href={`mailto:${THEME_CONFIG.contact.email}`}
+                    className="font-serif text-xl text-primary transition-colors hover:text-secondary"
+                  >
+                    {THEME_CONFIG.contact.email}
+                  </a>
                 </div>
               </div>
               <div className="flex items-center gap-4">

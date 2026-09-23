@@ -206,6 +206,12 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <p>{THEME_CONFIG.showroom.address}</p>
                 <p>{THEME_CONFIG.showroom.city}, {THEME_CONFIG.showroom.state} {THEME_CONFIG.showroom.zip}</p>
                 <p className="mt-4">{THEME_CONFIG.showroom.hours}</p>
+                <a
+                  href={`mailto:${THEME_CONFIG.contact.email}`}
+                  className="mt-2 text-secondary transition-colors hover:text-white"
+                >
+                  {THEME_CONFIG.contact.email}
+                </a>
               </address>
               <div className="mt-8 flex flex-col gap-2 text-sm text-muted-foreground">
                 <p>Construction support: Urban Green Energy, LLC</p>

@@ -38,6 +38,9 @@ export const THEME_CONFIG = {
     zip: "32256",
     hours: "Open 24 Hours • 7 Days a Week"
   },
+  contact: {
+    email: "Sales@coveandstonepools.com"
+  },
   financing: {
     primaryPartner: "Lyon Financial",
     disclosure: "Flexible financing options available, including programs through Lyon Financial and other financing partners. Subject to credit approval, lender terms and program availability."
