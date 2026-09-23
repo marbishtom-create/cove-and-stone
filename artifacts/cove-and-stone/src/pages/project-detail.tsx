@@ -19,9 +19,9 @@ export default function ProjectDetail() {
   const isCompletedProject = project.status === "completed";
 
   return (
-    <div className="w-full pt-20 bg-background">
+    <div className="w-full pt-24 lg:pt-20 bg-background">
       {/* Hero Image */}
-      <div className="w-full h-[60dvh] relative">
+      <div className="w-full h-[52dvh] min-h-[420px] lg:h-[60dvh] relative">
         <img
           src={isCompletedProject && project.media.completedDay
             ? project.media.completedDay.src
@@ -32,19 +32,19 @@ export default function ProjectDetail() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute bottom-8 right-8 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
+        <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 max-w-[calc(100%-2rem)] border border-white/30 bg-black/35 px-3 py-2 text-[9px] lg:text-[10px] uppercase tracking-[0.14em] lg:tracking-[0.2em] text-white/90 backdrop-blur-sm">
           {isCompletedProject ? "Completed photography" : "Concept rendering"}
         </div>
-        <div className="absolute top-8 left-8">
+        <div className="absolute top-4 left-4 lg:top-8 lg:left-8">
           <Link href="/projects" className="inline-flex items-center gap-2 bg-background/80 backdrop-blur px-4 py-2 text-sm uppercase tracking-widest text-primary hover:bg-secondary hover:text-secondary-foreground transition-colors">
             <ArrowLeft size={16} /> Back to Projects
           </Link>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 max-w-7xl -mt-20 relative z-10 pb-24">
+      <div className="container mx-auto px-6 max-w-7xl mt-0 lg:-mt-20 relative z-10 pb-16 lg:pb-24">
         {/* Project Header Card */}
-        <div className="bg-card border border-border p-10 md:p-16 shadow-xl flex flex-col lg:flex-row gap-12 lg:gap-24 mb-24">
+        <div className="bg-card border border-border p-6 sm:p-10 md:p-16 shadow-xl flex flex-col lg:flex-row gap-10 lg:gap-24 mb-20 lg:mb-24">
           <div className="flex-1">
             <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">{project.title}</h1>
             <p className="text-xl text-muted-foreground leading-relaxed mb-8 font-light">
@@ -199,7 +199,7 @@ export default function ProjectDetail() {
         </section>
 
         {/* Features list */}
-        <div className="max-w-3xl mx-auto bg-card border border-border p-12">
+        <div className="max-w-3xl mx-auto bg-card border border-border p-6 sm:p-12">
           <h3 className="text-2xl font-serif text-primary mb-8">Design Highlights</h3>
           <ul className="space-y-4">
             {project.features.split(', ').map((feature, i) => (

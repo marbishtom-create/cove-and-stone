@@ -151,7 +151,7 @@ export default function Projects() {
   const completedProjectCount = CASE_STUDIES.filter(project => project.status === "completed").length;
 
   return (
-    <div className="w-full pt-20">
+    <div className="w-full pt-24 lg:pt-20">
       <header className="bg-card py-20 text-center border-b border-border">
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Case Studies</span>

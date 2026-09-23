@@ -32,14 +32,14 @@ export default function Layout({ children }: { children: ReactNode }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled 
             ? 'bg-background/90 backdrop-blur-md border-b border-border py-2' 
-            : 'bg-transparent py-2'
+            : 'bg-background/95 backdrop-blur-md border-b border-border py-1 lg:bg-transparent lg:backdrop-blur-none lg:border-transparent lg:py-2'
         }`}
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <div className="relative shrink-0 lg:mr-8">
              <Logo
                variant={isScrolled ? 'light' : 'default'}
-               imageClassName="w-[112px] md:w-[128px]"
+                imageClassName="w-[96px] md:w-[128px]"
              />
              <div className="absolute left-2 top-full z-10 mt-2.5 hidden flex-col items-start gap-2 lg:flex">
                <Link

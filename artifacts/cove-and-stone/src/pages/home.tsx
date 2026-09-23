@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="w-full overflow-hidden">
       {/* 1. Cinematic Hero */}
-      <section className="relative h-[100dvh] w-full flex items-center justify-center pt-20">
+      <section className="relative h-[100dvh] w-full flex items-center justify-center pt-24 lg:pt-20">
         <div className="absolute inset-0 z-0">
           <img 
               src={jacksonvilleDayPool} 

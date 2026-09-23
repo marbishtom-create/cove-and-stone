@@ -6,7 +6,7 @@ import afterImg from '@assets/generated_images/after-pool.jpg';
 
 export default function Renovations() {
   return (
-    <div className="w-full pt-20">
+    <div className="w-full pt-24 lg:pt-20">
       <header className="bg-card py-20 md:py-32 border-b border-border text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Pool Renovations & Corrections</span>

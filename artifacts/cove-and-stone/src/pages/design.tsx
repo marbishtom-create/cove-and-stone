@@ -21,7 +21,7 @@ export default function Design() {
   };
 
   return (
-    <div className="w-full pt-20">
+    <div className="w-full pt-24 lg:pt-20">
       <header className="bg-card py-20 border-b border-border">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="flex flex-col md:flex-row gap-12 items-center">

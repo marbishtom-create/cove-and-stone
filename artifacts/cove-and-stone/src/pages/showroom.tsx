@@ -5,7 +5,7 @@ import showroomPhoto from '@assets/0_IMG_7080_1790117937906-high-res.jpeg';
 
 export default function Showroom() {
   return (
-    <div className="w-full pt-20 bg-background">
+    <div className="w-full pt-24 lg:pt-20 bg-background">
       <div className="container mx-auto px-6 max-w-7xl py-24">
         
         <div className="text-center max-w-3xl mx-auto mb-20">

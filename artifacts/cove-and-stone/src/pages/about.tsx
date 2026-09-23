@@ -5,7 +5,7 @@ import brandBoard from '@assets/B0C8B75A-36FB-47AE-A56D-4FE4ABFA6B52_17901166564
 
 export default function About() {
   return (
-    <div className="w-full pt-20 bg-background">
+    <div className="w-full pt-24 lg:pt-20 bg-background">
       <div className="container mx-auto px-6 max-w-4xl py-24">
         
         <div className="text-center mb-20">

@@ -13,7 +13,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="w-full pt-20 bg-background min-h-[100dvh]">
+    <div className="w-full pt-24 lg:pt-20 bg-background min-h-[100dvh]">
       <div className="container mx-auto px-6 max-w-7xl py-24">
         
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">

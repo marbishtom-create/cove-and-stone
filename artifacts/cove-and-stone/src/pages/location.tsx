@@ -9,7 +9,7 @@ export default function LocationPage() {
 
   if (!locationInfo) {
     return (
-      <div className="min-h-[60dvh] flex flex-col items-center justify-center pt-20">
+      <div className="min-h-[60dvh] flex flex-col items-center justify-center pt-24 lg:pt-20">
         <h1 className="text-4xl font-serif mb-4">Location Not Found</h1>
         <Link href="/" className="text-secondary hover:underline">Return Home</Link>
       </div>
@@ -17,7 +17,7 @@ export default function LocationPage() {
   }
 
   return (
-    <div className="w-full pt-20">
+    <div className="w-full pt-24 lg:pt-20">
       <header className="relative h-[50dvh] min-h-[400px] flex items-center bg-primary">
         <div className="absolute inset-0">
           <img 

@@ -82,7 +82,7 @@ export function BeforeAfter({
           className="w-full h-full object-cover" 
           draggable="false"
         />
-          <div className="absolute top-6 right-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest">
+           <div className="absolute top-3 right-3 md:top-6 md:right-6 bg-primary/80 backdrop-blur text-primary-foreground px-2 md:px-4 py-2 text-[9px] md:text-xs uppercase tracking-[0.08em] md:tracking-widest whitespace-nowrap">
            {afterLabel}
         </div>
       </div>
@@ -99,7 +99,7 @@ export function BeforeAfter({
           style={{ width: `${100 / (sliderPosition / 100)}%`, maxWidth: 'none' }}
           draggable="false"
         />
-          <div className="absolute top-6 left-6 bg-primary/80 backdrop-blur text-primary-foreground px-4 py-2 text-xs uppercase tracking-widest whitespace-nowrap">
+          <div className="absolute top-3 left-3 md:top-6 md:left-6 bg-primary/80 backdrop-blur text-primary-foreground px-2 md:px-4 py-2 text-[9px] md:text-xs uppercase tracking-[0.08em] md:tracking-widest whitespace-nowrap">
            {beforeLabel}
         </div>
       </div>

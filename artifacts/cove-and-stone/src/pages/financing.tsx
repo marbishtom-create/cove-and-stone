@@ -4,7 +4,7 @@ import { THEME_CONFIG } from '@/config/theme';
 
 export default function Financing() {
   return (
-    <div className="w-full pt-20 bg-background min-h-[80dvh]">
+    <div className="w-full pt-24 lg:pt-20 bg-background min-h-[80dvh]">
       <div className="container mx-auto px-6 max-w-6xl py-24">
         
         <div className="text-center mb-16">

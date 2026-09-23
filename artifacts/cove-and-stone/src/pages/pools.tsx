@@ -5,7 +5,7 @@ import projectImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_179011368
 
 export default function Pools() {
   return (
-    <div className="w-full pt-20">
+    <div className="w-full pt-24 lg:pt-20">
       {/* Hero */}
       <header className="relative h-[60dvh] min-h-[500px] flex items-center bg-primary">
         <div className="absolute inset-0">
