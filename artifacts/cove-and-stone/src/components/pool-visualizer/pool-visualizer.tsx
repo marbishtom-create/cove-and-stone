@@ -311,8 +311,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     }
   };
 
-  const onPhotoUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const processPhotoFile = (file: File | undefined) => {
     if (!file) return;
     if (!file.type.startsWith('image/')) {
       setUploadError('Please choose a JPG, PNG, or WebP image.');
@@ -329,6 +328,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     };
     reader.onerror = () => setUploadError('We could not read that image. Please try another file.');
     reader.readAsDataURL(file);
+  };
+
+  const onPhotoUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    processPhotoFile(event.target.files?.[0]);
+    event.target.value = '';
   };
 
   const resetDesign = () => {
@@ -397,8 +401,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               <span className="pool-visualizer__optional">Optional</span>
             </div>
             <div className="pool-visualizer__upload-row">
-              <button className="pool-visualizer__upload-button" type="button" onClick={() => fileInputRef.current?.click()} data-testid="button-upload-backyard">
-                <Upload size={16} /> {configuration.photoUrl ? 'Replace photo' : 'Upload photo'}
+              <button className="pool-visualizer__upload-button" type="button" onClick={() => fileInputRef.current?.click()} data-testid="button-load-backyard">
+                <Upload size={16} /> {configuration.photoUrl ? 'Replace photo' : 'Load photo'}
+              </button>
+              <button className="pool-visualizer__camera-button" type="button" onClick={() => cameraInputRef.current?.click()} data-testid="button-take-backyard">
+                <Camera size={16} /> Take photo
               </button>
               {configuration.photoUrl && (
                 <button
@@ -412,8 +419,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 </button>
               )}
             </div>
-            <input ref={fileInputRef} className="pool-visualizer__file-input" type="file" accept="image/jpeg,image/png,image/webp" onChange={onPhotoUpload} data-testid="input-backyard-photo" />
-            <p className="pool-visualizer__helper">JPG, PNG or WebP · 8 MB max</p>
+            <input ref={fileInputRef} className="pool-visualizer__file-input" type="file" accept="image/jpeg,image/png,image/webp" onChange={onPhotoUpload} aria-label="Load a backyard photo" data-testid="input-backyard-photo" />
+            <input ref={cameraInputRef} className="pool-visualizer__file-input" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={onPhotoUpload} aria-label="Take a backyard photo" data-testid="input-backyard-camera" />
+            <p className="pool-visualizer__helper">Take a photo or load a JPG, PNG or WebP · 8 MB max</p>
             {uploadError && <p className="pool-visualizer__error" role="alert" data-testid="status-upload-error">{uploadError}</p>}
           </div>
 
