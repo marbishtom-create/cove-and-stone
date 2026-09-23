@@ -22,7 +22,6 @@ import { SiteMetadata } from '@/components/seo/site-metadata';
 import {
   Route,
   Switch,
-  type BaseLocationHook,
   useLocation,
   Router as WouterRouter,
 } from 'wouter';
@@ -60,16 +59,16 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
 }
 
 export type AppProps = {
-  locationHook?: BaseLocationHook;
+  ssrPath?: string;
 };
 
-function App({ locationHook }: AppProps = {}) {
+function App({ ssrPath }: AppProps = {}) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter
           base={import.meta.env.BASE_URL.replace(/\/$/, '')}
-          hook={locationHook}
+          ssrPath={ssrPath}
         >
           <SiteMetadata />
           <Router />
