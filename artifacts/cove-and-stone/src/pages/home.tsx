@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="w-full overflow-hidden">
       {/* 1. Cinematic Hero */}
-      <section className="relative min-h-[100dvh] w-full flex items-center justify-center pt-24 lg:h-[100dvh] lg:pt-20">
+      <section className="relative min-h-[100dvh] w-full flex items-center justify-center pt-28 lg:h-[100dvh] lg:pt-20">
         <div className="absolute inset-0 z-0">
           <img 
               src={jacksonvilleDayPool} 
@@ -34,7 +34,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-6 max-w-7xl flex w-full min-h-[calc(100dvh-6rem)] flex-col items-start justify-start pt-12 pb-20 lg:h-full lg:min-h-0 lg:translate-y-8 lg:justify-center lg:pt-0">
+        <div className="relative z-10 container mx-auto px-6 max-w-7xl flex w-full min-h-[calc(100dvh-6rem)] flex-col items-start justify-start pt-16 pb-20 lg:h-full lg:min-h-0 lg:translate-y-12 lg:justify-center lg:pt-0">
           <div className="max-w-3xl animate-in slide-in-from-bottom-8 duration-1000 ease-out fade-in fill-mode-both">
             <span className="text-[#c9eee7] uppercase tracking-[0.3em] text-sm md:text-base font-semibold mb-6 block drop-shadow-[0_2px_7px_rgba(0,0,0,0.65)]">
               Jacksonville Outdoor Living, Reimagined.
