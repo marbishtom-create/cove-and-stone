@@ -19,7 +19,7 @@ export default function ProjectDetail() {
   const isCompletedProject = project.status === "completed";
 
   return (
-    <div className="w-full pt-24 lg:pt-32 bg-background">
+    <div className="w-full pt-24 lg:pt-40 bg-background">
       {/* Hero Image */}
       <div className="w-full h-[52dvh] min-h-[420px] lg:h-[60dvh] relative">
         <img

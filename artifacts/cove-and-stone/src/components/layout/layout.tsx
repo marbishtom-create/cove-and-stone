@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
@@ -8,6 +8,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuToggleRef = useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
+  const wasMobileMenuOpenRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +25,33 @@ export default function Layout({ children }: { children: ReactNode }) {
     setIsScrolled(false);
     window.scrollTo(0, 0);
   }, [location]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      if (wasMobileMenuOpenRef.current) {
+        mobileMenuToggleRef.current?.focus({ preventScroll: true });
+      }
+      wasMobileMenuOpenRef.current = false;
+      return;
+    }
+
+    wasMobileMenuOpenRef.current = true;
+    const previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    firstMobileLinkRef.current?.focus({ preventScroll: true });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <div className="min-h-[100dvh] flex flex-col bg-background text-foreground">
@@ -45,13 +75,13 @@ export default function Layout({ children }: { children: ReactNode }) {
              <div className="absolute left-2 top-full z-10 mt-2.5 hidden flex-col items-start gap-2 lg:flex">
                <Link
                  href="/contact"
-                 className="whitespace-nowrap text-xs font-semibold tracking-[0.1em] text-primary transition-colors hover:text-secondary"
+                  className="whitespace-nowrap font-serif text-sm font-medium tracking-[0.08em] text-secondary transition-colors hover:text-primary"
                >
                  Design Consultations
                </Link>
                <Link
                  href="/contact"
-                 className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-primary transition-colors hover:text-secondary"
+                  className="whitespace-nowrap font-serif text-sm font-medium uppercase tracking-[0.16em] text-secondary transition-colors hover:text-primary"
                >
                  Start Your Project
                </Link>
@@ -78,6 +108,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             className="lg:hidden p-2 text-primary hover:text-secondary transition-colors"
             type="button"
             data-testid="mobile-menu-toggle"
+             ref={mobileMenuToggleRef}
             aria-controls="mobile-navigation"
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -93,6 +124,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         id="mobile-navigation"
         data-testid="mobile-menu-overlay"
         data-mobile-menu-state={mobileMenuOpen ? 'open' : 'closed'}
+        role="dialog"
+        aria-modal={mobileMenuOpen}
+        aria-label="Mobile navigation"
         aria-hidden={!mobileMenuOpen}
         className={`fixed inset-0 bg-background/95 backdrop-blur-lg z-40 lg:hidden flex flex-col pt-28 px-6 transition-all duration-500 ease-in-out ${
           mobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'
@@ -103,6 +137,8 @@ export default function Layout({ children }: { children: ReactNode }) {
             <Link 
               key={link.href} 
               href={link.href}
+              ref={link === THEME_CONFIG.navLinks[0] ? firstMobileLinkRef : undefined}
+              tabIndex={mobileMenuOpen ? 0 : -1}
               className={`flex items-center justify-between border-b border-border pb-4 ${
                 location === link.href ? 'text-secondary' : 'text-primary'
               }`}
@@ -115,11 +151,12 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="mt-auto pb-12 flex flex-col gap-6">
           <Link 
             href="/contact" 
+            tabIndex={mobileMenuOpen ? 0 : -1}
             className="bg-primary text-primary-foreground text-center py-4 text-sm tracking-widest uppercase w-full"
           >
             Start Your Project
           </Link>
-          <Link href="/contact" className="text-center font-medium flex items-center justify-center gap-2">
+          <Link href="/contact" tabIndex={mobileMenuOpen ? 0 : -1} className="text-center font-medium flex items-center justify-center gap-2">
             Book a design consultation <ArrowRight size={18} />
           </Link>
         </div>
