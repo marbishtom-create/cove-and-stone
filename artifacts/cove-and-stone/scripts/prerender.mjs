@@ -36,27 +36,43 @@ const template = await readFile(templatePath, "utf8");
 const sitemap = await readFile(sitemapPath, "utf8");
 
 function absoluteUrl(pathname = "/") {
-  const normalizedPath =
-    pathname === "/" ? "" : `/${pathname.replace(/^\/+/, "")}`;
-  return `${SITE_URL}${normalizedPath}`;
+  return `${SITE_URL}${canonicalPathname(pathname)}`;
 }
 
-function titleFromSlug(slug) {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+function canonicalPathname(pathname = "/") {
+  const pathOnly = pathname.split(/[?#]/)[0] || "/";
+  if (pathOnly === "/") {
+    return "/";
+  }
+
+  return `/${pathOnly.replace(/^\/+|\/+$/g, "")}/`;
+}
+
+function routeKey(pathname) {
+  const canonical = canonicalPathname(pathname);
+  return canonical === "/" ? "/" : canonical.slice(0, -1);
 }
 
 function getRouteSeo(pathname) {
-  if (routeData.pages[pathname]) {
-    return routeData.pages[pathname];
+  const key = routeKey(pathname);
+
+  if (routeData.pages[key]) {
+    return routeData.pages[key];
   }
 
-  if (pathname.startsWith("/projects/")) {
-    const slug = pathname.split("/")[2] ?? "project";
-    const projectName = routeData.projectNames[slug] ?? titleFromSlug(slug);
+  if (key.startsWith("/projects/") && key.split("/").length === 3) {
+    const slug = key.split("/")[2] ?? "";
+    const projectName = routeData.projectNames[slug];
+    if (!projectName) {
+      return {
+        title: "Page not found | Cove & Stone Pools",
+        description:
+          "The page you requested could not be found on the Cove & Stone Pools website.",
+        robots: "noindex,nofollow",
+        isNotFound: true,
+      };
+    }
+
     return {
       title: `${projectName} | Cove & Stone`,
       description:
@@ -64,9 +80,19 @@ function getRouteSeo(pathname) {
     };
   }
 
-  if (pathname.startsWith("/locations/")) {
-    const slug = pathname.split("/")[2] ?? "";
-    const location = routeData.locationNames[slug] ?? titleFromSlug(slug);
+  if (key.startsWith("/locations/") && key.split("/").length === 3) {
+    const slug = key.split("/")[2] ?? "";
+    const location = routeData.locationNames[slug];
+    if (!location) {
+      return {
+        title: "Page not found | Cove & Stone Pools",
+        description:
+          "The page you requested could not be found on the Cove & Stone Pools website.",
+        robots: "noindex,nofollow",
+        isNotFound: true,
+      };
+    }
+
     return {
       title: `${location} Pool Design & Outdoor Living | Cove & Stone`,
       description: `Explore Cove & Stone custom pools and complete outdoor-living design for ${location} and Northeast Florida.`,
@@ -77,9 +103,15 @@ function getRouteSeo(pathname) {
     };
   }
 
-  return {
+  return key === "/" ? {
     title: `${SITE_NAME} | Jacksonville Outdoor Living`,
     description: DEFAULT_DESCRIPTION,
+  } : {
+    title: "Page not found | Cove & Stone Pools",
+    description:
+      "The page you requested could not be found on the Cove & Stone Pools website.",
+    robots: "noindex,nofollow",
+    isNotFound: true,
   };
 }
 
@@ -151,9 +183,10 @@ function breadcrumbSchema(pathname, seo) {
 }
 
 function serviceSchema(pathname, service) {
-  const isLocation = pathname.startsWith("/locations/");
+  const key = routeKey(pathname);
+  const isLocation = key.startsWith("/locations/");
   const location = isLocation
-    ? routeData.locationNames[pathname.split("/")[2] ?? ""]
+    ? routeData.locationNames[key.split("/")[2] ?? ""]
     : undefined;
 
   return {
@@ -202,22 +235,30 @@ function placeSchema(pathname, place) {
 }
 
 function buildStructuredData(pathname, seo) {
+  if (seo.isNotFound) {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [],
+    };
+  }
+
+  const canonicalPath = canonicalPathname(pathname);
   const graph = [businessSchema(), websiteSchema()];
 
-  if (pathname !== "/") {
-    graph.push(breadcrumbSchema(pathname, seo));
+  if (canonicalPath !== "/") {
+    graph.push(breadcrumbSchema(canonicalPath, seo));
   }
 
   if (seo.service) {
-    graph.push(serviceSchema(pathname, seo.service));
+    graph.push(serviceSchema(canonicalPath, seo.service));
   }
 
   if (seo.faqs?.length) {
-    graph.push(faqSchema(pathname, seo.faqs));
+    graph.push(faqSchema(canonicalPath, seo.faqs));
   }
 
   if (seo.place) {
-    graph.push(placeSchema(pathname, seo.place));
+    graph.push(placeSchema(canonicalPath, seo.place));
   }
 
   return {
@@ -244,8 +285,9 @@ function replaceOrInsert(html, pattern, replacement) {
 }
 
 function renderRouteHtml(pathname) {
-  const seo = getRouteSeo(pathname);
-  const canonicalUrl = absoluteUrl(pathname);
+  const canonicalPath = canonicalPathname(pathname);
+  const seo = getRouteSeo(canonicalPath);
+  const canonicalUrl = absoluteUrl(canonicalPath);
   const structuredData = JSON.stringify(buildStructuredData(pathname, seo), null, 2)
     .replaceAll("</", "<\\/");
 

@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { absoluteUrl, SITE_IMAGE, SITE_NAME, SITE_URL } from "@/config/site";
+import {
+  absoluteUrl,
+  canonicalPathname,
+  SITE_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/config/site";
 import { buildStructuredData, getRouteSeo } from "@/config/seo-routes";
 
 function setMeta(attribute: "name" | "property", value: string, content: string) {
@@ -29,6 +35,10 @@ function setCanonical(href: string) {
   link.href = href;
 }
 
+function removeCanonical() {
+  document.head.querySelector('link[rel="canonical"]')?.remove();
+}
+
 function setStructuredData(pathname: string) {
   let script = document.head.querySelector<HTMLScriptElement>(
     "script#site-structured-data",
@@ -48,7 +58,7 @@ export function SiteMetadata() {
   const [location] = useLocation();
 
   useEffect(() => {
-    const pathname = location.split(/[?#]/)[0] || "/";
+    const pathname = canonicalPathname(location);
     const metadata = getRouteSeo(pathname);
     const canonicalUrl = absoluteUrl(pathname);
 
@@ -66,7 +76,12 @@ export function SiteMetadata() {
     setMeta("name", "twitter:description", metadata.description);
     setMeta("name", "twitter:image", SITE_IMAGE);
     setMeta("name", "twitter:image:alt", "Cove & Stone Pools logo");
-    setCanonical(canonicalUrl);
+    setMeta("name", "robots", metadata.robots ?? "index,follow");
+    if (metadata.isNotFound) {
+      removeCanonical();
+    } else {
+      setCanonical(canonicalUrl);
+    }
     setStructuredData(pathname);
   }, [location]);
 

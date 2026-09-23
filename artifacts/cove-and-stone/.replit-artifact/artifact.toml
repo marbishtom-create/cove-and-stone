@@ -14,14 +14,14 @@ localPort = 23978
 [services.development]
 run = "pnpm --filter @workspace/cove-and-stone run dev"
 
-[services.production]
-build = [ "pnpm", "--filter", "@workspace/cove-and-stone", "run", "build" ]
-serve = "static"
-publicDir = "artifacts/cove-and-stone/dist/public"
+[services.production.build]
+args = [ "pnpm", "--filter", "@workspace/cove-and-stone", "run", "build" ]
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+[services.production.run]
+args = [ "pnpm", "--filter", "@workspace/cove-and-stone", "run", "serve" ]
+
+[services.production.run.env]
+NODE_ENV = "production"
 
 [services.env]
 PORT = "23978"

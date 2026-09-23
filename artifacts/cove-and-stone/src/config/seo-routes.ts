@@ -1,6 +1,7 @@
 import routeData from "./seo-routes.json";
 import {
   absoluteUrl,
+  canonicalPathname,
   DEFAULT_DESCRIPTION,
   SITE_IMAGE,
   SITE_NAME,
@@ -29,6 +30,8 @@ export type PlaceDefinition = {
 export type RouteSeo = {
   title: string;
   description: string;
+  robots?: string;
+  isNotFound?: boolean;
   service?: ServiceDefinition;
   faqs?: FaqDefinition[];
   place?: PlaceDefinition;
@@ -52,22 +55,33 @@ const SERVICE_AREA_NAMES = [
   "Neptune Beach",
 ];
 
-function titleFromSlug(slug: string) {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+const NOT_FOUND_SEO: RouteSeo = {
+  title: "Page not found | Cove & Stone Pools",
+  description:
+    "The page you requested could not be found on the Cove & Stone Pools website.",
+  robots: "noindex,nofollow",
+  isNotFound: true,
+};
+
+function routeKey(pathname: string) {
+  const canonical = canonicalPathname(pathname);
+  return canonical === "/" ? "/" : canonical.slice(0, -1);
 }
 
 export function getRouteSeo(pathname: string): RouteSeo {
-  if (data.pages[pathname]) {
-    return data.pages[pathname];
+  const key = routeKey(pathname);
+
+  if (data.pages[key]) {
+    return data.pages[key];
   }
 
-  if (pathname.startsWith("/projects/")) {
-    const slug = pathname.split("/")[2] ?? "project";
-    const projectName = data.projectNames[slug] ?? titleFromSlug(slug);
+  if (key.startsWith("/projects/") && key.split("/").length === 3) {
+    const slug = key.split("/")[2] ?? "";
+    const projectName = data.projectNames[slug];
+    if (!projectName) {
+      return NOT_FOUND_SEO;
+    }
+
     return {
       title: `${projectName} | Cove & Stone`,
       description:
@@ -75,9 +89,13 @@ export function getRouteSeo(pathname: string): RouteSeo {
     };
   }
 
-  if (pathname.startsWith("/locations/")) {
-    const slug = pathname.split("/")[2] ?? "";
-    const location = data.locationNames[slug] ?? titleFromSlug(slug);
+  if (key.startsWith("/locations/") && key.split("/").length === 3) {
+    const slug = key.split("/")[2] ?? "";
+    const location = data.locationNames[slug];
+    if (!location) {
+      return NOT_FOUND_SEO;
+    }
+
     return {
       title: `${location} Pool Design & Outdoor Living | Cove & Stone`,
       description: `Explore Cove & Stone custom pools and complete outdoor-living design for ${location} and Northeast Florida.`,
@@ -88,10 +106,10 @@ export function getRouteSeo(pathname: string): RouteSeo {
     };
   }
 
-  return {
+  return key === "/" ? {
     title: `${SITE_NAME} | Jacksonville Outdoor Living`,
     description: DEFAULT_DESCRIPTION,
-  };
+  } : NOT_FOUND_SEO;
 }
 
 function businessSchema() {
@@ -213,22 +231,30 @@ function placeSchema(pathname: string, place: PlaceDefinition) {
 }
 
 export function buildStructuredData(pathname: string, seo = getRouteSeo(pathname)) {
+  if (seo.isNotFound) {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [],
+    };
+  }
+
+  const canonicalPath = canonicalPathname(pathname);
   const graph: Record<string, unknown>[] = [businessSchema(), websiteSchema()];
 
-  if (pathname !== "/") {
-    graph.push(breadcrumbSchema(pathname, seo));
+  if (canonicalPath !== "/") {
+    graph.push(breadcrumbSchema(canonicalPath, seo));
   }
 
   if (seo.service) {
-    graph.push(serviceSchema(pathname, seo.service));
+    graph.push(serviceSchema(canonicalPath, seo.service));
   }
 
   if (seo.faqs?.length) {
-    graph.push(faqSchema(pathname, seo.faqs));
+    graph.push(faqSchema(canonicalPath, seo.faqs));
   }
 
   if (seo.place) {
-    graph.push(placeSchema(pathname, seo.place));
+    graph.push(placeSchema(canonicalPath, seo.place));
   }
 
   return {

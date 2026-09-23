@@ -15,9 +15,9 @@ const layoutSource = await readFile(
 const appSource = await readFile(resolve(artifactRoot, 'src/App.tsx'), 'utf8');
 
 const representativeInteriorRoutes = [
-  { path: '/pools', component: 'Pools' },
-  { path: '/showroom', component: 'Showroom' },
-  { path: '/contact', component: 'Contact' },
+  { path: '/pools/', component: 'Pools' },
+  { path: '/showroom/', component: 'Showroom' },
+  { path: '/contact/', component: 'Contact' },
 ];
 const headerViewports = [
   { name: 'mobile', width: 'w-\\[92px\\]' },

@@ -45,7 +45,7 @@ export default function Financing() {
             <a href="https://www.lyonfinancial.net" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 text-sm uppercase tracking-widest hover:bg-secondary transition-colors">
               Explore Lyon Financial <ArrowRight size={15} />
             </a>
-            <Link href="/contact" className="inline-flex items-center gap-2 border border-primary text-primary px-8 py-4 text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors">
+            <Link href="/contact/" className="inline-flex items-center gap-2 border border-primary text-primary px-8 py-4 text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors">
               Estimate Your Project <ArrowRight size={15} />
             </Link>
           </div>

@@ -113,13 +113,13 @@ export default function Pools() {
           <nav aria-label="Continue exploring pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-              <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-              <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
-              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+              <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+              <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+              <Link href="/renovations/" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+              <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+              <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
             </div>
           </nav>
         </div>
@@ -190,7 +190,7 @@ export default function Pools() {
             Schedule a consultation to discuss your vision and learn how we translate concepts into concrete.
           </p>
           <Link 
-            href="/contact" 
+            href="/contact/" 
             className="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 text-sm uppercase tracking-widest hover:bg-white hover:text-primary transition-all duration-300"
           >
             Start The Conversation <ArrowRight size={16} />

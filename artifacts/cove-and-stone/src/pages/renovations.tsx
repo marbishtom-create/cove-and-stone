@@ -80,13 +80,13 @@ export default function Renovations() {
           <nav aria-label="Continue exploring pool renovation and outdoor-living services" className="mt-16 pt-8 border-t border-border">
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-              <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-              <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Request an assessment</Link>
+              <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+              <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+              <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+              <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+              <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Request an assessment</Link>
             </div>
           </nav>
         </div>
@@ -157,7 +157,7 @@ export default function Renovations() {
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-3xl md:text-5xl font-serif mb-6">Is your pool ready for a revival?</h2>
           <Link 
-            href="/contact" 
+            href="/contact/" 
             className="inline-block mt-8 bg-secondary text-secondary-foreground px-8 py-4 text-sm uppercase tracking-widest hover:bg-white hover:text-primary transition-all duration-300"
           >
             Request an Assessment

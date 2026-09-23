@@ -34,7 +34,7 @@ const approvedProjectMedia = [
     asset: 'generated_images/ponte-vedra-private-retreat.png',
     mobileImportName: 'ponteVedraRetreatMobile',
     mobileAsset: 'generated_images/ponte-vedra-private-retreat-mobile.jpg',
-    alt: 'Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak',
+    alt: 'Illustrative pool concept with a privacy wall, palms and live oak',
     label: 'Concept rendering',
   },
   {
@@ -42,7 +42,7 @@ const approvedProjectMedia = [
     asset: 'generated_images/project-2.jpg',
     mobileImportName: 'p2Mobile',
     mobileAsset: 'generated_images/project-2-mobile.jpg',
-    alt: 'Concept visualization of the Jacksonville Waterfront pool',
+    alt: 'Illustrative curved pool concept with a raised spa and fire features',
     label: 'Concept rendering',
   },
   {
@@ -50,7 +50,7 @@ const approvedProjectMedia = [
     asset: 'BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png',
     mobileImportName: 'conceptNightMobile',
     mobileAsset: 'BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed-mobile.jpg',
-    alt: 'Concept visualization of the Nocatee Resort Backyard',
+    alt: 'Illustrative resort-style backyard concept with a cabana and pool',
     label: 'Concept rendering',
   },
   {
@@ -58,7 +58,7 @@ const approvedProjectMedia = [
     asset: 'generated_images/project-4.jpg',
     mobileImportName: 'p4Mobile',
     mobileAsset: 'generated_images/project-4-mobile.jpg',
-    alt: 'Concept visualization of the Atlantic Beach Minimalist pool',
+    alt: 'Illustrative compact plunge-pool concept with a linear fire feature',
     label: 'Concept rendering',
   },
 ];

@@ -5,6 +5,14 @@ import { ErrorBoundary } from '@/components/error-boundary';
 
 import './index.css';
 
+function normalizeBrowserPath() {
+  const currentUrl = new URL(window.location.href);
+  if (currentUrl.pathname !== '/' && !currentUrl.pathname.endsWith('/')) {
+    currentUrl.pathname = `${currentUrl.pathname}/`;
+    window.history.replaceState({}, '', currentUrl);
+  }
+}
+
 if (
   typeof window !== 'undefined' &&
   window.location.hostname === 'www.coveandstonepools.com'
@@ -13,6 +21,8 @@ if (
   canonicalUrl.hostname = 'coveandstonepools.com';
   canonicalUrl.protocol = 'https:';
   window.location.replace(canonicalUrl.toString());
+} else if (typeof window !== 'undefined') {
+  normalizeBrowserPath();
 }
 
 createRoot(document.getElementById('root')!, {

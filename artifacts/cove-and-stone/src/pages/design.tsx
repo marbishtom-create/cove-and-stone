@@ -269,12 +269,12 @@ export default function Design() {
           </div>
           <nav aria-label="Continue planning your 3D pool and backyard design" className="mt-12 pt-8 border-t border-border">
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-              <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View concepts</Link>
-              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+              <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+              <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+              <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View concepts</Link>
+              <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
             </div>
           </nav>
         </div>

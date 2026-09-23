@@ -92,8 +92,8 @@ export default function Commercial() {
       <section className="py-16 bg-card border-t border-border">
         <div className="container mx-auto px-6 max-w-7xl">
           <nav aria-label="Commercial project information" className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-            <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Discuss a development</Link>
-            <Link href="/about" className="text-primary hover:text-secondary transition-colors">About Cove & Stone</Link>
+            <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Discuss a development</Link>
+            <Link href="/about/" className="text-primary hover:text-secondary transition-colors">About Cove & Stone</Link>
           </nav>
         </div>
       </section>

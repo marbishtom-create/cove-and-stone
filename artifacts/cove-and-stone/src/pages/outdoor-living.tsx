@@ -78,7 +78,7 @@ export default function OutdoorLiving() {
                 </p>
               </div>
               <Link 
-                href="/projects" 
+                href="/projects/" 
                 className="inline-block mt-10 border-b border-primary text-primary pb-1 uppercase tracking-widest text-sm hover:text-secondary hover:border-secondary transition-colors"
               >
                 View our complete environments
@@ -99,13 +99,13 @@ export default function OutdoorLiving() {
           <nav aria-label="Continue exploring pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-              <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
-              <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+              <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+              <Link href="/renovations/" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+              <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+              <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+              <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
             </div>
           </nav>
         </div>

@@ -34,18 +34,18 @@ function Router() {
       <Layout>
         <Switch>
           <Route path="/" component={Home} />
-          <Route path="/pools" component={Pools} />
-          <Route path="/renovations" component={Renovations} />
-          <Route path="/outdoor-living" component={OutdoorLiving} />
-          <Route path="/projects" component={Projects} />
-          <Route path="/projects/:slug" component={ProjectDetail} />
-          <Route path="/design" component={Design} />
-          <Route path="/showroom" component={Showroom} />
-          <Route path="/financing" component={Financing} />
-          <Route path="/commercial" component={Commercial} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/locations/:slug" component={LocationPage} />
+          <Route path="/pools/" component={Pools} />
+          <Route path="/renovations/" component={Renovations} />
+          <Route path="/outdoor-living/" component={OutdoorLiving} />
+          <Route path="/projects/" component={Projects} />
+          <Route path="/projects/:slug/" component={ProjectDetail} />
+          <Route path="/design/" component={Design} />
+          <Route path="/showroom/" component={Showroom} />
+          <Route path="/financing/" component={Financing} />
+          <Route path="/commercial/" component={Commercial} />
+          <Route path="/about/" component={About} />
+          <Route path="/contact/" component={Contact} />
+          <Route path="/locations/:slug/" component={LocationPage} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

@@ -74,7 +74,7 @@ export default function About() {
                 <p className="text-sm text-muted-foreground leading-relaxed">Urban Green Energy, LLC supports the in-house GC and construction structure. Regulated pool work is coordinated with the appropriately licensed pool contractor or qualifier for the applicable scope.</p>
               </div>
             </div>
-            <Link href="/contact" className="inline-flex items-center gap-2 mt-8 text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-colors">
+            <Link href="/contact/" className="inline-flex items-center gap-2 mt-8 text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-colors">
               Meet us around your project <ArrowRight size={14} />
             </Link>
           </div>

@@ -161,7 +161,7 @@ export default function Projects() {
                 : project.media.render;
 
               return (
-              <Link key={project.slug} href={`/projects/${project.slug}`} className="group block">
+              <Link key={project.slug} href={`/projects/${project.slug}/`} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                   <picture>
                     <source media="(max-width: 767px)" srcSet={cardMedia.mobileSrc} />

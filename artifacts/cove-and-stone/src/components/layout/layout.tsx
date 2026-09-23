@@ -74,13 +74,13 @@ export default function Layout({ children }: { children: ReactNode }) {
              />
              <div className="absolute left-2 top-full z-10 mt-2.5 hidden flex-col items-start gap-2 lg:flex">
                <Link
-                 href="/contact"
+                 href="/contact/"
                   className="whitespace-nowrap font-serif text-sm font-medium tracking-[0.08em] text-secondary transition-colors hover:text-primary"
                >
                  Design Consultations
                </Link>
                <Link
-                 href="/contact"
+                 href="/contact/"
                   className="whitespace-nowrap font-serif text-sm font-medium uppercase tracking-[0.16em] text-secondary transition-colors hover:text-primary"
                >
                  Start Your Project
@@ -150,13 +150,13 @@ export default function Layout({ children }: { children: ReactNode }) {
         </nav>
         <div className="mt-auto pb-12 flex flex-col gap-6">
           <Link 
-            href="/contact" 
+            href="/contact/" 
             tabIndex={mobileMenuOpen ? 0 : -1}
             className="bg-primary text-primary-foreground text-center py-4 text-sm tracking-widest uppercase w-full"
           >
             Start Your Project
           </Link>
-          <Link href="/contact" tabIndex={mobileMenuOpen ? 0 : -1} className="text-center font-medium flex items-center justify-center gap-2">
+          <Link href="/contact/" tabIndex={mobileMenuOpen ? 0 : -1} className="text-center font-medium flex items-center justify-center gap-2">
             Book a design consultation <ArrowRight size={18} />
           </Link>
         </div>
@@ -193,7 +193,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <h4 className="font-serif text-lg mb-6 uppercase tracking-widest text-secondary">Service Areas</h4>
               <nav className="flex flex-col gap-4 text-sm">
                 {THEME_CONFIG.locations.map(loc => (
-                  <Link key={loc.slug} href={`/locations/${loc.slug}`} className="text-muted-foreground hover:text-white transition-colors">
+                  <Link key={loc.slug} href={`/locations/${loc.slug}/`} className="text-muted-foreground hover:text-white transition-colors">
                     {loc.name}
                   </Link>
                 ))}
@@ -217,8 +217,8 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
             <p>&copy; {new Date().getFullYear()} Cove & Stone. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="/privacy/" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/terms/" className="hover:text-white transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

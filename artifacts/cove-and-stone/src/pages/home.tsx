@@ -66,19 +66,19 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
-                href="/contact" 
+                href="/contact/" 
                 className="bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary transition-all duration-300 text-center"
               >
                 Design My Backyard
               </Link>
               <Link 
-                href="/projects" 
+                href="/projects/" 
                 className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
               >
                 Visit the Showroom
               </Link>
               <Link
-                href="/financing"
+                href="/financing/"
                 className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
               >
                 Explore Financing
@@ -173,7 +173,7 @@ export default function Home() {
               <span className="text-secondary uppercase tracking-widest text-sm mb-4 block">Our Expertise</span>
               <h2 className="text-3xl md:text-5xl font-serif text-white">Complete Environments</h2>
             </div>
-            <Link href="/outdoor-living" className="hidden md:flex items-center gap-2 text-sm uppercase tracking-widest hover:text-secondary transition-colors mt-6 md:mt-0">
+            <Link href="/outdoor-living/" className="hidden md:flex items-center gap-2 text-sm uppercase tracking-widest hover:text-secondary transition-colors mt-6 md:mt-0">
               View All Services <ArrowRight size={16} />
             </Link>
           </div>
@@ -184,19 +184,19 @@ export default function Home() {
                 title: "Custom Pools & Spas",
                 desc: "Infinity edges, geometric modernism, and integrated elevated spas. Engineered for perfection.",
                 icon: <Droplet className="w-8 h-8 mb-6 text-secondary" />,
-                link: "/pools"
+                link: "/pools/"
               },
               {
                 title: "Outdoor Living",
                 desc: "Custom pergolas, summer kitchens, fire features, and extensive hardscaping that expands your home.",
                 icon: <Sun className="w-8 h-8 mb-6 text-secondary" />,
-                link: "/outdoor-living"
+                link: "/outdoor-living/"
               },
               {
                 title: "Renovations",
                 desc: "Complete structural corrections, material updates, and technology modernizations for existing pools.",
                 icon: <Wind className="w-8 h-8 mb-6 text-secondary" />,
-                link: "/renovations"
+                link: "/renovations/"
               }
             ].map((service, i) => (
               <div key={i} className="group border-t border-white/20 pt-8">
@@ -225,7 +225,7 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <Link href="/projects/ponte-vedra-modern" className="group block">
+            <Link href="/projects/ponte-vedra-modern/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                 <img src={ponteVedraRetreat} alt="Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -237,7 +237,7 @@ export default function Home() {
               <p className="text-muted-foreground text-sm uppercase tracking-widest">Ponte Vedra Beach, FL</p>
             </Link>
             
-            <Link href="/projects/nocatee-resort" className="group block">
+            <Link href="/projects/nocatee-resort/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                 <img src={jacksonvilleNightPool} alt="Concept visualization for Nocatee Resort Backyard" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
@@ -280,7 +280,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-5xl font-serif text-primary mb-6">One clear path from backyard idea to finished environment.</h2>
               <p className="text-muted-foreground leading-relaxed">Every phase is designed to keep the vision, selections, proposal and construction coordinated.</p>
             </div>
-            <Link href="/contact" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-colors whitespace-nowrap">
+              <Link href="/contact/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-primary hover:text-secondary transition-colors whitespace-nowrap">
               Start with your address <ArrowRight size={14} />
             </Link>
           </div>
@@ -467,7 +467,7 @@ export default function Home() {
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 When a pool contractor, a landscaper, and a concrete crew all work independently, the result is disjointed. Cove & Stone brings the entire exterior environment under one roof. One cohesive design language, one dedicated project manager, and zero communication gaps.
               </p>
-              <Link href="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors">
+              <Link href="/about/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors">
                 Read Our Story <ArrowRight size={14} />
               </Link>
             </div>
@@ -480,7 +480,7 @@ export default function Home() {
                  {THEME_CONFIG.showroom.address}<br />
                  {THEME_CONFIG.showroom.city}, {THEME_CONFIG.showroom.state} {THEME_CONFIG.showroom.zip}
                </div>
-               <Link href="/showroom" className="mt-8 border border-primary text-primary px-6 py-3 text-xs uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors">
+               <Link href="/showroom/" className="mt-8 border border-primary text-primary px-6 py-3 text-xs uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors">
                  Virtual Tour
                </Link>
             </div>
@@ -537,7 +537,7 @@ export default function Home() {
                 <div className="bg-card p-4 text-xs text-muted-foreground border border-border leading-relaxed mb-6">
                   Financing is subject to credit approval, lender terms, current programs and availability. Cove & Stone does not guarantee approval, rates, monthly payments or loan terms.
                 </div>
-                <Link href="/financing" className="text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors inline-flex items-center gap-2">
+                <Link href="/financing/" className="text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors inline-flex items-center gap-2">
                   Learn about financing <ArrowRight size={14} />
                 </Link>
               </div>
@@ -590,7 +590,7 @@ export default function Home() {
             <h3 className="text-2xl font-serif text-white mb-2">Commercial Division</h3>
             <p className="text-white/70">Luxury amenity centers for HOAs, developments, and architects.</p>
           </div>
-          <Link href="/commercial" className="border border-white/30 text-white px-6 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-primary transition-colors whitespace-nowrap">
+          <Link href="/commercial/" className="border border-white/30 text-white px-6 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-primary transition-colors whitespace-nowrap">
             View Commercial Projects
           </Link>
         </div>
@@ -604,7 +604,7 @@ export default function Home() {
             Build an outdoor experience designed around the way you live in Jacksonville.
           </p>
           <Link 
-            href="/contact" 
+              href="/contact/" 
             className="inline-flex items-center justify-center bg-secondary text-secondary-foreground px-10 py-5 text-sm uppercase tracking-widest hover:bg-white hover:text-primary transition-all duration-300"
           >
             Design My Backyard

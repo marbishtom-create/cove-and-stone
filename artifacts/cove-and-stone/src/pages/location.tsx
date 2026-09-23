@@ -3,6 +3,7 @@ import { THEME_CONFIG } from '@/config/theme';
 import { getRouteSeo } from '@/config/seo-routes';
 import { MapPin, ArrowRight } from 'lucide-react';
 import heroImg from '@assets/generated_images/hero-pool.jpg';
+import NotFound from '@/pages/not-found';
 
 type LowerLocationContent = {
   h1: string;
@@ -95,12 +96,7 @@ export default function LocationPage() {
   const locationInfo = THEME_CONFIG.locations.find(l => l.slug === slug);
 
   if (!locationInfo) {
-    return (
-      <div className="min-h-[60dvh] flex flex-col items-center justify-center pt-24 lg:pt-40">
-        <h1 className="text-4xl font-serif mb-4">Location Not Found</h1>
-        <Link href="/" className="text-secondary hover:underline">Return Home</Link>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const isPonteVedraBeach = locationInfo.slug === 'ponte-vedra-beach';
@@ -111,7 +107,7 @@ export default function LocationPage() {
   const jacksonvilleBeachesSeo = getRouteSeo('/locations/jacksonville-beaches');
   const lowerLocationContent = LOWER_LOCATION_CONTENT[locationInfo.slug];
   const lowerLocationSeo = lowerLocationContent
-    ? getRouteSeo(`/locations/${locationInfo.slug}`)
+    ? getRouteSeo(`/locations/${locationInfo.slug}/`)
     : undefined;
 
   return (
@@ -220,15 +216,15 @@ export default function LocationPage() {
               <nav aria-label="Continue exploring Ponte Vedra Beach pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
                 <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                  <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-                  <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
-                  <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-                  <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-                  <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-                  <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-                  <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-                  <Link href="/about" className="text-primary hover:text-secondary transition-colors">About Cove & Stone</Link>
-                  <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+                  <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+                  <Link href="/renovations/" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+                  <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+                  <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+                  <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+                  <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+                  <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+                  <Link href="/about/" className="text-primary hover:text-secondary transition-colors">About Cove & Stone</Link>
+                  <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
                 </div>
               </nav>
             </>
@@ -296,14 +292,14 @@ export default function LocationPage() {
               <nav aria-label="Continue exploring St. Johns pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
                 <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                  <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-                  <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
-                  <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-                  <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-                  <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-                  <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-                  <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-                  <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+                  <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+                  <Link href="/renovations/" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+                  <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+                  <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+                  <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+                  <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+                  <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+                  <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
                 </div>
               </nav>
             </>
@@ -371,18 +367,18 @@ export default function LocationPage() {
               <nav aria-label="Explore Jacksonville Beaches locations and services" className="mt-16 pt-8 border-t border-border">
                 <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Explore the region</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                  <Link href="/locations/atlantic-beach" className="text-primary hover:text-secondary transition-colors">Atlantic Beach</Link>
-                  <Link href="/locations/jacksonville-beach" className="text-primary hover:text-secondary transition-colors">Jacksonville Beach</Link>
-                  <Link href="/locations/neptune-beach" className="text-primary hover:text-secondary transition-colors">Neptune Beach</Link>
-                  <Link href="/locations/ponte-vedra-beach" className="text-primary hover:text-secondary transition-colors">Ponte Vedra Beach</Link>
-                  <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
-                  <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
-                  <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
-                  <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
-                  <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
-                  <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-                  <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
-                  <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+                  <Link href="/locations/atlantic-beach/" className="text-primary hover:text-secondary transition-colors">Atlantic Beach</Link>
+                  <Link href="/locations/jacksonville-beach/" className="text-primary hover:text-secondary transition-colors">Jacksonville Beach</Link>
+                  <Link href="/locations/neptune-beach/" className="text-primary hover:text-secondary transition-colors">Neptune Beach</Link>
+                  <Link href="/locations/ponte-vedra-beach/" className="text-primary hover:text-secondary transition-colors">Ponte Vedra Beach</Link>
+                  <Link href="/pools/" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+                  <Link href="/renovations/" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+                  <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+                  <Link href="/design/" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+                  <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+                  <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+                  <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+                  <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
                 </div>
               </nav>
             </>
@@ -399,10 +395,10 @@ export default function LocationPage() {
               </div>
               
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <Link href="/projects" className="bg-card text-primary border border-border px-8 py-4 uppercase tracking-widest text-sm hover:border-secondary transition-colors inline-flex items-center justify-center gap-2">
+                <Link href="/projects/" className="bg-card text-primary border border-border px-8 py-4 uppercase tracking-widest text-sm hover:border-secondary transition-colors inline-flex items-center justify-center gap-2">
                   View Case Studies
                 </Link>
-                <Link href="/contact" className="bg-primary text-primary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-secondary transition-colors inline-flex items-center justify-center gap-2">
+                <Link href="/contact/" className="bg-primary text-primary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-secondary transition-colors inline-flex items-center justify-center gap-2">
                   Schedule {locationInfo.name} Consultation <ArrowRight size={16} />
                 </Link>
               </div>

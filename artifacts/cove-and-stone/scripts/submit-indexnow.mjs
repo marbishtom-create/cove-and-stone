@@ -50,7 +50,7 @@ function normalizeCanonicalUrl(rawUrl) {
   const normalizedPath =
     parsed.pathname === "/"
       ? "/"
-      : `/${parsed.pathname.replace(/^\/+|\/+$/g, "")}`;
+      : `/${parsed.pathname.replace(/^\/+|\/+$/g, "")}/`;
 
   if (
     excludedPathPattern.test(normalizedPath) ||

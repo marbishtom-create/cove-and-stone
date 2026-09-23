@@ -2,18 +2,14 @@ import { useParams, Link } from 'wouter';
 import { CASE_STUDIES } from './projects';
 import { ArrowLeft, CheckCircle2, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
 import { BeforeAfter } from '@/components/ui/before-after';
+import NotFound from '@/pages/not-found';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
   const project = CASE_STUDIES.find(p => p.slug === slug);
 
   if (!project) {
-    return (
-      <div className="min-h-[60dvh] flex flex-col items-center justify-center pt-20">
-        <h1 className="text-4xl font-serif mb-4">Project Not Found</h1>
-        <Link href="/projects" className="text-secondary hover:underline">Return to Portfolio</Link>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const isCompletedProject = project.status === "completed";
@@ -34,7 +30,7 @@ export default function ProjectDetail() {
           {isCompletedProject ? "Completed photography" : "Concept rendering"}
         </div>
         <div className="absolute top-4 left-4 lg:top-8 lg:left-8">
-          <Link href="/projects" className="inline-flex items-center gap-2 bg-background/80 backdrop-blur px-4 py-2 text-sm uppercase tracking-widest text-primary hover:bg-secondary hover:text-secondary-foreground transition-colors">
+          <Link href="/projects/" className="inline-flex items-center gap-2 bg-background/80 backdrop-blur px-4 py-2 text-sm uppercase tracking-widest text-primary hover:bg-secondary hover:text-secondary-foreground transition-colors">
             <ArrowLeft size={16} /> Back to Projects
           </Link>
         </div>
@@ -222,7 +218,7 @@ export default function ProjectDetail() {
         {/* Next Project CTA */}
         <div className="mt-24 text-center border-t border-border pt-16">
           <p className="text-muted-foreground uppercase tracking-widest text-sm mb-4">Start your own transformation</p>
-          <Link href="/contact" className="text-3xl font-serif text-primary hover:text-secondary transition-colors inline-block border-b-2 border-transparent hover:border-secondary pb-2">
+          <Link href="/contact/" className="text-3xl font-serif text-primary hover:text-secondary transition-colors inline-block border-b-2 border-transparent hover:border-secondary pb-2">
             Inquire about a project like this →
           </Link>
         </div>
