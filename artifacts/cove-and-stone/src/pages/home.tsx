@@ -55,13 +55,13 @@ export default function Home() {
               </Link>
               <Link 
                 href="/projects/" 
-                className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
+                className="border border-white/90 bg-white/95 text-primary px-8 py-4 uppercase tracking-widest text-sm shadow-lg hover:bg-white hover:border-white transition-all duration-300 text-center"
               >
                 Visit the Showroom
               </Link>
               <Link
                 href="/financing/"
-                className="border border-white/30 text-white px-8 py-4 uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 backdrop-blur-sm text-center"
+                className="border border-white/90 bg-white/95 text-primary px-8 py-4 uppercase tracking-widest text-sm shadow-lg hover:bg-white hover:border-white transition-all duration-300 text-center"
               >
                 Explore Financing
               </Link>

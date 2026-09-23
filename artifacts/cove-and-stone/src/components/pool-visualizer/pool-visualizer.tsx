@@ -176,17 +176,38 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           <path d={poolPath} />
         </clipPath>
       </defs>
-      <rect width="760" height="430" fill="url(#concept-sky)" />
-      <path d="M0 146 C110 122 169 153 258 139 C379 120 463 148 574 126 C653 110 705 127 760 117 V0 H0Z" fill="#b1c0bd" opacity=".7" />
-      <path d="M0 168 C87 148 137 176 232 161 C358 141 449 174 550 150 C637 131 702 152 760 140 V220 H0Z" fill="#687f78" opacity=".84" />
-      <path d="M0 211 C128 189 213 230 330 202 C473 168 586 222 760 186 V430 H0Z" fill="url(#concept-lawn)" />
-      <g opacity=".6" fill="#344f4b">
-        <path d="M40 196l24-63 21 63Z" /><path d="M664 181l27-74 25 74Z" /><path d="M104 208l19-51 18 51Z" />
-      </g>
-      <g opacity=".55" fill="#d9d6c4">
-        <rect x="58" y="78" width="122" height="62" /><path d="M48 78l72-47 77 47Z" />
-        <rect x="83" y="99" width="35" height="41" fill="#7c9290" /><rect x="130" y="99" width="31" height="20" fill="#a1b4ae" />
-      </g>
+      {configuration.photoUrl ? (
+        <>
+          <image
+            href={configuration.photoUrl}
+            x="0"
+            y="0"
+            width="760"
+            height="430"
+            preserveAspectRatio="xMidYMid slice"
+          />
+          <rect width="760" height="430" fill="#183e3c" opacity=".14" />
+          <path
+            d="M0 330 C152 298 256 349 391 321 C535 292 649 343 760 312 V430 H0Z"
+            fill="#d1c4ac"
+            opacity=".18"
+          />
+        </>
+      ) : (
+        <>
+          <rect width="760" height="430" fill="url(#concept-sky)" />
+          <path d="M0 146 C110 122 169 153 258 139 C379 120 463 148 574 126 C653 110 705 127 760 117 V0 H0Z" fill="#b1c0bd" opacity=".7" />
+          <path d="M0 168 C87 148 137 176 232 161 C358 141 449 174 550 150 C637 131 702 152 760 140 V220 H0Z" fill="#687f78" opacity=".84" />
+          <path d="M0 211 C128 189 213 230 330 202 C473 168 586 222 760 186 V430 H0Z" fill="url(#concept-lawn)" />
+          <g opacity=".6" fill="#344f4b">
+            <path d="M40 196l24-63 21 63Z" /><path d="M664 181l27-74 25 74Z" /><path d="M104 208l19-51 18 51Z" />
+          </g>
+          <g opacity=".55" fill="#d9d6c4">
+            <rect x="58" y="78" width="122" height="62" /><path d="M48 78l72-47 77 47Z" />
+            <rect x="83" y="99" width="35" height="41" fill="#7c9290" /><rect x="130" y="99" width="31" height="20" fill="#a1b4ae" />
+          </g>
+        </>
+      )}
       <g transform={poolTransform}>
         <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
         <path d={poolPath} fill="#d1c4ac" stroke="#eee4ce" strokeWidth="8" />
@@ -221,7 +242,9 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
       <g fill="#c7bb9f" opacity=".9">
         <path d="M38 353h46v20H38z" /><path d="M92 346h27v27H92z" /><path d="M613 354h58v18H613z" />
       </g>
-      <text x="28" y="400" fill="#f8f4eb" fontSize="10" letterSpacing="2.2" fontFamily="sans-serif">CONCEPT STUDY / MATERIAL + LAYOUT</text>
+      <text x="28" y="400" fill="#f8f4eb" fontSize="10" letterSpacing="2.2" fontFamily="sans-serif">
+        {configuration.photoUrl ? 'PHOTO-BASED CONCEPT / MATERIAL + LAYOUT' : 'CONCEPT STUDY / MATERIAL + LAYOUT'}
+      </text>
     </svg>
   );
 }
@@ -619,7 +642,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           >
             <div className="pool-visualizer__after-art">
               <ConceptScene configuration={configuration} />
-              <span className="pool-visualizer__comparison-label pool-visualizer__comparison-label--after">After · concept</span>
+              <span className="pool-visualizer__comparison-label pool-visualizer__comparison-label--after">
+                {configuration.photoUrl ? 'After · photo concept' : 'After · concept'}
+              </span>
             </div>
             <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%` }}>
               {configuration.photoUrl ? (

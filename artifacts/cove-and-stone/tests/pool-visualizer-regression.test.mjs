@@ -59,6 +59,19 @@ test("renders configured values in the concept preview instead of only storing t
   assert.match(component, /aria-label={`Illustrative/);
 });
 
+test("uses an uploaded backyard photo as the after-concept canvas", () => {
+  assert.match(component, /href=\{configuration\.photoUrl\}/);
+  assert.match(component, /PHOTO-BASED CONCEPT/);
+  assert.match(component, /After · photo concept/);
+});
+
+test("keeps the 3D walkthrough video visible in the mobile layout", () => {
+  assert.match(designPage, /designWalkthrough/);
+  assert.match(designPage, /max-h-\[72svh\]/);
+  assert.match(designPage, /className="block h-auto max-h-\[72svh\] w-full object-contain"/);
+  assert.match(designPage, /className="block aspect-\[9\/16\] w-full object-cover shadow-2xl md:hidden"/);
+});
+
 test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /role="slider"/);
   assert.match(component, /onSliderKeyDown/);

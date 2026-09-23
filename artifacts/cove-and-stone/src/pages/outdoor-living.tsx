@@ -2,6 +2,7 @@ import { Flame, Trees, ChefHat, Sofa } from 'lucide-react';
 import { Link } from 'wouter';
 import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
 import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
+import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
 
 export default function OutdoorLiving() {
   return (
@@ -59,6 +60,73 @@ export default function OutdoorLiving() {
               <p className="text-muted-foreground">
                  Flawless installations of porcelain, travertine, marble, natural stone and concrete pavers, contrasted with artificial turf, turf between oversized pavers and putting-green or lifestyle-turf applications.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="outdoor-kitchens" className="border-y border-border bg-primary py-24 text-primary-foreground md:py-32" data-testid="outdoor-kitchen-section">
+        <div className="container mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
+          <div className="relative order-2 lg:order-1" data-testid="outdoor-kitchen-visuals">
+            <div className="relative overflow-hidden">
+              <img
+                src={kitchenImage}
+                alt="Concept visualization of a gourmet outdoor kitchen with a cooking island, bar seating, pergola and lounge area"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+              <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 border-t border-white/30 pt-3 text-[10px] uppercase tracking-[0.2em] text-white/80">
+                <span>Gourmet kitchen concept</span>
+                <span>Outdoor room / 01</span>
+              </div>
+            </div>
+            <div className="relative z-10 ml-auto mt-[-2.5rem] w-[82%] border-8 border-primary bg-primary shadow-2xl sm:mt-[-4rem] sm:w-[68%]">
+              <img
+                src={projectImage}
+                alt="Concept visualization of a pool and raised spa beside a covered outdoor kitchen and seating area"
+                className="aspect-[4/3] w-full object-cover"
+              />
+              <div className="absolute bottom-3 left-3 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 backdrop-blur-sm">
+                Pool + spa / Outdoor room 02
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <span className="mb-5 block text-sm uppercase tracking-[0.3em] text-secondary">The outdoor kitchen</span>
+            <h2 className="mb-6 max-w-xl text-4xl font-serif leading-tight md:text-6xl">
+              The heart of the backyard, designed for the way you host.
+            </h2>
+            <p className="max-w-xl text-lg leading-relaxed text-primary-foreground/75">
+              Build beyond the grill. We compose gourmet outdoor kitchens with generous islands, comfortable seating, full bars and the equipment, storage and finish details that make entertaining feel effortless.
+            </p>
+
+            <div className="my-10 grid max-w-xl grid-cols-2 gap-x-8 gap-y-6 border-y border-primary-foreground/20 py-7 text-sm">
+              {[
+                ['01', 'Kitchen islands', 'Prep, serve and gather around one generous center.'],
+                ['02', 'Full bar moments', 'Refrigeration, spirits and seating built into the room.'],
+                ['03', 'Lounge seating', 'Keep the cook in the conversation from first pour to last course.'],
+                ['04', 'Limitless options', 'Materials, appliances, shade and lighting shaped to your property.'],
+              ].map(([number, title, copy]) => (
+                <div key={number}>
+                  <span className="mb-2 block font-mono text-xs tracking-[0.2em] text-secondary">{number}</span>
+                  <h3 className="mb-1 text-sm font-medium uppercase tracking-widest">{title}</h3>
+                  <p className="text-sm leading-relaxed text-primary-foreground/60">{copy}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <div>
+                <span className="block font-mono text-xs uppercase tracking-[0.18em] text-secondary">Typical investment</span>
+                <strong className="mt-1 block text-2xl font-serif">$20,000–$100,000</strong>
+                <span className="mt-1 block text-xs text-primary-foreground/55">Scope, materials and equipment determine the final range.</span>
+              </div>
+              <Link
+                href="/contact/"
+                className="inline-flex items-center justify-center border border-secondary bg-secondary px-6 py-3 text-center text-sm uppercase tracking-widest text-secondary-foreground transition-colors hover:border-white hover:bg-white hover:text-primary"
+              >
+                Plan your kitchen
+              </Link>
             </div>
           </div>
         </div>

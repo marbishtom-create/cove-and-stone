@@ -1,6 +1,7 @@
 import { THEME_CONFIG } from '@/config/theme';
 import designImage from '@assets/generated_images/design-3d.jpg';
-import designWalkthrough from '@assets/✨_Bringing_this_backyard_to_life_through_custom_3D_design_befo_1790179934195.mp4';
+import designWalkthrough from '@assets/design-walkthrough-mobile.mp4';
+import designWalkthroughPoster from '@assets/design-walkthrough-poster.jpg';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { Link } from 'wouter';
 
@@ -19,30 +20,24 @@ export default function Design() {
                 Our in-house design studio uses photorealistic 3D rendering to bring your concepts to life. Walk through your new backyard digitally before any ground is broken.
               </p>
             </div>
-            <div className="flex-1 relative aspect-video w-full">
-              <img src={designImage} alt="3D Pool Design" className="w-full h-full object-cover shadow-2xl" />
+            <div className="flex-1 relative w-full">
+              <img src={designImage} alt="3D Pool Design" className="hidden aspect-video w-full object-cover shadow-2xl md:block" />
+              <video
+                className="block aspect-[9/16] w-full object-cover shadow-2xl md:hidden"
+                src={designWalkthrough}
+                poster={designWalkthroughPoster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
+              />
             </div>
           </div>
         </div>
       </header>
-
-      {/* The Process */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <h2 className="text-3xl md:text-5xl font-serif mb-16 text-primary text-center">How We Work</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {THEME_CONFIG.process.map((stepName, i) => (
-              <div key={i} className="p-6 bg-card border border-border relative">
-                <div className="text-4xl font-serif text-secondary mb-4 opacity-50">
-                  {(i + 1).toString().padStart(2, '0')}
-                </div>
-                <h4 className="font-medium text-primary text-sm uppercase tracking-widest">{stepName}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="border-t border-border bg-primary py-24 text-primary-foreground" aria-labelledby="design-walkthrough-title">
         <div className="container mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
@@ -68,12 +63,12 @@ export default function Design() {
               ))}
             </div>
           </div>
-          <figure className="order-1 lg:order-2">
+          <figure className="order-1 flex w-full flex-col items-center lg:order-2">
             <div className="mx-auto w-full max-w-sm overflow-hidden border border-primary-foreground/20 bg-black shadow-2xl">
               <video
-                className="block aspect-[9/16] h-auto w-full object-cover"
+                className="block h-auto max-h-[72svh] w-full object-contain"
                 src={designWalkthrough}
-                poster={designImage}
+                poster={designWalkthroughPoster}
                 autoPlay
                 muted
                 loop
@@ -87,6 +82,24 @@ export default function Design() {
               Illustrative 3D design walkthrough · concept study
             </figcaption>
           </figure>
+        </div>
+      </section>
+
+      {/* The Process */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <h2 className="text-3xl md:text-5xl font-serif mb-16 text-primary text-center">How We Work</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {THEME_CONFIG.process.map((stepName, i) => (
+              <div key={i} className="p-6 bg-card border border-border relative">
+                <div className="text-4xl font-serif text-secondary mb-4 opacity-50">
+                  {(i + 1).toString().padStart(2, '0')}
+                </div>
+                <h4 className="font-medium text-primary text-sm uppercase tracking-widest">{stepName}</h4>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
