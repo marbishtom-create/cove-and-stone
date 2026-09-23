@@ -20,6 +20,7 @@ export const THEME_CONFIG = {
     { name: "Ponte Vedra Beach", slug: "ponte-vedra-beach" },
     { name: "Nocatee", slug: "nocatee" },
     { name: "St. Johns", slug: "st-johns" },
+    { name: "Jacksonville Beaches", slug: "jacksonville-beaches" },
     { name: "Atlantic Beach", slug: "atlantic-beach" },
     { name: "Jacksonville Beach", slug: "jacksonville-beach" },
     { name: "Neptune Beach", slug: "neptune-beach" },

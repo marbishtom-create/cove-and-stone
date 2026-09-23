@@ -5,28 +5,142 @@
       "description": "Cove & Stone designs custom pools, spas, pool renovations and complete outdoor living spaces in Jacksonville, Ponte Vedra, Nocatee and Northeast Florida."
     },
     "/pools": {
-      "title": "Custom Pools & Spas | Cove & Stone Pools",
-      "description": "Explore modern custom pools, spas, water features and architectural finishes designed for Jacksonville and Northeast Florida outdoor living.",
+      "title": "Custom Pool Builder Jacksonville, FL | Cove & Stone Pools",
+      "description": "Explore custom pools, spas, geometric pools, sun shelves, water and fire features, and premium finishes designed for Jacksonville and Northeast Florida outdoor living.",
       "service": {
         "name": "Custom Pools & Spas",
         "serviceType": "Custom pool and spa design-build"
-      }
+      },
+      "faqs": [
+        {
+          "question": "How does Cove & Stone approach custom pool design?",
+          "answer": "Each pool is developed as a custom architectural response to the home's geometry, the property and the way the space will be used. The design process coordinates the pool, surrounding materials and outdoor-living elements into one clear direction."
+        },
+        {
+          "question": "Can a spa be integrated with a custom pool?",
+          "answer": "Yes. A pool concept can include an integrated or raised spa, sun shelves and other connected water elements when they fit the property and the overall design."
+        },
+        {
+          "question": "What pool features can be included in a design?",
+          "answer": "Depending on the property and design direction, features may include infinity-edge, zero-edge or perimeter-overflow concepts, waterfalls, sheer descents, bubblers, fire-and-water features, lighting, equipment upgrades and automation."
+        },
+        {
+          "question": "How are pool finishes and materials selected?",
+          "answer": "Selections are coordinated around the architecture and palette of the home. Options can include porcelain, marble, travertine, natural stone, glass tile and other premium interior, coping and decking finishes."
+        },
+        {
+          "question": "Can I review a 3D visualization of my pool concept?",
+          "answer": "The design studio can develop a photorealistic 3D visualization so the layout, materials and relationship to the home can be reviewed before construction begins."
+        },
+        {
+          "question": "Can I review pool materials at the Jacksonville showroom?",
+          "answer": "Yes. The Jacksonville design studio and showroom provides a place to review pool finishes, waterline tile, stone, pavers, coping, outdoor kitchens, fire and water features, and lighting."
+        },
+        {
+          "question": "Does Cove & Stone coordinate engineering and permitting?",
+          "answer": "Engineering coordination and permitting requirements are reviewed as part of project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a custom pool?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
     },
     "/renovations": {
-      "title": "Pool Renovations & Corrections | Cove & Stone Pools",
-      "description": "Resurface, modernize and reimagine an outdated pool with Cove & Stone's coordinated renovation and outdoor-living design process.",
+      "title": "Pool Renovation & Remodeling Jacksonville, FL | Cove & Stone",
+      "description": "Modernize a pool in Jacksonville and Northeast Florida with resurfacing, tile and coping updates, decking, structural corrections, equipment and automation upgrades, and complete pool transformations.",
       "service": {
         "name": "Pool Renovations & Corrections",
         "serviceType": "Pool renovation and correction design-build"
-      }
+      },
+      "faqs": [
+        {
+          "question": "When is it time to consider a pool renovation?",
+          "answer": "Renovation can be considered when a pool has aging surfaces, damaged tile or coping, outdated equipment, structural concerns, or a layout that no longer suits the home or the way the space is used."
+        },
+        {
+          "question": "What is the difference between resurfacing and a complete remodel?",
+          "answer": "Resurfacing renews the pool's interior finish. A broader remodel can coordinate surface work with tile, coping, decking, equipment, structural corrections, layout changes and additional water or outdoor-living features."
+        },
+        {
+          "question": "Can a renovation add a spa, sun shelf or water feature?",
+          "answer": "A renovation concept may include a raised or integrated spa, sun shelf, zero-edge element, waterfall, sheer descent, bubbler or fire-and-water feature when the property and existing structure support the design."
+        },
+        {
+          "question": "Can you update the pool's coping, tile and decking?",
+          "answer": "Yes. Aging tile, coping and decking can be reviewed as part of the renovation scope, with material selections such as glass tile, porcelain, marble, travertine, natural stone and other premium finishes."
+        },
+        {
+          "question": "Can pool equipment and automation be upgraded?",
+          "answer": "Equipment planning can include variable-speed pumps, heating, ozone or UV sanitation systems, lighting and smartphone automation when those upgrades fit the existing system and renovation goals."
+        },
+        {
+          "question": "Can I see a 3D redesign before renovation work begins?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review the proposed layout, materials and relationship to the home before construction begins."
+        },
+        {
+          "question": "Can I select renovation materials at the Jacksonville showroom?",
+          "answer": "Yes. The Jacksonville design studio and showroom provides a place to review pool finishes, waterline tile, stone, pavers, coping, outdoor kitchens, fire and water features, and lighting."
+        },
+        {
+          "question": "Does Cove & Stone coordinate renovation engineering and permitting?",
+          "answer": "Engineering coordination and permitting requirements are reviewed during project planning. Specific requirements depend on the existing pool, renovation scope, property and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for pool remodeling?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
     },
     "/outdoor-living": {
-      "title": "Outdoor Living Design | Cove & Stone Pools",
-      "description": "Design a complete Jacksonville outdoor environment with pergolas, kitchens, fire and water features, lighting, stone and landscape coordination.",
+      "title": "Outdoor Living Design & Build Jacksonville, FL | Cove & Stone",
+      "description": "Design outdoor kitchens, pergolas and cabanas, pavers and stone, artificial turf, fire and water features, lighting and pool-integrated outdoor environments in Jacksonville and Northeast Florida.",
       "service": {
         "name": "Outdoor Living Design",
         "serviceType": "Outdoor-living design-build"
-      }
+      },
+      "faqs": [
+        {
+          "question": "Can an outdoor kitchen or pergola be integrated with a pool?",
+          "answer": "Yes. A pool, outdoor kitchen, pergola or cabana can be planned as one cohesive environment so circulation, shade, materials, lighting and views work together around the property."
+        },
+        {
+          "question": "How do I choose between pavers, porcelain, marble and natural stone?",
+          "answer": "Material selections are coordinated around the architecture, palette, use of each area and the relationship between indoor and outdoor spaces. Pavers, porcelain, marble and natural stone each offer different visual and surface qualities to review during design."
+        },
+        {
+          "question": "Where can artificial turf be used in an outdoor-living design?",
+          "answer": "Artificial turf can be considered for lawn areas, turf between oversized pavers, putting-green applications and other lifestyle-turf zones when it suits the property and the overall landscape direction."
+        },
+        {
+          "question": "What fire and water features can be included?",
+          "answer": "Outdoor environments may include linear fire pits, architectural fire bowls, fire-and-water elements, waterfalls or other water features when they fit the design, property and applicable project requirements."
+        },
+        {
+          "question": "How are lighting and ambiance planned?",
+          "answer": "Lighting is considered as part of the outdoor environment, with the placement of landscape and architectural lighting coordinated with paths, seating, kitchens, water and fire features."
+        },
+        {
+          "question": "Can I review a 3D design of the complete outdoor environment?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review the relationship between the pool, outdoor rooms, materials, landscape elements and the home before construction begins."
+        },
+        {
+          "question": "Can I select outdoor-living materials at the Jacksonville showroom?",
+          "answer": "Yes. The Jacksonville design studio and showroom provides a place to review stone, pavers, pool finishes, outdoor kitchens, fire and water features, turf and lighting selections."
+        },
+        {
+          "question": "How does Cove & Stone coordinate outdoor construction?",
+          "answer": "The design-build process keeps the pool, kitchen, shade structures, hardscape, lighting and landscape coordination organized around one design direction and one project scope."
+        },
+        {
+          "question": "Does outdoor-living design include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for outdoor-living projects?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
     },
     "/projects": {
       "title": "Selected Pool & Outdoor-Living Projects | Cove & Stone",
@@ -41,8 +155,34 @@
       }
     },
     "/showroom": {
-      "title": "Jacksonville Design Studio & Showroom | Cove & Stone",
-      "description": "Visit the Cove & Stone Jacksonville showroom to explore pool finishes, stone, pavers, outdoor kitchens, fire features and lighting."
+      "title": "Pool & Outdoor Living Showroom Jacksonville, FL | Cove & Stone",
+      "description": "Visit the Cove & Stone design studio and showroom at 7662 Philips Hwy, Unit 32 in Jacksonville to compare pool finishes, tile, stone, pavers, coping, turf, outdoor kitchen finishes, fire and water features, and lighting.",
+      "place": {
+        "name": "Cove & Stone Design Studio & Showroom",
+        "streetAddress": "7662 Philips Hwy, Unit 32",
+        "addressLocality": "Jacksonville",
+        "addressRegion": "FL",
+        "postalCode": "32256",
+        "addressCountry": "US"
+      },
+      "faqs": [
+        {
+          "question": "What should I bring to a showroom visit?",
+          "answer": "Bring property photos, inspiration images, measurements or a survey if available, and the priorities you want the outdoor space to support. These details help connect material selections to the property and project scope."
+        },
+        {
+          "question": "What can I review or select at the showroom?",
+          "answer": "You can review pool finishes, waterline tile, marble, porcelain, travertine, pavers, coping, artificial turf, outdoor kitchen finishes, fire and water features, and lighting."
+        },
+        {
+          "question": "Can I review a design or 3D visualization at the showroom?",
+          "answer": "Showroom visits and virtual reviews are available as part of the design process. A photorealistic 3D visualization can help connect the selected materials to the pool, home and complete outdoor environment."
+        },
+        {
+          "question": "How does a showroom visit fit with a consultation?",
+          "answer": "Showroom selections can follow an initial conversation about the property and help shape a coordinated proposal. Visits, virtual reviews and private home consultations are available."
+        }
+      ]
     },
     "/financing": {
       "title": "Pool & Outdoor-Living Financing | Cove & Stone",
@@ -63,6 +203,254 @@
     "/contact": {
       "title": "Start Your Project | Cove & Stone Pools",
       "description": "Start a conversation about a custom pool, renovation or complete outdoor-living project with Cove & Stone in Jacksonville and Northeast Florida."
+    },
+    "/locations/ponte-vedra-beach": {
+      "title": "Pool Builder Ponte Vedra Beach, FL | Cove & Stone Pools",
+      "description": "Cove & Stone designs custom pools, spas, renovations and complete outdoor living for Ponte Vedra Beach homeowners, with clean-lined geometry, premium materials and coordinated design-build planning.",
+      "service": {
+        "name": "Ponte Vedra Beach Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "What pool styles suit a luxury Ponte Vedra Beach backyard?",
+          "answer": "Clean-lined geometric pools and resort-style pool environments can both be considered. The right direction depends on the home's architecture, property layout and how the outdoor space will be used."
+        },
+        {
+          "question": "Can a custom pool include a spa or sun shelf?",
+          "answer": "Yes. An integrated or raised spa, a sun shelf and other connected water elements can be considered when they fit the property and the overall design."
+        },
+        {
+          "question": "How are pool decks and material palettes selected?",
+          "answer": "Stone, porcelain and marble can be reviewed alongside the home's architecture, the use of each outdoor area and the desired relationship between indoor and outdoor spaces."
+        },
+        {
+          "question": "Can outdoor kitchens, pergolas and fire features be part of the plan?",
+          "answer": "Yes. Outdoor kitchens, pergolas, cabanas, fire features and lighting can be coordinated with the pool and surrounding landscape as one complete outdoor environment."
+        },
+        {
+          "question": "Can I review a 3D visualization before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review the pool geometry, materials, outdoor rooms and relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can I select materials for a Ponte Vedra Beach project?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the design process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a custom outdoor project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
+    },
+    "/locations/st-johns": {
+      "title": "Pool Builder St. Johns, FL | Cove & Stone Pools",
+      "description": "Cove & Stone designs custom pools, spas, renovations and complete outdoor living for St. Johns, Florida homeowners with a coordinated architectural design-build process.",
+      "service": {
+        "name": "St. Johns Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "How does pool and spa design begin for a St. Johns home?",
+          "answer": "The design begins with the home's architecture, property layout and the way the outdoor space will be used. Pool geometry, an integrated or raised spa, sun shelves and surrounding spaces can then be considered as one environment."
+        },
+        {
+          "question": "Can an outdoor kitchen or shade structure be integrated with the pool?",
+          "answer": "Yes. Outdoor kitchens, pergolas and cabanas can be coordinated with the pool, spa, seating areas and circulation so the backyard works as a complete outdoor environment."
+        },
+        {
+          "question": "How are deck, stone and turf materials planned?",
+          "answer": "Selections such as porcelain, marble, natural stone, pavers and artificial turf are reviewed in relation to the home's architecture, each area's use and the overall material palette."
+        },
+        {
+          "question": "Can I review a 3D visualization before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review the pool, spa, outdoor rooms, materials and relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can I select materials for a St. Johns project?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a St. Johns outdoor project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
+    },
+    "/locations/jacksonville-beaches": {
+      "title": "Pool Builder Jacksonville Beaches, FL | Cove & Stone Pools",
+      "description": "Cove & Stone designs custom pools, spas and complete outdoor living for Atlantic Beach, Jacksonville Beach, Neptune Beach, nearby Ponte Vedra Beach and the Jacksonville Beaches.",
+      "service": {
+        "name": "Jacksonville Beaches Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, spa and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "What can a complete Jacksonville Beaches outdoor environment include?",
+          "answer": "A connected plan can bring together a custom pool, spa, outdoor kitchen, pergola or cabana, premium hardscape, artificial turf, fire features, water features and lighting when those elements fit the property and design direction."
+        },
+        {
+          "question": "How should coastal-style pool and outdoor-living materials be considered?",
+          "answer": "Material selections can be reviewed around the home's architecture, the way each area will be used, the desired visual palette and the relationship between indoor and outdoor spaces. Specific material choices should be evaluated for the property's conditions and intended application."
+        },
+        {
+          "question": "Can a pool and outdoor kitchen be designed as one environment?",
+          "answer": "Yes. Pool geometry, an integrated or raised spa, an outdoor kitchen, shade structures, seating and circulation can be planned together so the backyard reads as one cohesive environment."
+        },
+        {
+          "question": "What options are available for decks, pavers, porcelain, marble and turf?",
+          "answer": "Pavers, porcelain, marble, natural stone and artificial turf can all be considered for different areas of a project, with selections coordinated around the architecture, use, palette and relationship to the pool."
+        },
+        {
+          "question": "Can I review a 3D visualization before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review pool geometry, outdoor rooms, materials, lighting and the relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can Jacksonville Beaches homeowners review materials?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a Jacksonville Beaches project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
+    },
+    "/locations/atlantic-beach": {
+      "title": "Pool Builder Atlantic Beach, FL | Cove & Stone Pools",
+      "description": "Cove & Stone designs refined coastal-modern custom pools, spas, renovations and complete outdoor living for Atlantic Beach homeowners.",
+      "service": {
+        "name": "Atlantic Beach Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "How can a refined coastal-modern pool design take shape?",
+          "answer": "A design can begin with quiet pool geometry, a restrained material palette and clear connections between the home, water, shade and outdoor rooms. The direction is shaped around the property and the way it will be used."
+        },
+        {
+          "question": "Can the pool include an integrated spa or sun shelf?",
+          "answer": "Yes. An integrated or raised spa, a sun shelf and other connected water elements can be considered when they fit the property and the overall design."
+        },
+        {
+          "question": "Which deck and material selections can be reviewed?",
+          "answer": "Pavers, porcelain, marble and natural stone can be evaluated with coping, tile and artificial turf to create a cohesive palette across the pool and outdoor-living areas."
+        },
+        {
+          "question": "Can an outdoor kitchen, pergola or fire feature be part of the plan?",
+          "answer": "Yes. Outdoor kitchens, pergolas, cabanas, fire features and lighting can be coordinated with the pool and spa as one complete outdoor environment."
+        },
+        {
+          "question": "Can I review a 3D visualization before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review pool geometry, materials, outdoor rooms and the relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can I review materials for an Atlantic Beach project?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for an outdoor-living project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
+    },
+    "/locations/jacksonville-beach": {
+      "title": "Pool Builder Jacksonville Beach, FL | Cove & Stone Pools",
+      "description": "Cove & Stone designs custom pools, spas, renovations and complete outdoor living for Jacksonville Beach homeowners, from compact courtyards to expansive entertaining spaces.",
+      "service": {
+        "name": "Jacksonville Beach Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "How can a pool design work in a compact or expansive Jacksonville Beach backyard?",
+          "answer": "The layout can be shaped around the available property, circulation and intended use. Compact courtyards and larger backyards can each consider pool geometry, spa integration, shade and entertaining areas at an appropriate scale."
+        },
+        {
+          "question": "Can the pool, spa and entertaining spaces be designed together?",
+          "answer": "Yes. An integrated or raised spa, sun shelf, outdoor kitchen, pergola, cabana and seating areas can be coordinated with the pool as one connected outdoor environment."
+        },
+        {
+          "question": "What materials work across pool decks and outdoor rooms?",
+          "answer": "Pavers, porcelain, marble, natural stone and artificial turf can be reviewed for different areas, with selections coordinated around the home's architecture, use and overall palette."
+        },
+        {
+          "question": "Can renovations and new outdoor-living features be planned together?",
+          "answer": "A renovation scope can be reviewed alongside decking, tile, coping, equipment, outdoor kitchens, shade structures, fire features and lighting when the existing property supports the design."
+        },
+        {
+          "question": "Can I review the design in 3D before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review the pool, spa, entertaining areas, materials and relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can I select materials for a Jacksonville Beach project?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the planning process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a Jacksonville Beach project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
+    },
+    "/locations/neptune-beach": {
+      "title": "Pool Builder Neptune Beach, FL | Cove & Stone Pools",
+      "description": "Cove & Stone creates clean-lined custom pools, spas, renovations and complete outdoor living for Neptune Beach homeowners with an understated design approach.",
+      "service": {
+        "name": "Neptune Beach Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "What defines an understated Neptune Beach pool design?",
+          "answer": "The direction can focus on clean lines, balanced proportions, a restrained material palette and a calm relationship between the pool, spa, home and surrounding outdoor spaces."
+        },
+        {
+          "question": "Can a spa and sun shelf be integrated without overwhelming the design?",
+          "answer": "Yes. An integrated or raised spa, sun shelf and other water details can be considered as part of the overall geometry so the features feel connected to the architecture."
+        },
+        {
+          "question": "How are pavers, porcelain, marble and turf coordinated?",
+          "answer": "Selections are reviewed around the home's architecture, the way each space will be used and the desired balance of texture and tone across decks, paths, pool edges and outdoor rooms."
+        },
+        {
+          "question": "Can outdoor kitchens, pergolas and fire features stay visually restrained?",
+          "answer": "Outdoor kitchens, pergolas, cabanas, fire features and lighting can be planned with the pool and spa so the entertaining elements support one cohesive, understated environment."
+        },
+        {
+          "question": "Can I review a 3D visualization before construction?",
+          "answer": "The design studio can develop a photorealistic 3D visualization to review pool geometry, materials, outdoor rooms and the relationship to the home before construction begins."
+        },
+        {
+          "question": "Where can I review materials for a Neptune Beach project?",
+          "answer": "Selections can be reviewed at the Cove & Stone Design Studio & Showroom at 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        },
+        {
+          "question": "Does the process include engineering and permitting coordination?",
+          "answer": "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction."
+        },
+        {
+          "question": "Are financing options available for a Neptune Beach project?",
+          "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        }
+      ]
     }
   },
   "projectNames": {

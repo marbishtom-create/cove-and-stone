@@ -169,6 +169,38 @@ function serviceSchema(pathname, service) {
   };
 }
 
+function faqSchema(pathname, faqs) {
+  return {
+    "@type": "FAQPage",
+    "@id": `${absoluteUrl(pathname)}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+function placeSchema(pathname, place) {
+  return {
+    "@type": "Place",
+    "@id": `${absoluteUrl(pathname)}#place`,
+    name: place.name,
+    url: absoluteUrl(pathname),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: place.streetAddress,
+      addressLocality: place.addressLocality,
+      addressRegion: place.addressRegion,
+      postalCode: place.postalCode,
+      addressCountry: place.addressCountry,
+    },
+  };
+}
+
 function buildStructuredData(pathname, seo) {
   const graph = [businessSchema(), websiteSchema()];
 
@@ -178,6 +210,14 @@ function buildStructuredData(pathname, seo) {
 
   if (seo.service) {
     graph.push(serviceSchema(pathname, seo.service));
+  }
+
+  if (seo.faqs?.length) {
+    graph.push(faqSchema(pathname, seo.faqs));
+  }
+
+  if (seo.place) {
+    graph.push(placeSchema(pathname, seo.place));
   }
 
   return {

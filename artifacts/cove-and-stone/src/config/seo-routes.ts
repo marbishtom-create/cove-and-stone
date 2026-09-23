@@ -12,10 +12,26 @@ type ServiceDefinition = {
   serviceType: string;
 };
 
+export type FaqDefinition = {
+  question: string;
+  answer: string;
+};
+
+export type PlaceDefinition = {
+  name: string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+};
+
 export type RouteSeo = {
   title: string;
   description: string;
   service?: ServiceDefinition;
+  faqs?: FaqDefinition[];
+  place?: PlaceDefinition;
 };
 
 const data = routeData as {
@@ -164,6 +180,38 @@ function serviceSchema(pathname: string, service: ServiceDefinition) {
   };
 }
 
+function faqSchema(pathname: string, faqs: FaqDefinition[]) {
+  return {
+    "@type": "FAQPage",
+    "@id": `${absoluteUrl(pathname)}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+function placeSchema(pathname: string, place: PlaceDefinition) {
+  return {
+    "@type": "Place",
+    "@id": `${absoluteUrl(pathname)}#place`,
+    name: place.name,
+    url: absoluteUrl(pathname),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: place.streetAddress,
+      addressLocality: place.addressLocality,
+      addressRegion: place.addressRegion,
+      postalCode: place.postalCode,
+      addressCountry: place.addressCountry,
+    },
+  };
+}
+
 export function buildStructuredData(pathname: string, seo = getRouteSeo(pathname)) {
   const graph: Record<string, unknown>[] = [businessSchema(), websiteSchema()];
 
@@ -173,6 +221,14 @@ export function buildStructuredData(pathname: string, seo = getRouteSeo(pathname
 
   if (seo.service) {
     graph.push(serviceSchema(pathname, seo.service));
+  }
+
+  if (seo.faqs?.length) {
+    graph.push(faqSchema(pathname, seo.faqs));
+  }
+
+  if (seo.place) {
+    graph.push(placeSchema(pathname, seo.place));
   }
 
   return {

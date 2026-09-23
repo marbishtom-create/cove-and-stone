@@ -19,9 +19,9 @@ export default function OutdoorLiving() {
           </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-foreground pt-32">
-          <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Complete Backyards</span>
+          <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Rooms without walls.</span>
           <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight text-primary">
-            Rooms without walls.
+            Outdoor Living Design & Build in Jacksonville, FL
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl font-light leading-relaxed">
             Expand your home's footprint. We design and build seamless outdoor environments featuring custom kitchens, architectural pergolas, fire features, and elite hardscaping.
@@ -94,6 +94,84 @@ export default function OutdoorLiving() {
                 Concept visualization
               </div>
             </div>
+          </div>
+
+          <nav aria-label="Continue exploring pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
+            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+              <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+              <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+            </div>
+          </nav>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="mb-12">
+            <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">The details, considered</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-primary mb-5">Questions before the doors open.</h2>
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              The best outdoor rooms feel inevitable because every element has been considered together. These are the practical questions that shape the process.
+            </p>
+          </div>
+          <div className="border-t border-border">
+            {[
+              {
+                question: "Can an outdoor kitchen or pergola be integrated with a pool?",
+                answer: "Yes. A pool, outdoor kitchen, pergola or cabana can be planned as one cohesive environment so circulation, shade, materials, lighting and views work together around the property.",
+              },
+              {
+                question: "How do I choose between pavers, porcelain, marble and natural stone?",
+                answer: "Material selections are coordinated around the architecture, palette, use of each area and the relationship between indoor and outdoor spaces. Pavers, porcelain, marble and natural stone each offer different visual and surface qualities to review during design.",
+              },
+              {
+                question: "Where can artificial turf be used in an outdoor-living design?",
+                answer: "Artificial turf can be considered for lawn areas, turf between oversized pavers, putting-green applications and other lifestyle-turf zones when it suits the property and the overall landscape direction.",
+              },
+              {
+                question: "What fire and water features can be included?",
+                answer: "Outdoor environments may include linear fire pits, architectural fire bowls, fire-and-water elements, waterfalls or other water features when they fit the design, property and applicable project requirements.",
+              },
+              {
+                question: "How are lighting and ambiance planned?",
+                answer: "Lighting is considered as part of the outdoor environment, with the placement of landscape and architectural lighting coordinated with paths, seating, kitchens, water and fire features.",
+              },
+              {
+                question: "Can I review a 3D design of the complete outdoor environment?",
+                answer: "The design studio can develop a photorealistic 3D visualization to review the relationship between the pool, outdoor rooms, materials, landscape elements and the home before construction begins.",
+              },
+              {
+                question: "Can I select outdoor-living materials at the Jacksonville showroom?",
+                answer: "Yes. The Jacksonville design studio and showroom provides a place to review stone, pavers, pool finishes, outdoor kitchens, fire and water features, turf and lighting selections.",
+              },
+              {
+                question: "How does Cove & Stone coordinate outdoor construction?",
+                answer: "The design-build process keeps the pool, kitchen, shade structures, hardscape, lighting and landscape coordination organized around one design direction and one project scope.",
+              },
+              {
+                question: "Does outdoor-living design include engineering and permitting coordination?",
+                answer: "Engineering coordination and permitting requirements are reviewed where applicable during project planning. Specific requirements depend on the property, scope and applicable local jurisdiction.",
+              },
+              {
+                question: "Are financing options available for outdoor-living projects?",
+                answer: "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms.",
+              },
+            ].map(({ question, answer }) => (
+              <details key={question} className="group border-b border-border">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-serif text-primary marker:hidden">
+                  {question}
+                  <span className="text-secondary text-2xl font-light transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="max-w-3xl pb-6 pr-10 text-muted-foreground leading-relaxed">{answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

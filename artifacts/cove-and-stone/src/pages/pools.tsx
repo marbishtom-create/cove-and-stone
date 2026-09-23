@@ -109,6 +109,76 @@ export default function Pools() {
               </p>
             </div>
           </div>
+
+          <nav aria-label="Continue exploring pool and outdoor-living services" className="mt-16 pt-8 border-t border-border">
+            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue exploring</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+              <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+              <Link href="/renovations" className="text-primary hover:text-secondary transition-colors">Pool renovations</Link>
+              <Link href="/showroom" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
+              <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+              <Link href="/projects" className="text-primary hover:text-secondary transition-colors">View projects</Link>
+              <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+            </div>
+          </nav>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="mb-12">
+            <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">The details, considered</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-primary mb-5">Questions before the first line is drawn.</h2>
+            <p className="text-muted-foreground leading-relaxed max-w-2xl">
+              A custom pool is shaped by the property, the architecture and the way you want to live outside. These are some of the practical questions we review together.
+            </p>
+          </div>
+          <div className="border-t border-border">
+            {[
+              {
+                question: "How does Cove & Stone approach custom pool design?",
+                answer: "Each pool is developed as a custom architectural response to the home's geometry, the property and the way the space will be used. The design process coordinates the pool, surrounding materials and outdoor-living elements into one clear direction.",
+              },
+              {
+                question: "Can a spa be integrated with a custom pool?",
+                answer: "Yes. A pool concept can include an integrated or raised spa, sun shelves and other connected water elements when they fit the property and the overall design.",
+              },
+              {
+                question: "What pool features can be included in a design?",
+                answer: "Depending on the property and design direction, features may include infinity-edge, zero-edge or perimeter-overflow concepts, waterfalls, sheer descents, bubblers, fire-and-water features, lighting, equipment upgrades and automation.",
+              },
+              {
+                question: "How are pool finishes and materials selected?",
+                answer: "Selections are coordinated around the architecture and palette of the home. Options can include porcelain, marble, travertine, natural stone, glass tile and other premium interior, coping and decking finishes.",
+              },
+              {
+                question: "Can I review a 3D visualization of my pool concept?",
+                answer: "The design studio can develop a photorealistic 3D visualization so the layout, materials and relationship to the home can be reviewed before construction begins.",
+              },
+              {
+                question: "Can I review pool materials at the Jacksonville showroom?",
+                answer: "Yes. The Jacksonville design studio and showroom provides a place to review pool finishes, waterline tile, stone, pavers, coping, outdoor kitchens, fire and water features, and lighting.",
+              },
+              {
+                question: "Does Cove & Stone coordinate engineering and permitting?",
+                answer: "Engineering coordination and permitting requirements are reviewed as part of project planning. Specific requirements depend on the property, scope and applicable local jurisdiction.",
+              },
+              {
+                question: "Are financing options available for a custom pool?",
+                answer: "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms.",
+              },
+            ].map(({ question, answer }) => (
+              <details key={question} className="group border-b border-border">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-serif text-primary marker:hidden">
+                  {question}
+                  <span className="text-secondary text-2xl font-light transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="max-w-3xl pb-6 pr-10 text-muted-foreground leading-relaxed">{answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 

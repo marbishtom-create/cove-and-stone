@@ -11,9 +11,9 @@ export default function Showroom() {
         
         <div className="text-center max-w-3xl mx-auto mb-20">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Jacksonville Design Studio & Showroom</span>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6 text-primary">See it. Design it. Finance it. Build it.</h1>
+          <h1 className="text-4xl md:text-6xl font-serif mb-6 text-primary">Pool & Outdoor Living Showroom in Jacksonville, FL</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Our in-house design showroom on Philips Highway brings the whole backyard into view. Explore materials at full scale, build a cohesive palette and review photorealistic concepts before construction begins.
+            Our in-house design showroom at 7662 Philips Hwy, Unit 32 brings the whole backyard into view. Compare materials at full scale, build a cohesive palette and review photorealistic concepts before construction begins.
           </p>
         </div>
 
@@ -25,6 +25,9 @@ export default function Showroom() {
                 src={showroomPhotoDesktop}
                 alt="Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays"
                 className="w-full h-full object-cover"
+                width={1600}
+                height={1200}
+                fetchPriority="high"
               />
             </picture>
             <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
@@ -113,6 +116,82 @@ export default function Showroom() {
             </Link>
           </div>
         </div>
+
+        <section className="mt-24 pt-16 border-t border-border">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-12">
+              <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">From selection to scope</span>
+              <h2 className="text-3xl md:text-5xl font-serif text-primary mb-5">A material decision is part of the larger design.</h2>
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                Showroom selections help connect the pool, outdoor rooms, hardscape, lighting and the architecture of the home. Review the design direction, compare finishes and carry the chosen palette into the project scope.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-card border border-border p-8">
+                <h3 className="text-xl font-serif text-primary mb-4">Start with the property</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Bring property photos, inspiration, measurements or a survey if available, and the way you want to use the space. The design studio can use that context when reviewing pools, spas, outdoor kitchens and materials.
+                </p>
+              </div>
+              <div className="bg-card border border-border p-8">
+                <h3 className="text-xl font-serif text-primary mb-4">Carry the palette forward</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  A cohesive selection can inform the pool and spa, outdoor living, renovation scope, available financing conversations and the coordinated proposal.
+                </p>
+              </div>
+            </div>
+            <nav aria-label="Continue planning your pool and outdoor-living project" className="mt-12 pt-8 border-t border-border">
+              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-5">Continue planning</p>
+              <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+                <Link href="/design" className="text-primary hover:text-secondary transition-colors">Design your backyard</Link>
+                <Link href="/pools" className="text-primary hover:text-secondary transition-colors">Custom pools & spas</Link>
+                <Link href="/outdoor-living" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
+                <Link href="/financing" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
+                <Link href="/contact" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
+              </div>
+            </nav>
+          </div>
+        </section>
+
+        <section className="mt-24 pt-16 border-t border-border">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-12">
+              <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Showroom questions</span>
+              <h2 className="text-3xl md:text-5xl font-serif text-primary mb-5">Before you make a selection.</h2>
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                The showroom is one part of a larger design conversation. These practical questions help clarify how to prepare and what the visit can support.
+              </p>
+            </div>
+            <div className="border-t border-border">
+              {[
+                {
+                  question: "What should I bring to a showroom visit?",
+                  answer: "Bring property photos, inspiration images, measurements or a survey if available, and the priorities you want the outdoor space to support. These details help connect material selections to the property and project scope.",
+                },
+                {
+                  question: "What can I review or select at the showroom?",
+                  answer: "You can review pool finishes, waterline tile, marble, porcelain, travertine, pavers, coping, artificial turf, outdoor kitchen finishes, fire and water features, and lighting.",
+                },
+                {
+                  question: "Can I review a design or 3D visualization at the showroom?",
+                  answer: "Showroom visits and virtual reviews are available as part of the design process. A photorealistic 3D visualization can help connect the selected materials to the pool, home and complete outdoor environment.",
+                },
+                {
+                  question: "How does a showroom visit fit with a consultation?",
+                  answer: "Showroom selections can follow an initial conversation about the property and help shape a coordinated proposal. Visits, virtual reviews and private home consultations are available.",
+                },
+              ].map(({ question, answer }) => (
+                <details key={question} className="group border-b border-border">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-serif text-primary marker:hidden">
+                    {question}
+                    <span className="text-secondary text-2xl font-light transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </summary>
+                  <p className="max-w-3xl pb-6 pr-10 text-muted-foreground leading-relaxed">{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
