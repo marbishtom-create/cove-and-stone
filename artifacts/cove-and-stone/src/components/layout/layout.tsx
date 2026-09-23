@@ -72,20 +72,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                variant={isScrolled ? 'light' : 'default'}
                  imageClassName="w-[122px] md:w-[160px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)]"
              />
-              <div className="fixed bottom-0 left-6 z-10 hidden flex-col items-start gap-2 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)] lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:flex">
-               <Link
-                 href="/contact/"
-                  className="whitespace-nowrap font-serif text-sm font-medium tracking-[0.08em] text-secondary transition-colors hover:text-primary"
-               >
-                 Design Consultations
-               </Link>
-               <Link
-                 href="/contact/"
-                  className="whitespace-nowrap font-serif text-sm font-medium uppercase tracking-[0.16em] text-secondary transition-colors hover:text-primary"
-               >
-                 Start Your Project
-               </Link>
-             </div>
            </div>
 
           {/* Desktop Nav */}
@@ -118,6 +104,21 @@ export default function Layout({ children }: { children: ReactNode }) {
           </button>
         </div>
       </header>
+
+      <div className="fixed bottom-0 left-6 z-50 hidden flex-col items-start gap-2 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)] lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:flex">
+        <Link
+          href="/contact/"
+          className="whitespace-nowrap font-serif text-sm font-medium tracking-[0.08em] text-secondary transition-colors hover:text-primary"
+        >
+          Design Consultations
+        </Link>
+        <Link
+          href="/contact/"
+          className="whitespace-nowrap font-serif text-sm font-medium uppercase tracking-[0.16em] text-secondary transition-colors hover:text-primary"
+        >
+          Start Your Project
+        </Link>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <div 
