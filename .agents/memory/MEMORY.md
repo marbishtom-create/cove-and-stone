@@ -4,3 +4,4 @@
 - [Responsive project media](responsive-project-media.md) — derive smaller mobile variants from approved originals while preserving source copy and accessibility text.
 - [Production routing and SEO status codes](production-routing.md) — static catch-all hosting cannot provide route-aware redirects or real 404 responses.
 - [Pool visualizer generation boundary](pool-visualizer-generation.md) — keep previews deterministic and truthful; AI rendering can enhance but must not be the only path.
+- [Resend internal handoff](resend-internal-handoff.md) — keep concept emails server-side and use a verified Cove & Stone sender because the connector is send-only.

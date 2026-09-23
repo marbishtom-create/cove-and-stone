@@ -1,5 +1,6 @@
 import { THEME_CONFIG } from '@/config/theme';
 import designImage from '@assets/generated_images/design-3d.jpg';
+import designWalkthrough from '@assets/✨_Bringing_this_backyard_to_life_through_custom_3D_design_befo_1790179934195.mp4';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { Link } from 'wouter';
 
@@ -40,6 +41,52 @@ export default function Design() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-primary py-24 text-primary-foreground" aria-labelledby="design-walkthrough-title">
+        <div className="container mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+          <div className="order-2 lg:order-1">
+            <span className="mb-4 block text-sm uppercase tracking-[0.3em] text-secondary">See the service in motion</span>
+            <h2 id="design-walkthrough-title" className="mb-6 text-3xl font-serif leading-tight md:text-5xl">
+              See your future backyard before construction begins.
+            </h2>
+            <p className="mb-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
+              Our 3D design process turns the property, pool, materials and outdoor-living details into a visual direction you can review together. This concept walkthrough shows how the finished environment can be explored before the build begins.
+            </p>
+            <div className="grid max-w-xl grid-cols-1 gap-4 border-t border-primary-foreground/20 pt-6 sm:grid-cols-3">
+              {[
+                ['01', 'Place the pool', 'Review proportion and placement in the backyard.'],
+                ['02', 'Shape the details', 'Coordinate water, materials, lighting and outdoor rooms.'],
+                ['03', 'Walk the direction', 'Use the visual concept to make decisions with confidence.'],
+              ].map(([number, title, copy]) => (
+                <div key={number}>
+                  <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-secondary">{number}</span>
+                  <h3 className="mb-2 text-sm font-medium uppercase tracking-widest">{title}</h3>
+                  <p className="text-sm leading-relaxed text-primary-foreground/60">{copy}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <figure className="order-1 lg:order-2">
+            <div className="mx-auto w-full max-w-sm overflow-hidden border border-primary-foreground/20 bg-black shadow-2xl">
+              <video
+                className="block aspect-[9/16] h-auto w-full object-cover"
+                src={designWalkthrough}
+                poster={designImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
+              />
+            </div>
+            <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-primary-foreground/55">
+              Illustrative 3D design walkthrough · concept study
+            </figcaption>
+          </figure>
         </div>
       </section>
 

@@ -64,5 +64,7 @@ test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /onSliderKeyDown/);
   assert.match(component, /data-testid="button-export-concept"/);
   assert.match(component, /data-testid="button-reset-design"/);
+  assert.match(component, /data-testid="button-send-concept"/);
+  assert.match(component, /emailDesignConcept/);
   assert.match(component, /illustrative study, not completed-project photography/);
 });

@@ -4,6 +4,7 @@ import {
   Download,
   Image as ImageIcon,
   Lightbulb,
+  Mail,
   MoveHorizontal,
   RefreshCcw,
   Sparkles,
@@ -12,6 +13,7 @@ import {
   Waves,
   X,
 } from 'lucide-react';
+import { emailDesignConcept } from '@workspace/api-client-react';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -250,6 +252,8 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   }));
   const [isDragging, setIsDragging] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [isSendingConcept, setIsSendingConcept] = useState(false);
+  const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -362,6 +366,36 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     anchor.click();
     anchor.remove();
     URL.revokeObjectURL(url);
+  };
+
+  const sendConceptToTeam = async () => {
+    const svg = previewRef.current?.querySelector('.pool-visualizer__after-art svg');
+    if (!(svg instanceof SVGSVGElement)) {
+      setConceptSendStatus('error');
+      return;
+    }
+
+    setIsSendingConcept(true);
+    setConceptSendStatus('idle');
+
+    try {
+      await emailDesignConcept({
+        width: configuration.width,
+        length: configuration.length,
+        shape: configuration.shape,
+        waterFinish: configuration.waterFinish,
+        waterlineTile: configuration.waterlineTile,
+        lights: configuration.lights,
+        waterfall: configuration.waterfall,
+        sunShelf: configuration.sunShelf,
+        svg: new XMLSerializer().serializeToString(svg),
+      });
+      setConceptSendStatus('sent');
+    } catch {
+      setConceptSendStatus('error');
+    } finally {
+      setIsSendingConcept(false);
+    }
   };
 
   const beforeImageWidth = configuration.comparisonPosition > 0
@@ -549,9 +583,20 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <button className="pool-visualizer__text-button" type="button" onClick={resetDesign} data-testid="button-reset-design">
               <RefreshCcw size={14} /> Reset design
             </button>
-            <span className="pool-visualizer__saved-status" role="status" aria-live="polite" data-testid="status-generated">
-              <span /> Concept updated
-            </span>
+            <div className="pool-visualizer__handoff">
+              <button
+                className="pool-visualizer__send-button"
+                type="button"
+                onClick={sendConceptToTeam}
+                disabled={isSendingConcept}
+                data-testid="button-send-concept"
+              >
+                <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
+              </button>
+              <span className="pool-visualizer__saved-status" role="status" aria-live="polite" data-testid="status-generated">
+                <span /> {conceptSendStatus === 'sent' ? 'Sent internally' : conceptSendStatus === 'error' ? 'Could not send' : 'Concept updated'}
+              </span>
+            </div>
           </div>
         </aside>
 

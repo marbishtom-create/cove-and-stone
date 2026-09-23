@@ -521,6 +521,37 @@
   padding-top: 1rem;
 }
 
+.pool-visualizer__handoff {
+  align-items: flex-end;
+  display: grid;
+  gap: .45rem;
+  justify-items: end;
+}
+
+.pool-visualizer__send-button {
+  align-items: center;
+  background: var(--pv-charcoal);
+  border: 1px solid var(--pv-charcoal);
+  color: var(--pv-paper);
+  display: flex;
+  font-size: .62rem;
+  gap: .35rem;
+  letter-spacing: .04em;
+  padding: .55rem .7rem;
+  transition: background-color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+.pool-visualizer__send-button:hover,
+.pool-visualizer__send-button:focus-visible {
+  background: var(--pv-aqua-dark);
+  border-color: var(--pv-aqua-dark);
+}
+
+.pool-visualizer__send-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
 .pool-visualizer__text-button {
   align-items: center;
   background: none;

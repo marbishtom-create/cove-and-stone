@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: design-concepts
+    description: Internal pool concept handoff operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /design-concepts/email:
+    post:
+      operationId: emailDesignConcept
+      tags: [design-concepts]
+      summary: Email a completed pool concept internally
+      description: Sends the completed concept SVG and configuration summary to the Cove & Stone team.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DesignConceptEmailRequest"
+      responses:
+        "202":
+          description: Design concept queued for internal delivery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DesignConceptEmailResponse"
+        "400":
+          description: Invalid design concept
+        "502":
+          description: Internal email provider failure
 components:
   schemas:
     HealthStatus:
@@ -31,6 +56,54 @@ components:
       properties:
         status:
           type: string
+      required:
+        - status
+    DesignConceptEmailRequest:
+      type: object
+      properties:
+        width:
+          type: integer
+          minimum: 8
+          maximum: 60
+        length:
+          type: integer
+          minimum: 12
+          maximum: 100
+        shape:
+          type: string
+          enum: [rectangular, freeform, kidney, l-shape]
+        waterFinish:
+          type: string
+          enum: [clear-cove, deep-atlas, greenstone]
+        waterlineTile:
+          type: string
+          enum: [travertine, ink-line, sea-glass]
+        lights:
+          type: boolean
+        waterfall:
+          type: boolean
+        sunShelf:
+          type: boolean
+        svg:
+          type: string
+          minLength: 1
+          maxLength: 120000
+      required:
+        - width
+        - length
+        - shape
+        - waterFinish
+        - waterlineTile
+        - lights
+        - waterfall
+        - sunShelf
+        - svg
+    DesignConceptEmailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [sent]
       required:
         - status
 
