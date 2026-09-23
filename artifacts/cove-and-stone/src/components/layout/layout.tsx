@@ -29,9 +29,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       <header
         data-testid="site-header"
         data-header-state={isScrolled ? 'scrolled' : 'hero'}
+        data-mobile-menu-state={mobileMenuOpen ? 'open' : 'closed'}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-background/90 backdrop-blur-md border-b border-border py-2' 
+          mobileMenuOpen || isScrolled
+            ? 'bg-background/90 backdrop-blur-md border-b border-border py-2'
             : 'bg-background/95 backdrop-blur-md border-b border-border py-1 lg:bg-transparent lg:backdrop-blur-none lg:border-transparent lg:py-2'
         }`}
       >
@@ -56,7 +57,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                </Link>
              </div>
            </div>
-          
+
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
             {THEME_CONFIG.navLinks.map((link) => (
@@ -75,6 +76,11 @@ export default function Layout({ children }: { children: ReactNode }) {
           {/* Mobile Menu Toggle */}
           <button 
             className="lg:hidden p-2 text-primary hover:text-secondary transition-colors"
+            type="button"
+            data-testid="mobile-menu-toggle"
+            aria-controls="mobile-navigation"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -84,6 +90,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       {/* Mobile Menu Overlay */}
       <div 
+        id="mobile-navigation"
+        data-testid="mobile-menu-overlay"
+        data-mobile-menu-state={mobileMenuOpen ? 'open' : 'closed'}
+        aria-hidden={!mobileMenuOpen}
         className={`fixed inset-0 bg-background/95 backdrop-blur-lg z-40 lg:hidden flex flex-col pt-28 px-6 transition-all duration-500 ease-in-out ${
           mobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'
         }`}

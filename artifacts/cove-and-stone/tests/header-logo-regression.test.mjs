@@ -34,7 +34,7 @@ test('uses the complete transparent logo lockup in the header', () => {
 test('keeps the logo aspect ratio stable across mobile and desktop widths', () => {
   assert.match(
     logoSource,
-    /className="block w-\[92px\] h-auto object-contain md:w-\[104px\]/,
+    /className=\{`block w-\[92px\] h-auto object-contain md:w-\[104px\]/,
   );
   assert.match(logoSource, /data-testid="site-logo-image"/);
 });
@@ -51,7 +51,10 @@ test('covers the complete lockup on representative interior routes at both viewp
   }
 
   assert.match(layoutSource, /data-testid="site-header"/);
-  assert.match(layoutSource, /<Logo variant=\{isScrolled \? 'light' : 'default'\} \/>/);
+  assert.match(
+    layoutSource,
+    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}(?:\s+imageClassName="[^"]+")?\s+\/>/,
+  );
 
   for (const viewport of headerViewports) {
     assert.match(
@@ -64,11 +67,36 @@ test('covers the complete lockup on representative interior routes at both viewp
 
 test('keeps the hero and scrolled header states explicit', () => {
   assert.match(layoutSource, /data-header-state=\{isScrolled \? 'scrolled' : 'hero'\}/);
+  assert.match(layoutSource, /data-mobile-menu-state=\{mobileMenuOpen \? 'open' : 'closed'\}/);
   assert.match(
     layoutSource,
-    /isScrolled\s+\?[\s\S]*?'bg-background\/90 backdrop-blur-md border-b border-border py-2'\s*:\s*'bg-transparent py-2'/,
+    /mobileMenuOpen \|\| isScrolled\s+\?[\s\S]*?'bg-background\/90 backdrop-blur-md border-b border-border py-2'\s*:\s*'bg-background\/95 backdrop-blur-md border-b border-border py-1 lg:bg-transparent lg:backdrop-blur-none lg:border-transparent lg:py-2'/,
   );
   assert.match(layoutSource, /setIsScrolled\(window\.scrollY > 50\)/);
+});
+
+test('keeps the complete logo readable while the mobile menu opens and closes', () => {
+  assert.match(layoutSource, /data-testid="mobile-menu-toggle"/);
+  assert.match(layoutSource, /aria-controls="mobile-navigation"/);
+  assert.match(layoutSource, /aria-expanded=\{mobileMenuOpen\}/);
+  assert.match(
+    layoutSource,
+    /aria-label=\{mobileMenuOpen \? 'Close navigation menu' : 'Open navigation menu'\}/,
+  );
+  assert.match(layoutSource, /id="mobile-navigation"/);
+  assert.match(layoutSource, /data-testid="mobile-menu-overlay"/);
+  assert.match(
+    layoutSource,
+    /data-mobile-menu-state=\{mobileMenuOpen \? 'open' : 'closed'\}/g,
+  );
+  assert.match(
+    layoutSource,
+    /mobileMenuOpen \? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'/,
+  );
+  assert.match(
+    layoutSource,
+    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}\s+imageClassName="w-\[96px\] md:w-\[128px\]"\s+\/>/,
+  );
 });
 
 test('resets the header state when navigating between interior routes', () => {
@@ -78,7 +106,7 @@ test('resets the header state when navigating between interior routes', () => {
   );
   assert.match(
     layoutSource,
-    /<Logo variant=\{isScrolled \? 'light' : 'default'\} \/>/,
+    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}(?:\s+imageClassName="[^"]+")?\s+\/>/,
   );
   assert.match(
     layoutSource,
