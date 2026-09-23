@@ -113,7 +113,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           Design Consultations
         </Link>
         <Link
-          href="/contact/"
+          href="/financing/"
           className="origin-left whitespace-nowrap font-serif text-sm font-semibold uppercase tracking-[0.16em] text-secondary transition-all duration-200 hover:scale-110 hover:text-white focus-visible:scale-110"
         >
           Start Your Project
@@ -151,7 +151,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </nav>
         <div className="mt-auto pb-12 flex flex-col gap-6">
           <Link 
-            href="/contact/" 
+            href="/financing/"
             tabIndex={mobileMenuOpen ? 0 : -1}
             className="bg-primary text-primary-foreground text-center py-4 text-sm tracking-widest uppercase w-full"
           >
