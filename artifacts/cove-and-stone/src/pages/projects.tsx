@@ -146,21 +146,22 @@ export default function Projects() {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-            {CASE_STUDIES.map((project, i) => (
+            {CASE_STUDIES.map((project) => {
+              const cardMedia = project.status === "completed" && project.media.completedDay
+                ? project.media.completedDay
+                : project.media.render;
+
+              return (
               <Link key={project.slug} href={`/projects/${project.slug}`} className="group block">
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                   <img
-                    src={project.status === "completed" && project.media.completedDay
-                      ? project.media.completedDay.src
-                      : project.media.render.src}
-                    alt={project.status === "completed" && project.media.completedDay
-                      ? project.media.completedDay.alt
-                      : project.media.render.alt}
+                    src={cardMedia.src}
+                    alt={cardMedia.alt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-                    {project.status === "completed" ? "Completed photography" : "Concept rendering"}
+                    {cardMedia.label}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
@@ -177,7 +178,8 @@ export default function Projects() {
                   </div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
