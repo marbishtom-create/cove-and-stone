@@ -36,7 +36,7 @@ export default function Home() {
         
         <div className="relative z-10 container mx-auto px-6 max-w-7xl flex w-full min-h-[calc(100dvh-6rem)] flex-col items-start justify-start pt-12 pb-20 lg:h-full lg:min-h-0 lg:translate-y-8 lg:justify-center lg:pt-0">
           <div className="max-w-3xl animate-in slide-in-from-bottom-8 duration-1000 ease-out fade-in fill-mode-both">
-            <span className="text-secondary uppercase tracking-[0.3em] text-sm md:text-base font-medium mb-6 block drop-shadow-sm">
+            <span className="text-[#c9eee7] uppercase tracking-[0.3em] text-sm md:text-base font-semibold mb-6 block drop-shadow-[0_2px_7px_rgba(0,0,0,0.65)]">
               Jacksonville Outdoor Living, Reimagined.
             </span>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8">
