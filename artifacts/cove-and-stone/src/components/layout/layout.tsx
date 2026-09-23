@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: ReactNode }) {
            <div className="relative shrink-0 lg:mr-8">
              <Logo
                variant={isScrolled ? 'light' : 'default'}
-                imageClassName="w-[96px] md:w-[128px]"
+                 imageClassName="w-[110px] md:w-[144px] drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)]"
              />
              <div className="absolute left-2 top-full z-10 mt-2.5 hidden flex-col items-start gap-2 lg:flex">
                <Link
