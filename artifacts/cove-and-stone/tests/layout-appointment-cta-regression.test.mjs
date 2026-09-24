@@ -12,6 +12,10 @@ const ctaStyles = await readFile(
   resolve(artifactRoot, 'src/components/layout/appointment-cta.css'),
   'utf8',
 );
+const projectDetailSource = await readFile(
+  resolve(artifactRoot, 'src/pages/project-detail.tsx'),
+  'utf8',
+);
 
 test('keeps the consultation CTA brand-led and free of the round icon badge', () => {
   assert.match(layoutSource, /data-testid="link-desktop-appointment-cta"/);
@@ -23,6 +27,14 @@ test('keeps the consultation CTA brand-led and free of the round icon badge', ()
   );
   assert.doesNotMatch(layoutSource, /layout-appointment-cta__icon|<Waves\b/);
   assert.match(layoutSource, /<ArrowUpRight\b/);
+});
+
+test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
+  assert.match(
+    layoutSource,
+    /\{!location\.startsWith\("\/projects\/"\) && \(\s*<div className=\{`fixed bottom-6/,
+  );
+  assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {

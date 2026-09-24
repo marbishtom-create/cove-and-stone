@@ -62,7 +62,7 @@ const approvedProjectMedia = [
     asset: 'generated_images/st-johns-river-retreat-entertaining.webp',
     mobileImportName: 'stJohnsRiverRetreatMobile',
     mobileAsset: 'generated_images/st-johns-river-retreat-entertaining-mobile.jpg',
-    alt: 'Illustrative St. Johns River pool and raised spa with an expanded dark-gray stone deck, pergola-covered gourmet kitchen and bar, large TV, ceiling fan, open lawn and private dock',
+    alt: 'Illustrative St. Johns River pool and raised spa with an expanded dark-gray stone deck, pergola-covered gourmet kitchen and bar, large TV showing a Jacksonville Jaguars game, open lawn and private dock',
     label: 'Design visualization',
   },
 ];
@@ -259,6 +259,12 @@ test('renders the approved project media copy on each card', () => {
   assert.match(projectsSource, /label: "Fully Enclosed · Smart Use of Space"/);
   assert.match(projectsSource, /title: "St\. Johns River Retreat"/);
   assert.match(projectsSource, /title: "St\. Johns River Retreat"[\s\S]*?label: "Design visualization"/);
+  const stJohnsRetreat = projectsSource.slice(
+    projectsSource.indexOf('title: "St. Johns River Retreat"'),
+    projectsSource.indexOf('title: "St. Johns River Retreat"') + 1800,
+  );
+  assert.match(stJohnsRetreat, /Jacksonville Jaguars game/);
+  assert.doesNotMatch(stJohnsRetreat, /ceiling fan/i);
   assert.match(projectsSource, /statusLabel: "Riverfront design"/);
   assert.match(
       projectDetailSource,

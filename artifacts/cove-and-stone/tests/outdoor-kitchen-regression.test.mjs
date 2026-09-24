@@ -21,7 +21,7 @@ test("shows responsive outdoor-kitchen design imagery with accurate labels", () 
   assert.match(outdoorLivingPage, /id="outdoor-kitchen-watermarked-reference"/);
   assert.match(outdoorLivingPage, /data-testid="outdoor-kitchen-watermarked-reference"/);
   assert.match(outdoorLivingPage, /Outdoor kitchen reference/);
-  assert.match(outdoorLivingPage, /src="\/brand\/cove-and-stone-approved\.png"/);
+  assert.match(outdoorLivingPage, /src="\/brand\/cove-and-stone-approved-white\.png"/);
   assert.match(outdoorLivingPage, /aria-hidden="true"/);
   assert.match(outdoorLivingPage, /light-stone built-in kitchen with a pizza oven, grill and sink/);
   assert.match(outdoorLivingPage, /\$20,000–\$100,000/);

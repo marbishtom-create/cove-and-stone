@@ -108,7 +108,7 @@ test('keeps photo-backed headers in color and uses the white lockup in the dark 
   assert.match(layoutSource, /<Logo variant="dark" \/>/);
 });
 
-test('enlarges the shared logo and outdoor-living watermark', () => {
+test('enlarges the shared logo and outdoor-living watermark', async () => {
   assert.match(logoSource, /w-\[122px\] md:w-\[137px\]/);
   assert.match(layoutSource, /w-\[127px\] md:w-\[169px\]/);
   const outdoorLivingSource = await readFile(

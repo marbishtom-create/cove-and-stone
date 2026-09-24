@@ -111,19 +111,21 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
-        <Link
-          href="/appointments/"
-          className="layout-appointment-cta min-h-[4.35rem] w-[22rem] gap-3 px-3 py-2"
-          data-testid="link-desktop-appointment-cta"
-        >
-          <span className="layout-appointment-cta__copy">
-            <span className="layout-appointment-cta__eyebrow">Design consultation</span>
-            <span className="layout-appointment-cta__title">Start your project today</span>
-          </span>
-          <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
-        </Link>
-      </div>
+      {!location.startsWith("/projects/") && (
+        <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
+          <Link
+            href="/appointments/"
+            className="layout-appointment-cta min-h-[4.35rem] w-[22rem] gap-3 px-3 py-2"
+            data-testid="link-desktop-appointment-cta"
+          >
+            <span className="layout-appointment-cta__copy">
+              <span className="layout-appointment-cta__eyebrow">Design consultation</span>
+              <span className="layout-appointment-cta__title">Start your project today</span>
+            </span>
+            <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
+          </Link>
+        </div>
+      )}
 
       {/* Mobile Menu Overlay */}
       <div 
