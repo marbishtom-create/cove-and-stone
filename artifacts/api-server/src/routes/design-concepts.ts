@@ -11,6 +11,8 @@ const router: IRouter = Router();
 const connectors = new ReplitConnectors();
 const INTERNAL_RECIPIENT = "Sales@coveandstonepools.com";
 const SENDER = "Cove & Stone Pools <Sales@coveandstonepools.com>";
+const UNVERIFIED_SENDER_MESSAGE =
+  "The email service is not ready to send this request. Please contact Sales directly at Sales@coveandstonepools.com.";
 const MAX_RENDER_IMAGE_BYTES = 2 * 1024 * 1024;
 const RENDER_RATE_WINDOW_MS = 15 * 60 * 1000;
 const MAX_RENDERS_PER_WINDOW = 3;
@@ -327,6 +329,14 @@ router.post("/design-concepts/email", async (req, res) => {
         { providerStatus: response.status, providerMessage },
         "Internal design concept email failed",
       );
+      if (
+        response.status === 403 &&
+        providerMessage.toLowerCase().includes("sender domain") &&
+        providerMessage.toLowerCase().includes("not verified")
+      ) {
+        res.status(502).json({ message: UNVERIFIED_SENDER_MESSAGE });
+        return;
+      }
       res.status(502).json({ message: "The internal design email could not be sent." });
       return;
     }
