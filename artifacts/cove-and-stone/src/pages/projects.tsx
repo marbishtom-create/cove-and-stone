@@ -1,8 +1,8 @@
 import { Link } from 'wouter';
 import p2 from '@assets/generated_images/project-2.jpg';
 import p2Mobile from '@assets/generated_images/project-2-mobile.jpg';
-import stJohnsRiverRetreat from '@assets/generated_images/st-johns-river-retreat.webp';
-import stJohnsRiverRetreatMobile from '@assets/generated_images/st-johns-river-retreat-mobile.jpg';
+import stJohnsRiverRetreat from '@assets/generated_images/st-johns-river-retreat-entertaining.webp';
+import stJohnsRiverRetreatMobile from '@assets/generated_images/st-johns-river-retreat-entertaining-mobile.jpg';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import ponteVedraRetreatMobile from '@assets/generated_images/ponte-vedra-private-retreat-mobile.jpg';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
@@ -119,19 +119,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "St. Johns River, Northeast Florida",
     type: "Riverfront pool & outdoor living",
     size: "Spacious riverfront backyard",
-    materials: "Charcoal porcelain coping, pale stone decking, river-blue tile and native Florida planting",
-    features: "Minimalist Pool, Raised Spa, Gourmet Outdoor Kitchen, Charcoal Coping, Spacious Lawn, Private Dock, Small Boat",
+    materials: "Smooth dark-gray stone decking, charcoal porcelain coping, river-blue tile and native Florida planting",
+    features: "Pool, Raised Spa, Smooth Dark-Gray Stone Deck, Pergola, Ceiling Fan, Gourmet Outdoor Kitchen, Oversized TV, Small Bar, Expanded Lawn, Private Dock",
     timeline: "To be confirmed",
     image: stJohnsRiverRetreat,
-    desc: "An illustrative St. Johns River retreat with a clean-lined pool, raised spa opposite a full gourmet outdoor kitchen, charcoal coping, a spacious yard and private dock.",
+    desc: "An illustrative St. Johns River retreat designed for entertaining, with a pool and raised spa, expansive smooth dark-gray stone decking, a pergola-covered gourmet kitchen and bar, oversized TV, ceiling fan, generous lawn and private dock.",
     status: "concept",
     statusLabel: "Riverfront design",
     media: {
       render: {
         src: stJohnsRiverRetreat,
         mobileSrc: stJohnsRiverRetreatMobile,
-        alt: "Illustrative St. Johns River backyard with a pool, raised spa, charcoal coping, full outdoor kitchen, spacious lawn and private dock",
-        label: "Concept rendering",
+        alt: "Illustrative St. Johns River pool and raised spa with an expanded dark-gray stone deck, pergola-covered gourmet kitchen and bar, large TV, ceiling fan, open lawn and private dock",
+        label: "Design visualization",
       },
     },
   }

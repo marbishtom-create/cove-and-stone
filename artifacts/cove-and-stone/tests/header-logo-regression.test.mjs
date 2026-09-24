@@ -11,6 +11,9 @@ const logoSource = await readFile(
 const logoAsset = await readFile(
   resolve(artifactRoot, 'public/brand/cove-and-stone-approved.png'),
 );
+const whiteLogoAsset = await readFile(
+  resolve(artifactRoot, 'public/brand/cove-and-stone-approved-white.png'),
+);
 const layoutSource = await readFile(
   resolve(artifactRoot, 'src/components/layout/layout.tsx'),
   'utf8',
@@ -23,12 +26,14 @@ const representativeInteriorRoutes = [
   { path: '/contact/', component: 'Contact' },
 ];
 const headerViewports = [
-  { name: 'mobile', width: 'w-\\[92px\\]' },
-  { name: 'desktop', width: 'md:w-\\[104px\\]' },
+  { name: 'mobile', width: 'w-\\[122px\\]' },
+  { name: 'desktop', width: 'md:w-\\[137px\\]' },
 ];
 
 test('uses the complete transparent logo lockup in the header', () => {
-  assert.match(logoSource, /src="\/brand\/cove-and-stone-approved\.png"/);
+  assert.match(logoSource, /src=\{imageSource\}/);
+  assert.match(logoSource, /cove-and-stone-approved\.png/);
+  assert.match(logoSource, /cove-and-stone-approved-white\.png/);
   assert.match(logoSource, /alt="Cove & Stone Pools, Spas & Outdoor Living"/);
   assert.doesNotMatch(logoSource, /cove-and-stone-(monogram|wordmark-exact)\.png/);
   assert.match(logoSource, /bg-transparent/);
@@ -42,12 +47,17 @@ test('keeps the full logo lockup cropped and transparent', () => {
   const height = logoAsset.readUInt32BE(20);
   assert.ok(width > height, 'the complete horizontal lockup should remain intact');
   assert.ok(width / height < 1.5, 'the logo should not be cropped down to the wordmark');
+  assert.equal(whiteLogoAsset.toString('ascii', 1, 4), 'PNG');
+  assert.ok([4, 6].includes(whiteLogoAsset[25]), 'the white logo should retain transparency');
+  const whiteWidth = whiteLogoAsset.readUInt32BE(16);
+  const whiteHeight = whiteLogoAsset.readUInt32BE(20);
+  assert.ok(whiteWidth > whiteHeight, 'the white lockup should retain its full composition');
 });
 
 test('keeps the logo aspect ratio stable across mobile and desktop widths', () => {
   assert.match(
     logoSource,
-    /className=\{`block w-\[92px\] h-auto object-contain md:w-\[104px\]/,
+    /w-\[122px\] md:w-\[137px\]/,
   );
   assert.match(logoSource, /data-testid="site-logo-image"/);
 });
@@ -66,7 +76,7 @@ test('covers the complete lockup on representative interior routes at both viewp
   assert.match(layoutSource, /data-testid="site-header"/);
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}(?:\s+imageClassName="[^"]+")?\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
   );
 
   for (const viewport of headerViewports) {
@@ -86,6 +96,23 @@ test('keeps the hero and scrolled header states explicit', () => {
     /mobileMenuOpen \|\| isScrolled\s+\?[\s\S]*?'bg-background\/90 backdrop-blur-md border-b border-border py-2'\s*:\s*'bg-background\/95 backdrop-blur-md border-b border-border py-1 lg:bg-transparent lg:backdrop-blur-none lg:border-transparent lg:py-2'/,
   );
   assert.match(layoutSource, /setIsScrolled\(window\.scrollY > 50\)/);
+});
+
+test('uses the white lockup over dark heroes and in the dark footer', () => {
+  assert.match(logoSource, /<source\s+media="\(min-width: 1024px\)"\s+srcSet="\/brand\/cove-and-stone-approved-white\.png"/);
+  assert.match(layoutSource, /const isDarkHeroPage = location\.startsWith\("\/projects\/atlantic-beach-minimalist"\)/);
+  assert.match(layoutSource, /isDarkHeroPage[\s\S]*\? "hero"/);
+  assert.match(layoutSource, /<Logo variant="dark" \/>/);
+});
+
+test('enlarges the shared logo and outdoor-living watermark', () => {
+  assert.match(logoSource, /w-\[122px\] md:w-\[137px\]/);
+  assert.match(layoutSource, /w-\[127px\] md:w-\[169px\]/);
+  const outdoorLivingSource = await readFile(
+    resolve(artifactRoot, 'src/pages/outdoor-living.tsx'),
+    'utf8',
+  );
+  assert.match(outdoorLivingSource, /w-\[32%\] min-w-\[6\.6rem\] max-w-\[10\.5rem\]/);
 });
 
 test('keeps the complete logo readable while the mobile menu opens and closes', () => {
@@ -108,7 +135,7 @@ test('keeps the complete logo readable while the mobile menu opens and closes', 
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}\s+imageClassName="w-\[96px\] md:w-\[128px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
   );
 });
 
@@ -160,7 +187,7 @@ test('resets the header state when navigating between interior routes', () => {
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{isScrolled \? 'light' : 'default'\}(?:\s+imageClassName="[^"]+")?\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
   );
   assert.match(
     layoutSource,

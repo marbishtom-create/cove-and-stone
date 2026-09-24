@@ -9,6 +9,13 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isDarkHeroPage = location.startsWith("/projects/atlantic-beach-minimalist");
+  const headerLogoVariant =
+    isScrolled || mobileMenuOpen
+      ? "light"
+      : isDarkHeroPage
+        ? "hero"
+        : "default";
   const mobileMenuToggleRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const wasMobileMenuOpenRef = useRef(false);
@@ -69,7 +76,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <div className="relative shrink-0 lg:mr-8">
-             <Logo variant={isScrolled ? 'light' : 'default'} imageClassName="w-[96px] md:w-[128px]" />
+              <Logo variant={headerLogoVariant} imageClassName="w-[127px] md:w-[169px]" />
            </div>
 
           {/* Desktop Nav */}
@@ -164,7 +171,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8 mb-16">
             <div className="flex flex-col gap-6">
-              <Logo variant="light" />
+              <Logo variant="dark" />
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mt-4">
                 COVE & STONE is a Jacksonville design-build brand for modern pools and complete outdoor environments across Northeast Florida.
               </p>

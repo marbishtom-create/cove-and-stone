@@ -172,7 +172,7 @@ export default function OutdoorLiving() {
                 src="/brand/cove-and-stone-approved.png"
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute right-4 top-4 z-10 w-[24%] min-w-20 max-w-32 select-none opacity-90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.22)]"
+                className="pointer-events-none absolute right-4 top-4 z-10 w-[32%] min-w-[6.6rem] max-w-[10.5rem] select-none opacity-90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.22)]"
               />
               <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
                 Outdoor kitchen reference
