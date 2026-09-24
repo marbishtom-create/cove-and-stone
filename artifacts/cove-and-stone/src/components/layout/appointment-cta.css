@@ -36,21 +36,10 @@
 
 .layout-appointment-cta::before {
   background:
-    radial-gradient(ellipse 24% 78% at 24% 26%, rgba(202, 255, 248, 0.42), transparent 78%),
-    repeating-linear-gradient(
-      38deg,
-      transparent 0 17px,
-      rgba(220, 255, 251, 0.28) 18px 19px,
-      transparent 20px 36px
-    ),
-    repeating-linear-gradient(
-      142deg,
-      transparent 0 17px,
-      rgba(202, 255, 249, 0.17) 18px 19px,
-      transparent 20px 36px
-    ),
-    linear-gradient(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%);
-  background-size: 100% 100%, 74px 58px, 74px 58px, 220% 100%;
+    url("/brand/cove-water-caustics.svg"),
+    radial-gradient(ellipse 24% 78% at 24% 26%, rgba(188, 255, 248, 0.48), transparent 78%),
+    linear-gradient(108deg, #078a9a 0%, #0ab7c0 34%, #18c9c7 53%, #068e9c 100%);
+  background-size: 120px 84px, 100% 100%, 220% 100%;
   content: '';
   inset: 0;
   pointer-events: none;
@@ -69,13 +58,8 @@
 .layout-appointment-cta::after {
   background:
     linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.52) 42%, transparent 70%),
-    repeating-linear-gradient(
-      116deg,
-      transparent 0 18px,
-      rgba(240, 255, 251, 0.3) 19px 20px,
-      transparent 21px 38px
-    );
-  background-size: 190% 150%, 82px 60px;
+    radial-gradient(ellipse 28% 62% at 64% 52%, rgba(226, 255, 251, 0.32), transparent 82%);
+  background-size: 190% 150%, 120% 100%;
   clip-path: polygon(
     0 41%, 3% 42%, 6% 45%, 9% 50%, 12% 56%, 15% 62%, 18% 68%, 22% 73%, 26% 78%,
     30% 81%, 35% 84%, 40% 85%, 45% 86%, 50% 85%, 55% 83%, 60% 80%, 65% 75%,
@@ -216,10 +200,10 @@
 
 @keyframes cove-water-flow {
   from {
-    background-position: 0 0, 0 0, 37px 18px, 0 0;
+    background-position: 0 0, 0 0, 0 0;
   }
   to {
-    background-position: 0 0, 74px 58px, 111px 76px, 100% 0;
+    background-position: 120px 84px, 0 0, 100% 0;
   }
 }
 
@@ -229,7 +213,7 @@
     opacity: 0.42;
   }
   to {
-    background-position: 150px 0, 82px 60px;
+    background-position: 150px 0, 100% 0;
     opacity: 0.78;
   }
 }

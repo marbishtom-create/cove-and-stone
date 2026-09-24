@@ -12,6 +12,10 @@ const ctaStyles = await readFile(
   resolve(artifactRoot, 'src/components/layout/appointment-cta.css'),
   'utf8',
 );
+const waterTexture = await readFile(
+  resolve(artifactRoot, 'public/brand/cove-water-caustics.svg'),
+  'utf8',
+);
 const projectDetailSource = await readFile(
   resolve(artifactRoot, 'src/pages/project-detail.tsx'),
   'utf8',
@@ -43,9 +47,12 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {
   assert.match(ctaStyles, /url\("\/brand\/cove-stone-button-texture\.webp"\)/);
+  assert.match(ctaStyles, /url\("\/brand\/cove-water-caustics\.svg"\)/);
+  assert.match(waterTexture, /<path/);
+  assert.match(waterTexture, /<circle/);
   assert.match(ctaStyles, /background-blend-mode: normal, normal, normal, normal, normal/);
   assert.match(ctaStyles, /linear-gradient\(115deg, #f7f8f6 0%, #f8f8f6 69%, #eee7da 100%\)/);
-  assert.match(ctaStyles, /linear-gradient\(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(108deg, #078a9a 0%, #0ab7c0 34%, #18c9c7 53%, #068e9c 100%\)/);
   assert.match(ctaStyles, /@keyframes cove-water-current/);
   assert.match(ctaStyles, /@keyframes cove-water-flow/);
   assert.match(ctaStyles, /@keyframes cove-water-glint/);
