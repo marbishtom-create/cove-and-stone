@@ -17,4 +17,6 @@ export const DesignConceptEmailRequestDeckTile = {
   'warm-limestone': 'warm-limestone',
   'coastal-shellstone': 'coastal-shellstone',
   'charcoal-porcelain': 'charcoal-porcelain',
+  'dark-gray-porcelain': 'dark-gray-porcelain',
+  'black-marble-porcelain': 'black-marble-porcelain',
 } as const;

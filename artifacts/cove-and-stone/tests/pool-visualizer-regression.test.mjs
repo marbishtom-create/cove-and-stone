@@ -142,6 +142,20 @@ test("uses representative photographed material textures and places feature togg
   assert.match(apiSpec, /pool-pergola-rainfall/);
 });
 
+test("shows distinct material tones and supports darker porcelain deck choices", () => {
+  assert.match(component, /material-deck-dark-gray-porcelain-small\.jpg/);
+  assert.match(component, /material-deck-black-marble-porcelain-small\.jpg/);
+  assert.match(component, /id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Bright white matte finish', swatch: '#f7f7f2'/);
+  assert.match(component, /id: 'dark-gray-porcelain', label: 'Dark gray porcelain'/);
+  assert.match(component, /id: 'black-marble-porcelain', label: 'Black marble-look porcelain'/);
+  assert.match(component, /tile\.swatch\}66/);
+  assert.match(component, /opacity="\.48"/);
+  assert.match(designConceptRoute, /dark-gray-porcelain/);
+  assert.match(designConceptRoute, /near-black marble-look porcelain pavers with subtle pale veining/);
+  assert.match(apiSpec, /dark-gray-porcelain/);
+  assert.match(apiSpec, /black-marble-porcelain/);
+});
+
 test("keeps the 3D walkthrough video visible in the mobile layout", () => {
   assert.match(designPage, /designWalkthrough/);
   assert.match(designPage, /max-h-\[72svh\]/);

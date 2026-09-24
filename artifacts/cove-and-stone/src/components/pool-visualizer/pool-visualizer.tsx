@@ -36,6 +36,8 @@ import pebbleFinishTexture from '@assets/generated_images/material-pool-pebble-s
 import stoneWaterlineTexture from '@assets/generated_images/material-waterline-stone-tile-small.jpg';
 import glassWaterlineTexture from '@assets/generated_images/material-waterline-glass-tile-small.jpg';
 import deckPaverTexture from '@assets/generated_images/material-deck-pavers-small.jpg';
+import darkGrayDeckTexture from '@assets/generated_images/material-deck-dark-gray-porcelain-small.jpg';
+import blackMarbleDeckTexture from '@assets/generated_images/material-deck-black-marble-porcelain-small.jpg';
 import {
   Form,
   FormControl,
@@ -74,7 +76,9 @@ export type DeckTile =
   | 'sand-travertine'
   | 'warm-limestone'
   | 'coastal-shellstone'
-  | 'charcoal-porcelain';
+  | 'charcoal-porcelain'
+  | 'dark-gray-porcelain'
+  | 'black-marble-porcelain';
 export type PoolFeature =
   | 'spa'
   | 'spa-waterfall'
@@ -226,12 +230,14 @@ const TILE_OPTIONS: Array<{ id: WaterlineTile; label: string; detail: string; sw
 
 const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: string; grout: string; texture: string }> = [
   { id: 'shell-limestone', label: 'Shell limestone', detail: 'Pale coastal stone', swatch: '#d5cbb7', grout: '#bdb39f', texture: deckPaverTexture },
-  { id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Clean light matte', swatch: '#e2ded1', grout: '#c9c5b8', texture: deckPaverTexture },
+  { id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Bright white matte finish', swatch: '#f7f7f2', grout: '#d8d9d3', texture: deckPaverTexture },
   { id: 'silver-porcelain', label: 'Silver porcelain', detail: 'Cool modern gray', swatch: '#bfc5c0', grout: '#a7afaa', texture: deckPaverTexture },
   { id: 'sand-travertine', label: 'Sand travertine', detail: 'Warm natural variation', swatch: '#c7b395', grout: '#ad9878', texture: deckPaverTexture },
   { id: 'warm-limestone', label: 'Warm limestone', detail: 'Soft beige with quiet grain', swatch: '#cbbda7', grout: '#b5a68d', texture: deckPaverTexture },
   { id: 'coastal-shellstone', label: 'Coastal shellstone', detail: 'Sun-washed ivory', swatch: '#d9d1bc', grout: '#c0b6a0', texture: deckPaverTexture },
   { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461', texture: deckPaverTexture },
+  { id: 'dark-gray-porcelain', label: 'Dark gray porcelain', detail: 'Matte graphite with fine stone grain', swatch: '#414649', grout: '#303638', texture: darkGrayDeckTexture },
+  { id: 'black-marble-porcelain', label: 'Black marble-look porcelain', detail: 'Near-black stone with subtle pale veining', swatch: '#17191a', grout: '#363839', texture: blackMarbleDeckTexture },
 ];
 
 const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [
@@ -330,7 +336,7 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
         </linearGradient>
         <pattern id={poolId} width="72" height="72" patternUnits="userSpaceOnUse">
           <image data-material-texture="true" href={finish.texture} width="72" height="72" preserveAspectRatio="xMidYMid slice" />
-          <rect width="72" height="72" fill={`url(#${poolId}-water-tone)`} opacity=".48" />
+          <rect width="72" height="72" fill={`url(#${poolId}-water-tone)`} opacity=".58" />
         </pattern>
         <linearGradient id="spa-water" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={finish.swatch} />
@@ -341,11 +347,11 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
         </filter>
         <pattern id="waterline-tile-pattern" width="54" height="44" patternUnits="userSpaceOnUse">
           <image data-material-texture="true" href={tile.texture} width="54" height="44" preserveAspectRatio="xMidYMid slice" />
-          <rect width="54" height="44" fill={tile.swatch} opacity=".3" />
+          <rect width="54" height="44" fill={tile.swatch} opacity=".48" />
         </pattern>
         <pattern id="continuous-deck-tile" width="96" height="72" patternUnits="userSpaceOnUse">
           <image data-material-texture="true" href={deck.texture} width="96" height="72" preserveAspectRatio="xMidYMid slice" />
-          <rect width="96" height="72" fill={deck.swatch} opacity=".26" />
+          <rect width="96" height="72" fill={deck.swatch} opacity=".42" />
           <path d="M96 0H0V72M48 0V72M0 36H96" fill="none" stroke={deck.grout} strokeOpacity=".58" strokeWidth="1.4" />
         </pattern>
         <clipPath id="pool-clip">
@@ -974,7 +980,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.poolFinish === finish.id}
                   data-testid={`button-finish-${finish.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${finish.swatch}55, ${finish.swatch}55), url(${finish.texture})` }} />
+                  <span className="pool-visualizer__material-swatch" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${finish.swatch}66, ${finish.swatch}66), url(${finish.texture})` }} />
                   <strong>{finish.label}</strong>
                 </button>
               ))}
@@ -996,7 +1002,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.waterlineTile === tile.id}
                   data-testid={`button-waterline-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}55, ${tile.swatch}55), url(${tile.texture})` }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}66, ${tile.swatch}66), url(${tile.texture})` }} />
                   <strong>{tile.label}</strong>
                 </button>
               ))}
@@ -1018,7 +1024,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.deckTile === tile.id}
                   data-testid={`button-deck-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}55, ${tile.swatch}55), url(${tile.texture})` }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}66, ${tile.swatch}66), url(${tile.texture})` }} />
                   <strong>{tile.label}</strong>
                 </button>
               ))}

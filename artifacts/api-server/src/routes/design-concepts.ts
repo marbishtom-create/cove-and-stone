@@ -62,6 +62,8 @@ const DECK_TILE_LABELS = {
   "warm-limestone": "Warm limestone",
   "coastal-shellstone": "Coastal shellstone",
   "charcoal-porcelain": "Charcoal porcelain",
+  "dark-gray-porcelain": "Dark gray porcelain",
+  "black-marble-porcelain": "Black marble-look porcelain",
 } as const;
 
 const FEATURE_LABELS = {
@@ -162,6 +164,12 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
   }
 
   const concept = parsed.data;
+  const deckTileAppearance =
+    concept.deckTile === "dark-gray-porcelain"
+      ? "matte dark gray porcelain pavers with restrained fine stone grain"
+      : concept.deckTile === "black-marble-porcelain"
+        ? "near-black marble-look porcelain pavers with subtle pale veining"
+        : `${DECK_TILE_LABELS[concept.deckTile].toLowerCase()} tile`;
   const photoMatch =
     /^data:image\/jpeg;base64,([A-Za-z0-9+/]+={0,2})$/.exec(
       concept.photoDataUrl,
@@ -191,7 +199,7 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     "Keep the same property, camera angle, perspective, house, fences, trees, major landscaping, and visible site boundaries recognizable.",
     `Add a realistically scaled ${concept.width}-by-${concept.length}-foot ${SHAPE_LABELS[concept.shape].toLowerCase()} in-ground pool that fits the existing yard.`,
     `Use ${FINISH_PROMPTS[concept.poolFinish]} and ${TILE_LABELS[concept.waterlineTile].toLowerCase()} waterline tile.`,
-    `Use ${DECK_TILE_LABELS[concept.deckTile].toLowerCase()} in a consistent large-format module across the deck and all the way to the water as one continuous, flush surface. Keep the pool edge modern, level, and seamless; do not add a raised, contrasting, bullnose, or differently sized coping band.`,
+    `Use ${deckTileAppearance} in a consistent large-format module across the deck and all the way to the water as one continuous, flush surface. Keep the pool edge modern, level, and seamless; do not add a raised, contrasting, bullnose, or differently sized coping band.`,
     `Pool edge treatment: ${concept.edgeTreatment === "flush-continuous" ? "continuous flush deck tile, same module at the water's edge, with no separate coping" : "continuous flush deck tile"}.`,
     features.length ? `Include only the individually selected features: ${features.join(", ")}.` : "Do not add unselected pool or outdoor-living features.",
     "Make the pool and surrounding hardscape look physically plausible and integrated with the original photograph.",

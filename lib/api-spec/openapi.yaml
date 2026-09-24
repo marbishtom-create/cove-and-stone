@@ -118,7 +118,7 @@ components:
           enum: [pale-limestone, shellstone, mist-porcelain, warm-travertine, sea-glass, lagoon-glass, ocean-blue-glass, deep-navy-glass, charcoal-mosaic]
         deckTile:
           type: string
-          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain]
+          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain, dark-gray-porcelain, black-marble-porcelain]
         edgeTreatment:
           type: string
           enum: [flush-continuous]
@@ -180,7 +180,7 @@ components:
           enum: [pale-limestone, shellstone, mist-porcelain, warm-travertine, sea-glass, lagoon-glass, ocean-blue-glass, deep-navy-glass, charcoal-mosaic]
         deckTile:
           type: string
-          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain]
+          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain, dark-gray-porcelain, black-marble-porcelain]
         edgeTreatment:
           type: string
           enum: [flush-continuous]
