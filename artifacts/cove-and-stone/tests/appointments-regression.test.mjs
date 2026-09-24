@@ -51,6 +51,8 @@ test("validates and emails preferred appointment requests for staff confirmation
   assert.match(apiRoute, /RequestAppointmentBody\.safeParse/);
   assert.match(apiRoute, /connectors\.proxy\("resend", "\/emails"/);
   assert.match(apiRoute, /INTERNAL_RECIPIENT/);
+  assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("domain"\)/);
+  assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("not verified"\)/);
   assert.match(apiRoute, /res\.status\(202\)\.json\(RequestAppointmentResponse\.parse\(\{ status: "requested" \}\)\)/);
   assert.match(apiRoute, /not a confirmed or reserved appointment/);
   assert.match(apiRoute, /MAX_REQUESTS_PER_WINDOW/);

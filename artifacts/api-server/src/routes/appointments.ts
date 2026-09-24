@@ -10,7 +10,7 @@ const connectors = new ReplitConnectors();
 const INTERNAL_RECIPIENT = "Sales@coveandstonepools.com";
 const SENDER = "Cove & Stone Pools <Sales@coveandstonepools.com>";
 const UNVERIFIED_SENDER_MESSAGE =
-  "The email service is not ready to send this request. Please contact Sales directly at Sales@coveandstonepools.com.";
+  "We could not send your appointment request right now. Please contact Sales directly at Sales@coveandstonepools.com.";
 const REQUEST_WINDOW_MS = 60 * 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 5;
 const requestsByIp = new Map<string, number[]>();
@@ -134,7 +134,7 @@ router.post("/appointments/request", async (req, res): Promise<void> => {
       );
       if (
         response.status === 403 &&
-        providerMessage.toLowerCase().includes("sender domain") &&
+        providerMessage.toLowerCase().includes("domain") &&
         providerMessage.toLowerCase().includes("not verified")
       ) {
         res.status(502).json({ message: UNVERIFIED_SENDER_MESSAGE });

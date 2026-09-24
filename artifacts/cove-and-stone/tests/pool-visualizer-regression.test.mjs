@@ -115,6 +115,8 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
   assert.match(designConceptRoute, /cove-stone-ai-pool-concept/);
   assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
+  assert.match(designConceptRoute, /providerMessage\.toLowerCase\(\)\.includes\("domain"\)/);
+  assert.match(designConceptRoute, /providerMessage\.toLowerCase\(\)\.includes\("not verified"\)/);
   assert.match(designConceptRoute, /concept\.features\.map\(\(feature\) => FEATURE_PROMPTS\[feature\]\)/);
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerAddress\)/);
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerPhone\)/);
