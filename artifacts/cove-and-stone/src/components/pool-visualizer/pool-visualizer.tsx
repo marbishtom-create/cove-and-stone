@@ -1,7 +1,11 @@
 import {
+  Bath,
+  ChefHat,
   Camera,
   ChevronDown,
   Download,
+  Droplets,
+  Flame,
   Image as ImageIcon,
   Lightbulb,
   Mail,
@@ -26,18 +30,58 @@ import {
 import './pool-visualizer.css';
 
 export type PoolShape = 'rectangular' | 'freeform' | 'kidney' | 'l-shape';
-export type WaterFinish = 'clear-cove' | 'deep-atlas' | 'greenstone';
-export type WaterlineTile = 'travertine' | 'ink-line' | 'sea-glass';
+export type WaterFinish =
+  | 'white-plaster'
+  | 'arctic-quartz'
+  | 'sandbar-quartz'
+  | 'sea-glass-quartz'
+  | 'lagoon-pebble'
+  | 'ocean-blue-pebble'
+  | 'silver-pebble'
+  | 'greenstone'
+  | 'midnight-pebble';
+export type WaterlineTile =
+  | 'pale-limestone'
+  | 'shellstone'
+  | 'mist-porcelain'
+  | 'warm-travertine'
+  | 'sea-glass'
+  | 'lagoon-glass'
+  | 'ocean-blue-glass'
+  | 'deep-navy-glass'
+  | 'charcoal-mosaic';
+export type DeckTile =
+  | 'shell-limestone'
+  | 'ivory-porcelain'
+  | 'silver-porcelain'
+  | 'sand-travertine'
+  | 'warm-limestone'
+  | 'coastal-shellstone'
+  | 'charcoal-porcelain';
+export type PoolFeature =
+  | 'spa'
+  | 'spa-waterfall'
+  | 'infinity-edge'
+  | 'pool-lights'
+  | 'sun-shelf'
+  | 'sheer-descent'
+  | 'bubblers'
+  | 'sunken-fire-pit'
+  | 'outdoor-kitchen'
+  | 'fire-bowls'
+  | 'pergola'
+  | 'outdoor-shower';
+export type PoolEdgeTreatment = 'flush-continuous';
 
 export interface PoolVisualizerConfiguration {
   width: number;
   length: number;
   shape: PoolShape;
-  waterFinish: WaterFinish;
+  poolFinish: WaterFinish;
   waterlineTile: WaterlineTile;
-  lights: boolean;
-  waterfall: boolean;
-  sunShelf: boolean;
+  deckTile: DeckTile;
+  edgeTreatment: PoolEdgeTreatment;
+  features: PoolFeature[];
   photoUrl: string | null;
   comparisonPosition: number;
 }
@@ -51,11 +95,11 @@ const DEFAULT_CONFIGURATION: PoolVisualizerConfiguration = {
   width: 18,
   length: 36,
   shape: 'rectangular',
-  waterFinish: 'clear-cove',
-  waterlineTile: 'travertine',
-  lights: true,
-  waterfall: false,
-  sunShelf: true,
+  poolFinish: 'arctic-quartz',
+  waterlineTile: 'sea-glass',
+  deckTile: 'shell-limestone',
+  edgeTreatment: 'flush-continuous',
+  features: ['pool-lights', 'sun-shelf'],
   photoUrl: null,
   comparisonPosition: 50,
 };
@@ -68,32 +112,108 @@ const FINISHES: Array<{
   deepSwatch: string;
 }> = [
   {
-    id: 'clear-cove',
-    label: 'Clear Cove',
-    detail: 'Soft aqua / bright, reflective',
-    swatch: '#88c8c2',
-    deepSwatch: '#3e8990',
+    id: 'white-plaster',
+    label: 'White plaster',
+    detail: 'Classic smooth white · pale sky water',
+    swatch: '#d9e8df',
+    deepSwatch: '#6aa9aa',
   },
   {
-    id: 'deep-atlas',
-    label: 'Deep Atlas',
-    detail: 'Blue charcoal / architectural',
-    swatch: '#6192a0',
-    deepSwatch: '#275568',
+    id: 'arctic-quartz',
+    label: 'Arctic quartz',
+    detail: 'Bright quartz · clear light aqua',
+    swatch: '#b9dfd8',
+    deepSwatch: '#4c9da2',
+  },
+  {
+    id: 'sandbar-quartz',
+    label: 'Sandbar quartz',
+    detail: 'Warm sand quartz · soft turquoise',
+    swatch: '#b7d0bd',
+    deepSwatch: '#57928d',
+  },
+  {
+    id: 'sea-glass-quartz',
+    label: 'Sea-glass quartz',
+    detail: 'Mint aggregate · luminous aqua',
+    swatch: '#8fcac0',
+    deepSwatch: '#398c91',
+  },
+  {
+    id: 'lagoon-pebble',
+    label: 'Lagoon pebble',
+    detail: 'Aqua pebble · coastal teal',
+    swatch: '#68b3ad',
+    deepSwatch: '#28777e',
+  },
+  {
+    id: 'ocean-blue-pebble',
+    label: 'Ocean-blue pebble',
+    detail: 'Blue aggregate · vivid blue water',
+    swatch: '#5e9fb0',
+    deepSwatch: '#235e7c',
+  },
+  {
+    id: 'silver-pebble',
+    label: 'Silver pebble',
+    detail: 'Cool gray aggregate · blue-gray water',
+    swatch: '#a8c4c5',
+    deepSwatch: '#557d8b',
   },
   {
     id: 'greenstone',
     label: 'Greenstone',
-    detail: 'Mineral teal / softly organic',
+    detail: 'Mineral green · softly organic teal',
     swatch: '#8ab1a5',
     deepSwatch: '#416e6c',
+  },
+  {
+    id: 'midnight-pebble',
+    label: 'Midnight pebble',
+    detail: 'Charcoal aggregate · deep ink blue',
+    swatch: '#526773',
+    deepSwatch: '#182f43',
   },
 ];
 
 const TILE_OPTIONS: Array<{ id: WaterlineTile; label: string; detail: string; swatch: string }> = [
-  { id: 'travertine', label: 'Warm travertine', detail: 'Quiet sand / honed edge', swatch: '#c8b293' },
-  { id: 'ink-line', label: 'Ink line', detail: 'Charcoal / crisp contrast', swatch: '#46565a' },
-  { id: 'sea-glass', label: 'Sea glass', detail: 'Mist aqua / hand-cut feel', swatch: '#79aaa5' },
+  { id: 'pale-limestone', label: 'Pale limestone', detail: 'Soft ivory stone', swatch: '#ded7c6' },
+  { id: 'shellstone', label: 'Shellstone', detail: 'Warm shell and sand tones', swatch: '#cbbb9f' },
+  { id: 'mist-porcelain', label: 'Mist porcelain', detail: 'Quiet cloud gray', swatch: '#bbc9c5' },
+  { id: 'warm-travertine', label: 'Warm travertine', detail: 'Natural sand with soft movement', swatch: '#c8b293' },
+  { id: 'sea-glass', label: 'Sea glass', detail: 'Hand-cut pale aqua', swatch: '#79aaa5' },
+  { id: 'lagoon-glass', label: 'Lagoon glass', detail: 'Layered coastal teal', swatch: '#478e8e' },
+  { id: 'ocean-blue-glass', label: 'Ocean-blue glass', detail: 'Clear blue iridescence', swatch: '#568fa7' },
+  { id: 'deep-navy-glass', label: 'Deep navy glass', detail: 'Inky blue contrast', swatch: '#344d66' },
+  { id: 'charcoal-mosaic', label: 'Charcoal mosaic', detail: 'Architectural dark gray', swatch: '#4a5353' },
+];
+
+const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: string; grout: string }> = [
+  { id: 'shell-limestone', label: 'Shell limestone', detail: 'Pale coastal stone', swatch: '#d5cbb7', grout: '#bdb39f' },
+  { id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Clean light matte', swatch: '#e2ded1', grout: '#c9c5b8' },
+  { id: 'silver-porcelain', label: 'Silver porcelain', detail: 'Cool modern gray', swatch: '#bfc5c0', grout: '#a7afaa' },
+  { id: 'sand-travertine', label: 'Sand travertine', detail: 'Warm natural variation', swatch: '#c7b395', grout: '#ad9878' },
+  { id: 'warm-limestone', label: 'Warm limestone', detail: 'Soft beige with quiet grain', swatch: '#cbbda7', grout: '#b5a68d' },
+  { id: 'coastal-shellstone', label: 'Coastal shellstone', detail: 'Sun-washed ivory', swatch: '#d9d1bc', grout: '#c0b6a0' },
+  { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461' },
+];
+
+const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: JSX.Element }> = [
+  { id: 'spa', label: 'Integrated spa / Jacuzzi', detail: 'A dedicated hot-water retreat', icon: <Bath size={17} /> },
+  { id: 'spa-waterfall', label: 'Spa with overhead waterfall', detail: 'Spa with a dramatic spillover', icon: <Waves size={17} /> },
+  { id: 'infinity-edge', label: 'Infinity edge', detail: 'Water flowing over a vanishing edge', icon: <Droplets size={17} /> },
+  { id: 'sun-shelf', label: 'Sun shelf', detail: 'Shallow place to settle in', icon: <Sun size={17} /> },
+  { id: 'sheer-descent', label: 'Sheer-descent waterfall', detail: 'A clean architectural water wall', icon: <Waves size={17} /> },
+  { id: 'bubblers', label: 'Sun-shelf bubblers', detail: 'Gentle vertical water jets', icon: <Droplets size={17} /> },
+  { id: 'pool-lights', label: 'Pool lights', detail: 'A quiet glow after sunset', icon: <Lightbulb size={17} /> },
+];
+
+const OUTDOOR_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: JSX.Element }> = [
+  { id: 'sunken-fire-pit', label: 'Sunken fire pit', detail: 'A lower lounge for gathering', icon: <Flame size={17} /> },
+  { id: 'outdoor-kitchen', label: 'Outdoor kitchen', detail: 'A built-in place to cook and serve', icon: <ChefHat size={17} /> },
+  { id: 'fire-bowls', label: 'Fire bowls', detail: 'Sculptural fire beside the water', icon: <Flame size={17} /> },
+  { id: 'pergola', label: 'Pergola', detail: 'Defined shade for outdoor living', icon: <Sun size={17} /> },
+  { id: 'outdoor-shower', label: 'Outdoor shower', detail: 'A simple rinse beside the pool', icon: <Droplets size={17} /> },
 ];
 
 const SHAPES: Array<{ id: PoolShape; label: string; detail: string }> = [
