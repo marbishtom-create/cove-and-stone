@@ -1,6 +1,6 @@
 import { Flame, Trees, ChefHat, Sofa } from 'lucide-react';
 import { Link } from 'wouter';
-import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import heroImage from '@assets/outdoor-living-hero-gourmet-kitchen.png';
 import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
 import kitchenLoungeConceptImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept.jpg';
 import kitchenLoungeConceptMobileImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept-mobile.jpg';
@@ -13,7 +13,7 @@ export default function OutdoorLiving() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Concept visualization of a dramatic Jacksonville outdoor living environment with fire and water features" 
+            alt="Concept visualization of a Jacksonville outdoor living environment with a stone-backed gourmet kitchen, pool, fire and water features"
             className="w-full h-full object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
