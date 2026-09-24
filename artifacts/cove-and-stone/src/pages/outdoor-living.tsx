@@ -73,11 +73,11 @@ export default function OutdoorLiving() {
             <div className="relative overflow-hidden">
               <img
                 src={kitchenImage}
-                alt="Concept visualization of a gourmet outdoor kitchen with a cooking island, bar seating, pergola and lounge area"
+                alt="Design visualization of a gourmet outdoor kitchen with a cooking island, bar seating, pergola and lounge area"
                 className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
               />
               <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 border-t border-white/30 pt-3 text-[10px] uppercase tracking-[0.2em] text-white/80">
-                <span>Gourmet kitchen concept</span>
+                <span>Gourmet kitchen design</span>
                 <span>Outdoor room / 01</span>
               </div>
             </div>
@@ -86,13 +86,13 @@ export default function OutdoorLiving() {
                 <source media="(max-width: 767px)" srcSet={kitchenLoungeConceptMobileImage} />
                 <img
                   src={kitchenLoungeConceptImage}
-                  alt="Concept visualization of a covered outdoor kitchen with a stone island, large mounted television, screened enclosure, and turf lounge seating"
+                  alt="Design visualization of a covered outdoor kitchen with a stone island, large mounted television, screened enclosure, and turf lounge seating"
                   className="aspect-[4/3] w-full object-cover"
                   loading="lazy"
                 />
               </picture>
               <div className="absolute bottom-3 left-3 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 backdrop-blur-sm">
-                Outdoor kitchen + turf lounge / Concept 02
+                Outdoor kitchen + turf lounge / Design visualization
               </div>
             </div>
           </div>

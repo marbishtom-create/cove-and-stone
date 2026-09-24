@@ -11,15 +11,15 @@ const heroSection = homePage.slice(
   homePage.indexOf("{/* 2. Credibility Content */}"),
 );
 
-test("keeps all three mobile hero CTAs with a subtle frosted-glass treatment", () => {
+test("keeps all three mobile hero CTAs vibrant with a subtle frosted-glass treatment", () => {
   assert.match(heroSection, /Design My Backyard/);
   assert.match(heroSection, /Visit the Showroom/);
   assert.match(heroSection, /Explore Financing/);
   assert.equal(
-    (heroSection.match(/bg-secondary\/80 text-secondary-foreground/g) ?? []).length,
+    (heroSection.match(/bg-secondary\/90 text-secondary-foreground/g) ?? []).length,
     3,
   );
-  assert.equal((heroSection.match(/backdrop-blur-sm/g) ?? []).length, 3);
+  assert.equal((heroSection.match(/backdrop-blur-md/g) ?? []).length, 3);
   assert.equal((heroSection.match(/border-white\/30/g) ?? []).length, 3);
   assert.match(heroSection, /hover:bg-white hover:text-primary/);
   assert.match(heroSection, /focus-visible:bg-white focus-visible:text-primary/);
