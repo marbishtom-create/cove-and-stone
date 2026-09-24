@@ -9,9 +9,11 @@ import {
   Lightbulb,
   Mail,
   MoveHorizontal,
+  Redo2,
   RefreshCcw,
   Sparkles,
   Sun,
+  Undo2,
   Upload,
   Waves,
   X,
@@ -255,13 +257,11 @@ const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: s
 ];
 
 const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [
-  { id: 'spa', label: 'Integrated spa / Jacuzzi', detail: 'A dedicated hot-water retreat', icon: <Bath size={17} /> },
-  { id: 'spa-waterfall', label: 'Spa with overhead waterfall', detail: 'Spa with a dramatic spillover', icon: <Waves size={17} /> },
+  { id: 'spa', label: 'Raised spa with pool spillover', detail: 'A separate hot-water retreat that flows into the pool', icon: <Bath size={17} /> },
   { id: 'infinity-edge', label: 'Infinity edge', detail: 'Water flowing over a vanishing edge', icon: <Droplets size={17} /> },
   { id: 'sun-shelf', label: 'Sun shelf', detail: 'Shallow place to settle in', icon: <Sun size={17} /> },
   { id: 'sheer-descent', label: 'Sheer-descent waterfall', detail: 'A clean architectural water wall', icon: <Waves size={17} /> },
   { id: 'bubblers', label: 'Sun-shelf bubblers', detail: 'Gentle vertical water jets', icon: <Droplets size={17} /> },
-  { id: 'pool-pergola-rainfall', label: 'Pool pergola with rainfall', detail: 'A pergola over the water with a soft rain curtain', icon: <Waves size={17} /> },
   { id: 'pool-lights', label: 'Pool lights', detail: 'A quiet glow after sunset', icon: <Lightbulb size={17} /> },
 ];
 
@@ -419,6 +419,13 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           </g>
         </>
       )}
+      {selectedFeatures.has('pergola') && (
+        <g data-feature-pergola="true" opacity=".84">
+          <path d="M566 150h142" fill="none" stroke="#594c3b" strokeWidth="9" />
+          <path d="M566 147h142M580 150v96M694 150v96" fill="none" stroke="#e5ddca" strokeWidth="5" />
+          <path d="M582 143v14M604 143v14M626 143v14M648 143v14M670 143v14" fill="none" stroke="#806d50" strokeWidth="3" />
+        </g>
+      )}
       <g transform={poolTransform}>
         <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
         <path d={poolPath} fill="none" stroke="url(#continuous-deck-tile)" strokeWidth="48" />
@@ -460,27 +467,20 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           </g>
         )}
         {spaEnabled && (
-          <g>
-            <ellipse cx="520" cy="287" rx="44" ry="26" fill="url(#continuous-deck-tile)" stroke="#eee9da" strokeWidth="2" />
-            <ellipse cx="520" cy="287" rx="35" ry="18" fill="url(#spa-water)" stroke="url(#waterline-tile-pattern)" strokeWidth="5" />
-            <path d="M497 285c9-6 18-6 27 0s18 6 27 0" fill="none" stroke="#d8f5ed" strokeWidth="2" opacity=".65" />
-            {selectedFeatures.has('spa-waterfall') && (
-              <g fill="none" stroke="#e4fbf5" strokeLinecap="round" opacity=".9">
-                <path d="M507 307v13M520 307v16M533 307v12" strokeWidth="3" />
-              </g>
-            )}
-          </g>
-        )}
-        {selectedFeatures.has('pool-pergola-rainfall') && (
-          <g data-feature-rainfall-pergola="true">
-            <path d="M288 139H472L460 121H300Z" fill="#866f4f" fillOpacity=".9" stroke="#584b39" strokeWidth="2.5" />
-            <path d="M300 121H460M288 139H472" fill="none" stroke="#e7dcc5" strokeWidth="3" />
-            <path d="M298 129V192M462 129V192" fill="none" stroke="#6f785e" strokeWidth="5" strokeLinecap="round" />
-            <path d="M306 142V209M323 142V217M340 142V204M357 142V220M374 142V211M391 142V218M408 142V206M425 142V215M442 142V204M457 142V210" fill="none" stroke="#e2faf4" strokeOpacity=".88" strokeWidth="2.5" strokeLinecap="round" />
-            <path d="M301 207c-4 5-4 9 0 12M324 215c-4 5-4 9 0 12M358 218c-4 5-4 9 0 12M391 216c-4 5-4 9 0 12M425 213c-4 5-4 9 0 12M458 208c-4 5-4 9 0 12" fill="none" stroke="#e2faf4" strokeOpacity=".78" strokeWidth="2" strokeLinecap="round" />
+          <g data-feature-spa="true">
+            <ellipse cx="520" cy="271" rx="50" ry="30" fill="url(#continuous-deck-tile)" stroke="#eee9da" strokeWidth="2" />
+            <ellipse cx="520" cy="267" rx="40" ry="22" fill="url(#spa-water)" stroke="url(#waterline-tile-pattern)" strokeWidth="5" />
+            <path d="M492 286 C502 297 538 297 548 286 C546 306 536 315 520 315 C504 315 494 306 492 286Z" fill="url(#spa-water)" stroke="#d8f5ed" strokeWidth="2" opacity=".9" />
+            <path d="M497 265c9-6 18-6 27 0s18 6 27 0" fill="none" stroke="#d8f5ed" strokeWidth="2" opacity=".65" />
           </g>
         )}
       </g>
+      {selectedFeatures.has('pergola') && selectedFeatures.has('pool-pergola-rainfall') && (
+        <g data-feature-pergola-water="true" fill="none" stroke="#e2faf4" strokeLinecap="round">
+          <path d="M569 153 C568 165 570 178 571 192 M573 153 C573 167 574 180 575 193 M577 153 C578 166 578 180 579 191" strokeOpacity=".78" strokeWidth="2.5" />
+          <path d="M570 154 C570 167 571 180 573 192" strokeOpacity=".55" strokeWidth="5" />
+        </g>
+      )}
       {selectedFeatures.has('outdoor-kitchen') && (
         <g>
           <path d="M625 230h105v18H625z" fill="#e8e1d1" stroke="#9da79e" strokeWidth="2" />
@@ -505,12 +505,6 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           <circle cx="609" cy="175" r="12" fill="#d4c6aa" />
           <circle cx="609" cy="172" r="6" fill="#e58a4c" />
           <path d="M607 173c-2-4 2-6 3-8 4 4 4 7 1 9-2 1-4 0-4-1Z" fill="#ffe0a2" />
-        </g>
-      )}
-      {selectedFeatures.has('pergola') && (
-        <g fill="none" stroke="#e5ddca" strokeWidth="5" opacity=".82">
-          <path d="M48 219h88M54 219v82M130 219v82" />
-          <path d="M58 212v14M77 212v14M96 212v14M115 212v14" strokeWidth="3" />
         </g>
       )}
       {selectedFeatures.has('outdoor-shower') && (
@@ -650,6 +644,8 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [isSendingConcept, setIsSendingConcept] = useState(false);
   const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [conceptSendError, setConceptSendError] = useState('');
+  const [history, setHistory] = useState<PoolVisualizerConfiguration[]>([]);
+  const [future, setFuture] = useState<PoolVisualizerConfiguration[]>([]);
   const customerForm = useForm<CustomerContact>({
     resolver: zodResolver(customerContactSchema),
     defaultValues: {
@@ -662,8 +658,10 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const renderVersionRef = useRef(0);
+  const configurationRef = useRef(configuration);
 
   useEffect(() => {
+    configurationRef.current = configuration;
     onConfigurationChange?.(configuration);
   }, [configuration, onConfigurationChange]);
 
@@ -680,12 +678,48 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   };
 
   const updateConfiguration = (updates: Partial<PoolVisualizerConfiguration>) => {
-    if (Object.keys(updates).some((key) => key !== 'comparisonPosition')) {
+    const isVisualEdit = Object.keys(updates).some((key) => key !== 'comparisonPosition');
+    if (isVisualEdit) {
+      setHistory((items) => [...items.slice(-29), configurationRef.current]);
+      setFuture([]);
+    }
+    if (isVisualEdit) {
       clearAiRender();
       setConceptSendStatus('idle');
       setConceptSendError('');
     }
     setConfiguration((current) => ({ ...current, ...updates }));
+  };
+
+  const toggleFeature = (feature: PoolFeature) => {
+    const features = configuration.features.includes(feature)
+      ? configuration.features.filter((selected) => selected !== feature && !(feature === 'pergola' && selected === 'pool-pergola-rainfall'))
+      : [...configuration.features, feature];
+    updateConfiguration({ features });
+  };
+
+  const undo = () => {
+    const previous = history.at(-1);
+    if (!previous) return;
+    setHistory((items) => items.slice(0, -1));
+    setFuture((items) => [...items, configurationRef.current]);
+    clearAiRender();
+    setConfiguration({
+      ...previous,
+      comparisonPosition: configurationRef.current.comparisonPosition,
+    });
+  };
+
+  const redo = () => {
+    const next = future.at(-1);
+    if (!next) return;
+    setFuture((items) => items.slice(0, -1));
+    setHistory((items) => [...items, configurationRef.current]);
+    clearAiRender();
+    setConfiguration({
+      ...next,
+      comparisonPosition: configurationRef.current.comparisonPosition,
+    });
   };
 
   const updateSlider = (clientX: number) => {
@@ -843,7 +877,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     if (!configuration.photoUrl) return;
 
     const renderVersion = ++renderVersionRef.current;
-    setAiRenderDataUrl(null);
     setAiRenderStatus('generating');
 
     try {
@@ -896,7 +929,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               <span className="pool-visualizer__kicker">Your brief</span>
               <h3>Set the essentials</h3>
             </div>
-            <span className="pool-visualizer__step">01 — 04</span>
+            <div className="pool-visualizer__history-actions" aria-label="Edit history">
+              <button className="pool-visualizer__history-button" type="button" onClick={undo} disabled={!history.length} aria-label="Undo last design change" data-testid="button-undo">
+                <Undo2 size={14} />
+              </button>
+              <button className="pool-visualizer__history-button" type="button" onClick={redo} disabled={!future.length} aria-label="Redo last design change" data-testid="button-redo">
+                <Redo2 size={14} />
+              </button>
+            </div>
           </div>
 
           <div className="pool-visualizer__photo-control">
@@ -1267,10 +1307,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                       type="checkbox"
                       checked={configuration.features.includes(feature.id)}
                       onChange={(event) => {
-                        const features = event.target.checked
-                          ? [...configuration.features, feature.id]
-                          : configuration.features.filter((selected) => selected !== feature.id);
-                        updateConfiguration({ features });
+                        toggleFeature(feature.id);
                       }}
                       data-testid={`toggle-feature-${feature.id}`}
                     />
@@ -1289,16 +1326,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                       type="checkbox"
                       checked={configuration.features.includes(feature.id)}
                       onChange={(event) => {
-                        const features = event.target.checked
-                          ? [...configuration.features, feature.id]
-                          : configuration.features.filter((selected) => selected !== feature.id);
-                        updateConfiguration({ features });
+                        toggleFeature(feature.id);
                       }}
                       data-testid={`toggle-feature-${feature.id}`}
                     />
                     <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
                   </label>
                 ))}
+                {configuration.features.includes('pergola') && (
+                  <label className="pool-visualizer__toggle pool-visualizer__toggle--child">
+                    <span className="pool-visualizer__toggle-icon"><Waves size={17} /></span>
+                    <span><strong>Overhead sheer waterfall</strong><small>Water falls from the pergola overhang into the pool</small></span>
+                    <input
+                      type="checkbox"
+                      checked={configuration.features.includes('pool-pergola-rainfall')}
+                      onChange={() => toggleFeature('pool-pergola-rainfall')}
+                      data-testid="toggle-feature-pool-pergola-rainfall"
+                    />
+                    <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
+                  </label>
+                )}
               </div>
             </div>
           </section>

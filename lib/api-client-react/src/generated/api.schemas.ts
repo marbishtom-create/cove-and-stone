@@ -9,6 +9,44 @@ export interface HealthStatus {
   status: string;
 }
 
+export interface AppointmentRequestInput {
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /**
+     * @minLength 5
+     * @maxLength 300
+     */
+  address: string;
+  /**
+     * @minLength 7
+     * @maxLength 30
+     * @pattern ^[+()0-9 .-]+$
+     */
+  phone: string;
+  /**
+     * @minLength 10
+     * @maxLength 10
+     * @pattern ^\d{4}-\d{2}-\d{2}$
+     */
+  preferredDate: string;
+  /** @pattern ^(?:(?:10|11|12|13|14|15|16):(00|30)|17:00)$ */
+  preferredTime: string;
+}
+
+export type AppointmentRequestResponseStatus = typeof AppointmentRequestResponseStatus[keyof typeof AppointmentRequestResponseStatus];
+
+
+export const AppointmentRequestResponseStatus = {
+  requested: 'requested',
+} as const;
+
+export interface AppointmentRequestResponse {
+  status: AppointmentRequestResponseStatus;
+}
+
 export type DesignConceptEmailRequestShape = typeof DesignConceptEmailRequestShape[keyof typeof DesignConceptEmailRequestShape];
 
 

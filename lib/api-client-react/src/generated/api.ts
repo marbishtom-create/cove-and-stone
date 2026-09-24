@@ -20,6 +20,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  AppointmentRequestInput,
+  AppointmentRequestResponse,
   DesignConceptEmailRequest,
   DesignConceptEmailResponse,
   HealthStatus,
@@ -308,5 +310,94 @@ export const useGeneratePoolConceptRender = <TError = ErrorType<void>,
         TContext
       > => {
       return useMutation(getGeneratePoolConceptRenderMutationOptions(options));
+    }
+
+export const getRequestAppointmentUrl = () => {
+
+
+
+
+  return `/api/appointments/request`
+}
+
+/**
+ * Sends a preferred date and time to Cove & Stone for confirmation; it does not reserve a slot.
+ * @summary Request a design consultation appointment
+ */
+export const requestAppointment = async (appointmentRequestInput: AppointmentRequestInput, options?: Parameters<typeof customFetch>[1]): Promise<AppointmentRequestResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<AppointmentRequestResponse>(getRequestAppointmentUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(appointmentRequestInput)
+  }
+);}
+
+
+
+
+
+export const getRequestAppointmentMutationKey = () => ['requestAppointment'] as const;
+
+export const getRequestAppointmentMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestAppointment>>, TError,RequestAppointmentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof requestAppointment>>, TError,RequestAppointmentMutationVariables, TContext> => {
+
+const mutationKey = getRequestAppointmentMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof requestAppointment>>, RequestAppointmentMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  requestAppointment(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RequestAppointmentMutationResult = NonNullable<Awaited<ReturnType<typeof requestAppointment>>>
+    export type RequestAppointmentMutationBody = BodyType<AppointmentRequestInput>
+    export type RequestAppointmentMutationError = ErrorType<void>
+    export type RequestAppointmentMutationVariables = {data: BodyType<AppointmentRequestInput>}
+
+    /**
+ * @summary Request a design consultation appointment
+ */
+export const useRequestAppointment = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestAppointment>>, TError,RequestAppointmentMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof requestAppointment>>,
+        TError,
+        RequestAppointmentMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRequestAppointmentMutationOptions(options));
     }
 

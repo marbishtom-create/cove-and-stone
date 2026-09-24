@@ -2,7 +2,8 @@ import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
-import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
+import './appointment-cta.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
@@ -102,18 +103,13 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <div className="fixed bottom-0 left-6 z-50 hidden flex-col items-start gap-2 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)] lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:flex">
+      <div className="fixed bottom-0 left-6 z-50 hidden drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)] lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:flex">
         <Link
-          href="/contact/"
-          className="origin-left whitespace-nowrap font-serif text-sm font-semibold tracking-[0.08em] text-secondary transition-all duration-200 hover:scale-110 hover:text-white focus-visible:scale-110"
+          href="/appointments/"
+          className="layout-appointment-cta min-h-12 whitespace-nowrap px-5 py-3 font-serif text-sm font-semibold tracking-[0.08em]"
+          data-testid="link-desktop-appointment-cta"
         >
-          Design Consultations
-        </Link>
-        <Link
-          href="/financing/"
-          className="origin-left whitespace-nowrap font-serif text-sm font-semibold uppercase tracking-[0.16em] text-secondary transition-all duration-200 hover:scale-110 hover:text-white focus-visible:scale-110"
-        >
-          Start Your Project
+          Design consultation · Start your project
         </Link>
       </div>
 
@@ -146,16 +142,14 @@ export default function Layout({ children }: { children: ReactNode }) {
             </Link>
           ))}
         </nav>
-        <div className="mt-auto pb-12 flex flex-col gap-6">
-          <Link 
-            href="/financing/"
+        <div className="mt-auto pb-12">
+          <Link
+            href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="bg-primary text-primary-foreground text-center py-4 text-sm tracking-widest uppercase w-full"
+            className="layout-appointment-cta min-h-14 w-full px-5 py-4 text-center text-sm tracking-widest uppercase"
+            data-testid="link-mobile-appointment-cta"
           >
-            Start Your Project
-          </Link>
-          <Link href="/contact/" tabIndex={mobileMenuOpen ? 0 : -1} className="text-center font-medium flex items-center justify-center gap-2">
-            Book a design consultation <ArrowRight size={18} />
+            Design consultation · Start your project
           </Link>
         </div>
       </div>

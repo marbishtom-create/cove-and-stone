@@ -113,3 +113,39 @@ export const GeneratePoolConceptRenderResponse = zod.object({
 })
 
 
+/**
+ * Sends a preferred date and time to Cove & Stone for confirmation; it does not reserve a slot.
+ * @summary Request a design consultation appointment
+ */
+export const requestAppointmentBodyFullNameMin = 2;
+export const requestAppointmentBodyFullNameMax = 120;
+
+export const requestAppointmentBodyAddressMin = 5;
+export const requestAppointmentBodyAddressMax = 300;
+
+export const requestAppointmentBodyPhoneMin = 7;
+export const requestAppointmentBodyPhoneMax = 30;
+
+
+export const requestAppointmentBodyPhoneRegExp = new RegExp('^[+()0-9 .-]+$');
+export const requestAppointmentBodyPreferredDateMin = 10;
+export const requestAppointmentBodyPreferredDateMax = 10;
+
+
+export const requestAppointmentBodyPreferredDateRegExp = new RegExp('^\\d{4}-\\d{2}-\\d{2}$');
+export const requestAppointmentBodyPreferredTimeRegExp = new RegExp('^(?:(?:10|11|12|13|14|15|16):(00|30)|17:00)$');
+
+
+export const RequestAppointmentBody = zod.object({
+  "fullName": zod.string().min(requestAppointmentBodyFullNameMin).max(requestAppointmentBodyFullNameMax),
+  "address": zod.string().min(requestAppointmentBodyAddressMin).max(requestAppointmentBodyAddressMax),
+  "phone": zod.string().min(requestAppointmentBodyPhoneMin).max(requestAppointmentBodyPhoneMax).regex(requestAppointmentBodyPhoneRegExp),
+  "preferredDate": zod.string().min(requestAppointmentBodyPreferredDateMin).max(requestAppointmentBodyPreferredDateMax).regex(requestAppointmentBodyPreferredDateRegExp),
+  "preferredTime": zod.string().regex(requestAppointmentBodyPreferredTimeRegExp)
+})
+
+export const RequestAppointmentResponse = zod.object({
+  "status": zod.enum(['requested'])
+})
+
+

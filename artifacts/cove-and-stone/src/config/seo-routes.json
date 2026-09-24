@@ -164,7 +164,7 @@
     },
     "/projects/ongoing-construction": {
       "title": "Ongoing Pool Construction | Cove & Stone Progress Log",
-      "description": "Follow this pool build from excavation to shell work. See the usual build stages; timing varies with the property, permits, inspections and weather."
+      "description": "Follow this pool build from excavation to shell work. See typical stages as work progresses; timing varies with the property, permits, inspections and weather."
     },
     "/design": {
       "title": "3D Pool Design Jacksonville, FL | Cove & Stone Pools",
@@ -241,6 +241,10 @@
     "/contact": {
       "title": "Start Your Project | Cove & Stone Pools",
       "description": "Start a conversation about a custom pool, renovation or complete outdoor-living project with Cove & Stone in Jacksonville and Northeast Florida."
+    },
+    "/appointments": {
+      "title": "Pool Design Consultation Appointments | Cove & Stone",
+      "description": "Request a pool design consultation with Cove & Stone in Northeast Florida. Choose a date and time; our team will contact you to confirm your appointment."
     },
     "/locations/jacksonville": {
       "title": "Jacksonville Pool Builder & Outdoor Living | Cove & Stone",

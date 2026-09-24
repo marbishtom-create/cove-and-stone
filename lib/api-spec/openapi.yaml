@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: appointments
+    description: Appointment request operations
   - name: design-concepts
     description: Internal pool concept handoff operations
 paths:
@@ -74,6 +76,31 @@ paths:
           description: Image generation rate limit reached
         "502":
           description: AI image generation failed
+  /appointments/request:
+    post:
+      operationId: requestAppointment
+      tags: [appointments]
+      summary: Request a design consultation appointment
+      description: Sends a preferred date and time to Cove & Stone for confirmation; it does not reserve a slot.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentRequestInput"
+      responses:
+        "202":
+          description: Appointment request sent for confirmation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppointmentRequestResponse"
+        "400":
+          description: Invalid appointment request
+        "429":
+          description: Too many appointment requests
+        "502":
+          description: Internal email provider failure
 components:
   schemas:
     HealthStatus:
@@ -81,6 +108,44 @@ components:
       properties:
         status:
           type: string
+      required:
+        - status
+    AppointmentRequestInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 120
+        address:
+          type: string
+          minLength: 5
+          maxLength: 300
+        phone:
+          type: string
+          minLength: 7
+          maxLength: 30
+          pattern: '^[+()0-9 .-]+$'
+        preferredDate:
+          type: string
+          minLength: 10
+          maxLength: 10
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+        preferredTime:
+          type: string
+          pattern: '^(?:(?:10|11|12|13|14|15|16):(00|30)|17:00)$'
+      required:
+        - fullName
+        - address
+        - phone
+        - preferredDate
+        - preferredTime
+    AppointmentRequestResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [requested]
       required:
         - status
     DesignConceptEmailRequest:

@@ -67,14 +67,14 @@ const DECK_TILE_LABELS = {
 } as const;
 
 const FEATURE_LABELS = {
-  spa: "Integrated spa / Jacuzzi",
-  "spa-waterfall": "Overhead spa spillover waterfall",
+  spa: "Raised spa with pool spillover",
+  "spa-waterfall": "Legacy spa spillover (treated as integrated spa)",
   "infinity-edge": "Infinity edge",
   "pool-lights": "Pool lights",
   "sun-shelf": "Sun shelf",
   "sheer-descent": "Sheer-descent waterfall",
   bubblers: "Sun-shelf bubblers",
-  "pool-pergola-rainfall": "Pool pergola with rainfall",
+  "pool-pergola-rainfall": "Optional overhead sheer waterfall from pergola",
   "sunken-fire-pit": "Sunken fire pit",
   "outdoor-kitchen": "Outdoor kitchen",
   "fire-bowls": "Fire bowls",
@@ -83,18 +83,18 @@ const FEATURE_LABELS = {
 } as const;
 
 const FEATURE_PROMPTS = {
-  spa: "an integrated spa / Jacuzzi with clean modern lines",
-  "spa-waterfall": "a spa with a dramatic overhead spillover waterfall",
+  spa: "a separate raised spa beside the pool, with a clean spillover lip flowing directly into the swimming pool",
+  "spa-waterfall": "an integrated raised spa with a broad spillover directly into the pool",
   "infinity-edge": "an infinity edge with water flowing over one vanishing edge",
   "pool-lights": "subtle underwater pool lighting",
   "sun-shelf": "a shallow sun shelf",
   "sheer-descent": "a clean architectural sheer-descent waterfall",
   bubblers: "gentle bubblers on the sun shelf",
-  "pool-pergola-rainfall": "a slim pergola centered above the pool with a controlled rain curtain falling directly into the water",
+  "pool-pergola-rainfall": "a narrow overhead sheer waterfall falling from the selected pergola overhang directly into the pool; do not add a second pergola",
   "sunken-fire-pit": "a sunken outdoor fire-pit lounge",
   "outdoor-kitchen": "a built-in outdoor kitchen",
   "fire-bowls": "sculptural fire bowls beside the pool",
-  pergola: "a simple modern pergola",
+  pergola: "a simple modern pergola positioned mostly behind the pool, adjacent to the outdoor kitchen, providing shade with only a slight overhang",
   "outdoor-shower": "a discreet outdoor shower",
 } as const;
 

@@ -1,0 +1,125 @@
+.appointment-page {
+  --appointment-line: hsl(var(--primary) / 0.14);
+}
+
+.appointment-watermark {
+  color: hsl(var(--secondary) / 0.24);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5rem, 18vw, 13rem);
+  font-style: italic;
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.appointment-field {
+  background: hsl(var(--background) / 0.72);
+  border: 1px solid hsl(var(--primary) / 0.18);
+  color: hsl(var(--foreground));
+  min-height: 3.25rem;
+  padding: 0.8rem 0.95rem;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  width: 100%;
+}
+
+.appointment-field::placeholder {
+  color: hsl(var(--muted-foreground) / 0.72);
+}
+
+.appointment-field:hover {
+  border-color: hsl(var(--secondary) / 0.7);
+}
+
+.appointment-field:focus {
+  background: hsl(var(--card));
+  border-color: hsl(var(--secondary));
+  box-shadow: 0 0 0 3px hsl(var(--secondary) / 0.2);
+  outline: none;
+}
+
+.appointment-field[aria-invalid='true'] {
+  border-color: hsl(var(--destructive));
+}
+
+.appointment-cta {
+  align-items: center;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  display: inline-flex;
+  isolation: isolate;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.appointment-cta::before,
+.appointment-cta::after {
+  content: '';
+  inset: -35%;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-75%) rotate(-8deg);
+  transition: opacity 240ms ease, transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: -1;
+}
+
+.appointment-cta::before {
+  background: repeating-linear-gradient(
+    112deg,
+    transparent 0 18px,
+    hsl(var(--secondary) / 0.32) 19px 22px,
+    transparent 23px 42px
+  );
+  opacity: 0;
+}
+
+.appointment-cta::after {
+  background: hsl(var(--secondary));
+  opacity: 0;
+  transform: translateX(-110%) skewX(-18deg);
+  width: 42%;
+}
+
+.appointment-cta:hover,
+.appointment-cta:focus-visible {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transform: translateY(-1px);
+}
+
+.appointment-cta:hover::before,
+.appointment-cta:focus-visible::before {
+  opacity: 1;
+  transform: translateX(22%) rotate(-8deg);
+}
+
+.appointment-cta:hover::after,
+.appointment-cta:focus-visible::after {
+  opacity: 0.17;
+  transform: translateX(260%) skewX(-18deg);
+}
+
+.appointment-cta:active {
+  transform: translateY(0);
+}
+
+.appointment-cta:focus-visible {
+  outline: 3px solid hsl(var(--secondary));
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appointment-field,
+  .appointment-cta,
+  .appointment-cta::before,
+  .appointment-cta::after {
+    transition-duration: 0.01ms;
+  }
+
+  .appointment-cta:hover,
+  .appointment-cta:focus-visible {
+    transform: none;
+  }
+}

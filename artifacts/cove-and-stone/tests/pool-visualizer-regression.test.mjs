@@ -22,6 +22,10 @@ const apiSpec = await readFile(
   new URL("../../../lib/api-spec/openapi.yaml", import.meta.url),
   "utf8",
 );
+const geminiImageHelper = await readFile(
+  new URL("../../../lib/integrations-gemini-ai/src/image.ts", import.meta.url),
+  "utf8",
+);
 
 test("keeps the pool visualizer wired into both customer entry points", () => {
   assert.match(homePage, /<PoolVisualizer \/>/);
@@ -54,9 +58,7 @@ test("keeps every requested pool configuration in the generated state", () => {
   assert.match(component, /data-testid=\{`toggle-feature-\$\{feature\.id\}`\}/);
   for (const feature of [
     "spa",
-    "spa-waterfall",
     "infinity-edge",
-    "pool-pergola-rainfall",
     "sunken-fire-pit",
     "outdoor-kitchen",
     "pool-lights",
@@ -64,8 +66,8 @@ test("keeps every requested pool configuration in the generated state", () => {
     assert.match(component, new RegExp(`id: '${feature}'`), `${feature} must have its own independent toggle`);
   }
   assert.match(component, /configuration\.features\.includes\(feature\.id\)/);
-  assert.match(component, /\[\.\.\.configuration\.features, feature\.id\]/);
-  assert.match(component, /configuration\.features\.filter\(\(selected\) => selected !== feature\.id\)/);
+  assert.match(component, /\[\.\.\.configuration\.features, feature\]/);
+  assert.match(component, /configuration\.features\.filter\(\(selected\) => selected !== feature/);
 });
 
 test("renders configured values in the concept preview instead of only storing them", () => {
@@ -73,10 +75,10 @@ test("renders configured values in the concept preview instead of only storing t
   assert.match(component, /tile\.swatch/);
   assert.match(component, /deck\.swatch/);
   assert.match(component, /selectedFeatures\.has\('sun-shelf'\)/);
-  assert.match(component, /selectedFeatures\.has\('spa-waterfall'\)/);
+  assert.match(component, /selectedFeatures\.has\('spa'\)/);
   assert.match(component, /selectedFeatures\.has\('infinity-edge'\)/);
   assert.match(component, /selectedFeatures\.has\('pool-pergola-rainfall'\)/);
-  assert.match(component, /data-feature-rainfall-pergola="true"/);
+  assert.match(component, /data-feature-pergola-water="true"/);
   assert.match(component, /selectedFeatures\.has\('sunken-fire-pit'\)/);
   assert.match(component, /selectedFeatures\.has\('outdoor-kitchen'\)/);
   assert.match(component, /stroke="url\(#continuous-deck-tile\)" strokeWidth="48"/);
@@ -137,8 +139,8 @@ test("uses representative photographed material textures and places feature togg
       component.indexOf("POOL_FEATURES.map((feature)"),
     "feature controls should live in the dock below the comparison",
   );
-  assert.match(designConceptRoute, /"pool-pergola-rainfall": "Pool pergola with rainfall"/);
-  assert.match(designConceptRoute, /"pool-pergola-rainfall": "a slim pergola centered above the pool/);
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "Optional overhead sheer waterfall from pergola"/);
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "a narrow overhead sheer waterfall falling from the selected pergola overhang/);
   assert.match(apiSpec, /pool-pergola-rainfall/);
 });
 
@@ -188,4 +190,50 @@ test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /data-testid="button-send-concept"/);
   assert.match(component, /emailDesignConcept/);
   assert.match(component, /AI concepts are illustrative only, not completed-project photography or construction drawings/);
+});
+
+test("keeps edit history accessible without recording comparison-slider movement", () => {
+  assert.match(component, /data-testid="button-undo"/);
+  assert.match(component, /data-testid="button-redo"/);
+  assert.match(component, /disabled=\{!history\.length\}/);
+  assert.match(component, /disabled=\{!future\.length\}/);
+  assert.match(component, /key !== 'comparisonPosition'/);
+  assert.match(component, /\.\.\.previous,[\s\S]*?comparisonPosition: configurationRef\.current\.comparisonPosition/);
+  assert.match(component, /\.\.\.next,[\s\S]*?comparisonPosition: configurationRef\.current\.comparisonPosition/);
+});
+
+test("keeps pergola waterfall subordinate to the pergola and preserves AI fallback state", () => {
+  assert.match(component, /configuration\.features\.includes\('pergola'\)/);
+  assert.match(component, /feature === 'pergola' && selected === 'pool-pergola-rainfall'/);
+  assert.match(component, /setAiRenderStatus\('generating'\)/);
+  assert.doesNotMatch(component.slice(component.indexOf('const generateAiRender')), /setAiRenderDataUrl\(null\)/);
+  assert.match(designConceptRoute, /do not add a second pergola/);
+});
+
+test("keeps the spa spillover and pergola waterfall distinct in the local and AI concepts", () => {
+  assert.match(component, /label: 'Raised spa with pool spillover'/);
+  assert.match(component, /const spaEnabled = selectedFeatures\.has\('spa'\)/);
+  assert.doesNotMatch(component, /Spa with overhead waterfall/);
+  assert.ok(
+    component.indexOf('data-feature-pergola="true"') < component.indexOf('<g transform={poolTransform}>'),
+    "the pergola should be drawn behind the pool",
+  );
+  assert.match(component, /data-feature-pergola-water="true"/);
+  assert.match(component, /M569 153 C568 165 570 178 571 192/);
+  assert.match(
+    designConceptRoute,
+    /spa: "a separate raised spa beside the pool, with a clean spillover lip flowing directly into the swimming pool"/,
+  );
+  assert.match(
+    designConceptRoute,
+    /"pool-pergola-rainfall": "a narrow overhead sheer waterfall falling from the selected pergola overhang directly into the pool/,
+  );
+});
+
+test("retries missing Gemini image payloads without changing the supported model", () => {
+  assert.match(geminiImageHelper, /for \(let attempt = 0; attempt < 2; attempt \+= 1\)/);
+  assert.match(geminiImageHelper, /candidates[\s\S]*?flatMap/);
+  assert.match(geminiImageHelper, /if \(attempt === 0\)/);
+  assert.match(geminiImageHelper, /model: "gemini-2\.5-flash-image"/);
+  assert.match(geminiImageHelper, /did not return a pool concept image after retrying/);
 });

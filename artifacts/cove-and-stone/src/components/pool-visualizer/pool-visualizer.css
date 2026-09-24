@@ -132,6 +132,29 @@
   padding-bottom: 1.2rem;
 }
 
+.pool-visualizer__history-actions {
+  align-items: center;
+  display: flex;
+  gap: .25rem;
+}
+
+.pool-visualizer__history-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--pv-line);
+  color: var(--pv-aqua-dark);
+  display: flex;
+  height: 1.9rem;
+  justify-content: center;
+  padding: 0;
+  width: 1.9rem;
+}
+
+.pool-visualizer__history-button:disabled {
+  cursor: not-allowed;
+  opacity: .35;
+}
+
 .pool-visualizer__control-head h3,
 .pool-visualizer__preview-header h3 {
   font-family: var(--app-font-serif, Georgia, serif);
@@ -515,6 +538,12 @@
   display: flex;
   gap: .58rem;
   padding: .72rem 0;
+}
+
+.pool-visualizer__toggle--child {
+  border-left: 2px solid var(--pv-aqua);
+  margin-left: 1.8rem;
+  padding-left: .7rem;
 }
 
 .pool-visualizer__toggle:last-child {

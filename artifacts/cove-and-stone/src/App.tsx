@@ -17,6 +17,7 @@ import Financing from '@/pages/financing';
 import Commercial from '@/pages/commercial';
 import About from '@/pages/about';
 import Contact from '@/pages/contact';
+import Appointments from '@/pages/appointments';
 import LocationPage from '@/pages/location';
 import Layout from '@/components/layout/layout';
 import { SiteMetadata } from '@/components/seo/site-metadata';
@@ -47,6 +48,7 @@ function Router() {
           <Route path="/commercial/" component={Commercial} />
           <Route path="/about/" component={About} />
           <Route path="/contact/" component={Contact} />
+          <Route path="/appointments/" component={Appointments} />
           <Route path="/locations/:slug/" component={LocationPage} />
           <Route component={NotFound} />
         </Switch>
