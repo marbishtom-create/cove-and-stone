@@ -17,6 +17,7 @@ export const DesignConceptEmailRequestFeaturesItem = {
   'sun-shelf': 'sun-shelf',
   'sheer-descent': 'sheer-descent',
   bubblers: 'bubblers',
+  'pool-pergola-rainfall': 'pool-pergola-rainfall',
   'sunken-fire-pit': 'sunken-fire-pit',
   'outdoor-kitchen': 'outdoor-kitchen',
   'fire-bowls': 'fire-bowls',

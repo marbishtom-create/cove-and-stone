@@ -30,6 +30,12 @@ import {
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import whitePlasterTexture from '@assets/generated_images/material-pool-white-plaster-small.jpg';
+import quartzFinishTexture from '@assets/generated_images/material-pool-quartz-small.jpg';
+import pebbleFinishTexture from '@assets/generated_images/material-pool-pebble-small.jpg';
+import stoneWaterlineTexture from '@assets/generated_images/material-waterline-stone-tile-small.jpg';
+import glassWaterlineTexture from '@assets/generated_images/material-waterline-glass-tile-small.jpg';
+import deckPaverTexture from '@assets/generated_images/material-deck-pavers-small.jpg';
 import {
   Form,
   FormControl,
@@ -80,6 +86,7 @@ export type PoolFeature =
   | 'sunken-fire-pit'
   | 'outdoor-kitchen'
   | 'fire-bowls'
+  | 'pool-pergola-rainfall'
   | 'pergola'
   | 'outdoor-shower';
 export type PoolEdgeTreatment = 'flush-continuous';
@@ -129,6 +136,7 @@ const FINISHES: Array<{
   detail: string;
   swatch: string;
   deepSwatch: string;
+  texture: string;
 }> = [
   {
     id: 'white-plaster',
@@ -136,6 +144,7 @@ const FINISHES: Array<{
     detail: 'Classic smooth white · pale sky water',
     swatch: '#d9e8df',
     deepSwatch: '#6aa9aa',
+    texture: whitePlasterTexture,
   },
   {
     id: 'arctic-quartz',
@@ -143,6 +152,7 @@ const FINISHES: Array<{
     detail: 'Bright quartz · clear light aqua',
     swatch: '#b9dfd8',
     deepSwatch: '#4c9da2',
+    texture: quartzFinishTexture,
   },
   {
     id: 'sandbar-quartz',
@@ -150,6 +160,7 @@ const FINISHES: Array<{
     detail: 'Warm sand quartz · soft turquoise',
     swatch: '#b7d0bd',
     deepSwatch: '#57928d',
+    texture: quartzFinishTexture,
   },
   {
     id: 'sea-glass-quartz',
@@ -157,6 +168,7 @@ const FINISHES: Array<{
     detail: 'Mint aggregate · luminous aqua',
     swatch: '#8fcac0',
     deepSwatch: '#398c91',
+    texture: quartzFinishTexture,
   },
   {
     id: 'lagoon-pebble',
@@ -164,6 +176,7 @@ const FINISHES: Array<{
     detail: 'Aqua pebble · coastal teal',
     swatch: '#68b3ad',
     deepSwatch: '#28777e',
+    texture: pebbleFinishTexture,
   },
   {
     id: 'ocean-blue-pebble',
@@ -171,6 +184,7 @@ const FINISHES: Array<{
     detail: 'Blue aggregate · vivid blue water',
     swatch: '#5e9fb0',
     deepSwatch: '#235e7c',
+    texture: pebbleFinishTexture,
   },
   {
     id: 'silver-pebble',
@@ -178,6 +192,7 @@ const FINISHES: Array<{
     detail: 'Cool gray aggregate · blue-gray water',
     swatch: '#a8c4c5',
     deepSwatch: '#557d8b',
+    texture: pebbleFinishTexture,
   },
   {
     id: 'greenstone',
@@ -185,6 +200,7 @@ const FINISHES: Array<{
     detail: 'Mineral green · softly organic teal',
     swatch: '#8ab1a5',
     deepSwatch: '#416e6c',
+    texture: pebbleFinishTexture,
   },
   {
     id: 'midnight-pebble',
@@ -192,29 +208,30 @@ const FINISHES: Array<{
     detail: 'Charcoal aggregate · deep ink blue',
     swatch: '#526773',
     deepSwatch: '#182f43',
+    texture: pebbleFinishTexture,
   },
 ];
 
-const TILE_OPTIONS: Array<{ id: WaterlineTile; label: string; detail: string; swatch: string }> = [
-  { id: 'pale-limestone', label: 'Pale limestone', detail: 'Soft ivory stone', swatch: '#ded7c6' },
-  { id: 'shellstone', label: 'Shellstone', detail: 'Warm shell and sand tones', swatch: '#cbbb9f' },
-  { id: 'mist-porcelain', label: 'Mist porcelain', detail: 'Quiet cloud gray', swatch: '#bbc9c5' },
-  { id: 'warm-travertine', label: 'Warm travertine', detail: 'Natural sand with soft movement', swatch: '#c8b293' },
-  { id: 'sea-glass', label: 'Sea glass', detail: 'Hand-cut pale aqua', swatch: '#79aaa5' },
-  { id: 'lagoon-glass', label: 'Lagoon glass', detail: 'Layered coastal teal', swatch: '#478e8e' },
-  { id: 'ocean-blue-glass', label: 'Ocean-blue glass', detail: 'Clear blue iridescence', swatch: '#568fa7' },
-  { id: 'deep-navy-glass', label: 'Deep navy glass', detail: 'Inky blue contrast', swatch: '#344d66' },
-  { id: 'charcoal-mosaic', label: 'Charcoal mosaic', detail: 'Architectural dark gray', swatch: '#4a5353' },
+const TILE_OPTIONS: Array<{ id: WaterlineTile; label: string; detail: string; swatch: string; texture: string }> = [
+  { id: 'pale-limestone', label: 'Pale limestone', detail: 'Soft ivory stone', swatch: '#ded7c6', texture: stoneWaterlineTexture },
+  { id: 'shellstone', label: 'Shellstone', detail: 'Warm shell and sand tones', swatch: '#cbbb9f', texture: stoneWaterlineTexture },
+  { id: 'mist-porcelain', label: 'Mist porcelain', detail: 'Quiet cloud gray', swatch: '#bbc9c5', texture: stoneWaterlineTexture },
+  { id: 'warm-travertine', label: 'Warm travertine', detail: 'Natural sand with soft movement', swatch: '#c8b293', texture: stoneWaterlineTexture },
+  { id: 'sea-glass', label: 'Sea glass', detail: 'Hand-cut pale aqua', swatch: '#79aaa5', texture: glassWaterlineTexture },
+  { id: 'lagoon-glass', label: 'Lagoon glass', detail: 'Layered coastal teal', swatch: '#478e8e', texture: glassWaterlineTexture },
+  { id: 'ocean-blue-glass', label: 'Ocean-blue glass', detail: 'Clear blue iridescence', swatch: '#568fa7', texture: glassWaterlineTexture },
+  { id: 'deep-navy-glass', label: 'Deep navy glass', detail: 'Inky blue contrast', swatch: '#344d66', texture: glassWaterlineTexture },
+  { id: 'charcoal-mosaic', label: 'Charcoal mosaic', detail: 'Architectural dark gray', swatch: '#4a5353', texture: glassWaterlineTexture },
 ];
 
-const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: string; grout: string }> = [
-  { id: 'shell-limestone', label: 'Shell limestone', detail: 'Pale coastal stone', swatch: '#d5cbb7', grout: '#bdb39f' },
-  { id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Clean light matte', swatch: '#e2ded1', grout: '#c9c5b8' },
-  { id: 'silver-porcelain', label: 'Silver porcelain', detail: 'Cool modern gray', swatch: '#bfc5c0', grout: '#a7afaa' },
-  { id: 'sand-travertine', label: 'Sand travertine', detail: 'Warm natural variation', swatch: '#c7b395', grout: '#ad9878' },
-  { id: 'warm-limestone', label: 'Warm limestone', detail: 'Soft beige with quiet grain', swatch: '#cbbda7', grout: '#b5a68d' },
-  { id: 'coastal-shellstone', label: 'Coastal shellstone', detail: 'Sun-washed ivory', swatch: '#d9d1bc', grout: '#c0b6a0' },
-  { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461' },
+const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: string; grout: string; texture: string }> = [
+  { id: 'shell-limestone', label: 'Shell limestone', detail: 'Pale coastal stone', swatch: '#d5cbb7', grout: '#bdb39f', texture: deckPaverTexture },
+  { id: 'ivory-porcelain', label: 'Ivory porcelain', detail: 'Clean light matte', swatch: '#e2ded1', grout: '#c9c5b8', texture: deckPaverTexture },
+  { id: 'silver-porcelain', label: 'Silver porcelain', detail: 'Cool modern gray', swatch: '#bfc5c0', grout: '#a7afaa', texture: deckPaverTexture },
+  { id: 'sand-travertine', label: 'Sand travertine', detail: 'Warm natural variation', swatch: '#c7b395', grout: '#ad9878', texture: deckPaverTexture },
+  { id: 'warm-limestone', label: 'Warm limestone', detail: 'Soft beige with quiet grain', swatch: '#cbbda7', grout: '#b5a68d', texture: deckPaverTexture },
+  { id: 'coastal-shellstone', label: 'Coastal shellstone', detail: 'Sun-washed ivory', swatch: '#d9d1bc', grout: '#c0b6a0', texture: deckPaverTexture },
+  { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461', texture: deckPaverTexture },
 ];
 
 const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [
@@ -224,6 +241,7 @@ const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; ico
   { id: 'sun-shelf', label: 'Sun shelf', detail: 'Shallow place to settle in', icon: <Sun size={17} /> },
   { id: 'sheer-descent', label: 'Sheer-descent waterfall', detail: 'A clean architectural water wall', icon: <Waves size={17} /> },
   { id: 'bubblers', label: 'Sun-shelf bubblers', detail: 'Gentle vertical water jets', icon: <Droplets size={17} /> },
+  { id: 'pool-pergola-rainfall', label: 'Pool pergola with rainfall', detail: 'A pergola over the water with a soft rain curtain', icon: <Waves size={17} /> },
   { id: 'pool-lights', label: 'Pool lights', detail: 'A quiet glow after sunset', icon: <Lightbulb size={17} /> },
 ];
 
@@ -305,11 +323,15 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           <stop offset="0" stopColor="#879b87" />
           <stop offset="1" stopColor="#536e64" />
         </linearGradient>
-        <linearGradient id={poolId} x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id={`${poolId}-water-tone`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={finish.swatch} />
           <stop offset="0.55" stopColor={finish.deepSwatch} />
           <stop offset="1" stopColor="#274b59" />
         </linearGradient>
+        <pattern id={poolId} width="72" height="72" patternUnits="userSpaceOnUse">
+          <image data-material-texture="true" href={finish.texture} width="72" height="72" preserveAspectRatio="xMidYMid slice" />
+          <rect width="72" height="72" fill={`url(#${poolId}-water-tone)`} opacity=".48" />
+        </pattern>
         <linearGradient id="spa-water" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={finish.swatch} />
           <stop offset="1" stopColor={finish.deepSwatch} />
@@ -317,15 +339,14 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
         <filter id="pool-shadow" x="-30%" y="-30%" width="160%" height="170%">
           <feGaussianBlur stdDeviation="12" />
         </filter>
-        <pattern id="waterline-tile-pattern" width="12" height="12" patternUnits="userSpaceOnUse">
-          <rect width="10" height="10" fill={tile.swatch} />
-          <path d="M0 0H12V12H0ZM6 0V12M0 6H12" fill="none" stroke="rgba(255,255,255,.28)" strokeWidth="1.2" />
+        <pattern id="waterline-tile-pattern" width="54" height="44" patternUnits="userSpaceOnUse">
+          <image data-material-texture="true" href={tile.texture} width="54" height="44" preserveAspectRatio="xMidYMid slice" />
+          <rect width="54" height="44" fill={tile.swatch} opacity=".3" />
         </pattern>
-        <pattern id="continuous-deck-tile" width="48" height="48" patternUnits="userSpaceOnUse">
-          <rect width="48" height="48" fill={deck.swatch} />
-          <path d="M48 0H0V48M24 0V48" fill="none" stroke={deck.grout} strokeWidth="1.5" />
-          <path d="M0 24H48" fill="none" stroke={deck.grout} strokeWidth="1.5" />
-          <path d="M4 7C14 4 23 5 33 8M5 34C15 31 23 33 42 29" fill="none" stroke="#fff" strokeOpacity=".17" strokeWidth="1.2" />
+        <pattern id="continuous-deck-tile" width="96" height="72" patternUnits="userSpaceOnUse">
+          <image data-material-texture="true" href={deck.texture} width="96" height="72" preserveAspectRatio="xMidYMid slice" />
+          <rect width="96" height="72" fill={deck.swatch} opacity=".26" />
+          <path d="M96 0H0V72M48 0V72M0 36H96" fill="none" stroke={deck.grout} strokeOpacity=".58" strokeWidth="1.4" />
         </pattern>
         <clipPath id="pool-clip">
           <path d={poolPath} />
@@ -417,6 +438,15 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
             )}
           </g>
         )}
+        {selectedFeatures.has('pool-pergola-rainfall') && (
+          <g data-feature-rainfall-pergola="true">
+            <path d="M288 139H472L460 121H300Z" fill="#866f4f" fillOpacity=".9" stroke="#584b39" strokeWidth="2.5" />
+            <path d="M300 121H460M288 139H472" fill="none" stroke="#e7dcc5" strokeWidth="3" />
+            <path d="M298 129V192M462 129V192" fill="none" stroke="#6f785e" strokeWidth="5" strokeLinecap="round" />
+            <path d="M306 142V209M323 142V217M340 142V204M357 142V220M374 142V211M391 142V218M408 142V206M425 142V215M442 142V204M457 142V210" fill="none" stroke="#e2faf4" strokeOpacity=".88" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M301 207c-4 5-4 9 0 12M324 215c-4 5-4 9 0 12M358 218c-4 5-4 9 0 12M391 216c-4 5-4 9 0 12M425 213c-4 5-4 9 0 12M458 208c-4 5-4 9 0 12" fill="none" stroke="#e2faf4" strokeOpacity=".78" strokeWidth="2" strokeLinecap="round" />
+          </g>
+        )}
       </g>
       {selectedFeatures.has('outdoor-kitchen') && (
         <g>
@@ -498,9 +528,29 @@ function readBlobAsDataUrl(blob: Blob) {
   });
 }
 
-function serializeEmailConceptSvg(svg: SVGSVGElement) {
+function blobToDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') resolve(reader.result);
+      else reject(new Error('A material texture could not be attached to the concept.'));
+    };
+    reader.onerror = () => reject(new Error('A material texture could not be attached to the concept.'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function serializeEmailConceptSvg(svg: SVGSVGElement) {
   const copy = svg.cloneNode(true) as SVGSVGElement;
   copy.querySelectorAll('[data-background-photo="true"]').forEach((element) => element.remove());
+  const materialImages = Array.from(copy.querySelectorAll<SVGImageElement>('image[data-material-texture="true"]'));
+  await Promise.all(materialImages.map(async (image) => {
+    const href = image.getAttribute('href');
+    if (!href || href.startsWith('data:')) return;
+    const response = await fetch(href);
+    if (!response.ok) throw new Error('A material texture could not be attached to the concept.');
+    image.setAttribute('href', await blobToDataUrl(await response.blob()));
+  }));
   return new XMLSerializer().serializeToString(copy);
 }
 
@@ -743,7 +793,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         deckTile: configuration.deckTile,
         edgeTreatment: configuration.edgeTreatment,
         features: configuration.features,
-        svg: serializeEmailConceptSvg(svg),
+        svg: await serializeEmailConceptSvg(svg),
         originalPhotoDataUrl: configuration.photoUrl ?? undefined,
         aiRenderDataUrl: aiRenderDataUrl ?? undefined,
       });
@@ -911,7 +961,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
           <div className="pool-visualizer__section">
             <div className="pool-visualizer__field-label"><span>Pool interior finish</span><span className="pool-visualizer__unit-note">02</span></div>
-            <p className="pool-visualizer__section-note">Choose the surface material and the water color it creates.</p>
+            <p className="pool-visualizer__section-note">Choose the surface material and the water color it creates. Texture imagery is representative; confirm exact products with physical samples.</p>
             <div className="pool-visualizer__material-grid" aria-label="Pool interior finishes">
               {FINISHES.map((finish) => (
                 <button
@@ -924,7 +974,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.poolFinish === finish.id}
                   data-testid={`button-finish-${finish.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch" style={{ background: `linear-gradient(145deg, ${finish.swatch}, ${finish.deepSwatch})` }} />
+                  <span className="pool-visualizer__material-swatch" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${finish.swatch}55, ${finish.swatch}55), url(${finish.texture})` }} />
                   <strong>{finish.label}</strong>
                 </button>
               ))}
@@ -933,7 +983,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
           <div className="pool-visualizer__section">
             <div className="pool-visualizer__field-label"><span>Waterline tile</span><span className="pool-visualizer__unit-note">03</span></div>
-            <p className="pool-visualizer__section-note">A separate accent band at the waterline; choose a stone, porcelain, glass, or mosaic look.</p>
+            <p className="pool-visualizer__section-note">A separate accent band at the waterline; choose a stone, porcelain, glass, or mosaic look. Images are representative, not exact catalog samples.</p>
             <div className="pool-visualizer__material-grid" aria-label="Waterline tile selections">
               {TILE_OPTIONS.map((tile) => (
                 <button
@@ -946,7 +996,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.waterlineTile === tile.id}
                   data-testid={`button-waterline-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" style={{ backgroundColor: tile.swatch }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}55, ${tile.swatch}55), url(${tile.texture})` }} />
                   <strong>{tile.label}</strong>
                 </button>
               ))}
@@ -955,7 +1005,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
           <div className="pool-visualizer__section">
             <div className="pool-visualizer__field-label"><span>Deck tile + pool edge</span><span className="pool-visualizer__unit-note">04</span></div>
-            <p className="pool-visualizer__section-note">One continuous, flush surface runs to the water. No raised or differently sized coping band.</p>
+            <p className="pool-visualizer__section-note">One continuous, flush surface runs to the water. No raised or differently sized coping band; imagery is representative.</p>
             <div className="pool-visualizer__material-grid" aria-label="Continuous deck tile selections">
               {DECK_TILES.map((tile) => (
                 <button
@@ -968,56 +1018,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.deckTile === tile.id}
                   data-testid={`button-deck-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" style={{ backgroundColor: tile.swatch, backgroundImage: `linear-gradient(90deg, transparent 48%, ${tile.grout} 49%, ${tile.grout} 51%, transparent 52%), linear-gradient(0deg, transparent 48%, ${tile.grout} 49%, ${tile.grout} 51%, transparent 52%)` }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}55, ${tile.swatch}55), url(${tile.texture})` }} />
                   <strong>{tile.label}</strong>
                 </button>
               ))}
             </div>
-          </div>
-
-          <div className="pool-visualizer__section pool-visualizer__features">
-            <div className="pool-visualizer__field-label"><span>Pool & water features</span><span className="pool-visualizer__unit-note">05</span></div>
-            <p className="pool-visualizer__section-note">Every switch works on its own. Choose one feature or any combination.</p>
-            {POOL_FEATURES.map((feature) => (
-              <label className="pool-visualizer__toggle" key={feature.id}>
-                <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
-                <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
-                <input
-                  type="checkbox"
-                  checked={configuration.features.includes(feature.id)}
-                  onChange={(event) => {
-                    const features = event.target.checked
-                      ? [...configuration.features, feature.id]
-                      : configuration.features.filter((selected) => selected !== feature.id);
-                    updateConfiguration({ features });
-                  }}
-                  data-testid={`toggle-feature-${feature.id}`}
-                />
-                <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
-              </label>
-            ))}
-          </div>
-
-          <div className="pool-visualizer__section pool-visualizer__features">
-            <div className="pool-visualizer__field-label"><span>Outdoor living</span><span className="pool-visualizer__unit-note">06</span></div>
-            {OUTDOOR_FEATURES.map((feature) => (
-              <label className="pool-visualizer__toggle" key={feature.id}>
-                <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
-                <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
-                <input
-                  type="checkbox"
-                  checked={configuration.features.includes(feature.id)}
-                  onChange={(event) => {
-                    const features = event.target.checked
-                      ? [...configuration.features, feature.id]
-                      : configuration.features.filter((selected) => selected !== feature.id);
-                    updateConfiguration({ features });
-                  }}
-                  data-testid={`toggle-feature-${feature.id}`}
-                />
-                <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
-              </label>
-            ))}
           </div>
 
           <div className="pool-visualizer__control-actions">
@@ -1201,6 +1206,61 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedFinish.label} pool finish</span></div>
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedDeck.label} · flush edge</span></div>
           </div>
+          <section className="pool-visualizer__feature-dock" aria-label="Pool and outdoor feature selections">
+            <div className="pool-visualizer__feature-dock-heading">
+              <div>
+                <span className="pool-visualizer__kicker">Shape the experience</span>
+                <h4>Pool & outdoor features</h4>
+              </div>
+              <p>Choose any combination. The concept above updates with every selection.</p>
+            </div>
+            <div className="pool-visualizer__feature-groups">
+              <div className="pool-visualizer__feature-group">
+                <div className="pool-visualizer__field-label"><span>Pool & water features</span><span className="pool-visualizer__unit-note">05</span></div>
+                <p className="pool-visualizer__section-note">Add water, lighting, and relaxation details.</p>
+                {POOL_FEATURES.map((feature) => (
+                  <label className="pool-visualizer__toggle" key={feature.id}>
+                    <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
+                    <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
+                    <input
+                      type="checkbox"
+                      checked={configuration.features.includes(feature.id)}
+                      onChange={(event) => {
+                        const features = event.target.checked
+                          ? [...configuration.features, feature.id]
+                          : configuration.features.filter((selected) => selected !== feature.id);
+                        updateConfiguration({ features });
+                      }}
+                      data-testid={`toggle-feature-${feature.id}`}
+                    />
+                    <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
+                  </label>
+                ))}
+              </div>
+              <div className="pool-visualizer__feature-group">
+                <div className="pool-visualizer__field-label"><span>Outdoor living</span><span className="pool-visualizer__unit-note">06</span></div>
+                <p className="pool-visualizer__section-note">Extend the design into the surrounding yard.</p>
+                {OUTDOOR_FEATURES.map((feature) => (
+                  <label className="pool-visualizer__toggle" key={feature.id}>
+                    <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
+                    <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
+                    <input
+                      type="checkbox"
+                      checked={configuration.features.includes(feature.id)}
+                      onChange={(event) => {
+                        const features = event.target.checked
+                          ? [...configuration.features, feature.id]
+                          : configuration.features.filter((selected) => selected !== feature.id);
+                        updateConfiguration({ features });
+                      }}
+                      data-testid={`toggle-feature-${feature.id}`}
+                    />
+                    <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>

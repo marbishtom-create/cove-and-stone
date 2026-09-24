@@ -761,6 +761,59 @@
   animation: pv-reveal .65s .16s ease both;
 }
 
+.pool-visualizer__feature-dock {
+  background: var(--pv-paper);
+  border: 1px solid var(--pv-line);
+  box-shadow: 0 20px 48px rgba(54, 65, 60, .06);
+  margin-top: 1.25rem;
+  padding: clamp(1rem, 2vw, 1.55rem);
+}
+
+.pool-visualizer__feature-dock-heading {
+  align-items: end;
+  border-bottom: 1px solid var(--pv-line);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: .9rem;
+}
+
+.pool-visualizer__feature-dock-heading h4 {
+  color: var(--pv-charcoal);
+  font-family: var(--app-font-serif, Georgia, serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -.03em;
+  margin: .3rem 0 0;
+}
+
+.pool-visualizer__feature-dock-heading p {
+  color: var(--pv-muted);
+  font-size: .66rem;
+  line-height: 1.5;
+  margin: 0 0 .1rem;
+  max-width: 19rem;
+}
+
+.pool-visualizer__feature-groups {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pool-visualizer__feature-group {
+  min-width: 0;
+}
+
+.pool-visualizer__feature-group .pool-visualizer__section-note {
+  margin-bottom: .35rem;
+}
+
+.pool-visualizer__feature-group .pool-visualizer__toggle {
+  padding: .58rem 0;
+}
+
 .pool-visualizer__preview-header {
   margin: .25rem 0 1rem;
 }
@@ -1115,6 +1168,15 @@
 
   .pool-visualizer__preview-meta {
     gap: .6rem;
+  }
+
+  .pool-visualizer__feature-dock-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pool-visualizer__feature-groups {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -61,7 +61,7 @@ export const EmailDesignConceptBody = zod.object({
   "waterlineTile": zod.enum(['pale-limestone', 'shellstone', 'mist-porcelain', 'warm-travertine', 'sea-glass', 'lagoon-glass', 'ocean-blue-glass', 'deep-navy-glass', 'charcoal-mosaic']),
   "deckTile": zod.enum(['shell-limestone', 'ivory-porcelain', 'silver-porcelain', 'sand-travertine', 'warm-limestone', 'coastal-shellstone', 'charcoal-porcelain']),
   "edgeTreatment": zod.enum(['flush-continuous']),
-  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower'])),
+  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'pool-pergola-rainfall', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower'])),
   "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax),
   "originalPhotoDataUrl": zod.string().max(emailDesignConceptBodyOriginalPhotoDataUrlMax).regex(emailDesignConceptBodyOriginalPhotoDataUrlRegExp).optional(),
   "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional()
@@ -98,7 +98,7 @@ export const GeneratePoolConceptRenderBody = zod.object({
   "waterlineTile": zod.enum(['pale-limestone', 'shellstone', 'mist-porcelain', 'warm-travertine', 'sea-glass', 'lagoon-glass', 'ocean-blue-glass', 'deep-navy-glass', 'charcoal-mosaic']),
   "deckTile": zod.enum(['shell-limestone', 'ivory-porcelain', 'silver-porcelain', 'sand-travertine', 'warm-limestone', 'coastal-shellstone', 'charcoal-porcelain']),
   "edgeTreatment": zod.enum(['flush-continuous']),
-  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower']))
+  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'pool-pergola-rainfall', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower']))
 })
 
 export const generatePoolConceptRenderResponseImageDataUrlMin = 40;

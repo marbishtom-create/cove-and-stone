@@ -56,6 +56,7 @@ test("keeps every requested pool configuration in the generated state", () => {
     "spa",
     "spa-waterfall",
     "infinity-edge",
+    "pool-pergola-rainfall",
     "sunken-fire-pit",
     "outdoor-kitchen",
     "pool-lights",
@@ -74,6 +75,8 @@ test("renders configured values in the concept preview instead of only storing t
   assert.match(component, /selectedFeatures\.has\('sun-shelf'\)/);
   assert.match(component, /selectedFeatures\.has\('spa-waterfall'\)/);
   assert.match(component, /selectedFeatures\.has\('infinity-edge'\)/);
+  assert.match(component, /selectedFeatures\.has\('pool-pergola-rainfall'\)/);
+  assert.match(component, /data-feature-rainfall-pergola="true"/);
   assert.match(component, /selectedFeatures\.has\('sunken-fire-pit'\)/);
   assert.match(component, /selectedFeatures\.has\('outdoor-kitchen'\)/);
   assert.match(component, /stroke="url\(#continuous-deck-tile\)" strokeWidth="48"/);
@@ -120,6 +123,23 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(apiSpec, /customerAddress:/);
   assert.match(apiSpec, /customerPhone:/);
   assert.match(apiSpec, /features:/);
+});
+
+test("uses representative photographed material textures and places feature toggles below the comparison", () => {
+  assert.match(component, /material-pool-white-plaster-small\.jpg/);
+  assert.match(component, /href=\{finish\.texture\}/);
+  assert.match(component, /href=\{tile\.texture\}/);
+  assert.match(component, /href=\{deck\.texture\}/);
+  assert.match(component, /data-material-texture="true"/);
+  assert.match(component, /confirm exact products with physical samples/);
+  assert.ok(
+    component.indexOf('className="pool-visualizer__feature-dock"') <
+      component.indexOf("POOL_FEATURES.map((feature)"),
+    "feature controls should live in the dock below the comparison",
+  );
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "Pool pergola with rainfall"/);
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "a slim pergola centered above the pool/);
+  assert.match(apiSpec, /pool-pergola-rainfall/);
 });
 
 test("keeps the 3D walkthrough video visible in the mobile layout", () => {

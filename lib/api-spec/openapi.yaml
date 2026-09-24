@@ -126,7 +126,7 @@ components:
           type: array
           items:
             type: string
-            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
+            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, pool-pergola-rainfall, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
           uniqueItems: true
         svg:
           type: string
@@ -188,7 +188,7 @@ components:
           type: array
           items:
             type: string
-            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
+            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, pool-pergola-rainfall, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
           uniqueItems: true
       required:
         - photoDataUrl
