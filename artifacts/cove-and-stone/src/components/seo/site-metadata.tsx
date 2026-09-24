@@ -70,12 +70,12 @@ export function SiteMetadata() {
     setMeta("property", "og:image", SITE_IMAGE);
     setMeta("property", "og:type", "website");
     setMeta("property", "og:site_name", SITE_NAME);
-    setMeta("property", "og:image:alt", "Cove & Stone Pools logo");
+    setMeta("property", "og:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo");
     setMeta("name", "twitter:card", "summary_large_image");
     setMeta("name", "twitter:title", metadata.title);
     setMeta("name", "twitter:description", metadata.description);
     setMeta("name", "twitter:image", SITE_IMAGE);
-    setMeta("name", "twitter:image:alt", "Cove & Stone Pools logo");
+    setMeta("name", "twitter:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo");
     setMeta("name", "robots", metadata.robots ?? "index,follow");
     if (metadata.isNotFound) {
       removeCanonical();

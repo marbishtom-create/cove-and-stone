@@ -38,8 +38,8 @@ const approvedProjectMedia = [
     asset: 'generated_images/ponte-vedra-private-retreat.png',
     mobileImportName: 'ponteVedraRetreatMobile',
     mobileAsset: 'generated_images/ponte-vedra-private-retreat-mobile.jpg',
-    alt: 'Illustrative pool concept with a privacy wall, palms and live oak',
-    label: 'Concept rendering',
+    alt: 'Fully enclosed Ponte Vedra pool setting with a privacy wall, palms and live oak',
+    label: 'Fully Enclosed · Smart Use of Space',
   },
   {
     importName: 'p2',
@@ -254,19 +254,19 @@ test('renders the approved project media copy on each card', () => {
   );
   assert.match(projectsSource, /src=\{cardMedia\.src\}/);
   assert.match(projectsSource, /alt=\{cardMedia\.alt\}/);
-    assert.match(projectsSource, /\{cardMedia\.label\}/);
-   assert.match(projectsSource, /label: "Concept rendering"/);
-    assert.match(projectsSource, /label: "Fully Enclosed · Smart Use of Space"/);
-    assert.match(projectsSource, /title: "St\. Johns River Retreat"/);
-    assert.match(projectsSource, /statusLabel: "Riverfront design"/);
-   assert.doesNotMatch(
+  assert.match(projectsSource, /\{cardMedia\.label\}/);
+  assert.match(projectsSource, /label: "Concept rendering"/);
+  assert.match(projectsSource, /label: "Fully Enclosed · Smart Use of Space"/);
+  assert.match(projectsSource, /title: "St\. Johns River Retreat"/);
+  assert.match(projectsSource, /statusLabel: "Riverfront design"/);
+  assert.match(
       projectDetailSource,
       /copy=\{isCompletedProject \? "Original design visualization" : project\.desc\}/,
       'project media must use the current case study copy',
    );
-    assert.match(projectDetailSource, /\{heroMedia\.label\}/);
-    assert.match(projectDetailSource, /project\.statusLabel \|\|/);
-    assert.doesNotMatch(
+  assert.match(projectDetailSource, /\{heroMedia\.label\}/);
+  assert.match(projectDetailSource, /project\.statusLabel \|\|/);
+  assert.doesNotMatch(
       projectDetailSource,
       /Concept preview|This concept is shown|Private Ponte Vedra concept direction/,
       'project details must not reuse concept or mismatched Ponte Vedra copy',

@@ -8,6 +8,9 @@ const logoSource = await readFile(
   resolve(artifactRoot, 'src/components/ui/logo.tsx'),
   'utf8',
 );
+const logoAsset = await readFile(
+  resolve(artifactRoot, 'public/brand/cove-and-stone-approved.png'),
+);
 const layoutSource = await readFile(
   resolve(artifactRoot, 'src/components/layout/layout.tsx'),
   'utf8',
@@ -26,9 +29,19 @@ const headerViewports = [
 
 test('uses the complete transparent logo lockup in the header', () => {
   assert.match(logoSource, /src="\/brand\/cove-and-stone-approved\.png"/);
+  assert.match(logoSource, /alt="Cove & Stone Pools, Spas & Outdoor Living"/);
   assert.doesNotMatch(logoSource, /cove-and-stone-(monogram|wordmark-exact)\.png/);
   assert.match(logoSource, /bg-transparent/);
   assert.match(logoSource, /data-logo-variant=\{variant\}/);
+});
+
+test('keeps the full logo lockup cropped and transparent', () => {
+  assert.equal(logoAsset.toString('ascii', 1, 4), 'PNG');
+  assert.equal(logoAsset[25], 6, 'the logo should retain transparency');
+  const width = logoAsset.readUInt32BE(16);
+  const height = logoAsset.readUInt32BE(20);
+  assert.ok(width > height, 'the complete horizontal lockup should remain intact');
+  assert.ok(width / height < 1.5, 'the logo should not be cropped down to the wordmark');
 });
 
 test('keeps the logo aspect ratio stable across mobile and desktop widths', () => {

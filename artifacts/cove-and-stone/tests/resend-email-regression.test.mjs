@@ -9,11 +9,11 @@ const apiRoute = await readFile(
 
 test("turns an unverified Resend sender response into a safe Sales fallback", () => {
   assert.match(apiRoute, /response\.status === 403/);
-  assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("sender domain"\)/);
+  assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("domain"\)/);
   assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("not verified"\)/);
   assert.match(
     apiRoute,
-    /The email service is not ready to send this request\. Please contact Sales directly at Sales@coveandstonepools\.com\./,
+    /We could not send your concept right now\. Please contact Sales directly at Sales@coveandstonepools\.com\./,
   );
   assert.match(apiRoute, /res\.status\(502\)\.json\(\{ message: UNVERIFIED_SENDER_MESSAGE \}\)/);
   assert.match(apiRoute, /req\.log\.error\(\s*\{ providerStatus: response\.status, providerMessage \}/s);
