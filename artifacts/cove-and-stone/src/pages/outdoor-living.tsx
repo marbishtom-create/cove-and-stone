@@ -169,7 +169,7 @@ export default function OutdoorLiving() {
                 className="w-full h-full object-cover"
               />
               <img
-                src="/brand/cove-and-stone-approved.png"
+                src="/brand/cove-and-stone-approved-white.png"
                 alt=""
                 aria-hidden="true"
                 className="pointer-events-none absolute right-4 top-4 z-10 w-[32%] min-w-[6.6rem] max-w-[10.5rem] select-none opacity-90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.22)]"

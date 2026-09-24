@@ -1,57 +1,201 @@
 .layout-appointment-cta {
   align-items: center;
-  background: hsl(var(--primary));
-  border: 1px solid hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.92), transparent 48%),
+    repeating-linear-gradient(
+      153deg,
+      transparent 0 17px,
+      rgba(82, 74, 59, 0.06) 18px 19px,
+      transparent 20px 35px
+    ),
+    linear-gradient(135deg, #f3ecdc 0%, #cfc4af 46%, #e9dfcc 100%);
+  border: 1px solid rgba(93, 84, 67, 0.78);
+  border-radius: 9999px;
+  box-shadow:
+    0 12px 26px rgba(6, 24, 28, 0.28),
+    0 0 0 2px rgba(230, 224, 208, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -2px 5px rgba(70, 66, 55, 0.16);
+  color: #17363a;
   display: inline-flex;
   isolation: isolate;
   justify-content: center;
   overflow: hidden;
   position: relative;
-  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  text-decoration: none;
+  transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
 }
 
 .layout-appointment-cta::before {
-  background: repeating-linear-gradient(
-    112deg,
-    transparent 0 13px,
-    hsl(var(--secondary) / 0.4) 14px 17px,
-    transparent 18px 32px
-  );
+  background:
+    radial-gradient(ellipse 32% 105% at 28% 0%, rgba(218, 255, 247, 0.9), transparent 72%),
+    repeating-linear-gradient(
+      112deg,
+      transparent 0 23px,
+      rgba(238, 255, 252, 0.28) 24px 26px,
+      transparent 27px 44px
+    ),
+    linear-gradient(108deg, #075c78 0%, #008d93 22%, #11b8aa 43%, #67ead0 54%, #078c93 72%, #095c7b 100%);
   content: '';
-  inset: -45%;
-  opacity: 0;
+  inset: -1px;
   pointer-events: none;
   position: absolute;
-  transform: translateX(-72%) rotate(-8deg);
-  transition: opacity 220ms ease, transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  z-index: -1;
+  clip-path: polygon(
+    0 64%, 7% 59%, 14% 57%, 22% 61%, 30% 68%, 38% 72%, 46% 70%, 54% 64%, 62% 56%,
+    70% 51%, 78% 50%, 86% 54%, 93% 59%, 100% 55%,
+    100% 100%, 0 100%
+  );
+  animation: cove-water-current 6.4s ease-in-out infinite;
+  z-index: 0;
+}
+
+.layout-appointment-cta::after {
+  background:
+    linear-gradient(110deg, transparent 10%, rgba(255, 255, 255, 0.65) 34%, transparent 58%),
+    repeating-linear-gradient(
+      116deg,
+      transparent 0 18px,
+      rgba(240, 255, 251, 0.38) 19px 20px,
+      transparent 21px 38px
+    );
+  background-size: 190% 150%;
+  clip-path: polygon(
+    0 66%, 12% 58%, 24% 64%, 37% 52%, 50% 60%, 63% 48%, 76% 58%, 88% 50%, 100% 56%,
+    100% 100%, 0 100%
+  );
+  content: '';
+  inset: -1px;
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  pointer-events: none;
+  position: absolute;
+  animation: cove-water-glint 4.5s linear infinite;
+  z-index: 1;
+}
+
+.layout-appointment-cta__copy,
+.layout-appointment-cta__arrow {
+  position: relative;
+  z-index: 2;
+}
+
+.layout-appointment-cta__copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  transform: translateY(-0.25rem);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.86);
+}
+
+.layout-appointment-cta__eyebrow {
+  color: #526c68;
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.19em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.layout-appointment-cta__title {
+  color: #17363a;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.layout-appointment-cta__arrow {
+  flex: 0 0 auto;
+  color: #176f78;
+  transition: transform 220ms ease;
 }
 
 .layout-appointment-cta:hover,
 .layout-appointment-cta:focus-visible {
-  color: hsl(var(--primary-foreground));
-  transform: translateY(-1px);
+  border-color: rgba(50, 132, 129, 0.8);
+  box-shadow:
+    0 16px 32px rgba(6, 24, 28, 0.34),
+    0 0 0 3px rgba(67, 177, 169, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -2px 5px rgba(70, 66, 55, 0.12);
+  transform: translateY(-2px);
 }
 
 .layout-appointment-cta:hover::before,
 .layout-appointment-cta:focus-visible::before {
-  opacity: 1;
-  transform: translateX(18%) rotate(-8deg);
+  animation-duration: 4.5s;
+  filter: saturate(1.14) brightness(1.06);
+}
+
+.layout-appointment-cta:hover::after,
+.layout-appointment-cta:focus-visible::after {
+  opacity: 0.95;
+}
+
+.layout-appointment-cta:hover .layout-appointment-cta__arrow,
+.layout-appointment-cta:focus-visible .layout-appointment-cta__arrow {
+  transform: translate(3px, -2px);
 }
 
 .layout-appointment-cta:focus-visible {
-  outline: 3px solid hsl(var(--secondary));
-  outline-offset: 3px;
+  outline: 3px solid #5bc9bd;
+  outline-offset: 4px;
 }
 
 .layout-appointment-cta:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.99);
+}
+
+@keyframes cove-water-current {
+  0% {
+    clip-path: polygon(
+      0 64%, 7% 59%, 14% 57%, 22% 61%, 30% 68%, 38% 72%, 46% 70%, 54% 64%, 62% 56%,
+      70% 51%, 78% 50%, 86% 54%, 93% 59%, 100% 55%,
+      100% 100%, 0 100%
+    );
+    transform: translateX(-1.5%) scaleX(1.05);
+  }
+  50% {
+    clip-path: polygon(
+      0 60%, 8% 64%, 16% 63%, 24% 67%, 32% 71%, 40% 68%, 48% 61%, 56% 54%, 64% 49%,
+      72% 48%, 80% 52%, 88% 58%, 96% 57%, 100% 52%,
+      100% 100%, 0 100%
+    );
+    transform: translateX(1.5%) scaleX(1.1);
+  }
+  100% {
+    clip-path: polygon(
+      0 66%, 7% 61%, 15% 59%, 23% 63%, 31% 68%, 39% 70%, 47% 67%, 55% 61%, 63% 54%,
+      71% 50%, 79% 51%, 87% 55%, 94% 58%, 100% 54%,
+      100% 100%, 0 100%
+    );
+    transform: translateX(-0.5%) scaleX(1.06);
+  }
+}
+
+@keyframes cove-water-glint {
+  from {
+    background-position: -110px 0;
+    opacity: 0.48;
+  }
+  to {
+    background-position: 150px 0;
+    opacity: 0.82;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .layout-appointment-cta,
-  .layout-appointment-cta::before {
+  .layout-appointment-cta::before,
+  .layout-appointment-cta::after,
+  .layout-appointment-cta__copy,
+  .layout-appointment-cta__arrow {
+    animation: none;
     transition-duration: 0.01ms;
   }
 

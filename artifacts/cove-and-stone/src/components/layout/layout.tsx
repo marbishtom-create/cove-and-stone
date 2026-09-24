@@ -2,20 +2,21 @@ import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ArrowUpRight } from 'lucide-react';
 import './appointment-cta.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isDarkHeroPage = location.startsWith("/projects/atlantic-beach-minimalist");
   const headerLogoVariant =
     isScrolled || mobileMenuOpen
       ? "light"
-      : isDarkHeroPage
-        ? "hero"
-        : "default";
+      : "default";
+  const appointmentCtaPosition =
+    location === "/"
+      ? "right-6 lg:right-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
+      : "left-6 lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]";
   const mobileMenuToggleRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const wasMobileMenuOpenRef = useRef(false);
@@ -110,13 +111,17 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <div className="fixed bottom-0 left-6 z-50 hidden drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)] lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:flex">
+      <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
         <Link
           href="/appointments/"
-          className="layout-appointment-cta min-h-12 whitespace-nowrap px-5 py-3 font-serif text-sm font-semibold tracking-[0.08em]"
+          className="layout-appointment-cta min-h-[4.35rem] w-[22rem] gap-3 px-3 py-2"
           data-testid="link-desktop-appointment-cta"
         >
-          Design consultation · Start your project
+          <span className="layout-appointment-cta__copy">
+            <span className="layout-appointment-cta__eyebrow">Design consultation</span>
+            <span className="layout-appointment-cta__title">Start your project today</span>
+          </span>
+          <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
         </Link>
       </div>
 
@@ -153,10 +158,14 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link
             href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="layout-appointment-cta min-h-14 w-full px-5 py-4 text-center text-sm tracking-widest uppercase"
+            className="layout-appointment-cta min-h-[4.5rem] w-full justify-start gap-3 px-3 py-2"
             data-testid="link-mobile-appointment-cta"
           >
-            Design consultation · Start your project
+            <span className="layout-appointment-cta__copy">
+              <span className="layout-appointment-cta__eyebrow">Design consultation</span>
+              <span className="layout-appointment-cta__title">Start your project today</span>
+            </span>
+            <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
           </Link>
         </div>
       </div>

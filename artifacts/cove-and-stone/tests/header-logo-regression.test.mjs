@@ -98,10 +98,13 @@ test('keeps the hero and scrolled header states explicit', () => {
   assert.match(layoutSource, /setIsScrolled\(window\.scrollY > 50\)/);
 });
 
-test('uses the white lockup over dark heroes and in the dark footer', () => {
+test('keeps photo-backed headers in color and uses the white lockup in the dark footer', () => {
   assert.match(logoSource, /<source\s+media="\(min-width: 1024px\)"\s+srcSet="\/brand\/cove-and-stone-approved-white\.png"/);
-  assert.match(layoutSource, /const isDarkHeroPage = location\.startsWith\("\/projects\/atlantic-beach-minimalist"\)/);
-  assert.match(layoutSource, /isDarkHeroPage[\s\S]*\? "hero"/);
+  assert.match(
+    layoutSource,
+    /const headerLogoVariant =\s*isScrolled \|\| mobileMenuOpen\s*\?\s*"light"\s*:\s*"default";/,
+  );
+  assert.doesNotMatch(layoutSource, /isDarkHeroPage|variant="hero"/);
   assert.match(layoutSource, /<Logo variant="dark" \/>/);
 });
 
@@ -113,6 +116,7 @@ test('enlarges the shared logo and outdoor-living watermark', () => {
     'utf8',
   );
   assert.match(outdoorLivingSource, /w-\[32%\] min-w-\[6\.6rem\] max-w-\[10\.5rem\]/);
+  assert.match(outdoorLivingSource, /src="\/brand\/cove-and-stone-approved-white\.png"/);
 });
 
 test('keeps the complete logo readable while the mobile menu opens and closes', () => {
