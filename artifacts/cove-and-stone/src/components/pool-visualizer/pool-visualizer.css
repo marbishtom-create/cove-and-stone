@@ -432,22 +432,21 @@
 
 .pool-visualizer__material-swatch {
   border: 1px solid rgba(255,255,255,.72);
+  background-position: center;
+  background-size: cover;
+  border-radius: .16rem;
   box-shadow: 0 0 0 1px rgba(60,78,70,.19);
   display: block;
-  height: 1.65rem;
-  width: 2.7rem;
+  height: 2.2rem;
+  width: 100%;
 }
 
 .pool-visualizer__material-swatch--tile {
-  background-image:
-    linear-gradient(90deg, transparent 47%, rgba(255,255,255,.62) 48%, rgba(255,255,255,.62) 51%, transparent 52%),
-    linear-gradient(0deg, transparent 47%, rgba(255,255,255,.62) 48%, rgba(255,255,255,.62) 51%, transparent 52%);
-  background-size: 12px 12px;
+  background-position: center;
 }
 
 .pool-visualizer__material-swatch--deck {
-  height: 1.65rem;
-  width: 2.7rem;
+  background-position: center;
 }
 
 .pool-visualizer__material-option strong {
