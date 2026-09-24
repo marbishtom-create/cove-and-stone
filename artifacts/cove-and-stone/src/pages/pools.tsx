@@ -1,7 +1,7 @@
 import { ArrowRight, Box, Ruler, CheckCircle2, Droplet, Layers } from 'lucide-react';
 import { Link } from 'wouter';
-import heroImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
-import projectImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
+import heroImage from '@assets/generated_images/hero-pool.jpg';
+import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 
 export default function Pools() {
   return (
@@ -11,12 +11,12 @@ export default function Pools() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Concept visualization of a modern Jacksonville waterfront pool" 
+            alt="Concept visualization of a modern waterfront pool beside an enclosed contemporary home" 
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
           <div className="absolute bottom-6 right-6 border border-white/30 bg-black/20 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-            Concept visualization
+            Waterfront concept
           </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-white">
@@ -34,19 +34,21 @@ export default function Pools() {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="aspect-square relative">
-              <img 
-                src={projectImage} 
-                alt="Concept visualization of a minimalist coastal pool detail"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                Concept visualization
+            <div className="relative aspect-square border border-primary/20 bg-primary p-3 shadow-2xl md:p-4">
+              <div className="relative h-full overflow-hidden">
+                <img 
+                  src={projectImage} 
+                  alt="Concept visualization of a modern pool and spa overlooking the St. Johns River and Jacksonville skyline"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+                  St. Johns River concept
+                </div>
               </div>
-              <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-card border border-border p-8 flex flex-col justify-center hidden md:flex">
-                <Droplet className="text-secondary w-8 h-8 mb-4" />
-                <h4 className="font-serif text-xl mb-2">Purity of Form</h4>
-                <p className="text-sm text-muted-foreground">Every angle, depth, and finish is calculated for aesthetic impact and hydraulic efficiency.</p>
+              <div className="absolute -bottom-8 -right-8 hidden h-64 w-64 flex-col justify-center border border-white/40 bg-white/10 p-8 text-white shadow-2xl backdrop-blur-md md:flex">
+                <Droplet className="mb-4 w-8 h-8 text-secondary" />
+                <h4 className="mb-2 font-serif text-xl">Purity of Form</h4>
+                <p className="text-sm text-white/75">Every angle, depth, and finish is calculated for aesthetic impact and hydraulic efficiency.</p>
               </div>
             </div>
             

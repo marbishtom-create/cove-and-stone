@@ -6,11 +6,20 @@ const homePage = await readFile(
   new URL("../src/pages/home.tsx", import.meta.url),
   "utf8",
 );
+const heroSection = homePage.slice(
+  0,
+  homePage.indexOf("{/* 2. Credibility Content */}"),
+);
 
 test("keeps all three mobile hero CTAs visible over the background image", () => {
-  assert.match(homePage, /Design My Backyard/);
-  assert.match(homePage, /Visit the Showroom/);
-  assert.match(homePage, /Explore Financing/);
-  assert.match(homePage, /bg-secondary text-secondary-foreground/);
-  assert.match(homePage, /bg-white\/95 text-primary/);
+  assert.match(heroSection, /Design My Backyard/);
+  assert.match(heroSection, /Visit the Showroom/);
+  assert.match(heroSection, /Explore Financing/);
+  assert.equal(
+    (heroSection.match(/bg-secondary text-secondary-foreground/g) ?? []).length,
+    3,
+  );
+  assert.match(heroSection, /hover:bg-white hover:text-primary/);
+  assert.match(heroSection, /focus-visible:bg-white focus-visible:text-primary/);
+  assert.match(heroSection, /active:bg-white active:text-primary/);
 });

@@ -49,19 +49,19 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
                 href="/contact/" 
-                className="bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary transition-all duration-300 text-center"
+                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Design My Backyard
               </Link>
               <Link 
                 href="/projects/" 
-                className="border border-white/90 bg-white/95 text-primary px-8 py-4 uppercase tracking-widest text-sm shadow-lg hover:bg-white hover:border-white transition-all duration-300 text-center"
+                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Visit the Showroom
               </Link>
               <Link
                 href="/financing/"
-                className="border border-white/90 bg-white/95 text-primary px-8 py-4 uppercase tracking-widest text-sm shadow-lg hover:bg-white hover:border-white transition-all duration-300 text-center"
+                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Explore Financing
               </Link>
