@@ -4,6 +4,7 @@ import afterPool from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
+import nocateeResortRealistic from '@assets/generated_images/nocatee-resort-backyard-realistic.jpg';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { THEME_CONFIG } from '@/config/theme';
@@ -211,9 +212,6 @@ export default function Home() {
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
                 <img src={ponteVedraRetreat} alt="Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
-                  Concept rendering
-                </div>
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Ponte Vedra Modern</h3>
               <p className="text-muted-foreground text-sm uppercase tracking-widest">Ponte Vedra Beach, FL</p>
@@ -221,8 +219,11 @@ export default function Home() {
             
             <Link href="/projects/nocatee-resort/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={jacksonvilleNightPool} alt="Concept visualization for Nocatee Resort Backyard" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={nocateeResortRealistic} alt="More realistic concept rendering of a Florida backyard pool, cabana and outdoor-living area" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
+                  Concept rendering
+                </div>
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Nocatee Resort Backyard</h3>
               <p className="text-muted-foreground text-sm uppercase tracking-widest">Nocatee, FL</p>

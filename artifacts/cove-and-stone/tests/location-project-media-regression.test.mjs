@@ -17,6 +17,10 @@ const projectDetailSource = await readFile(
   resolve(artifactRoot, 'src/pages/project-detail.tsx'),
   'utf8',
 );
+const homeSource = await readFile(
+  resolve(artifactRoot, 'src/pages/home.tsx'),
+  'utf8',
+);
 const beforeAfterSource = await readFile(
   resolve(artifactRoot, 'src/components/ui/before-after.tsx'),
   'utf8',
@@ -55,10 +59,10 @@ const approvedProjectMedia = [
   },
   {
     importName: 'p4',
-    asset: 'generated_images/project-4.jpg',
+    asset: 'generated_images/project-4-st-johns-river.jpg',
     mobileImportName: 'p4Mobile',
-    mobileAsset: 'generated_images/project-4-mobile.jpg',
-    alt: 'Illustrative compact plunge-pool concept with a linear fire feature',
+    mobileAsset: 'generated_images/project-4-st-johns-river-mobile.jpg',
+    alt: 'Illustrative minimalist plunge-pool concept overlooking a calm, wooded St. Johns River setting',
     label: 'Concept rendering',
   },
 ];
@@ -232,6 +236,21 @@ test('renders the approved project media copy on each card', () => {
      /copy: "Private Ponte Vedra concept direction"/,
      'project media must not reuse a mismatched location label',
    );
+});
+
+test('labels only the right Selected Works image as a concept rendering', () => {
+  const selectedWorksStart = homeSource.indexOf('>Selected Works</h2>');
+  const selectedWorksEnd = homeSource.indexOf('{/* 6. Project Levels */}');
+  const selectedWorks = homeSource.slice(selectedWorksStart, selectedWorksEnd);
+  const leftCardStart = selectedWorks.indexOf('<Link href="/projects/ponte-vedra-modern/"');
+  const rightCardStart = selectedWorks.indexOf('<Link href="/projects/nocatee-resort/"');
+  const leftCard = selectedWorks.slice(leftCardStart, rightCardStart);
+  const rightCard = selectedWorks.slice(rightCardStart);
+
+  assert.match(leftCard, /src=\{ponteVedraRetreat\}/);
+  assert.doesNotMatch(leftCard, /Concept rendering/);
+  assert.match(rightCard, /src=\{nocateeResortRealistic\}/);
+  assert.match(rightCard, /Concept rendering/);
 });
 
 test('uses responsive sources for project cards and detail-page media', () => {
