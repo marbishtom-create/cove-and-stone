@@ -517,8 +517,52 @@
 
 .pool-visualizer__control-actions {
   border-top: 1px solid var(--pv-line);
-  gap: .4rem;
+  display: grid;
+  gap: .65rem;
   padding-top: 1rem;
+}
+
+.pool-visualizer__ai-controls {
+  display: grid;
+  gap: .38rem;
+}
+
+.pool-visualizer__ai-button {
+  align-items: center;
+  background: #e6eeea;
+  border: 1px solid #aebfb5;
+  color: var(--pv-charcoal);
+  display: flex;
+  font-size: .66rem;
+  gap: .45rem;
+  justify-content: center;
+  letter-spacing: .04em;
+  min-height: 2.6rem;
+  padding: .6rem .75rem;
+  transition: background-color .2s ease, border-color .2s ease, opacity .2s ease;
+  width: 100%;
+}
+
+.pool-visualizer__ai-button:hover,
+.pool-visualizer__ai-button:focus-visible {
+  background: #dbe8e2;
+  border-color: var(--pv-aqua-dark);
+}
+
+.pool-visualizer__ai-button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+.pool-visualizer__ai-note {
+  color: var(--pv-muted);
+  font-size: .58rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pool-visualizer__ai-note.is-error {
+  color: #9a4739;
 }
 
 .pool-visualizer__handoff {
@@ -640,6 +684,10 @@
 
 .pool-visualizer__concept-scene {
   display: block;
+}
+
+.pool-visualizer__ai-image {
+  object-fit: cover;
 }
 
 .pool-visualizer__before-art {

@@ -14,6 +14,14 @@ const designPage = await readFile(
   new URL("../src/pages/design.tsx", import.meta.url),
   "utf8",
 );
+const designConceptRoute = await readFile(
+  new URL("../../api-server/src/routes/design-concepts.ts", import.meta.url),
+  "utf8",
+);
+const apiSpec = await readFile(
+  new URL("../../../lib/api-spec/openapi.yaml", import.meta.url),
+  "utf8",
+);
 
 test("keeps the pool visualizer wired into both customer entry points", () => {
   assert.match(homePage, /<PoolVisualizer \/>/);
@@ -65,11 +73,30 @@ test("uses an uploaded backyard photo as the after-concept canvas", () => {
   assert.match(component, /After · photo concept/);
 });
 
+test("creates a real AI rendering from a backyard photo and sends it to Sales", () => {
+  assert.match(component, /generatePoolConceptRender/);
+  assert.match(component, /data-testid="button-generate-ai-render"/);
+  assert.match(component, /src=\{aiRenderDataUrl\}/);
+  assert.match(component, /aiRenderDataUrl: aiRenderDataUrl \?\? undefined/);
+  assert.match(component, /Your photo is sent to AI/);
+  assert.match(designConceptRoute, /renderBackyardPool/);
+  assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
+  assert.match(designConceptRoute, /cove-stone-ai-pool-concept/);
+  assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
+  assert.match(apiSpec, /\/design-concepts\/render/);
+  assert.match(apiSpec, /aiRenderDataUrl/);
+  assert.match(apiSpec, /originalPhotoDataUrl/);
+});
+
 test("keeps the 3D walkthrough video visible in the mobile layout", () => {
   assert.match(designPage, /designWalkthrough/);
   assert.match(designPage, /max-h-\[72svh\]/);
-  assert.match(designPage, /className="block h-auto max-h-\[72svh\] w-full object-contain"/);
-  assert.match(designPage, /className="block aspect-\[9\/16\] w-full object-cover shadow-2xl md:hidden"/);
+  assert.equal([...designPage.matchAll(/<video\b/g)].length, 1);
+  assert.match(designPage, /preload="none"/);
+  assert.match(designPage, /playsInline/);
+  assert.match(designPage, /<source src=\{designWalkthrough\} type="video\/mp4" \/>/);
+  assert.doesNotMatch(designPage, /autoPlay/);
+  assert.match(designPage, /className="block aspect-square w-full object-cover shadow-2xl md:aspect-video"/);
 });
 
 test("keeps the before/after comparison and export controls available", () => {
@@ -79,5 +106,5 @@ test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /data-testid="button-reset-design"/);
   assert.match(component, /data-testid="button-send-concept"/);
   assert.match(component, /emailDesignConcept/);
-  assert.match(component, /illustrative study, not completed-project photography/);
+  assert.match(component, /AI concepts are illustrative only, not completed-project photography or construction drawings/);
 });

@@ -31,4 +31,14 @@ export interface DesignConceptEmailRequest {
      * @maxLength 120000
      */
   svg: string;
+  /**
+     * @maxLength 2900000
+     * @pattern ^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  originalPhotoDataUrl?: string;
+  /**
+     * @maxLength 6000000
+     * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  aiRenderDataUrl?: string;
 }

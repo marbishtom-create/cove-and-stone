@@ -49,6 +49,31 @@ paths:
           description: Invalid design concept
         "502":
           description: Internal email provider failure
+  /design-concepts/render:
+    post:
+      operationId: generatePoolConceptRender
+      tags: [design-concepts]
+      summary: Generate an AI pool concept from a backyard photo
+      description: Creates a photorealistic illustrative after-image from the customer's uploaded backyard photo and selected pool details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PoolConceptRenderRequest"
+      responses:
+        "200":
+          description: AI-generated pool concept image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoolConceptRenderResponse"
+        "400":
+          description: Invalid image or pool concept
+        "429":
+          description: Image generation rate limit reached
+        "502":
+          description: AI image generation failed
 components:
   schemas:
     HealthStatus:
@@ -88,6 +113,14 @@ components:
           type: string
           minLength: 1
           maxLength: 120000
+        originalPhotoDataUrl:
+          type: string
+          maxLength: 2900000
+          pattern: '^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$'
+        aiRenderDataUrl:
+          type: string
+          maxLength: 6000000
+          pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
       required:
         - width
         - length
@@ -98,6 +131,57 @@ components:
         - waterfall
         - sunShelf
         - svg
+    PoolConceptRenderRequest:
+      type: object
+      properties:
+        photoDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 2900000
+          pattern: '^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$'
+        width:
+          type: integer
+          minimum: 8
+          maximum: 60
+        length:
+          type: integer
+          minimum: 12
+          maximum: 100
+        shape:
+          type: string
+          enum: [rectangular, freeform, kidney, l-shape]
+        waterFinish:
+          type: string
+          enum: [clear-cove, deep-atlas, greenstone]
+        waterlineTile:
+          type: string
+          enum: [travertine, ink-line, sea-glass]
+        lights:
+          type: boolean
+        waterfall:
+          type: boolean
+        sunShelf:
+          type: boolean
+      required:
+        - photoDataUrl
+        - width
+        - length
+        - shape
+        - waterFinish
+        - waterlineTile
+        - lights
+        - waterfall
+        - sunShelf
+    PoolConceptRenderResponse:
+      type: object
+      properties:
+        imageDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 6000000
+          pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+      required:
+        - imageDataUrl
     DesignConceptEmailResponse:
       type: object
       properties:

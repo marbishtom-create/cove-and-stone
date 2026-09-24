@@ -29,6 +29,14 @@ export const emailDesignConceptBodyLengthMax = 100;
 
 export const emailDesignConceptBodySvgMax = 120000;
 
+export const emailDesignConceptBodyOriginalPhotoDataUrlMax = 2900000;
+
+
+export const emailDesignConceptBodyOriginalPhotoDataUrlRegExp = new RegExp('^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$');
+export const emailDesignConceptBodyAiRenderDataUrlMax = 6000000;
+
+
+export const emailDesignConceptBodyAiRenderDataUrlRegExp = new RegExp('^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$');
 
 
 export const EmailDesignConceptBody = zod.object({
@@ -40,11 +48,54 @@ export const EmailDesignConceptBody = zod.object({
   "lights": zod.boolean(),
   "waterfall": zod.boolean(),
   "sunShelf": zod.boolean(),
-  "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax)
+  "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax),
+  "originalPhotoDataUrl": zod.string().max(emailDesignConceptBodyOriginalPhotoDataUrlMax).regex(emailDesignConceptBodyOriginalPhotoDataUrlRegExp).optional(),
+  "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional()
 })
 
 export const EmailDesignConceptResponse = zod.object({
   "status": zod.enum(['sent'])
+})
+
+
+/**
+ * Creates a photorealistic illustrative after-image from the customer's uploaded backyard photo and selected pool details.
+ * @summary Generate an AI pool concept from a backyard photo
+ */
+export const generatePoolConceptRenderBodyPhotoDataUrlMin = 40;
+export const generatePoolConceptRenderBodyPhotoDataUrlMax = 2900000;
+
+
+export const generatePoolConceptRenderBodyPhotoDataUrlRegExp = new RegExp('^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$');
+export const generatePoolConceptRenderBodyWidthMin = 8;
+export const generatePoolConceptRenderBodyWidthMax = 60;
+
+export const generatePoolConceptRenderBodyLengthMin = 12;
+export const generatePoolConceptRenderBodyLengthMax = 100;
+
+
+
+export const GeneratePoolConceptRenderBody = zod.object({
+  "photoDataUrl": zod.string().min(generatePoolConceptRenderBodyPhotoDataUrlMin).max(generatePoolConceptRenderBodyPhotoDataUrlMax).regex(generatePoolConceptRenderBodyPhotoDataUrlRegExp),
+  "width": zod.number().int().min(generatePoolConceptRenderBodyWidthMin).max(generatePoolConceptRenderBodyWidthMax),
+  "length": zod.number().int().min(generatePoolConceptRenderBodyLengthMin).max(generatePoolConceptRenderBodyLengthMax),
+  "shape": zod.enum(['rectangular', 'freeform', 'kidney', 'l-shape']),
+  "waterFinish": zod.enum(['clear-cove', 'deep-atlas', 'greenstone']),
+  "waterlineTile": zod.enum(['travertine', 'ink-line', 'sea-glass']),
+  "lights": zod.boolean(),
+  "waterfall": zod.boolean(),
+  "sunShelf": zod.boolean()
+})
+
+export const generatePoolConceptRenderResponseImageDataUrlMin = 40;
+export const generatePoolConceptRenderResponseImageDataUrlMax = 6000000;
+
+
+export const generatePoolConceptRenderResponseImageDataUrlRegExp = new RegExp('^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$');
+
+
+export const GeneratePoolConceptRenderResponse = zod.object({
+  "imageDataUrl": zod.string().min(generatePoolConceptRenderResponseImageDataUrlMin).max(generatePoolConceptRenderResponseImageDataUrlMax).regex(generatePoolConceptRenderResponseImageDataUrlRegExp)
 })
 
 

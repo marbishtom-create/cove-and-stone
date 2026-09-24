@@ -13,7 +13,7 @@ import {
   Waves,
   X,
 } from 'lucide-react';
-import { emailDesignConcept } from '@workspace/api-client-react';
+import { emailDesignConcept, generatePoolConceptRender } from '@workspace/api-client-react';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -268,6 +268,58 @@ function BackyardFallback() {
   );
 }
 
+function readBlobAsDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') resolve(reader.result);
+      else reject(new Error('The backyard photo could not be prepared.'));
+    };
+    reader.onerror = () => reject(new Error('The backyard photo could not be read.'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function compressBackyardPhoto(file: File) {
+  const objectUrl = URL.createObjectURL(file);
+  const image = new Image();
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error('The selected photo could not be opened.'));
+      image.src = objectUrl;
+    });
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('This browser could not prepare the selected photo.');
+
+    let scale = Math.min(1, 1536 / Math.max(image.naturalWidth, image.naturalHeight));
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+      context.fillStyle = '#ffffff';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      const quality = Math.max(0.62, 0.84 - attempt * 0.06);
+      const compressed = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, 'image/jpeg', quality);
+      });
+
+      if (compressed && compressed.size <= 2 * 1024 * 1024) {
+        return await readBlobAsDataUrl(compressed);
+      }
+      scale *= 0.8;
+    }
+
+    throw new Error('This photo is too large to prepare. Choose a smaller image.');
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
 export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolVisualizerProps) {
   const [configuration, setConfiguration] = useState<PoolVisualizerConfiguration>(() => ({
     ...DEFAULT_CONFIGURATION,
@@ -275,11 +327,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   }));
   const [isDragging, setIsDragging] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [aiRenderDataUrl, setAiRenderDataUrl] = useState<string | null>(null);
+  const [aiRenderStatus, setAiRenderStatus] = useState<'idle' | 'generating' | 'ready' | 'error'>('idle');
   const [isSendingConcept, setIsSendingConcept] = useState(false);
   const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const renderVersionRef = useRef(0);
 
   useEffect(() => {
     onConfigurationChange?.(configuration);
@@ -290,7 +345,17 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     [configuration.waterFinish],
   );
 
+  const clearAiRender = () => {
+    renderVersionRef.current += 1;
+    setAiRenderDataUrl(null);
+    setAiRenderStatus('idle');
+  };
+
   const updateConfiguration = (updates: Partial<PoolVisualizerConfiguration>) => {
+    if (Object.keys(updates).some((key) => key !== 'comparisonPosition')) {
+      clearAiRender();
+      setConceptSendStatus('idle');
+    }
     setConfiguration((current) => ({ ...current, ...updates }));
   };
 
@@ -338,9 +403,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     }
   };
 
-  const processPhotoFile = (file: File | undefined) => {
+  const processPhotoFile = async (file: File | undefined) => {
     if (!file) return;
-    if (!file.type.startsWith('image/')) {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
       setUploadError('Please choose a JPG, PNG, or WebP image.');
       return;
     }
@@ -349,12 +414,12 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       return;
     }
     setUploadError('');
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') updateConfiguration({ photoUrl: reader.result });
-    };
-    reader.onerror = () => setUploadError('We could not read that image. Please try another file.');
-    reader.readAsDataURL(file);
+    clearAiRender();
+    try {
+      updateConfiguration({ photoUrl: await compressBackyardPhoto(file) });
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : 'We could not prepare that image.');
+    }
   };
 
   const onPhotoUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -376,7 +441,23 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     });
   };
 
-  const exportConcept = () => {
+  const exportConcept = async () => {
+    if (aiRenderDataUrl) {
+      const response = await fetch(aiRenderDataUrl);
+      if (!response.ok) return;
+      const blob = await response.blob();
+      const extension = blob.type === 'image/png' ? 'png' : 'jpg';
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `cove-stone-${configuration.width}x${configuration.length}-ai-pool-concept.${extension}`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      return;
+    }
+
     const svg = previewRef.current?.querySelector('.pool-visualizer__after-art svg');
     if (!(svg instanceof SVGSVGElement)) return;
     const serialized = new XMLSerializer().serializeToString(svg);
@@ -388,7 +469,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const sendConceptToTeam = async () => {
@@ -412,12 +493,43 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         waterfall: configuration.waterfall,
         sunShelf: configuration.sunShelf,
         svg: new XMLSerializer().serializeToString(svg),
+        originalPhotoDataUrl: configuration.photoUrl ?? undefined,
+        aiRenderDataUrl: aiRenderDataUrl ?? undefined,
       });
       setConceptSendStatus('sent');
     } catch {
       setConceptSendStatus('error');
     } finally {
       setIsSendingConcept(false);
+    }
+  };
+
+  const generateAiRender = async () => {
+    if (!configuration.photoUrl) return;
+
+    const renderVersion = ++renderVersionRef.current;
+    setAiRenderDataUrl(null);
+    setAiRenderStatus('generating');
+
+    try {
+      const result = await generatePoolConceptRender({
+        photoDataUrl: configuration.photoUrl,
+        width: configuration.width,
+        length: configuration.length,
+        shape: configuration.shape,
+        waterFinish: configuration.waterFinish,
+        waterlineTile: configuration.waterlineTile,
+        lights: configuration.lights,
+        waterfall: configuration.waterfall,
+        sunShelf: configuration.sunShelf,
+      });
+      if (renderVersion !== renderVersionRef.current) return;
+      setAiRenderDataUrl(result.imageDataUrl);
+      setAiRenderStatus('ready');
+    } catch {
+      if (renderVersion === renderVersionRef.current) {
+        setAiRenderStatus('error');
+      }
     }
   };
 
@@ -603,6 +715,31 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           </div>
 
           <div className="pool-visualizer__control-actions">
+            <div className="pool-visualizer__ai-controls">
+              <button
+                className="pool-visualizer__ai-button"
+                type="button"
+                onClick={generateAiRender}
+                disabled={!configuration.photoUrl || aiRenderStatus === 'generating'}
+                data-testid="button-generate-ai-render"
+              >
+                <Sparkles size={15} />
+                {aiRenderStatus === 'generating'
+                  ? 'Creating AI rendering…'
+                  : aiRenderDataUrl
+                    ? 'Regenerate AI rendering'
+                    : 'Create AI pool rendering'}
+              </button>
+              <p className={`pool-visualizer__ai-note ${aiRenderStatus === 'error' ? 'is-error' : ''}`} role={aiRenderStatus === 'error' ? 'alert' : 'status'} aria-live="polite" data-testid="status-ai-render">
+                {aiRenderStatus === 'generating'
+                  ? 'Creating a realistic pool concept from your backyard photo. This can take a little while.'
+                  : aiRenderStatus === 'ready'
+                    ? 'AI rendering ready. Slide to compare it with the original photo.'
+                    : aiRenderStatus === 'error'
+                      ? 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
+                      : 'Your photo is sent to AI to make this concept. The original and rendering are emailed to our team only when you choose to send.'}
+              </p>
+            </div>
             <button className="pool-visualizer__text-button" type="button" onClick={resetDesign} data-testid="button-reset-design">
               <RefreshCcw size={14} /> Reset design
             </button>
@@ -611,7 +748,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 className="pool-visualizer__send-button"
                 type="button"
                 onClick={sendConceptToTeam}
-                disabled={isSendingConcept}
+                disabled={isSendingConcept || aiRenderStatus === 'generating'}
                 data-testid="button-send-concept"
               >
                 <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
@@ -630,7 +767,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               <h3>Compare the direction</h3>
             </div>
             <button className="pool-visualizer__export-button" type="button" onClick={exportConcept} data-testid="button-export-concept">
-              <Download size={16} /> <span>Export concept</span>
+              <Download size={16} /> <span>{aiRenderDataUrl ? 'Download AI render' : 'Export concept'}</span>
             </button>
           </div>
 
@@ -641,9 +778,19 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             data-testid="pool-comparison-preview"
           >
             <div className="pool-visualizer__after-art">
-              <ConceptScene configuration={configuration} />
+              <div style={aiRenderDataUrl ? { display: 'none' } : undefined}>
+                <ConceptScene configuration={configuration} />
+              </div>
+              {aiRenderDataUrl && (
+                <img
+                  className="pool-visualizer__concept-scene pool-visualizer__ai-image"
+                  src={aiRenderDataUrl}
+                  alt="AI-generated pool rendering using your uploaded backyard photo"
+                  draggable="false"
+                />
+              )}
               <span className="pool-visualizer__comparison-label pool-visualizer__comparison-label--after">
-                {configuration.photoUrl ? 'After · photo concept' : 'After · concept'}
+                {aiRenderDataUrl ? 'After · AI rendering' : configuration.photoUrl ? 'After · photo concept' : 'After · concept'}
               </span>
             </div>
             <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%` }}>
@@ -679,10 +826,10 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           </div>
           <div className="pool-visualizer__comparison-legend">
             <span><i className="is-aqua" /> Drag or use arrow keys to compare</span>
-            <span><i className="is-ivory" /> The after view is an illustrative study, not completed-project photography.</span>
+            <span><i className="is-ivory" /> AI concepts are illustrative only, not completed-project photography or construction drawings.</span>
           </div>
           <div className="pool-visualizer__preview-meta">
-            <div><ImageIcon size={16} /><span>Preview updates with every selection</span></div>
+            <div><ImageIcon size={16} /><span>{aiRenderDataUrl ? 'AI rendering based on your photo' : 'Illustrative preview updates with every selection'}</span></div>
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedFinish.label} water finish</span></div>
           </div>
         </div>

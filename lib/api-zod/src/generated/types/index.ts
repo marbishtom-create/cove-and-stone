@@ -13,3 +13,8 @@ export * from './designConceptEmailRequestWaterlineTile';
 export * from './designConceptEmailResponse';
 export * from './designConceptEmailResponseStatus';
 export * from './healthStatus';
+export * from './poolConceptRenderRequest';
+export * from './poolConceptRenderRequestShape';
+export * from './poolConceptRenderRequestWaterFinish';
+export * from './poolConceptRenderRequestWaterlineTile';
+export * from './poolConceptRenderResponse';
