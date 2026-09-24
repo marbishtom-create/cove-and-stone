@@ -17,7 +17,7 @@ const projectDetailSource = await readFile(
   'utf8',
 );
 
-test('keeps the consultation CTA brand-led and free of the round icon badge', () => {
+test('matches the consultation CTA reference with a round teal arrow badge', () => {
   assert.match(layoutSource, /data-testid="link-desktop-appointment-cta"/);
   assert.match(layoutSource, /data-testid="link-mobile-appointment-cta"/);
   assert.equal(
@@ -25,8 +25,9 @@ test('keeps the consultation CTA brand-led and free of the round icon badge', ()
     2,
     'desktop and mobile CTAs should use the same direct call to action',
   );
-  assert.doesNotMatch(layoutSource, /layout-appointment-cta__icon|<Waves\b/);
-  assert.match(layoutSource, /<ArrowUpRight\b/);
+  assert.doesNotMatch(layoutSource, /<Waves\b/);
+  assert.equal((layoutSource.match(/layout-appointment-cta__arrow-shell/g) ?? []).length, 2);
+  assert.match(layoutSource, /<ArrowRight\b/);
 });
 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
@@ -38,9 +39,11 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {
-  assert.match(ctaStyles, /linear-gradient\(135deg, #f3ecdc 0%, #cfc4af 46%, #e9dfcc 100%\)/);
-  assert.match(ctaStyles, /linear-gradient\(108deg, #075c78 0%, #008d93 22%, #11b8aa 43%, #67ead0 54%, #078c93 72%, #095c7b 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(115deg, #f7f8f6 0%, #f8f8f6 69%, #eee7da 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%\)/);
   assert.match(ctaStyles, /@keyframes cove-water-current/);
+  assert.match(ctaStyles, /@keyframes cove-water-flow/);
   assert.match(ctaStyles, /@keyframes cove-water-glint/);
+  assert.match(ctaStyles, /layout-appointment-cta__arrow-shell/);
   assert.match(ctaStyles, /@media \(prefers-reduced-motion: reduce\)/);
 });

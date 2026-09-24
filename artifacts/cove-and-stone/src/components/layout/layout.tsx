@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
-import { Menu, X, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
 import './appointment-cta.css';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -115,14 +115,16 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
           <Link
             href="/appointments/"
-            className="layout-appointment-cta min-h-[4.35rem] w-[22rem] gap-3 px-3 py-2"
+            className="layout-appointment-cta min-h-[4.35rem] w-[22rem]"
             data-testid="link-desktop-appointment-cta"
           >
             <span className="layout-appointment-cta__copy">
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
+            <span className="layout-appointment-cta__arrow-shell" aria-hidden="true">
+              <ArrowRight className="layout-appointment-cta__arrow" size={22} strokeWidth={1.8} />
+            </span>
           </Link>
         </div>
       )}
@@ -160,14 +162,16 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link
             href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="layout-appointment-cta min-h-[4.5rem] w-full justify-start gap-3 px-3 py-2"
+            className="layout-appointment-cta min-h-[4.5rem] w-full"
             data-testid="link-mobile-appointment-cta"
           >
             <span className="layout-appointment-cta__copy">
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
+            <span className="layout-appointment-cta__arrow-shell" aria-hidden="true">
+              <ArrowRight className="layout-appointment-cta__arrow" size={22} strokeWidth={1.8} />
+            </span>
           </Link>
         </div>
       </div>

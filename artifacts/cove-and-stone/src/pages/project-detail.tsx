@@ -1,6 +1,6 @@
 import { useParams, Link } from 'wouter';
 import { CASE_STUDIES } from './projects';
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
 import { BeforeAfter } from '@/components/ui/before-after';
 import NotFound from '@/pages/not-found';
 
@@ -46,14 +46,16 @@ export default function ProjectDetail() {
             </p>
             <Link
               href="/appointments/"
-              className="layout-appointment-cta mb-8 min-h-[4.35rem] w-[22rem] max-w-full gap-3 px-3 py-2"
+              className="layout-appointment-cta mb-8 min-h-[4.35rem] w-[22rem] max-w-full"
               data-testid="link-project-detail-appointment-cta"
             >
               <span className="layout-appointment-cta__copy">
                 <span className="layout-appointment-cta__eyebrow">Design consultation</span>
                 <span className="layout-appointment-cta__title">Start your project today</span>
               </span>
-              <ArrowUpRight className="layout-appointment-cta__arrow" size={19} strokeWidth={1.8} aria-hidden="true" />
+              <span className="layout-appointment-cta__arrow-shell" aria-hidden="true">
+                <ArrowRight className="layout-appointment-cta__arrow" size={22} strokeWidth={1.8} />
+              </span>
             </Link>
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
               {isCompletedProject
