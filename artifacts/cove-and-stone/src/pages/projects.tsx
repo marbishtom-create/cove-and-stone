@@ -1,8 +1,8 @@
 import { Link } from 'wouter';
 import p2 from '@assets/generated_images/project-2.jpg';
 import p2Mobile from '@assets/generated_images/project-2-mobile.jpg';
-import p4 from '@assets/generated_images/project-4.jpg';
-import p4Mobile from '@assets/generated_images/project-4-mobile.jpg';
+import p4 from '@assets/generated_images/project-4-st-johns-river.jpg';
+import p4Mobile from '@assets/generated_images/project-4-st-johns-river-mobile.jpg';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import ponteVedraRetreatMobile from '@assets/generated_images/ponte-vedra-private-retreat-mobile.jpg';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
@@ -125,7 +125,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       render: {
         src: p4,
         mobileSrc: p4Mobile,
-        alt: "Illustrative compact plunge-pool concept with a linear fire feature",
+        alt: "Illustrative minimalist plunge-pool concept overlooking a calm, wooded St. Johns River setting",
         label: "Concept rendering",
       },
     },
