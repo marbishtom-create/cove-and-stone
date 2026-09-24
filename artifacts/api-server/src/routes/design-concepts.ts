@@ -233,12 +233,19 @@ router.post("/design-concepts/email", async (req, res) => {
   const parsed = EmailDesignConceptBody.safeParse(req.body);
 
   if (!parsed.success) {
-    res.status(400).json({ message: "The design concept payload is invalid." });
+    req.log.warn(
+      { issues: parsed.error.issues.map(({ path, message }) => ({ path, message })) },
+      "Invalid internal design concept email payload",
+    );
+    res.status(400).json({
+      message: "Some contact details or concept information are missing or invalid. Check them and try again.",
+    });
     return;
   }
 
   const concept = parsed.data;
-  const subject = `Internal pool concept · ${concept.width}′ × ${concept.length}′ ${shapeLabels[concept.shape]}`;
+  const safeCustomerName = concept.customerName.replace(/[\r\n]+/g, " ").trim();
+  const subject = `Pool concept · ${safeCustomerName} · ${concept.width}′ × ${concept.length}′ ${SHAPE_LABELS[concept.shape]}`;
   const featureList = concept.features.map((feature) => FEATURE_LABELS[feature]);
   const features = featureList.length ? featureList.join(", ") : "No optional features selected";
   const attachments = [
@@ -281,6 +288,12 @@ router.post("/design-concepts/email", async (req, res) => {
   const html = `
     <h1>Internal pool concept record</h1>
     <p>This message is for the Cove &amp; Stone team only. Do not send it automatically to the customer.</p>
+    <h2>Customer contact</h2>
+    <ul>
+      <li><strong>Name:</strong> ${escapeHtml(concept.customerName)}</li>
+      <li><strong>Property address:</strong> ${escapeHtml(concept.customerAddress)}</li>
+      <li><strong>Phone:</strong> ${escapeHtml(concept.customerPhone)}</li>
+    </ul>
     <h2>Concept summary</h2>
     <ul>
       <li><strong>Dimensions:</strong> ${concept.width}′ × ${concept.length}′</li>

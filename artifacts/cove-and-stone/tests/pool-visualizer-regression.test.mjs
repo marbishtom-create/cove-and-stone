@@ -33,35 +33,52 @@ test("keeps every requested pool configuration in the generated state", () => {
     "width",
     "length",
     "shape",
-    "waterFinish",
+    "poolFinish",
     "waterlineTile",
-    "lights",
-    "waterfall",
-    "sunShelf",
+    "deckTile",
+    "edgeTreatment",
+    "features",
   ]) {
     assert.match(component, new RegExp(`\\b${field}\\b`), `${field} must remain configurable`);
   }
 
   assert.match(component, /data-testid="input-pool-width"/);
   assert.match(component, /data-testid="input-pool-length"/);
-  assert.match(component, /data-testid="select-waterline-tile"/);
+  assert.match(component, /data-testid=\{`button-waterline-tile-\$\{tile\.id\}`\}/);
+  assert.match(component, /data-testid=\{`button-deck-tile-\$\{tile\.id\}`\}/);
   assert.match(component, /data-testid="button-load-backyard"/);
   assert.match(component, /data-testid="button-take-backyard"/);
   assert.match(component, /data-testid="input-backyard-photo"/);
   assert.match(component, /data-testid="input-backyard-camera"/);
   assert.match(component, /capture="environment"/);
-  assert.match(component, /data-testid=\{`toggle-\$\{feature\.key\}`\}/);
-  assert.match(component, /key: 'lights'/);
-  assert.match(component, /key: 'waterfall'/);
-  assert.match(component, /key: 'sunShelf'/);
+  assert.match(component, /data-testid=\{`toggle-feature-\$\{feature\.id\}`\}/);
+  for (const feature of [
+    "spa",
+    "spa-waterfall",
+    "infinity-edge",
+    "sunken-fire-pit",
+    "outdoor-kitchen",
+    "pool-lights",
+  ]) {
+    assert.match(component, new RegExp(`id: '${feature}'`), `${feature} must have its own independent toggle`);
+  }
+  assert.match(component, /configuration\.features\.includes\(feature\.id\)/);
+  assert.match(component, /\[\.\.\.configuration\.features, feature\.id\]/);
+  assert.match(component, /configuration\.features\.filter\(\(selected\) => selected !== feature\.id\)/);
 });
 
 test("renders configured values in the concept preview instead of only storing them", () => {
   assert.match(component, /finish\.swatch/);
   assert.match(component, /tile\.swatch/);
-  assert.match(component, /configuration\.sunShelf/);
-  assert.match(component, /configuration\.waterfall/);
-  assert.match(component, /configuration\.lights/);
+  assert.match(component, /deck\.swatch/);
+  assert.match(component, /selectedFeatures\.has\('sun-shelf'\)/);
+  assert.match(component, /selectedFeatures\.has\('spa-waterfall'\)/);
+  assert.match(component, /selectedFeatures\.has\('infinity-edge'\)/);
+  assert.match(component, /selectedFeatures\.has\('sunken-fire-pit'\)/);
+  assert.match(component, /selectedFeatures\.has\('outdoor-kitchen'\)/);
+  assert.match(component, /stroke="url\(#continuous-deck-tile\)" strokeWidth="48"/);
+  assert.match(component, /stroke="url\(#waterline-tile-pattern\)" strokeWidth="9"/);
+  assert.doesNotMatch(component, /stroke="#eee4ce"/);
   assert.match(component, /poolScaleX/);
   assert.match(component, /poolScaleY/);
   assert.match(component, /aria-label={`Illustrative/);
@@ -78,14 +95,31 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /data-testid="button-generate-ai-render"/);
   assert.match(component, /src=\{aiRenderDataUrl\}/);
   assert.match(component, /aiRenderDataUrl: aiRenderDataUrl \?\? undefined/);
+  assert.match(component, /customerName: customer\.customerName/);
+  assert.match(component, /customerAddress: customer\.customerAddress/);
+  assert.match(component, /customerPhone: customer\.customerPhone/);
+  assert.match(component, /data-testid="input-customer-name"/);
+  assert.match(component, /data-testid="input-customer-address"/);
+  assert.match(component, /data-testid="input-customer-phone"/);
+  assert.match(component, /data-testid="form-send-concept"/);
+  assert.match(component, /serializeEmailConceptSvg\(svg\)/);
+  assert.match(component, /data-background-photo="true"/);
+  assert.match(component, /querySelectorAll\('\[data-background-photo="true"\]'\)/);
   assert.match(component, /Your photo is sent to AI/);
   assert.match(designConceptRoute, /renderBackyardPool/);
   assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
   assert.match(designConceptRoute, /cove-stone-ai-pool-concept/);
   assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
+  assert.match(designConceptRoute, /concept\.features\.map\(\(feature\) => FEATURE_PROMPTS\[feature\]\)/);
+  assert.match(designConceptRoute, /escapeHtml\(concept\.customerAddress\)/);
+  assert.match(designConceptRoute, /escapeHtml\(concept\.customerPhone\)/);
   assert.match(apiSpec, /\/design-concepts\/render/);
   assert.match(apiSpec, /aiRenderDataUrl/);
   assert.match(apiSpec, /originalPhotoDataUrl/);
+  assert.match(apiSpec, /customerName:/);
+  assert.match(apiSpec, /customerAddress:/);
+  assert.match(apiSpec, /customerPhone:/);
+  assert.match(apiSpec, /features:/);
 });
 
 test("keeps the 3D walkthrough video visible in the mobile layout", () => {

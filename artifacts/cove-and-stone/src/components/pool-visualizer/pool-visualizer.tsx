@@ -21,11 +21,23 @@ import {
   ChangeEvent,
   KeyboardEvent,
   PointerEvent as ReactPointerEvent,
+  type ReactElement,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import './pool-visualizer.css';
 
 export type PoolShape = 'rectangular' | 'freeform' | 'kidney' | 'l-shape';
@@ -102,6 +114,14 @@ const DEFAULT_CONFIGURATION: PoolVisualizerConfiguration = {
   photoUrl: null,
   comparisonPosition: 50,
 };
+
+const customerContactSchema = z.object({
+  customerName: z.string().trim().min(2, 'Enter your name.').max(120, 'Name must be 120 characters or fewer.'),
+  customerAddress: z.string().trim().min(5, 'Enter the property address.').max(300, 'Address must be 300 characters or fewer.'),
+  customerPhone: z.string().trim().min(7, 'Enter a phone number with at least 7 characters.').max(30, 'Phone number must be 30 characters or fewer.').regex(/^[+()0-9 .-]+$/, 'Use digits and common phone punctuation only.'),
+});
+
+type CustomerContact = z.infer<typeof customerContactSchema>;
 
 const FINISHES: Array<{
   id: WaterFinish;
@@ -197,7 +217,7 @@ const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: s
   { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461' },
 ];
 
-const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: JSX.Element }> = [
+const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [
   { id: 'spa', label: 'Integrated spa / Jacuzzi', detail: 'A dedicated hot-water retreat', icon: <Bath size={17} /> },
   { id: 'spa-waterfall', label: 'Spa with overhead waterfall', detail: 'Spa with a dramatic spillover', icon: <Waves size={17} /> },
   { id: 'infinity-edge', label: 'Infinity edge', detail: 'Water flowing over a vanishing edge', icon: <Droplets size={17} /> },
@@ -207,7 +227,7 @@ const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; ico
   { id: 'pool-lights', label: 'Pool lights', detail: 'A quiet glow after sunset', icon: <Lightbulb size={17} /> },
 ];
 
-const OUTDOOR_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: JSX.Element }> = [
+const OUTDOOR_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [
   { id: 'sunken-fire-pit', label: 'Sunken fire pit', detail: 'A lower lounge for gathering', icon: <Flame size={17} /> },
   { id: 'outdoor-kitchen', label: 'Outdoor kitchen', detail: 'A built-in place to cook and serve', icon: <ChefHat size={17} /> },
   { id: 'fire-bowls', label: 'Fire bowls', detail: 'Sculptural fire beside the water', icon: <Flame size={17} /> },
@@ -314,6 +334,7 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
       {configuration.photoUrl ? (
         <>
           <image
+            data-background-photo="true"
             href={configuration.photoUrl}
             x="0"
             y="0"
@@ -321,8 +342,9 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
             height="430"
             preserveAspectRatio="xMidYMid slice"
           />
-          <rect width="760" height="430" fill="#183e3c" opacity=".14" />
+          <rect data-background-photo="true" width="760" height="430" fill="#183e3c" opacity=".14" />
           <path
+            data-background-photo="true"
             d="M0 330 C152 298 256 349 391 321 C535 292 649 343 760 312 V430 H0Z"
             fill="#d1c4ac"
             opacity=".18"
@@ -476,6 +498,23 @@ function readBlobAsDataUrl(blob: Blob) {
   });
 }
 
+function serializeEmailConceptSvg(svg: SVGSVGElement) {
+  const copy = svg.cloneNode(true) as SVGSVGElement;
+  copy.querySelectorAll('[data-background-photo="true"]').forEach((element) => element.remove());
+  return new XMLSerializer().serializeToString(copy);
+}
+
+function getEmailFailureMessage(error: unknown) {
+  if (error && typeof error === 'object' && 'data' in error) {
+    const responseData = (error as { data?: unknown }).data;
+    if (responseData && typeof responseData === 'object' && 'message' in responseData) {
+      const message = (responseData as { message?: unknown }).message;
+      if (typeof message === 'string' && message.trim()) return message;
+    }
+  }
+  return 'We could not send your concept. Check your connection and try again.';
+}
+
 async function compressBackyardPhoto(file: File) {
   const objectUrl = URL.createObjectURL(file);
   const image = new Image();
@@ -527,6 +566,15 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [aiRenderStatus, setAiRenderStatus] = useState<'idle' | 'generating' | 'ready' | 'error'>('idle');
   const [isSendingConcept, setIsSendingConcept] = useState(false);
   const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
+  const [conceptSendError, setConceptSendError] = useState('');
+  const customerForm = useForm<CustomerContact>({
+    resolver: zodResolver(customerContactSchema),
+    defaultValues: {
+      customerName: '',
+      customerAddress: '',
+      customerPhone: '',
+    },
+  });
   const previewRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -540,6 +588,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     () => FINISHES.find((finish) => finish.id === configuration.poolFinish) ?? FINISHES[0],
     [configuration.poolFinish],
   );
+  const selectedDeck = DECK_TILES.find((tile) => tile.id === configuration.deckTile) ?? DECK_TILES[0];
 
   const clearAiRender = () => {
     renderVersionRef.current += 1;
@@ -551,6 +600,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     if (Object.keys(updates).some((key) => key !== 'comparisonPosition')) {
       clearAiRender();
       setConceptSendStatus('idle');
+      setConceptSendError('');
     }
     setConfiguration((current) => ({ ...current, ...updates }));
   };
@@ -668,18 +718,23 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
-  const sendConceptToTeam = async () => {
+  const sendConceptToTeam = async (customer: CustomerContact) => {
     const svg = previewRef.current?.querySelector('.pool-visualizer__after-art svg');
     if (!(svg instanceof SVGSVGElement)) {
       setConceptSendStatus('error');
+      setConceptSendError('The concept preview is not ready yet. Please try again.');
       return;
     }
 
     setIsSendingConcept(true);
     setConceptSendStatus('idle');
+    setConceptSendError('');
 
     try {
       await emailDesignConcept({
+        customerName: customer.customerName,
+        customerAddress: customer.customerAddress,
+        customerPhone: customer.customerPhone,
         width: configuration.width,
         length: configuration.length,
         shape: configuration.shape,
@@ -688,13 +743,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         deckTile: configuration.deckTile,
         edgeTreatment: configuration.edgeTreatment,
         features: configuration.features,
-        svg: new XMLSerializer().serializeToString(svg),
+        svg: serializeEmailConceptSvg(svg),
         originalPhotoDataUrl: configuration.photoUrl ?? undefined,
         aiRenderDataUrl: aiRenderDataUrl ?? undefined,
       });
       setConceptSendStatus('sent');
-    } catch {
+    } catch (error) {
       setConceptSendStatus('error');
+      setConceptSendError(getEmailFailureMessage(error));
     } finally {
       setIsSendingConcept(false);
     }
@@ -993,20 +1049,82 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <button className="pool-visualizer__text-button" type="button" onClick={resetDesign} data-testid="button-reset-design">
               <RefreshCcw size={14} /> Reset design
             </button>
-            <div className="pool-visualizer__handoff">
-              <button
-                className="pool-visualizer__send-button"
-                type="button"
-                onClick={sendConceptToTeam}
-                disabled={isSendingConcept || aiRenderStatus === 'generating'}
-                data-testid="button-send-concept"
+            <Form {...customerForm}>
+              <form
+                className="pool-visualizer__contact-form"
+                onSubmit={customerForm.handleSubmit(sendConceptToTeam)}
+                onChange={() => {
+                  if (conceptSendError) {
+                    setConceptSendError('');
+                    setConceptSendStatus('idle');
+                  }
+                }}
+                noValidate
+                data-testid="form-send-concept"
               >
-                <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
-              </button>
-              <span className="pool-visualizer__saved-status" role="status" aria-live="polite" data-testid="status-generated">
-                <span /> {conceptSendStatus === 'sent' ? 'Sent internally' : conceptSendStatus === 'error' ? 'Could not send' : 'Concept updated'}
-              </span>
-            </div>
+                <div>
+                  <span className="pool-visualizer__kicker">Tie the concept to you</span>
+                  <h4>Your contact details</h4>
+                  <p className="pool-visualizer__section-note">Required so our team can review this design with you.</p>
+                  <p className="pool-visualizer__helper">Your details, selected design, backyard photo and rendering go to Cove &amp; Stone so the team can follow up.</p>
+                </div>
+                <div className="pool-visualizer__contact-fields">
+                  <FormField
+                    control={customerForm.control}
+                    name="customerName"
+                    render={({ field }) => (
+                      <FormItem className="pool-visualizer__contact-field">
+                        <FormLabel>Full name</FormLabel>
+                        <FormControl>
+                          <input {...field} type="text" autoComplete="name" maxLength={120} required placeholder="Your name" data-testid="input-customer-name" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={customerForm.control}
+                    name="customerAddress"
+                    render={({ field }) => (
+                      <FormItem className="pool-visualizer__contact-field">
+                        <FormLabel>Property address</FormLabel>
+                        <FormControl>
+                          <textarea {...field} autoComplete="street-address" maxLength={300} rows={2} required placeholder="Street, city, state, ZIP" data-testid="input-customer-address" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={customerForm.control}
+                    name="customerPhone"
+                    render={({ field }) => (
+                      <FormItem className="pool-visualizer__contact-field">
+                        <FormLabel>Phone number</FormLabel>
+                        <FormControl>
+                          <input {...field} type="tel" inputMode="tel" autoComplete="tel" maxLength={30} required placeholder="(555) 555-5555" data-testid="input-customer-phone" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="pool-visualizer__handoff">
+                  <button
+                    className="pool-visualizer__send-button"
+                    type="submit"
+                    disabled={isSendingConcept || aiRenderStatus === 'generating'}
+                    data-testid="button-send-concept"
+                  >
+                    <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
+                  </button>
+                  <span className="pool-visualizer__saved-status" data-send-state={conceptSendStatus} role="status" aria-live="polite" data-testid="status-generated">
+                    <span /> {conceptSendStatus === 'sent' ? 'Sent to our team' : conceptSendStatus === 'error' ? 'Could not send' : 'Concept updated'}
+                  </span>
+                  {conceptSendError && <p className="pool-visualizer__error" role="alert" data-testid="status-send-error">{conceptSendError}</p>}
+                </div>
+              </form>
+            </Form>
           </div>
         </aside>
 
@@ -1080,7 +1198,8 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           </div>
           <div className="pool-visualizer__preview-meta">
             <div><ImageIcon size={16} /><span>{aiRenderDataUrl ? 'AI rendering based on your photo' : 'Illustrative preview updates with every selection'}</span></div>
-            <div><span className="pool-visualizer__meta-rule" /><span>{selectedFinish.label} water finish</span></div>
+            <div><span className="pool-visualizer__meta-rule" /><span>{selectedFinish.label} pool finish</span></div>
+            <div><span className="pool-visualizer__meta-rule" /><span>{selectedDeck.label} · flush edge</span></div>
           </div>
         </div>
       </div>

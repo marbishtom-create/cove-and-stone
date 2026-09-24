@@ -89,6 +89,22 @@ export const DesignConceptEmailRequestFeaturesItem = {
 
 export interface DesignConceptEmailRequest {
   /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  customerName: string;
+  /**
+     * @minLength 5
+     * @maxLength 300
+     */
+  customerAddress: string;
+  /**
+     * @minLength 7
+     * @maxLength 30
+     * @pattern ^[+()0-9 .-]+$
+     */
+  customerPhone: string;
+  /**
      * @minimum 8
      * @maximum 60
      */

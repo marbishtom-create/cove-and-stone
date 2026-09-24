@@ -21,6 +21,17 @@ export const HealthCheckResponse = zod.object({
  * Sends the completed concept SVG and configuration summary to the Cove & Stone team.
  * @summary Email a completed pool concept internally
  */
+export const emailDesignConceptBodyCustomerNameMin = 2;
+export const emailDesignConceptBodyCustomerNameMax = 120;
+
+export const emailDesignConceptBodyCustomerAddressMin = 5;
+export const emailDesignConceptBodyCustomerAddressMax = 300;
+
+export const emailDesignConceptBodyCustomerPhoneMin = 7;
+export const emailDesignConceptBodyCustomerPhoneMax = 30;
+
+
+export const emailDesignConceptBodyCustomerPhoneRegExp = new RegExp('^[+()0-9 .-]+$');
 export const emailDesignConceptBodyWidthMin = 8;
 export const emailDesignConceptBodyWidthMax = 60;
 
@@ -40,6 +51,9 @@ export const emailDesignConceptBodyAiRenderDataUrlRegExp = new RegExp('^data:ima
 
 
 export const EmailDesignConceptBody = zod.object({
+  "customerName": zod.string().min(emailDesignConceptBodyCustomerNameMin).max(emailDesignConceptBodyCustomerNameMax),
+  "customerAddress": zod.string().min(emailDesignConceptBodyCustomerAddressMin).max(emailDesignConceptBodyCustomerAddressMax),
+  "customerPhone": zod.string().min(emailDesignConceptBodyCustomerPhoneMin).max(emailDesignConceptBodyCustomerPhoneMax).regex(emailDesignConceptBodyCustomerPhoneRegExp),
   "width": zod.number().int().min(emailDesignConceptBodyWidthMin).max(emailDesignConceptBodyWidthMax),
   "length": zod.number().int().min(emailDesignConceptBodyLengthMin).max(emailDesignConceptBodyLengthMax),
   "shape": zod.enum(['rectangular', 'freeform', 'kidney', 'l-shape']),
