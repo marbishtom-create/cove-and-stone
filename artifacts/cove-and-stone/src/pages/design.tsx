@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { THEME_CONFIG } from '@/config/theme';
 import designImage from '@assets/generated_images/design-3d.jpg';
 import designWalkthrough from '@assets/design-walkthrough-mobile.mp4';
@@ -6,6 +7,8 @@ import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { Link } from 'wouter';
 
 export default function Design() {
+  const [walkthroughFailed, setWalkthroughFailed] = useState(false);
+
   return (
     <div className="w-full pt-24 lg:pt-40">
       <header className="bg-card py-20 border-b border-border">
@@ -21,18 +24,10 @@ export default function Design() {
               </p>
             </div>
             <div className="flex-1 relative w-full">
-              <img src={designImage} alt="3D Pool Design" className="hidden aspect-video w-full object-cover shadow-2xl md:block" />
-              <video
-                className="block aspect-[9/16] w-full object-cover shadow-2xl md:hidden"
-                src={designWalkthrough}
-                poster={designWalkthroughPoster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-                preload="metadata"
-                aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
+              <img
+                src={designImage}
+                alt="3D backyard pool concept displayed on a design tablet"
+                className="block aspect-square w-full object-cover shadow-2xl md:aspect-video"
               />
             </div>
           </div>
@@ -65,21 +60,41 @@ export default function Design() {
           </div>
           <figure className="order-1 flex w-full flex-col items-center lg:order-2">
             <div className="mx-auto w-full max-w-sm overflow-hidden border border-primary-foreground/20 bg-black shadow-2xl">
-              <video
-                className="block h-auto max-h-[72svh] w-full object-contain"
-                src={designWalkthrough}
-                poster={designWalkthroughPoster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-                preload="metadata"
-                aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
-              />
+              {walkthroughFailed ? (
+                <div className="relative">
+                  <img
+                    src={designWalkthroughPoster}
+                    alt="Still image from the 3D pool and backyard design walkthrough"
+                    className="block aspect-[9/16] w-full object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-primary/90 p-4 text-center text-primary-foreground">
+                    <p className="mb-3 text-sm">This browser couldn’t play the walkthrough inline.</p>
+                    <a
+                      href={designWalkthrough}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center justify-center border border-secondary px-4 text-xs uppercase tracking-widest text-secondary transition-colors hover:bg-secondary hover:text-secondary-foreground"
+                    >
+                      Open the walkthrough
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <video
+                  className="block h-auto max-h-[72svh] w-full bg-black object-contain"
+                  poster={designWalkthroughPoster}
+                  controls
+                  playsInline
+                  preload="none"
+                  onError={() => setWalkthroughFailed(true)}
+                  aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
+                >
+                  <source src={designWalkthrough} type="video/mp4" />
+                </video>
+              )}
             </div>
             <figcaption className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-primary-foreground/55">
-              Illustrative 3D design walkthrough · concept study
+              Illustrative 3D design walkthrough · tap play to view
             </figcaption>
           </figure>
         </div>

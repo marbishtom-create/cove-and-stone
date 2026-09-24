@@ -20,6 +20,7 @@ const contentTypes = {
   ".jpg": "image/jpeg",
   ".js": "text/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".mp4": "video/mp4",
   ".png": "image/png",
   ".svg": "image/svg+xml",
   ".txt": "text/plain; charset=utf-8",
@@ -71,6 +72,38 @@ function notFoundHtml() {
     </main>
   </body>
 </html>`;
+}
+
+function parseByteRange(rangeHeader, fileSize) {
+  const match = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
+  if (!match || (!match[1] && !match[2]) || fileSize <= 0) {
+    return null;
+  }
+
+  let start;
+  let end;
+
+  if (!match[1]) {
+    const suffixLength = Number(match[2]);
+    if (!Number.isSafeInteger(suffixLength) || suffixLength <= 0) {
+      return null;
+    }
+    start = Math.max(fileSize - suffixLength, 0);
+    end = fileSize - 1;
+  } else {
+    start = Number(match[1]);
+    end = match[2] ? Number(match[2]) : fileSize - 1;
+    if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end)) {
+      return null;
+    }
+    end = Math.min(end, fileSize - 1);
+  }
+
+  if (start < 0 || start >= fileSize || end < start) {
+    return null;
+  }
+
+  return { start, end };
 }
 
 async function fileExists(filePath) {
@@ -142,10 +175,50 @@ const server = http.createServer(async (request, response) => {
     }
 
     const extension = path.extname(routeFile.file).toLowerCase();
+    const fileStats = await stat(routeFile.file);
+    const isVideo = extension === ".mp4";
+    const contentType = contentTypes[extension] || "application/octet-stream";
+    const cacheControl =
+      extension === ".html" ? "no-cache" : "public, max-age=31536000, immutable";
+    const rangeHeader = request.headers.range;
+
+    if (isVideo && request.method === "GET" && rangeHeader) {
+      const range = parseByteRange(rangeHeader, fileStats.size);
+      if (!range) {
+        response.writeHead(416, {
+          "Accept-Ranges": "bytes",
+          "Cache-Control": "no-store",
+          "Content-Range": `bytes */${fileStats.size}`,
+          "Content-Length": "0",
+        });
+        response.end();
+        return;
+      }
+
+      const contentLength = range.end - range.start + 1;
+      response.writeHead(206, {
+        "Accept-Ranges": "bytes",
+        "Cache-Control": cacheControl,
+        "Content-Length": contentLength,
+        "Content-Range": `bytes ${range.start}-${range.end}/${fileStats.size}`,
+        "Content-Type": contentType,
+      });
+      createReadStream(routeFile.file, range).pipe(response);
+      return;
+    }
+
     response.writeHead(200, {
-      "Content-Type": contentTypes[extension] || "application/octet-stream",
-      "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=31536000, immutable",
+      "Content-Type": contentType,
+      "Cache-Control": cacheControl,
+      "Content-Length": fileStats.size,
+      ...(isVideo ? { "Accept-Ranges": "bytes" } : {}),
     });
+
+    if (request.method === "HEAD") {
+      response.end();
+      return;
+    }
+
     createReadStream(routeFile.file).pipe(response);
   } catch (error) {
     console.error(error);
