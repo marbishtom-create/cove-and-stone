@@ -19,22 +19,72 @@ export const DesignConceptEmailRequestShape = {
   'l-shape': 'l-shape',
 } as const;
 
-export type DesignConceptEmailRequestWaterFinish = typeof DesignConceptEmailRequestWaterFinish[keyof typeof DesignConceptEmailRequestWaterFinish];
+export type DesignConceptEmailRequestPoolFinish = typeof DesignConceptEmailRequestPoolFinish[keyof typeof DesignConceptEmailRequestPoolFinish];
 
 
-export const DesignConceptEmailRequestWaterFinish = {
-  'clear-cove': 'clear-cove',
-  'deep-atlas': 'deep-atlas',
+export const DesignConceptEmailRequestPoolFinish = {
+  'white-plaster': 'white-plaster',
+  'arctic-quartz': 'arctic-quartz',
+  'sandbar-quartz': 'sandbar-quartz',
+  'sea-glass-quartz': 'sea-glass-quartz',
+  'lagoon-pebble': 'lagoon-pebble',
+  'ocean-blue-pebble': 'ocean-blue-pebble',
+  'silver-pebble': 'silver-pebble',
   greenstone: 'greenstone',
+  'midnight-pebble': 'midnight-pebble',
 } as const;
 
 export type DesignConceptEmailRequestWaterlineTile = typeof DesignConceptEmailRequestWaterlineTile[keyof typeof DesignConceptEmailRequestWaterlineTile];
 
 
 export const DesignConceptEmailRequestWaterlineTile = {
-  travertine: 'travertine',
-  'ink-line': 'ink-line',
+  'pale-limestone': 'pale-limestone',
+  shellstone: 'shellstone',
+  'mist-porcelain': 'mist-porcelain',
+  'warm-travertine': 'warm-travertine',
   'sea-glass': 'sea-glass',
+  'lagoon-glass': 'lagoon-glass',
+  'ocean-blue-glass': 'ocean-blue-glass',
+  'deep-navy-glass': 'deep-navy-glass',
+  'charcoal-mosaic': 'charcoal-mosaic',
+} as const;
+
+export type DesignConceptEmailRequestDeckTile = typeof DesignConceptEmailRequestDeckTile[keyof typeof DesignConceptEmailRequestDeckTile];
+
+
+export const DesignConceptEmailRequestDeckTile = {
+  'shell-limestone': 'shell-limestone',
+  'ivory-porcelain': 'ivory-porcelain',
+  'silver-porcelain': 'silver-porcelain',
+  'sand-travertine': 'sand-travertine',
+  'warm-limestone': 'warm-limestone',
+  'coastal-shellstone': 'coastal-shellstone',
+  'charcoal-porcelain': 'charcoal-porcelain',
+} as const;
+
+export type DesignConceptEmailRequestEdgeTreatment = typeof DesignConceptEmailRequestEdgeTreatment[keyof typeof DesignConceptEmailRequestEdgeTreatment];
+
+
+export const DesignConceptEmailRequestEdgeTreatment = {
+  'flush-continuous': 'flush-continuous',
+} as const;
+
+export type DesignConceptEmailRequestFeaturesItem = typeof DesignConceptEmailRequestFeaturesItem[keyof typeof DesignConceptEmailRequestFeaturesItem];
+
+
+export const DesignConceptEmailRequestFeaturesItem = {
+  spa: 'spa',
+  'spa-waterfall': 'spa-waterfall',
+  'infinity-edge': 'infinity-edge',
+  'pool-lights': 'pool-lights',
+  'sun-shelf': 'sun-shelf',
+  'sheer-descent': 'sheer-descent',
+  bubblers: 'bubblers',
+  'sunken-fire-pit': 'sunken-fire-pit',
+  'outdoor-kitchen': 'outdoor-kitchen',
+  'fire-bowls': 'fire-bowls',
+  pergola: 'pergola',
+  'outdoor-shower': 'outdoor-shower',
 } as const;
 
 export interface DesignConceptEmailRequest {
@@ -49,11 +99,11 @@ export interface DesignConceptEmailRequest {
      */
   length: number;
   shape: DesignConceptEmailRequestShape;
-  waterFinish: DesignConceptEmailRequestWaterFinish;
+  poolFinish: DesignConceptEmailRequestPoolFinish;
   waterlineTile: DesignConceptEmailRequestWaterlineTile;
-  lights: boolean;
-  waterfall: boolean;
-  sunShelf: boolean;
+  deckTile: DesignConceptEmailRequestDeckTile;
+  edgeTreatment: DesignConceptEmailRequestEdgeTreatment;
+  features: DesignConceptEmailRequestFeaturesItem[];
   /**
      * @minLength 1
      * @maxLength 120000
@@ -81,22 +131,72 @@ export const PoolConceptRenderRequestShape = {
   'l-shape': 'l-shape',
 } as const;
 
-export type PoolConceptRenderRequestWaterFinish = typeof PoolConceptRenderRequestWaterFinish[keyof typeof PoolConceptRenderRequestWaterFinish];
+export type PoolConceptRenderRequestPoolFinish = typeof PoolConceptRenderRequestPoolFinish[keyof typeof PoolConceptRenderRequestPoolFinish];
 
 
-export const PoolConceptRenderRequestWaterFinish = {
-  'clear-cove': 'clear-cove',
-  'deep-atlas': 'deep-atlas',
+export const PoolConceptRenderRequestPoolFinish = {
+  'white-plaster': 'white-plaster',
+  'arctic-quartz': 'arctic-quartz',
+  'sandbar-quartz': 'sandbar-quartz',
+  'sea-glass-quartz': 'sea-glass-quartz',
+  'lagoon-pebble': 'lagoon-pebble',
+  'ocean-blue-pebble': 'ocean-blue-pebble',
+  'silver-pebble': 'silver-pebble',
   greenstone: 'greenstone',
+  'midnight-pebble': 'midnight-pebble',
 } as const;
 
 export type PoolConceptRenderRequestWaterlineTile = typeof PoolConceptRenderRequestWaterlineTile[keyof typeof PoolConceptRenderRequestWaterlineTile];
 
 
 export const PoolConceptRenderRequestWaterlineTile = {
-  travertine: 'travertine',
-  'ink-line': 'ink-line',
+  'pale-limestone': 'pale-limestone',
+  shellstone: 'shellstone',
+  'mist-porcelain': 'mist-porcelain',
+  'warm-travertine': 'warm-travertine',
   'sea-glass': 'sea-glass',
+  'lagoon-glass': 'lagoon-glass',
+  'ocean-blue-glass': 'ocean-blue-glass',
+  'deep-navy-glass': 'deep-navy-glass',
+  'charcoal-mosaic': 'charcoal-mosaic',
+} as const;
+
+export type PoolConceptRenderRequestDeckTile = typeof PoolConceptRenderRequestDeckTile[keyof typeof PoolConceptRenderRequestDeckTile];
+
+
+export const PoolConceptRenderRequestDeckTile = {
+  'shell-limestone': 'shell-limestone',
+  'ivory-porcelain': 'ivory-porcelain',
+  'silver-porcelain': 'silver-porcelain',
+  'sand-travertine': 'sand-travertine',
+  'warm-limestone': 'warm-limestone',
+  'coastal-shellstone': 'coastal-shellstone',
+  'charcoal-porcelain': 'charcoal-porcelain',
+} as const;
+
+export type PoolConceptRenderRequestEdgeTreatment = typeof PoolConceptRenderRequestEdgeTreatment[keyof typeof PoolConceptRenderRequestEdgeTreatment];
+
+
+export const PoolConceptRenderRequestEdgeTreatment = {
+  'flush-continuous': 'flush-continuous',
+} as const;
+
+export type PoolConceptRenderRequestFeaturesItem = typeof PoolConceptRenderRequestFeaturesItem[keyof typeof PoolConceptRenderRequestFeaturesItem];
+
+
+export const PoolConceptRenderRequestFeaturesItem = {
+  spa: 'spa',
+  'spa-waterfall': 'spa-waterfall',
+  'infinity-edge': 'infinity-edge',
+  'pool-lights': 'pool-lights',
+  'sun-shelf': 'sun-shelf',
+  'sheer-descent': 'sheer-descent',
+  bubblers: 'bubblers',
+  'sunken-fire-pit': 'sunken-fire-pit',
+  'outdoor-kitchen': 'outdoor-kitchen',
+  'fire-bowls': 'fire-bowls',
+  pergola: 'pergola',
+  'outdoor-shower': 'outdoor-shower',
 } as const;
 
 export interface PoolConceptRenderRequest {
@@ -117,11 +217,11 @@ export interface PoolConceptRenderRequest {
      */
   length: number;
   shape: PoolConceptRenderRequestShape;
-  waterFinish: PoolConceptRenderRequestWaterFinish;
+  poolFinish: PoolConceptRenderRequestPoolFinish;
   waterlineTile: PoolConceptRenderRequestWaterlineTile;
-  lights: boolean;
-  waterfall: boolean;
-  sunShelf: boolean;
+  deckTile: PoolConceptRenderRequestDeckTile;
+  edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
+  features: PoolConceptRenderRequestFeaturesItem[];
 }
 
 export interface PoolConceptRenderResponse {

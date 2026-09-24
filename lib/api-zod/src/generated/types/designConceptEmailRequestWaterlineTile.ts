@@ -10,7 +10,13 @@ export type DesignConceptEmailRequestWaterlineTile = typeof DesignConceptEmailRe
 
 
 export const DesignConceptEmailRequestWaterlineTile = {
-  travertine: 'travertine',
-  'ink-line': 'ink-line',
+  'pale-limestone': 'pale-limestone',
+  shellstone: 'shellstone',
+  'mist-porcelain': 'mist-porcelain',
+  'warm-travertine': 'warm-travertine',
   'sea-glass': 'sea-glass',
+  'lagoon-glass': 'lagoon-glass',
+  'ocean-blue-glass': 'ocean-blue-glass',
+  'deep-navy-glass': 'deep-navy-glass',
+  'charcoal-mosaic': 'charcoal-mosaic',
 } as const;

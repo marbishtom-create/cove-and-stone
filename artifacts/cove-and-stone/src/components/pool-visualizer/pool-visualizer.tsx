@@ -2,7 +2,6 @@ import {
   Bath,
   ChefHat,
   Camera,
-  ChevronDown,
   Download,
   Droplets,
   Flame,
@@ -255,8 +254,14 @@ function PoolShapeMark({ shape }: { shape: PoolShape }) {
 }
 
 function ConceptScene({ configuration }: { configuration: PoolVisualizerConfiguration }) {
-  const finish = FINISHES.find((item) => item.id === configuration.waterFinish) ?? FINISHES[0];
+  const finish = FINISHES.find((item) => item.id === configuration.poolFinish) ?? FINISHES[0];
   const tile = TILE_OPTIONS.find((item) => item.id === configuration.waterlineTile) ?? TILE_OPTIONS[0];
+  const deck = DECK_TILES.find((item) => item.id === configuration.deckTile) ?? DECK_TILES[0];
+  const selectedFeatures = new Set(configuration.features);
+  const spaEnabled = selectedFeatures.has('spa') || selectedFeatures.has('spa-waterfall');
+  const selectedFeatureLabels = [...POOL_FEATURES, ...OUTDOOR_FEATURES]
+    .filter((feature) => selectedFeatures.has(feature.id))
+    .map((feature) => feature.label);
   const poolPath = getPoolPath(configuration.shape);
   const poolId = `pool-${configuration.shape}`;
   const poolScaleX = clamp(0.72 + ((configuration.width - 8) / 52) * 0.58, 0.72, 1.3);
@@ -268,7 +273,7 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
       className="pool-visualizer__concept-scene"
       viewBox="0 0 760 430"
       role="img"
-      aria-label={`Illustrative ${configuration.width} by ${configuration.length} foot ${configuration.shape} pool with ${finish.label} water and ${tile.label} waterline tile`}
+      aria-label={`Illustrative ${configuration.width} by ${configuration.length} foot ${configuration.shape} pool with ${finish.label} interior, ${tile.label} waterline tile, ${deck.label} continuous flush deck edge${selectedFeatureLabels.length ? `, and ${selectedFeatureLabels.join(', ')}` : ''}`}
     >
       <defs>
         <linearGradient id="concept-sky" x1="0" y1="0" x2="0" y2="1">
@@ -285,12 +290,22 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           <stop offset="0.55" stopColor={finish.deepSwatch} />
           <stop offset="1" stopColor="#274b59" />
         </linearGradient>
+        <linearGradient id="spa-water" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={finish.swatch} />
+          <stop offset="1" stopColor={finish.deepSwatch} />
+        </linearGradient>
         <filter id="pool-shadow" x="-30%" y="-30%" width="160%" height="170%">
           <feGaussianBlur stdDeviation="12" />
         </filter>
-        <pattern id="tile-grain" width="10" height="10" patternUnits="userSpaceOnUse">
+        <pattern id="waterline-tile-pattern" width="12" height="12" patternUnits="userSpaceOnUse">
           <rect width="10" height="10" fill={tile.swatch} />
-          <path d="M0 8L8 0M5 10L10 5" stroke="rgba(255,255,255,.2)" strokeWidth="1" />
+          <path d="M0 0H12V12H0ZM6 0V12M0 6H12" fill="none" stroke="rgba(255,255,255,.28)" strokeWidth="1.2" />
+        </pattern>
+        <pattern id="continuous-deck-tile" width="48" height="48" patternUnits="userSpaceOnUse">
+          <rect width="48" height="48" fill={deck.swatch} />
+          <path d="M48 0H0V48M24 0V48" fill="none" stroke={deck.grout} strokeWidth="1.5" />
+          <path d="M0 24H48" fill="none" stroke={deck.grout} strokeWidth="1.5" />
+          <path d="M4 7C14 4 23 5 33 8M5 34C15 31 23 33 42 29" fill="none" stroke="#fff" strokeOpacity=".17" strokeWidth="1.2" />
         </pattern>
         <clipPath id="pool-clip">
           <path d={poolPath} />
@@ -330,34 +345,95 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
       )}
       <g transform={poolTransform}>
         <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
-        <path d={poolPath} fill="#d1c4ac" stroke="#eee4ce" strokeWidth="8" />
-        <path d={poolPath} fill={`url(#${poolId})`} stroke="url(#tile-grain)" strokeWidth="13" />
+        <path d={poolPath} fill="none" stroke="url(#continuous-deck-tile)" strokeWidth="48" />
+        <path d={poolPath} fill={`url(#${poolId})`} stroke="url(#waterline-tile-pattern)" strokeWidth="9" />
         <path d={poolPath} fill="none" stroke={`url(#${poolId})`} strokeWidth="2" opacity=".8" />
         <g clipPath="url(#pool-clip)" opacity=".24" fill="none" stroke="#d8f5ed" strokeWidth="3">
           <path d="M122 188 C240 158 309 215 424 178 S638 158 677 191" />
           <path d="M87 233 C217 201 327 258 456 220 S635 204 689 241" />
           <path d="M158 283 C262 249 351 301 488 265 S612 252 660 277" />
         </g>
-        <path d={poolPath} fill="none" stroke={`url(#tile-grain)`} strokeWidth="9" opacity=".95" />
-        {configuration.sunShelf && (
+        {selectedFeatures.has('sun-shelf') && (
           <g>
             <path d="M213 153 H330 Q345 153 345 168 V205 H198 V168 Q198 153 213 153Z" fill="#a7d0c7" opacity=".84" />
             <path d="M209 157 H329" stroke="#dff5e9" strokeWidth="3" opacity=".8" />
           </g>
         )}
-        {configuration.waterfall && (
+        {selectedFeatures.has('sheer-descent') && (
           <g>
-            <path d="M489 126h49v13h-49z" fill="#d8d0bd" />
-            <path d="M496 139 C496 170 500 186 504 212 M514 139 C514 169 518 185 522 212 M532 139 C532 165 536 181 540 202" stroke="#d3f4ee" strokeWidth="5" opacity=".75" />
-            <path d="M489 129h49" stroke="#fff7e6" strokeWidth="3" />
+            <path d="M468 125h62v10h-62z" fill="url(#continuous-deck-tile)" />
+            <path d="M475 136 C475 159 478 175 481 195 M493 136 C493 159 496 177 499 199 M511 136 C511 160 514 177 517 194" stroke="#d3f4ee" strokeWidth="4" opacity=".8" />
+            <path d="M469 128h60" stroke="#fff7e6" strokeWidth="2.5" />
           </g>
         )}
-        {configuration.lights && (
+        {selectedFeatures.has('pool-lights') && (
           <g fill="#f4e8b4" stroke="#fff9dd" strokeWidth="3">
             <circle cx="254" cy="280" r="6" /><circle cx="370" cy="292" r="6" /><circle cx="493" cy="278" r="6" />
           </g>
         )}
+        {selectedFeatures.has('infinity-edge') && (
+          <g fill="none" stroke="#d4f2ec" strokeLinecap="round">
+            <path d="M578 169V278" strokeWidth="3" />
+            <path d="M581 181l14 4M581 207l14 4M581 234l14 4M581 261l14 4" strokeWidth="2.5" opacity=".85" />
+          </g>
+        )}
+        {selectedFeatures.has('bubblers') && (
+          <g fill="#ebfbf3" fillOpacity=".75" stroke="#e7faf2" strokeWidth="1.5">
+            <circle cx="242" cy="186" r="4" /><circle cx="242" cy="176" r="3" />
+            <circle cx="273" cy="185" r="3.5" /><circle cx="273" cy="174" r="2.5" />
+          </g>
+        )}
+        {spaEnabled && (
+          <g>
+            <ellipse cx="520" cy="287" rx="44" ry="26" fill="url(#continuous-deck-tile)" stroke="#eee9da" strokeWidth="2" />
+            <ellipse cx="520" cy="287" rx="35" ry="18" fill="url(#spa-water)" stroke="url(#waterline-tile-pattern)" strokeWidth="5" />
+            <path d="M497 285c9-6 18-6 27 0s18 6 27 0" fill="none" stroke="#d8f5ed" strokeWidth="2" opacity=".65" />
+            {selectedFeatures.has('spa-waterfall') && (
+              <g fill="none" stroke="#e4fbf5" strokeLinecap="round" opacity=".9">
+                <path d="M507 307v13M520 307v16M533 307v12" strokeWidth="3" />
+              </g>
+            )}
+          </g>
+        )}
       </g>
+      {selectedFeatures.has('outdoor-kitchen') && (
+        <g>
+          <path d="M625 230h105v18H625z" fill="#e8e1d1" stroke="#9da79e" strokeWidth="2" />
+          <path d="M631 248h93v39h-93z" fill="#8f9a91" stroke="#697871" strokeWidth="2" />
+          <path d="M653 251v34M700 251v34" stroke="#d5d8cc" strokeWidth="2" />
+          <path d="M637 236h18M663 236h18M689 236h18" stroke="#b7a98f" strokeWidth="2" />
+        </g>
+      )}
+      {selectedFeatures.has('sunken-fire-pit') && (
+        <g>
+          <ellipse cx="658" cy="332" rx="49" ry="25" fill="url(#continuous-deck-tile)" stroke="#ddd6c5" strokeWidth="3" />
+          <ellipse cx="658" cy="331" rx="27" ry="13" fill="#4c4c46" stroke="#d4c5a9" strokeWidth="3" />
+          <path d="M650 333c-6-8 5-10 5-17 8 6 12 12 7 18 8-3 10-7 10-9 8 9 1 17-10 17-8 0-14-3-12-9Z" fill="#e18a4d" />
+          <path d="M658 336c-3-4 2-7 3-10 4 5 6 9 1 12-3 1-5 0-4-2Z" fill="#ffd28a" />
+        </g>
+      )}
+      {selectedFeatures.has('fire-bowls') && (
+        <g>
+          <circle cx="141" cy="305" r="13" fill="#d4c6aa" />
+          <circle cx="141" cy="302" r="7" fill="#e58a4c" />
+          <path d="M139 303c-2-4 2-6 3-9 4 4 4 8 1 10-2 1-4 0-4-1Z" fill="#ffe0a2" />
+          <circle cx="609" cy="175" r="12" fill="#d4c6aa" />
+          <circle cx="609" cy="172" r="6" fill="#e58a4c" />
+          <path d="M607 173c-2-4 2-6 3-8 4 4 4 7 1 9-2 1-4 0-4-1Z" fill="#ffe0a2" />
+        </g>
+      )}
+      {selectedFeatures.has('pergola') && (
+        <g fill="none" stroke="#e5ddca" strokeWidth="5" opacity=".82">
+          <path d="M48 219h88M54 219v82M130 219v82" />
+          <path d="M58 212v14M77 212v14M96 212v14M115 212v14" strokeWidth="3" />
+        </g>
+      )}
+      {selectedFeatures.has('outdoor-shower') && (
+        <g fill="none" stroke="#e4e1d4" strokeWidth="4" strokeLinecap="round">
+          <path d="M728 176v68M728 179c-7-11-16-12-23-11M705 168v8M699 176h12" />
+          <path d="M716 192l-3 7M725 192l-3 7M735 192l-3 7" stroke="#bfe3da" strokeWidth="2.5" />
+        </g>
+      )}
       <path d="M0 381 C160 356 267 390 391 371 C535 348 649 389 760 365 V430 H0Z" fill="#405c54" opacity=".48" />
       <g fill="#c7bb9f" opacity=".9">
         <path d="M38 353h46v20H38z" /><path d="M92 346h27v27H92z" /><path d="M613 354h58v18H613z" />
@@ -461,8 +537,8 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   }, [configuration, onConfigurationChange]);
 
   const selectedFinish = useMemo(
-    () => FINISHES.find((finish) => finish.id === configuration.waterFinish) ?? FINISHES[0],
-    [configuration.waterFinish],
+    () => FINISHES.find((finish) => finish.id === configuration.poolFinish) ?? FINISHES[0],
+    [configuration.poolFinish],
   );
 
   const clearAiRender = () => {
@@ -552,11 +628,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       width: DEFAULT_CONFIGURATION.width,
       length: DEFAULT_CONFIGURATION.length,
       shape: DEFAULT_CONFIGURATION.shape,
-      waterFinish: DEFAULT_CONFIGURATION.waterFinish,
+      poolFinish: DEFAULT_CONFIGURATION.poolFinish,
       waterlineTile: DEFAULT_CONFIGURATION.waterlineTile,
-      lights: DEFAULT_CONFIGURATION.lights,
-      waterfall: DEFAULT_CONFIGURATION.waterfall,
-      sunShelf: DEFAULT_CONFIGURATION.sunShelf,
+      deckTile: DEFAULT_CONFIGURATION.deckTile,
+      edgeTreatment: DEFAULT_CONFIGURATION.edgeTreatment,
+      features: [...DEFAULT_CONFIGURATION.features],
       comparisonPosition: DEFAULT_CONFIGURATION.comparisonPosition,
     });
   };
@@ -607,11 +683,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         width: configuration.width,
         length: configuration.length,
         shape: configuration.shape,
-        waterFinish: configuration.waterFinish,
+        poolFinish: configuration.poolFinish,
         waterlineTile: configuration.waterlineTile,
-        lights: configuration.lights,
-        waterfall: configuration.waterfall,
-        sunShelf: configuration.sunShelf,
+        deckTile: configuration.deckTile,
+        edgeTreatment: configuration.edgeTreatment,
+        features: configuration.features,
         svg: new XMLSerializer().serializeToString(svg),
         originalPhotoDataUrl: configuration.photoUrl ?? undefined,
         aiRenderDataUrl: aiRenderDataUrl ?? undefined,
@@ -637,11 +713,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         width: configuration.width,
         length: configuration.length,
         shape: configuration.shape,
-        waterFinish: configuration.waterFinish,
+        poolFinish: configuration.poolFinish,
         waterlineTile: configuration.waterlineTile,
-        lights: configuration.lights,
-        waterfall: configuration.waterfall,
-        sunShelf: configuration.sunShelf,
+        deckTile: configuration.deckTile,
+        edgeTreatment: configuration.edgeTreatment,
+        features: configuration.features,
       });
       if (renderVersion !== renderVersionRef.current) return;
       setAiRenderDataUrl(result.imageDataUrl);
@@ -778,20 +854,22 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           </div>
 
           <div className="pool-visualizer__section">
-            <div className="pool-visualizer__field-label"><span>Water finish</span><span className="pool-visualizer__unit-note">02</span></div>
-            <div className="pool-visualizer__finish-list">
+            <div className="pool-visualizer__field-label"><span>Pool interior finish</span><span className="pool-visualizer__unit-note">02</span></div>
+            <p className="pool-visualizer__section-note">Choose the surface material and the water color it creates.</p>
+            <div className="pool-visualizer__material-grid" aria-label="Pool interior finishes">
               {FINISHES.map((finish) => (
                 <button
-                  className={`pool-visualizer__finish-option ${configuration.waterFinish === finish.id ? 'is-selected' : ''}`}
+                  className={`pool-visualizer__material-option ${configuration.poolFinish === finish.id ? 'is-selected' : ''}`}
                   type="button"
                   key={finish.id}
-                  onClick={() => updateConfiguration({ waterFinish: finish.id })}
-                  aria-pressed={configuration.waterFinish === finish.id}
+                  onClick={() => updateConfiguration({ poolFinish: finish.id })}
+                  aria-label={`${finish.label}: ${finish.detail}`}
+                  title={finish.detail}
+                  aria-pressed={configuration.poolFinish === finish.id}
                   data-testid={`button-finish-${finish.id}`}
                 >
-                  <span className="pool-visualizer__finish-swatch" style={{ background: `linear-gradient(145deg, ${finish.swatch}, ${finish.deepSwatch})` }} />
-                  <span><strong>{finish.label}</strong><small>{finish.detail}</small></span>
-                  {configuration.waterFinish === finish.id && <span className="pool-visualizer__selected-dot" />}
+                  <span className="pool-visualizer__material-swatch" style={{ background: `linear-gradient(145deg, ${finish.swatch}, ${finish.deepSwatch})` }} />
+                  <strong>{finish.label}</strong>
                 </button>
               ))}
             </div>
@@ -799,35 +877,87 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
           <div className="pool-visualizer__section">
             <div className="pool-visualizer__field-label"><span>Waterline tile</span><span className="pool-visualizer__unit-note">03</span></div>
-            <div className="pool-visualizer__tile-select">
-              <span className="pool-visualizer__tile-sample" style={{ backgroundColor: TILE_OPTIONS.find((tile) => tile.id === configuration.waterlineTile)?.swatch }} />
-              <select
-                value={configuration.waterlineTile}
-                onChange={(event) => updateConfiguration({ waterlineTile: event.target.value as WaterlineTile })}
-                aria-label="Waterline tile"
-                data-testid="select-waterline-tile"
-              >
-                {TILE_OPTIONS.map((tile) => <option value={tile.id} key={tile.id}>{tile.label} — {tile.detail}</option>)}
-              </select>
-              <ChevronDown size={16} />
+            <p className="pool-visualizer__section-note">A separate accent band at the waterline; choose a stone, porcelain, glass, or mosaic look.</p>
+            <div className="pool-visualizer__material-grid" aria-label="Waterline tile selections">
+              {TILE_OPTIONS.map((tile) => (
+                <button
+                  className={`pool-visualizer__material-option ${configuration.waterlineTile === tile.id ? 'is-selected' : ''}`}
+                  type="button"
+                  key={tile.id}
+                  onClick={() => updateConfiguration({ waterlineTile: tile.id })}
+                  aria-label={`${tile.label}: ${tile.detail}`}
+                  title={tile.detail}
+                  aria-pressed={configuration.waterlineTile === tile.id}
+                  data-testid={`button-waterline-tile-${tile.id}`}
+                >
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" style={{ backgroundColor: tile.swatch }} />
+                  <strong>{tile.label}</strong>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="pool-visualizer__section">
+            <div className="pool-visualizer__field-label"><span>Deck tile + pool edge</span><span className="pool-visualizer__unit-note">04</span></div>
+            <p className="pool-visualizer__section-note">One continuous, flush surface runs to the water. No raised or differently sized coping band.</p>
+            <div className="pool-visualizer__material-grid" aria-label="Continuous deck tile selections">
+              {DECK_TILES.map((tile) => (
+                <button
+                  className={`pool-visualizer__material-option ${configuration.deckTile === tile.id ? 'is-selected' : ''}`}
+                  type="button"
+                  key={tile.id}
+                  onClick={() => updateConfiguration({ deckTile: tile.id, edgeTreatment: 'flush-continuous' })}
+                  aria-label={`${tile.label}: ${tile.detail}. Continues to the water as a flush edge.`}
+                  title={tile.detail}
+                  aria-pressed={configuration.deckTile === tile.id}
+                  data-testid={`button-deck-tile-${tile.id}`}
+                >
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" style={{ backgroundColor: tile.swatch, backgroundImage: `linear-gradient(90deg, transparent 48%, ${tile.grout} 49%, ${tile.grout} 51%, transparent 52%), linear-gradient(0deg, transparent 48%, ${tile.grout} 49%, ${tile.grout} 51%, transparent 52%)` }} />
+                  <strong>{tile.label}</strong>
+                </button>
+              ))}
             </div>
           </div>
 
           <div className="pool-visualizer__section pool-visualizer__features">
-            <div className="pool-visualizer__field-label"><span>Atmosphere</span><span className="pool-visualizer__unit-note">04</span></div>
-            {[
-              { key: 'lights' as const, label: 'Pool lights', detail: 'A quiet glow after sunset', icon: <Lightbulb size={17} /> },
-              { key: 'waterfall' as const, label: 'Waterfall', detail: 'A sculptural water moment', icon: <Waves size={17} /> },
-              { key: 'sunShelf' as const, label: 'Sun shelf', detail: 'Shallow place to settle in', icon: <Sun size={17} /> },
-            ].map((feature) => (
-              <label className="pool-visualizer__toggle" key={feature.key}>
+            <div className="pool-visualizer__field-label"><span>Pool & water features</span><span className="pool-visualizer__unit-note">05</span></div>
+            <p className="pool-visualizer__section-note">Every switch works on its own. Choose one feature or any combination.</p>
+            {POOL_FEATURES.map((feature) => (
+              <label className="pool-visualizer__toggle" key={feature.id}>
                 <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
                 <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
                 <input
                   type="checkbox"
-                  checked={configuration[feature.key]}
-                  onChange={(event) => updateConfiguration({ [feature.key]: event.target.checked })}
-                  data-testid={`toggle-${feature.key}`}
+                  checked={configuration.features.includes(feature.id)}
+                  onChange={(event) => {
+                    const features = event.target.checked
+                      ? [...configuration.features, feature.id]
+                      : configuration.features.filter((selected) => selected !== feature.id);
+                    updateConfiguration({ features });
+                  }}
+                  data-testid={`toggle-feature-${feature.id}`}
+                />
+                <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
+              </label>
+            ))}
+          </div>
+
+          <div className="pool-visualizer__section pool-visualizer__features">
+            <div className="pool-visualizer__field-label"><span>Outdoor living</span><span className="pool-visualizer__unit-note">06</span></div>
+            {OUTDOOR_FEATURES.map((feature) => (
+              <label className="pool-visualizer__toggle" key={feature.id}>
+                <span className="pool-visualizer__toggle-icon">{feature.icon}</span>
+                <span><strong>{feature.label}</strong><small>{feature.detail}</small></span>
+                <input
+                  type="checkbox"
+                  checked={configuration.features.includes(feature.id)}
+                  onChange={(event) => {
+                    const features = event.target.checked
+                      ? [...configuration.features, feature.id]
+                      : configuration.features.filter((selected) => selected !== feature.id);
+                    updateConfiguration({ features });
+                  }}
+                  data-testid={`toggle-feature-${feature.id}`}
                 />
                 <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
               </label>

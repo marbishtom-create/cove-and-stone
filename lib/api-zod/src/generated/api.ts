@@ -43,11 +43,11 @@ export const EmailDesignConceptBody = zod.object({
   "width": zod.number().int().min(emailDesignConceptBodyWidthMin).max(emailDesignConceptBodyWidthMax),
   "length": zod.number().int().min(emailDesignConceptBodyLengthMin).max(emailDesignConceptBodyLengthMax),
   "shape": zod.enum(['rectangular', 'freeform', 'kidney', 'l-shape']),
-  "waterFinish": zod.enum(['clear-cove', 'deep-atlas', 'greenstone']),
-  "waterlineTile": zod.enum(['travertine', 'ink-line', 'sea-glass']),
-  "lights": zod.boolean(),
-  "waterfall": zod.boolean(),
-  "sunShelf": zod.boolean(),
+  "poolFinish": zod.enum(['white-plaster', 'arctic-quartz', 'sandbar-quartz', 'sea-glass-quartz', 'lagoon-pebble', 'ocean-blue-pebble', 'silver-pebble', 'greenstone', 'midnight-pebble']),
+  "waterlineTile": zod.enum(['pale-limestone', 'shellstone', 'mist-porcelain', 'warm-travertine', 'sea-glass', 'lagoon-glass', 'ocean-blue-glass', 'deep-navy-glass', 'charcoal-mosaic']),
+  "deckTile": zod.enum(['shell-limestone', 'ivory-porcelain', 'silver-porcelain', 'sand-travertine', 'warm-limestone', 'coastal-shellstone', 'charcoal-porcelain']),
+  "edgeTreatment": zod.enum(['flush-continuous']),
+  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower'])),
   "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax),
   "originalPhotoDataUrl": zod.string().max(emailDesignConceptBodyOriginalPhotoDataUrlMax).regex(emailDesignConceptBodyOriginalPhotoDataUrlRegExp).optional(),
   "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional()
@@ -80,11 +80,11 @@ export const GeneratePoolConceptRenderBody = zod.object({
   "width": zod.number().int().min(generatePoolConceptRenderBodyWidthMin).max(generatePoolConceptRenderBodyWidthMax),
   "length": zod.number().int().min(generatePoolConceptRenderBodyLengthMin).max(generatePoolConceptRenderBodyLengthMax),
   "shape": zod.enum(['rectangular', 'freeform', 'kidney', 'l-shape']),
-  "waterFinish": zod.enum(['clear-cove', 'deep-atlas', 'greenstone']),
-  "waterlineTile": zod.enum(['travertine', 'ink-line', 'sea-glass']),
-  "lights": zod.boolean(),
-  "waterfall": zod.boolean(),
-  "sunShelf": zod.boolean()
+  "poolFinish": zod.enum(['white-plaster', 'arctic-quartz', 'sandbar-quartz', 'sea-glass-quartz', 'lagoon-pebble', 'ocean-blue-pebble', 'silver-pebble', 'greenstone', 'midnight-pebble']),
+  "waterlineTile": zod.enum(['pale-limestone', 'shellstone', 'mist-porcelain', 'warm-travertine', 'sea-glass', 'lagoon-glass', 'ocean-blue-glass', 'deep-navy-glass', 'charcoal-mosaic']),
+  "deckTile": zod.enum(['shell-limestone', 'ivory-porcelain', 'silver-porcelain', 'sand-travertine', 'warm-limestone', 'coastal-shellstone', 'charcoal-porcelain']),
+  "edgeTreatment": zod.enum(['flush-continuous']),
+  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower']))
 })
 
 export const generatePoolConceptRenderResponseImageDataUrlMin = 40;

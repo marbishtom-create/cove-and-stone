@@ -5,8 +5,11 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { DesignConceptEmailRequestDeckTile } from './designConceptEmailRequestDeckTile';
+import type { DesignConceptEmailRequestEdgeTreatment } from './designConceptEmailRequestEdgeTreatment';
+import type { DesignConceptEmailRequestFeaturesItem } from './designConceptEmailRequestFeaturesItem';
+import type { DesignConceptEmailRequestPoolFinish } from './designConceptEmailRequestPoolFinish';
 import type { DesignConceptEmailRequestShape } from './designConceptEmailRequestShape';
-import type { DesignConceptEmailRequestWaterFinish } from './designConceptEmailRequestWaterFinish';
 import type { DesignConceptEmailRequestWaterlineTile } from './designConceptEmailRequestWaterlineTile';
 
 export interface DesignConceptEmailRequest {
@@ -21,11 +24,11 @@ export interface DesignConceptEmailRequest {
      */
   length: number;
   shape: DesignConceptEmailRequestShape;
-  waterFinish: DesignConceptEmailRequestWaterFinish;
+  poolFinish: DesignConceptEmailRequestPoolFinish;
   waterlineTile: DesignConceptEmailRequestWaterlineTile;
-  lights: boolean;
-  waterfall: boolean;
-  sunShelf: boolean;
+  deckTile: DesignConceptEmailRequestDeckTile;
+  edgeTreatment: DesignConceptEmailRequestEdgeTreatment;
+  features: DesignConceptEmailRequestFeaturesItem[];
   /**
      * @minLength 1
      * @maxLength 120000

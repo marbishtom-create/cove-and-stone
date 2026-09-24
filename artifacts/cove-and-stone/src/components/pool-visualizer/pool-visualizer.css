@@ -156,6 +156,13 @@
   margin-bottom: 1.55rem;
 }
 
+.pool-visualizer__section-note {
+  color: var(--pv-muted);
+  font-size: .62rem;
+  line-height: 1.45;
+  margin: -.3rem 0 .6rem;
+}
+
 .pool-visualizer__field-label {
   color: var(--pv-ink-soft);
   font-size: .7rem;
@@ -372,34 +379,83 @@
   line-height: 1.25;
 }
 
-.pool-visualizer__finish-list {
+.pool-visualizer__material-grid {
   display: grid;
   gap: .38rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.pool-visualizer__finish-option {
+.pool-visualizer__material-option {
   align-items: center;
-  background: transparent;
-  border: 1px solid transparent;
+  background: #f5f3ec;
+  border: 1px solid var(--pv-line);
+  color: var(--pv-ink-soft);
+  cursor: pointer;
   display: flex;
-  gap: .65rem;
-  min-height: 2.45rem;
-  padding: .35rem .45rem;
-  text-align: left;
-  transition: background-color .2s ease, border-color .2s ease;
+  flex-direction: column;
+  gap: .32rem;
+  justify-content: flex-start;
+  min-width: 0;
+  padding: .4rem .2rem .45rem;
+  position: relative;
+  text-align: center;
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
 }
 
-.pool-visualizer__finish-option:hover,
-.pool-visualizer__finish-option.is-selected {
+.pool-visualizer__material-option:hover {
+  background: #edf2eb;
+  border-color: #9cafaa;
+  transform: translateY(-1px);
+}
+
+.pool-visualizer__material-option.is-selected {
   background: #edf3ed;
-  border-color: var(--pv-line);
+  border-color: var(--pv-aqua-dark);
+  box-shadow: inset 0 0 0 1px var(--pv-aqua-dark);
 }
 
-.pool-visualizer__finish-swatch {
-  border: 2px solid #f9f6ed;
-  box-shadow: 0 0 0 1px #bccbc1;
-  flex: 0 0 1.65rem;
+.pool-visualizer__material-option.is-selected::after {
+  align-items: center;
+  background: var(--pv-aqua-dark);
+  border-radius: 50%;
+  color: white;
+  content: '✓';
+  display: flex;
+  font-size: .52rem;
+  height: .9rem;
+  justify-content: center;
+  position: absolute;
+  right: .2rem;
+  top: .2rem;
+  width: .9rem;
+}
+
+.pool-visualizer__material-swatch {
+  border: 1px solid rgba(255,255,255,.72);
+  box-shadow: 0 0 0 1px rgba(60,78,70,.19);
+  display: block;
   height: 1.65rem;
+  width: 2.7rem;
+}
+
+.pool-visualizer__material-swatch--tile {
+  background-image:
+    linear-gradient(90deg, transparent 47%, rgba(255,255,255,.62) 48%, rgba(255,255,255,.62) 51%, transparent 52%),
+    linear-gradient(0deg, transparent 47%, rgba(255,255,255,.62) 48%, rgba(255,255,255,.62) 51%, transparent 52%);
+  background-size: 12px 12px;
+}
+
+.pool-visualizer__material-swatch--deck {
+  height: 1.65rem;
+  width: 2.7rem;
+}
+
+.pool-visualizer__material-option strong {
+  color: inherit;
+  font-size: .55rem;
+  font-weight: 600;
+  line-height: 1.15;
+  max-width: 100%;
 }
 
 .pool-visualizer__selected-dot {
@@ -447,6 +503,10 @@
 .pool-visualizer__features {
   border-top: 1px solid var(--pv-line);
   padding-top: 1.2rem;
+}
+
+.pool-visualizer__features + .pool-visualizer__features {
+  margin-top: -.8rem;
 }
 
 .pool-visualizer__toggle {

@@ -16,19 +16,83 @@ const RENDER_RATE_WINDOW_MS = 15 * 60 * 1000;
 const MAX_RENDERS_PER_WINDOW = 3;
 const renderRequestsByIp = new Map<string, number[]>();
 
-const finishLabels = {
-  "clear-cove": "Clear Cove",
-  "deep-atlas": "Deep Atlas",
+const FINISH_LABELS = {
+  "white-plaster": "White plaster",
+  "arctic-quartz": "Arctic quartz",
+  "sandbar-quartz": "Sandbar quartz",
+  "sea-glass-quartz": "Sea-glass quartz",
+  "lagoon-pebble": "Lagoon pebble",
+  "ocean-blue-pebble": "Ocean-blue pebble",
+  "silver-pebble": "Silver pebble",
   greenstone: "Greenstone",
+  "midnight-pebble": "Midnight pebble",
 } as const;
 
-const tileLabels = {
-  travertine: "Warm travertine",
-  "ink-line": "Ink line",
+const FINISH_PROMPTS = {
+  "white-plaster": "a classic smooth white pool interior with pale sky-blue water",
+  "arctic-quartz": "a bright quartz pool interior with clear light aqua water",
+  "sandbar-quartz": "a warm sand-colored quartz interior with soft turquoise water",
+  "sea-glass-quartz": "a mint sea-glass quartz interior with luminous aqua water",
+  "lagoon-pebble": "an aqua pebble interior with coastal teal water",
+  "ocean-blue-pebble": "a blue pebble interior with vivid ocean-blue water",
+  "silver-pebble": "a cool silver pebble interior with blue-gray water",
+  greenstone: "a mineral-green interior with softly organic teal water",
+  "midnight-pebble": "a charcoal pebble interior with deep ink-blue water",
+} as const;
+
+const TILE_LABELS = {
+  "pale-limestone": "Pale limestone",
+  shellstone: "Shellstone",
+  "mist-porcelain": "Mist porcelain",
+  "warm-travertine": "Warm travertine",
   "sea-glass": "Sea glass",
+  "lagoon-glass": "Lagoon glass",
+  "ocean-blue-glass": "Ocean-blue glass",
+  "deep-navy-glass": "Deep navy glass",
+  "charcoal-mosaic": "Charcoal mosaic",
 } as const;
 
-const shapeLabels = {
+const DECK_TILE_LABELS = {
+  "shell-limestone": "Shell limestone",
+  "ivory-porcelain": "Ivory porcelain",
+  "silver-porcelain": "Silver porcelain",
+  "sand-travertine": "Sand travertine",
+  "warm-limestone": "Warm limestone",
+  "coastal-shellstone": "Coastal shellstone",
+  "charcoal-porcelain": "Charcoal porcelain",
+} as const;
+
+const FEATURE_LABELS = {
+  spa: "Integrated spa / Jacuzzi",
+  "spa-waterfall": "Overhead spa spillover waterfall",
+  "infinity-edge": "Infinity edge",
+  "pool-lights": "Pool lights",
+  "sun-shelf": "Sun shelf",
+  "sheer-descent": "Sheer-descent waterfall",
+  bubblers: "Sun-shelf bubblers",
+  "sunken-fire-pit": "Sunken fire pit",
+  "outdoor-kitchen": "Outdoor kitchen",
+  "fire-bowls": "Fire bowls",
+  pergola: "Pergola",
+  "outdoor-shower": "Outdoor shower",
+} as const;
+
+const FEATURE_PROMPTS = {
+  spa: "an integrated spa / Jacuzzi with clean modern lines",
+  "spa-waterfall": "a spa with a dramatic overhead spillover waterfall",
+  "infinity-edge": "an infinity edge with water flowing over one vanishing edge",
+  "pool-lights": "subtle underwater pool lighting",
+  "sun-shelf": "a shallow sun shelf",
+  "sheer-descent": "a clean architectural sheer-descent waterfall",
+  bubblers: "gentle bubblers on the sun shelf",
+  "sunken-fire-pit": "a sunken outdoor fire-pit lounge",
+  "outdoor-kitchen": "a built-in outdoor kitchen",
+  "fire-bowls": "sculptural fire bowls beside the pool",
+  pergola: "a simple modern pergola",
+  "outdoor-shower": "a discreet outdoor shower",
+} as const;
+
+const SHAPE_LABELS = {
   rectangular: "Rectangular",
   freeform: "Freeform",
   kidney: "Kidney",
@@ -116,34 +180,16 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     return;
   }
 
-  const finishLabels = {
-    "clear-cove": "soft aqua blue",
-    "deep-atlas": "deep blue-charcoal",
-    greenstone: "mineral teal",
-  } as const;
-  const tileLabels = {
-    travertine: "warm travertine",
-    "ink-line": "charcoal",
-    "sea-glass": "mist aqua",
-  } as const;
-  const shapeLabels = {
-    rectangular: "rectangular",
-    freeform: "freeform",
-    kidney: "kidney-shaped",
-    "l-shape": "L-shaped",
-  } as const;
-  const features = [
-    concept.lights ? "subtle underwater pool lighting" : null,
-    concept.waterfall ? "a modest built-in waterfall" : null,
-    concept.sunShelf ? "a shallow sun shelf" : null,
-  ].filter((feature): feature is string => Boolean(feature));
+  const features = concept.features.map((feature) => FEATURE_PROMPTS[feature]);
 
   const prompt = [
     "Edit the attached real backyard photo into one photorealistic residential pool design concept.",
     "Keep the same property, camera angle, perspective, house, fences, trees, major landscaping, and visible site boundaries recognizable.",
-    `Add a realistically scaled ${concept.width}-by-${concept.length}-foot ${shapeLabels[concept.shape]} in-ground pool that fits the existing yard.`,
-    `Use ${finishLabels[concept.waterFinish]} water and ${tileLabels[concept.waterlineTile]} waterline tile.`,
-    features.length ? `Include ${features.join(", ")}.` : "Do not add extra water features.",
+    `Add a realistically scaled ${concept.width}-by-${concept.length}-foot ${SHAPE_LABELS[concept.shape].toLowerCase()} in-ground pool that fits the existing yard.`,
+    `Use ${FINISH_PROMPTS[concept.poolFinish]} and ${TILE_LABELS[concept.waterlineTile].toLowerCase()} waterline tile.`,
+    `Use ${DECK_TILE_LABELS[concept.deckTile].toLowerCase()} in a consistent large-format module across the deck and all the way to the water as one continuous, flush surface. Keep the pool edge modern, level, and seamless; do not add a raised, contrasting, bullnose, or differently sized coping band.`,
+    `Pool edge treatment: ${concept.edgeTreatment === "flush-continuous" ? "continuous flush deck tile, same module at the water's edge, with no separate coping" : "continuous flush deck tile"}.`,
+    features.length ? `Include only the individually selected features: ${features.join(", ")}.` : "Do not add unselected pool or outdoor-living features.",
     "Make the pool and surrounding hardscape look physically plausible and integrated with the original photograph.",
     "Show only the finished proposed scene, not a before-and-after split. Do not add text, labels, logos, people, or unsupported buildings.",
     "This is an illustrative design concept, not a construction drawing; preserve the image's landscape orientation when possible.",
@@ -193,12 +239,8 @@ router.post("/design-concepts/email", async (req, res) => {
 
   const concept = parsed.data;
   const subject = `Internal pool concept · ${concept.width}′ × ${concept.length}′ ${shapeLabels[concept.shape]}`;
-  const featureList = [
-    concept.lights ? "Pool lights" : null,
-    concept.waterfall ? "Waterfall" : null,
-    concept.sunShelf ? "Sun shelf" : null,
-  ].filter((feature): feature is string => Boolean(feature));
-  const features = featureList.length ? featureList.join(", ") : "No atmosphere features selected";
+  const featureList = concept.features.map((feature) => FEATURE_LABELS[feature]);
+  const features = featureList.length ? featureList.join(", ") : "No optional features selected";
   const attachments = [
     {
       filename: `cove-stone-${concept.width}x${concept.length}-concept.svg`,
@@ -242,10 +284,12 @@ router.post("/design-concepts/email", async (req, res) => {
     <h2>Concept summary</h2>
     <ul>
       <li><strong>Dimensions:</strong> ${concept.width}′ × ${concept.length}′</li>
-      <li><strong>Shape:</strong> ${escapeHtml(shapeLabels[concept.shape])}</li>
-      <li><strong>Water finish:</strong> ${escapeHtml(finishLabels[concept.waterFinish])}</li>
-      <li><strong>Waterline tile:</strong> ${escapeHtml(tileLabels[concept.waterlineTile])}</li>
-      <li><strong>Atmosphere:</strong> ${escapeHtml(features)}</li>
+      <li><strong>Shape:</strong> ${escapeHtml(SHAPE_LABELS[concept.shape])}</li>
+      <li><strong>Pool interior finish:</strong> ${escapeHtml(FINISH_LABELS[concept.poolFinish])}</li>
+      <li><strong>Waterline tile:</strong> ${escapeHtml(TILE_LABELS[concept.waterlineTile])}</li>
+      <li><strong>Continuous deck / pool edge:</strong> ${escapeHtml(DECK_TILE_LABELS[concept.deckTile])} tile, flush to the water; no separate coping band</li>
+      <li><strong>Pool edge treatment:</strong> ${escapeHtml(concept.edgeTreatment)}</li>
+      <li><strong>Individually selected features:</strong> ${escapeHtml(features)}</li>
     </ul>
     <p>The attached SVG is an illustrative concept study generated from the customer's selections. ${concept.aiRenderDataUrl ? "The AI-generated pool rendering and original backyard photo are also attached for internal review." : "The original backyard photo is attached when one was provided; no AI rendering was generated for this concept."}</p>
     <p>AI images are visual references only. Confirm site conditions, engineering, dimensions, and project scope with the customer before treating any concept as a build document.</p>

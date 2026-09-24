@@ -86,6 +86,19 @@ components:
     DesignConceptEmailRequest:
       type: object
       properties:
+        customerName:
+          type: string
+          minLength: 2
+          maxLength: 120
+        customerAddress:
+          type: string
+          minLength: 5
+          maxLength: 300
+        customerPhone:
+          type: string
+          minLength: 7
+          maxLength: 30
+          pattern: '^[+()0-9 .-]+$'
         width:
           type: integer
           minimum: 8
@@ -97,18 +110,24 @@ components:
         shape:
           type: string
           enum: [rectangular, freeform, kidney, l-shape]
-        waterFinish:
+        poolFinish:
           type: string
-          enum: [clear-cove, deep-atlas, greenstone]
+          enum: [white-plaster, arctic-quartz, sandbar-quartz, sea-glass-quartz, lagoon-pebble, ocean-blue-pebble, silver-pebble, greenstone, midnight-pebble]
         waterlineTile:
           type: string
-          enum: [travertine, ink-line, sea-glass]
-        lights:
-          type: boolean
-        waterfall:
-          type: boolean
-        sunShelf:
-          type: boolean
+          enum: [pale-limestone, shellstone, mist-porcelain, warm-travertine, sea-glass, lagoon-glass, ocean-blue-glass, deep-navy-glass, charcoal-mosaic]
+        deckTile:
+          type: string
+          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain]
+        edgeTreatment:
+          type: string
+          enum: [flush-continuous]
+        features:
+          type: array
+          items:
+            type: string
+            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
+          uniqueItems: true
         svg:
           type: string
           minLength: 1
@@ -122,14 +141,17 @@ components:
           maxLength: 6000000
           pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
       required:
+        - customerName
+        - customerAddress
+        - customerPhone
         - width
         - length
         - shape
-        - waterFinish
+        - poolFinish
         - waterlineTile
-        - lights
-        - waterfall
-        - sunShelf
+        - deckTile
+        - edgeTreatment
+        - features
         - svg
     PoolConceptRenderRequest:
       type: object
@@ -150,28 +172,34 @@ components:
         shape:
           type: string
           enum: [rectangular, freeform, kidney, l-shape]
-        waterFinish:
+        poolFinish:
           type: string
-          enum: [clear-cove, deep-atlas, greenstone]
+          enum: [white-plaster, arctic-quartz, sandbar-quartz, sea-glass-quartz, lagoon-pebble, ocean-blue-pebble, silver-pebble, greenstone, midnight-pebble]
         waterlineTile:
           type: string
-          enum: [travertine, ink-line, sea-glass]
-        lights:
-          type: boolean
-        waterfall:
-          type: boolean
-        sunShelf:
-          type: boolean
+          enum: [pale-limestone, shellstone, mist-porcelain, warm-travertine, sea-glass, lagoon-glass, ocean-blue-glass, deep-navy-glass, charcoal-mosaic]
+        deckTile:
+          type: string
+          enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain]
+        edgeTreatment:
+          type: string
+          enum: [flush-continuous]
+        features:
+          type: array
+          items:
+            type: string
+            enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
+          uniqueItems: true
       required:
         - photoDataUrl
         - width
         - length
         - shape
-        - waterFinish
+        - poolFinish
         - waterlineTile
-        - lights
-        - waterfall
-        - sunShelf
+        - deckTile
+        - edgeTreatment
+        - features
     PoolConceptRenderResponse:
       type: object
       properties:

@@ -7,14 +7,20 @@
  */
 
 export * from './designConceptEmailRequest';
+export * from './designConceptEmailRequestDeckTile';
+export * from './designConceptEmailRequestEdgeTreatment';
+export * from './designConceptEmailRequestFeaturesItem';
+export * from './designConceptEmailRequestPoolFinish';
 export * from './designConceptEmailRequestShape';
-export * from './designConceptEmailRequestWaterFinish';
 export * from './designConceptEmailRequestWaterlineTile';
 export * from './designConceptEmailResponse';
 export * from './designConceptEmailResponseStatus';
 export * from './healthStatus';
 export * from './poolConceptRenderRequest';
+export * from './poolConceptRenderRequestDeckTile';
+export * from './poolConceptRenderRequestEdgeTreatment';
+export * from './poolConceptRenderRequestFeaturesItem';
+export * from './poolConceptRenderRequestPoolFinish';
 export * from './poolConceptRenderRequestShape';
-export * from './poolConceptRenderRequestWaterFinish';
 export * from './poolConceptRenderRequestWaterlineTile';
 export * from './poolConceptRenderResponse';

@@ -5,8 +5,11 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { PoolConceptRenderRequestDeckTile } from './poolConceptRenderRequestDeckTile';
+import type { PoolConceptRenderRequestEdgeTreatment } from './poolConceptRenderRequestEdgeTreatment';
+import type { PoolConceptRenderRequestFeaturesItem } from './poolConceptRenderRequestFeaturesItem';
+import type { PoolConceptRenderRequestPoolFinish } from './poolConceptRenderRequestPoolFinish';
 import type { PoolConceptRenderRequestShape } from './poolConceptRenderRequestShape';
-import type { PoolConceptRenderRequestWaterFinish } from './poolConceptRenderRequestWaterFinish';
 import type { PoolConceptRenderRequestWaterlineTile } from './poolConceptRenderRequestWaterlineTile';
 
 export interface PoolConceptRenderRequest {
@@ -27,9 +30,9 @@ export interface PoolConceptRenderRequest {
      */
   length: number;
   shape: PoolConceptRenderRequestShape;
-  waterFinish: PoolConceptRenderRequestWaterFinish;
+  poolFinish: PoolConceptRenderRequestPoolFinish;
   waterlineTile: PoolConceptRenderRequestWaterlineTile;
-  lights: boolean;
-  waterfall: boolean;
-  sunShelf: boolean;
+  deckTile: PoolConceptRenderRequestDeckTile;
+  edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
+  features: PoolConceptRenderRequestFeaturesItem[];
 }
