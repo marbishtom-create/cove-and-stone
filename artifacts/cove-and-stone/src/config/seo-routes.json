@@ -162,6 +162,10 @@
       "title": "Atlantic Beach Pool Design Concept | Cove & Stone",
       "description": "Explore an illustrative Atlantic Beach small-footprint pool concept with a sleek plunge pool and integrated entertaining space."
     },
+    "/projects/ongoing-construction": {
+      "title": "Ongoing Pool Construction | Cove & Stone Progress Log",
+      "description": "Follow this pool build from excavation to shell work. See the usual build stages; timing varies with the property, permits, inspections and weather."
+    },
     "/design": {
       "title": "3D Pool Design Jacksonville, FL | Cove & Stone Pools",
       "description": "Develop a photorealistic custom pool and complete backyard visualization for your Jacksonville or Northeast Florida property, then review materials and scope with the design studio.",
@@ -649,7 +653,8 @@
     "ponte-vedra-modern": "Ponte Vedra Modern",
     "jacksonville-waterfront": "Jacksonville Waterfront",
     "nocatee-resort": "Nocatee Resort Backyard",
-    "atlantic-beach-minimalist": "Atlantic Beach Minimalist"
+    "atlantic-beach-minimalist": "Atlantic Beach Minimalist",
+    "ongoing-construction": "Ongoing Construction"
   },
   "locationNames": {
     "jacksonville": "Jacksonville",

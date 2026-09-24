@@ -10,6 +10,7 @@ import Renovations from '@/pages/renovations';
 import OutdoorLiving from '@/pages/outdoor-living';
 import Projects from '@/pages/projects';
 import ProjectDetail from '@/pages/project-detail';
+import OngoingConstruction from '@/pages/ongoing-construction';
 import Design from '@/pages/design';
 import Showroom from '@/pages/showroom';
 import Financing from '@/pages/financing';
@@ -38,6 +39,7 @@ function Router() {
           <Route path="/renovations/" component={Renovations} />
           <Route path="/outdoor-living/" component={OutdoorLiving} />
           <Route path="/projects/" component={Projects} />
+          <Route path="/projects/ongoing-construction/" component={OngoingConstruction} />
           <Route path="/projects/:slug/" component={ProjectDetail} />
           <Route path="/design/" component={Design} />
           <Route path="/showroom/" component={Showroom} />
