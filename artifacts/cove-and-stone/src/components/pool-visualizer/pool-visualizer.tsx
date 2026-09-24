@@ -320,9 +320,11 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
   const deck = DECK_TILES.find((item) => item.id === configuration.deckTile) ?? DECK_TILES[0];
   const selectedFeatures = new Set(configuration.features);
   const spaEnabled = selectedFeatures.has('spa') || selectedFeatures.has('spa-waterfall');
+  const pergolaWaterEnabled = selectedFeatures.has('pergola') && selectedFeatures.has('pool-pergola-rainfall');
   const selectedFeatureLabels = [...POOL_FEATURES, ...OUTDOOR_FEATURES]
     .filter((feature) => selectedFeatures.has(feature.id))
-    .map((feature) => feature.label);
+    .map((feature) => feature.label)
+    .concat(pergolaWaterEnabled ? ['Pergola sheer-descent waterfall'] : []);
   const poolPath = getPoolPath(configuration.shape);
   const poolId = `pool-${configuration.shape}`;
   const poolScaleX = clamp(0.72 + ((configuration.width - 8) / 52) * 0.58, 0.72, 1.3);
@@ -475,10 +477,12 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
           </g>
         )}
       </g>
-      {selectedFeatures.has('pergola') && selectedFeatures.has('pool-pergola-rainfall') && (
-        <g data-feature-pergola-water="true" fill="none" stroke="#e2faf4" strokeLinecap="round">
-          <path d="M569 153 C568 165 570 178 571 192 M573 153 C573 167 574 180 575 193 M577 153 C578 166 578 180 579 191" strokeOpacity=".78" strokeWidth="2.5" />
-          <path d="M570 154 C570 167 571 180 573 192" strokeOpacity=".55" strokeWidth="5" />
+      {pergolaWaterEnabled && (
+        <g data-feature-pergola-water="true" aria-label="Smooth sheer-descent waterfall flowing from the pergola beam into the pool">
+          <path d="M622 153h34v3h-34z" fill="#f5fff9" opacity=".94" />
+          <path d="M623 156 C623 168 624 181 625 193 Q639 197 653 193 C654 181 655 168 655 156Z" fill="#d8f5ef" fillOpacity=".62" stroke="#eafff9" strokeOpacity=".72" strokeWidth="1.5" />
+          <path d="M628 157 C628 169 629 181 630 193 M638 157 C638 170 639 182 639 195 M648 157 C648 169 649 181 650 193" fill="none" stroke="#ffffff" strokeOpacity=".72" strokeWidth="1.4" />
+          <path d="M622 154h34" fill="none" stroke="#ffffff" strokeLinecap="round" strokeWidth="2.5" />
         </g>
       )}
       {selectedFeatures.has('outdoor-kitchen') && (
@@ -1336,7 +1340,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 {configuration.features.includes('pergola') && (
                   <label className="pool-visualizer__toggle pool-visualizer__toggle--child">
                     <span className="pool-visualizer__toggle-icon"><Waves size={17} /></span>
-                    <span><strong>Overhead sheer waterfall</strong><small>Water falls from the pergola overhang into the pool</small></span>
+                    <span><strong>Sheer-descent waterfall</strong><small>Pergola add-on: one smooth sheet of water spills from the beam into the pool</small></span>
                     <input
                       type="checkbox"
                       checked={configuration.features.includes('pool-pergola-rainfall')}

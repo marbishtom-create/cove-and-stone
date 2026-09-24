@@ -141,8 +141,8 @@ test("uses representative photographed material textures and places feature togg
       component.indexOf("POOL_FEATURES.map((feature)"),
     "feature controls should live in the dock below the comparison",
   );
-  assert.match(designConceptRoute, /"pool-pergola-rainfall": "Optional overhead sheer waterfall from pergola"/);
-  assert.match(designConceptRoute, /"pool-pergola-rainfall": "a narrow overhead sheer waterfall falling from the selected pergola overhang/);
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "Pergola sheer-descent waterfall add-on"/);
+  assert.match(designConceptRoute, /"pool-pergola-rainfall": "one smooth, continuous sheer-descent sheet of water flowing from a narrow horizontal spillway integrated into the front beam of the selected pergola/);
   assert.match(apiSpec, /pool-pergola-rainfall/);
 });
 
@@ -207,6 +207,9 @@ test("keeps edit history accessible without recording comparison-slider movement
 test("keeps pergola waterfall subordinate to the pergola and preserves AI fallback state", () => {
   assert.match(component, /configuration\.features\.includes\('pergola'\)/);
   assert.match(component, /feature === 'pergola' && selected === 'pool-pergola-rainfall'/);
+  assert.match(component, /Pergola add-on: one smooth sheet of water spills from the beam into the pool/);
+  assert.match(component, /const pergolaWaterEnabled = selectedFeatures\.has\('pergola'\) && selectedFeatures\.has\('pool-pergola-rainfall'\)/);
+  assert.match(component, /Pergola sheer-descent waterfall/);
   assert.match(component, /setAiRenderStatus\('generating'\)/);
   assert.doesNotMatch(component.slice(component.indexOf('const generateAiRender')), /setAiRenderDataUrl\(null\)/);
   assert.match(designConceptRoute, /do not add a second pergola/);
@@ -221,14 +224,14 @@ test("keeps the spa spillover and pergola waterfall distinct in the local and AI
     "the pergola should be drawn behind the pool",
   );
   assert.match(component, /data-feature-pergola-water="true"/);
-  assert.match(component, /M569 153 C568 165 570 178 571 192/);
+  assert.match(component, /M623 156 C623 168 624 181 625 193 Q639 197 653 193 C654 181 655 168 655 156Z/);
   assert.match(
     designConceptRoute,
     /spa: "a separate raised spa beside the pool, with a clean spillover lip flowing directly into the swimming pool"/,
   );
   assert.match(
     designConceptRoute,
-    /"pool-pergola-rainfall": "a narrow overhead sheer waterfall falling from the selected pergola overhang directly into the pool/,
+    /"pool-pergola-rainfall": "one smooth, continuous sheer-descent sheet of water flowing from a narrow horizontal spillway integrated into the front beam of the selected pergola/,
   );
 });
 

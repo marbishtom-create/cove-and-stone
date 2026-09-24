@@ -62,8 +62,8 @@ const approvedProjectMedia = [
     asset: 'generated_images/st-johns-river-retreat.webp',
     mobileImportName: 'stJohnsRiverRetreatMobile',
     mobileAsset: 'generated_images/st-johns-river-retreat-mobile.jpg',
-    alt: 'Photorealistic St. Johns River backyard design with a spacious lawn, minimalist pool, timber dock and small boat',
-    label: 'Riverfront retreat',
+    alt: 'Illustrative St. Johns River backyard with a pool, raised spa, charcoal coping, full outdoor kitchen, spacious lawn and private dock',
+    label: 'Concept rendering',
   },
 ];
 
