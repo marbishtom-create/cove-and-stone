@@ -12,10 +12,13 @@ test("keeps the premium outdoor kitchen feature grounded in poolside visuals", (
   assert.match(outdoorLivingPage, /data-testid="outdoor-kitchen-visuals"/);
   assert.match(outdoorLivingPage, /generated_images\/outdoor-living\.jpg/);
   assert.match(outdoorLivingPage, /pool and raised spa beside a covered outdoor kitchen/);
-  assert.match(outdoorLivingPage, /generated_images\/outdoor-kitchen-wall-concept\.jpg/);
-  assert.match(outdoorLivingPage, /data-testid="outdoor-kitchen-wall-concept"/);
-  assert.match(outdoorLivingPage, /Outdoor kitchen concept/);
-  assert.match(outdoorLivingPage, /built-in grill and pizza oven, sink, open slatted pergola/);
+  assert.match(outdoorLivingPage, /generated_images\/outdoor-kitchen-user-photo-clean\.jpg/);
+  assert.match(outdoorLivingPage, /id="outdoor-kitchen-watermarked-reference"/);
+  assert.match(outdoorLivingPage, /data-testid="outdoor-kitchen-watermarked-reference"/);
+  assert.match(outdoorLivingPage, /Outdoor kitchen reference/);
+  assert.match(outdoorLivingPage, /src="\/brand\/cove-and-stone-approved\.png"/);
+  assert.match(outdoorLivingPage, /aria-hidden="true"/);
+  assert.match(outdoorLivingPage, /light-stone built-in kitchen with a pizza oven, grill and sink/);
   assert.match(outdoorLivingPage, /\$20,000–\$100,000/);
   assert.match(outdoorLivingPage, /Kitchen islands/);
   assert.match(outdoorLivingPage, /Full bar moments/);

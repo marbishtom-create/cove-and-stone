@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
 import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
-import kitchenWallConceptImage from '@assets/generated_images/outdoor-kitchen-wall-concept.jpg';
+import kitchenReferencePhoto from '@assets/generated_images/outdoor-kitchen-user-photo-clean.jpg';
 
 export default function OutdoorLiving() {
   return (
@@ -153,14 +153,24 @@ export default function OutdoorLiving() {
                 View our complete environments
               </Link>
             </div>
-            <div className="relative aspect-[4/5]" data-testid="outdoor-kitchen-wall-concept">
+            <div
+              id="outdoor-kitchen-watermarked-reference"
+              className="relative aspect-[7/10] overflow-hidden"
+              data-testid="outdoor-kitchen-watermarked-reference"
+            >
               <img 
-                src={kitchenWallConceptImage} 
-                alt="Concept visualization of a pale stone outdoor kitchen with long cabinetry, a built-in grill and pizza oven, sink, open slatted pergola and warm wood-look flooring"
+                src={kitchenReferencePhoto} 
+                alt="Outdoor-kitchen style reference showing a light-stone built-in kitchen with a pizza oven, grill and sink beneath a dark slatted pergola"
                 className="w-full h-full object-cover"
               />
+              <img
+                src="/brand/cove-and-stone-approved.png"
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute right-4 top-4 z-10 w-[24%] min-w-20 max-w-32 select-none opacity-90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.22)]"
+              />
               <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                Outdoor kitchen concept
+                Outdoor kitchen reference
               </div>
             </div>
           </div>
