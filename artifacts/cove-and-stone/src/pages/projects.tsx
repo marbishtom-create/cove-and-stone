@@ -1,8 +1,8 @@
 import { Link } from 'wouter';
 import p2 from '@assets/generated_images/project-2.jpg';
 import p2Mobile from '@assets/generated_images/project-2-mobile.jpg';
-import p4 from '@assets/generated_images/project-4-st-johns-river.jpg';
-import p4Mobile from '@assets/generated_images/project-4-st-johns-river-mobile.jpg';
+import stJohnsRiverRetreat from '@assets/generated_images/st-johns-river-retreat.webp';
+import stJohnsRiverRetreatMobile from '@assets/generated_images/st-johns-river-retreat-mobile.jpg';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import ponteVedraRetreatMobile from '@assets/generated_images/ponte-vedra-private-retreat-mobile.jpg';
 import conceptNight from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
@@ -42,6 +42,7 @@ export interface CaseStudy {
   image: string;
   desc: string;
   status: "concept" | "completed";
+  statusLabel?: string;
   media: CaseStudyMedia;
 }
 
@@ -50,20 +51,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: "ponte-vedra-modern",
     title: "Ponte Vedra Modern",
     location: "Ponte Vedra Beach, FL",
-    type: "Concept direction",
+    type: "Enclosed pool & outdoor living",
     size: "800 sq ft pool",
     materials: "Light limestone, deep-blue waterline tile and native coastal planting",
     features: "Linear pool, Integrated spa, Private cabana",
     timeline: "Design development",
     image: ponteVedraRetreat,
-    desc: "A private Ponte Vedra Beach backyard direction with a linear pool, integrated spa and enclosed outdoor living pavilion—without a skyline or waterfront backdrop.",
+    desc: "A private Ponte Vedra retreat with a fully enclosed pool, integrated spa and covered outdoor living pavilion—planned to make the most of a compact lot.",
     status: "concept",
+    statusLabel: "Private backyard design",
     media: {
       render: {
         src: ponteVedraRetreat,
         mobileSrc: ponteVedraRetreatMobile,
-        alt: "Illustrative pool concept with a privacy wall, palms and live oak",
-        label: "Concept rendering",
+        alt: "Fully enclosed Ponte Vedra pool setting with a privacy wall, palms and live oak",
+        label: "Fully Enclosed · Smart Use of Space",
       },
     },
   },
@@ -113,22 +115,23 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "atlantic-beach-minimalist",
-    title: "Atlantic Beach Minimalist",
-    location: "Atlantic Beach, FL",
-    type: "Concept direction",
-    size: "450 sq ft pool",
-    materials: "Illustrative polished concrete and aqua mosaic palette",
-    features: "Plunge Pool, Linear Fire Pit",
-    timeline: "12 Weeks",
-    image: p4,
-    desc: "An illustrative small-footprint direction that maximizes a tight coastal lot with a sleek plunge pool and integrated entertaining space.",
+    title: "St. Johns River Retreat",
+    location: "St. Johns River, Northeast Florida",
+    type: "Riverfront pool & private dock",
+    size: "Spacious riverfront backyard",
+    materials: "Natural stone, river-blue tile and native Florida planting",
+    features: "Minimalist Pool, Generous Lawn, Private Dock, Small Boat",
+    timeline: "To be confirmed",
+    image: stJohnsRiverRetreat,
+    desc: "A relaxed St. Johns River retreat designed around a clean-lined pool, a larger open yard, native planting and a private dock for a small boat.",
     status: "concept",
+    statusLabel: "Riverfront design",
     media: {
       render: {
-        src: p4,
-        mobileSrc: p4Mobile,
-        alt: "Illustrative minimalist plunge-pool concept overlooking a calm, wooded St. Johns River setting",
-        label: "Concept rendering",
+        src: stJohnsRiverRetreat,
+        mobileSrc: stJohnsRiverRetreatMobile,
+        alt: "Photorealistic St. Johns River backyard design with a spacious lawn, minimalist pool, timber dock and small boat",
+        label: "Riverfront retreat",
       },
     },
   }
@@ -141,15 +144,15 @@ export default function Projects() {
     <div className="w-full pt-24 lg:pt-40">
       <header className="bg-card py-20 text-center border-b border-border">
         <div className="container mx-auto px-6 max-w-4xl">
-           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Pool design concepts</span>
-           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Pool Design Concepts & Projects</h1>
+           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Northeast Florida pool & backyard portfolio</span>
+           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary">Pool & Backyard Design</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-             Explore illustrative pool and backyard design directions across Northeast Florida. These entries are visual concepts, not completed-project photography; future case studies will be identified separately when approved.
+              Explore pool and backyard design directions across Northeast Florida. Approved completed projects are identified separately from design studies that are not presented as completed builds.
           </p>
           <div className="mt-6 inline-block bg-muted text-muted-foreground px-4 py-2 text-xs uppercase tracking-widest border border-border">
              {completedProjectCount > 0
-               ? `${completedProjectCount} approved completed case study · illustrative concepts also included`
-               : "Illustrative concept directions only · completed photography will be added as approved"}
+                ? `${completedProjectCount} approved completed case study · other entries show design directions`
+                : "Design directions shown · completed builds are labeled when approved"}
           </div>
         </div>
       </header>
@@ -206,7 +209,7 @@ export default function Projects() {
                   </picture>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                   <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-                     {project.status === "completed" ? cardMedia.label : "Illustrative concept"}
+                     {cardMedia.label}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">

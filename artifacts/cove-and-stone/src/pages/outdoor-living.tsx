@@ -1,6 +1,6 @@
 import { Flame, Trees, ChefHat, Sofa } from 'lucide-react';
 import { Link } from 'wouter';
-import heroImage from '@assets/outdoor-living-hero-gourmet-kitchen.png';
+import heroImage from '@assets/outdoor-living-hero-gourmet-kitchen.webp';
 import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
 import kitchenLoungeConceptImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept.jpg';
 import kitchenLoungeConceptMobileImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept-mobile.jpg';

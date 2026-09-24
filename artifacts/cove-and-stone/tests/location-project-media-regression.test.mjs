@@ -58,12 +58,12 @@ const approvedProjectMedia = [
     label: 'Concept rendering',
   },
   {
-    importName: 'p4',
-    asset: 'generated_images/project-4-st-johns-river.jpg',
-    mobileImportName: 'p4Mobile',
-    mobileAsset: 'generated_images/project-4-st-johns-river-mobile.jpg',
-    alt: 'Illustrative minimalist plunge-pool concept overlooking a calm, wooded St. Johns River setting',
-    label: 'Concept rendering',
+    importName: 'stJohnsRiverRetreat',
+    asset: 'generated_images/st-johns-river-retreat.webp',
+    mobileImportName: 'stJohnsRiverRetreatMobile',
+    mobileAsset: 'generated_images/st-johns-river-retreat-mobile.jpg',
+    alt: 'Photorealistic St. Johns River backyard design with a spacious lawn, minimalist pool, timber dock and small boat',
+    label: 'Riverfront retreat',
   },
 ];
 
@@ -104,6 +104,34 @@ function readImageDimensions(buffer) {
       height: buffer.readUInt32BE(20),
       width: buffer.readUInt32BE(16),
     };
+  }
+
+  if (
+    buffer.toString('ascii', 0, 4) === 'RIFF' &&
+    buffer.toString('ascii', 8, 12) === 'WEBP'
+  ) {
+    const webpChunk = buffer.toString('ascii', 12, 16);
+    if (webpChunk === 'VP8 ') {
+      return {
+        height: buffer.readUInt16LE(28) & 0x3fff,
+        width: buffer.readUInt16LE(26) & 0x3fff,
+      };
+    }
+
+    if (webpChunk === 'VP8X') {
+      return {
+        height: 1 + buffer.readUIntLE(27, 3),
+        width: 1 + buffer.readUIntLE(24, 3),
+      };
+    }
+
+    if (webpChunk === 'VP8L') {
+      const dimensions = buffer.readUInt32LE(21);
+      return {
+        height: ((dimensions >> 14) & 0x3fff) + 1,
+        width: (dimensions & 0x3fff) + 1,
+      };
+    }
   }
 
   return readJpegDimensions(buffer);
@@ -226,16 +254,23 @@ test('renders the approved project media copy on each card', () => {
   );
   assert.match(projectsSource, /src=\{cardMedia\.src\}/);
   assert.match(projectsSource, /alt=\{cardMedia\.alt\}/);
-   assert.match(
-     projectsSource,
-     /\{project\.status === "completed" \? cardMedia\.label : "Illustrative concept"\}/,
-   );
+    assert.match(projectsSource, /\{cardMedia\.label\}/);
    assert.match(projectsSource, /label: "Concept rendering"/);
+    assert.match(projectsSource, /label: "Fully Enclosed · Smart Use of Space"/);
+    assert.match(projectsSource, /title: "St\. Johns River Retreat"/);
+    assert.match(projectsSource, /statusLabel: "Riverfront design"/);
    assert.doesNotMatch(
-     projectsSource,
-     /copy: "Private Ponte Vedra concept direction"/,
-     'project media must not reuse a mismatched location label',
+      projectDetailSource,
+      /copy=\{isCompletedProject \? "Original design visualization" : project\.desc\}/,
+      'project media must use the current case study copy',
    );
+    assert.match(projectDetailSource, /\{heroMedia\.label\}/);
+    assert.match(projectDetailSource, /project\.statusLabel \|\|/);
+    assert.doesNotMatch(
+      projectDetailSource,
+      /Concept preview|This concept is shown|Private Ponte Vedra concept direction/,
+      'project details must not reuse concept or mismatched Ponte Vedra copy',
+    );
 });
 
 test('labels only the right Selected Works image as a concept rendering', () => {

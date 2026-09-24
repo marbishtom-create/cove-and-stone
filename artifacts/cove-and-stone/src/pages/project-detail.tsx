@@ -27,7 +27,7 @@ export default function ProjectDetail() {
         </picture>
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 max-w-[calc(100%-2rem)] border border-white/30 bg-black/35 px-3 py-2 text-[9px] lg:text-[10px] uppercase tracking-[0.14em] lg:tracking-[0.2em] text-white/90 backdrop-blur-sm">
-          {isCompletedProject ? "Completed photography" : "Concept rendering"}
+          {heroMedia.label}
         </div>
         <div className="absolute top-4 left-4 lg:top-8 lg:left-8">
           <Link href="/projects/" className="inline-flex items-center gap-2 bg-background/80 backdrop-blur px-4 py-2 text-sm uppercase tracking-widest text-primary hover:bg-secondary hover:text-secondary-foreground transition-colors">
@@ -67,7 +67,7 @@ export default function ProjectDetail() {
             <div>
               <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Status</div>
               <div className="font-medium text-primary text-base">
-                {isCompletedProject ? "Completed project" : "Illustrative concept direction"}
+                {project.statusLabel || (isCompletedProject ? "Completed project" : "Illustrative concept direction")}
               </div>
             </div>
             <div>
@@ -113,7 +113,7 @@ export default function ProjectDetail() {
           <p className="max-w-3xl mx-auto mt-5 text-center text-xs uppercase tracking-widest text-muted-foreground">
             {isCompletedProject
               ? "Approved before photo paired with completed project photography"
-              : "Concept preview · this visual does not represent a completed Cove & Stone project"}
+               : "Design preview · this visual does not represent a completed Cove & Stone project"}
           </p>
         </div>
 
@@ -122,19 +122,19 @@ export default function ProjectDetail() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
               <span className="text-secondary uppercase tracking-[0.25em] text-xs mb-3 block">Project media</span>
-              <h2 className="text-3xl font-serif text-primary">From reference to completion</h2>
+              <h2 className="text-3xl font-serif text-primary">Design and project media</h2>
             </div>
             <p className="max-w-md text-sm text-muted-foreground">
               {isCompletedProject
                 ? "Approved photography and a project walkthrough document the completed environment."
-                : "This concept is shown on its own until a real, same-property before-and-after set is approved."}
+                : "This design preview is shown on its own until an approved, same-property before-and-after set is available."}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <MediaCard
               icon={<ImageIcon className="w-5 h-5" />}
               title={project.media.render.label}
-                copy={isCompletedProject ? "Original design visualization" : "Private Ponte Vedra concept direction"}
+                copy={isCompletedProject ? "Original design visualization" : project.desc}
               src={project.media.render.src}
                mobileSrc={project.media.render.mobileSrc}
               alt={project.media.render.alt}

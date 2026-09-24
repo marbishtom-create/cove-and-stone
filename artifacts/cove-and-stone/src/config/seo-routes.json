@@ -143,12 +143,12 @@
       ]
     },
     "/projects": {
-      "title": "Pool Design Concepts & Projects | Cove & Stone Pools",
-      "description": "Explore illustrative pool and backyard design concepts across Northeast Florida, with completed-project case studies to be added as approved photography becomes available."
+      "title": "Northeast Florida Pool & Backyard Designs | Cove & Stone",
+      "description": "Explore pool and backyard design directions across Northeast Florida. Approved completed projects are identified separately from design studies and visualizations."
     },
     "/projects/ponte-vedra-modern": {
-      "title": "Ponte Vedra Pool Design Concept | Cove & Stone Pools",
-      "description": "Explore an illustrative Ponte Vedra Beach pool and backyard concept direction with linear geometry, an integrated spa and outdoor living."
+      "title": "Ponte Vedra Modern Pool & Backyard Design | Cove & Stone",
+      "description": "Explore a fully enclosed Ponte Vedra pool and outdoor-living design that makes smart use of a compact backyard, with an integrated spa and covered private cabana."
     },
     "/projects/jacksonville-waterfront": {
       "title": "Jacksonville Waterfront Pool Design Concept | Cove & Stone",
@@ -159,8 +159,8 @@
       "description": "Explore an illustrative Nocatee backyard concept direction pairing a resort-style pool, cabana, outdoor kitchen and connected living areas."
     },
     "/projects/atlantic-beach-minimalist": {
-      "title": "Atlantic Beach Pool Design Concept | Cove & Stone",
-      "description": "Explore an illustrative Atlantic Beach small-footprint pool concept with a sleek plunge pool and integrated entertaining space."
+      "title": "St. Johns River Pool Retreat | Cove & Stone",
+      "description": "Explore a spacious St. Johns River backyard with a minimalist pool, generous lawn, private dock and small boat, designed for relaxed riverfront living."
     },
     "/projects/ongoing-construction": {
       "title": "Ongoing Pool Construction | Cove & Stone Progress Log",
@@ -657,7 +657,7 @@
     "ponte-vedra-modern": "Ponte Vedra Modern",
     "jacksonville-waterfront": "Jacksonville Waterfront",
     "nocatee-resort": "Nocatee Resort Backyard",
-    "atlantic-beach-minimalist": "Atlantic Beach Minimalist",
+    "atlantic-beach-minimalist": "St. Johns River Retreat",
     "ongoing-construction": "Ongoing Construction"
   },
   "locationNames": {
