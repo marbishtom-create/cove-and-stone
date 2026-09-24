@@ -20,6 +20,8 @@ const projectDetailSource = await readFile(
 test('matches the consultation CTA reference with a round teal arrow badge', () => {
   assert.match(layoutSource, /data-testid="link-desktop-appointment-cta"/);
   assert.match(layoutSource, /data-testid="link-mobile-appointment-cta"/);
+  assert.match(layoutSource, /min-h-\[4\.35rem\] w-\[19\.8rem\]/);
+  assert.match(layoutSource, /mx-auto min-h-\[4\.5rem\] w-\[90%\]/);
   assert.equal(
     (layoutSource.match(/Start your project today/g) ?? []).length,
     2,
@@ -36,9 +38,12 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
     /\{!location\.startsWith\("\/projects\/"\) && \(\s*<div className=\{`fixed bottom-6/,
   );
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
+  assert.match(projectDetailSource, /w-\[19\.8rem\] max-w-\[90%\]/);
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {
+  assert.match(ctaStyles, /url\("\/brand\/cove-stone-button-texture\.webp"\)/);
+  assert.match(ctaStyles, /background-blend-mode: normal, normal, normal, normal, normal/);
   assert.match(ctaStyles, /linear-gradient\(115deg, #f7f8f6 0%, #f8f8f6 69%, #eee7da 100%\)/);
   assert.match(ctaStyles, /linear-gradient\(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%\)/);
   assert.match(ctaStyles, /@keyframes cove-water-current/);

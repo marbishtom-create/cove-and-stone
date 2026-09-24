@@ -14,6 +14,13 @@ const logoAsset = await readFile(
 const whiteLogoAsset = await readFile(
   resolve(artifactRoot, 'public/brand/cove-and-stone-approved-white.png'),
 );
+const waterMaskAsset = await readFile(
+  resolve(artifactRoot, 'public/brand/cove-and-stone-water-mask.png'),
+);
+const logoMotionStyles = await readFile(
+  resolve(artifactRoot, 'src/components/ui/logo-motion.css'),
+  'utf8',
+);
 const layoutSource = await readFile(
   resolve(artifactRoot, 'src/components/layout/layout.tsx'),
   'utf8',
@@ -52,6 +59,21 @@ test('keeps the full logo lockup cropped and transparent', () => {
   const whiteWidth = whiteLogoAsset.readUInt32BE(16);
   const whiteHeight = whiteLogoAsset.readUInt32BE(20);
   assert.ok(whiteWidth > whiteHeight, 'the white lockup should retain its full composition');
+});
+
+test('animates the logo water without rebuilding the approved lockup', () => {
+  assert.match(logoSource, /src=\{imageSource\}/);
+  assert.match(logoSource, /data-logo-water-motion=\{variant === "dark" \? undefined : "active"\}/);
+  assert.match(logoMotionStyles, /cove-and-stone-water-mask\.png/);
+  assert.match(logoMotionStyles, /@keyframes cove-logo-water-flow/);
+  assert.match(logoMotionStyles, /@keyframes cove-logo-water-glint/);
+  assert.match(logoMotionStyles, /prefers-reduced-motion: reduce/);
+
+  const width = waterMaskAsset.readUInt32BE(16);
+  const height = waterMaskAsset.readUInt32BE(20);
+  assert.equal(width, logoAsset.readUInt32BE(16));
+  assert.equal(height, logoAsset.readUInt32BE(20));
+  assert.ok([4, 6].includes(waterMaskAsset[25]), 'the water mask should retain transparency');
 });
 
 test('keeps the logo aspect ratio stable across mobile and desktop widths', () => {

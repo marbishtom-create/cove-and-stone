@@ -115,7 +115,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
           <Link
             href="/appointments/"
-            className="layout-appointment-cta min-h-[4.35rem] w-[22rem]"
+            className="layout-appointment-cta min-h-[4.35rem] w-[19.8rem]"
             data-testid="link-desktop-appointment-cta"
           >
             <span className="layout-appointment-cta__copy">
@@ -162,7 +162,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link
             href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="layout-appointment-cta min-h-[4.5rem] w-full"
+            className="layout-appointment-cta mx-auto min-h-[4.5rem] w-[90%]"
             data-testid="link-mobile-appointment-cta"
           >
             <span className="layout-appointment-cta__copy">

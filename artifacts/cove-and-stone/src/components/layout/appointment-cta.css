@@ -1,15 +1,20 @@
 .layout-appointment-cta {
   align-items: center;
   background:
-    radial-gradient(ellipse 36% 80% at 18% 0%, rgba(255, 255, 255, 0.96), transparent 76%),
-    radial-gradient(ellipse 22% 62% at 100% 80%, rgba(220, 207, 184, 0.38), transparent 88%),
+    radial-gradient(ellipse 36% 80% at 18% 0%, rgba(255, 255, 255, 0.42), transparent 76%),
+    radial-gradient(ellipse 22% 62% at 100% 80%, rgba(220, 207, 184, 0.18), transparent 88%),
     repeating-linear-gradient(
       132deg,
       transparent 0 16px,
       rgba(105, 96, 80, 0.035) 17px 18px,
       transparent 19px 34px
     ),
+    url("/brand/cove-stone-button-texture.webp"),
     linear-gradient(115deg, #f7f8f6 0%, #f8f8f6 69%, #eee7da 100%);
+  background-blend-mode: normal, normal, normal, normal, normal;
+  background-position: center, center, center, center, center;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat, no-repeat;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   border: 2px solid #8b8175;
   border-radius: 9999px;
   box-shadow:
