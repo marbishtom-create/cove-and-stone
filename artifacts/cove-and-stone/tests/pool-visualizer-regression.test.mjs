@@ -156,6 +156,19 @@ test("shows distinct material tones and supports darker porcelain deck choices",
   assert.match(apiSpec, /black-marble-porcelain/);
 });
 
+test("keeps glass waterline colors and charcoal tile scale visually distinct", () => {
+  assert.match(component, /id: 'sea-glass'.*swatch: '#a9ccc5'/);
+  assert.match(component, /id: 'lagoon-glass'.*swatch: '#79a9a7'.*tintOpacity: 0\.74/);
+  assert.match(component, /id: 'ocean-blue-glass'.*swatch: '#187eae'.*tintOpacity: 0\.88/);
+  assert.match(component, /label: 'Deep blue glass', detail: 'Very dark midnight blue', swatch: '#071d3a'.*tintOpacity: 0\.92/);
+  assert.match(component, /swatch: '#080b0d'.*tintOpacity: 0\.84, grayscale: true, patternScale: 1\.25/);
+  assert.match(component, /const tilePatternWidth = 54 \* \(tile\.patternScale \?\? 1\)/);
+  assert.match(component, /opacity=\{tileTintOpacity\}/);
+  assert.match(component, /filter=\{tile\.grayscale \? 'url\(#waterline-charcoal-filter\)' : undefined\}/);
+  assert.match(component, /backgroundSize: tile\.patternScale \?/);
+  assert.match(designConceptRoute, /"deep-navy-glass": "Deep blue glass"/);
+});
+
 test("keeps the 3D walkthrough video visible in the mobile layout", () => {
   assert.match(designPage, /designWalkthrough/);
   assert.match(designPage, /max-h-\[72svh\]/);

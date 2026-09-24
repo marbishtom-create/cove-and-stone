@@ -216,17 +216,31 @@ const FINISHES: Array<{
   },
 ];
 
-const TILE_OPTIONS: Array<{ id: WaterlineTile; label: string; detail: string; swatch: string; texture: string }> = [
+const TILE_OPTIONS: Array<{
+  id: WaterlineTile;
+  label: string;
+  detail: string;
+  swatch: string;
+  texture: string;
+  tintOpacity?: number;
+  grayscale?: boolean;
+  patternScale?: number;
+}> = [
   { id: 'pale-limestone', label: 'Pale limestone', detail: 'Soft ivory stone', swatch: '#ded7c6', texture: stoneWaterlineTexture },
   { id: 'shellstone', label: 'Shellstone', detail: 'Warm shell and sand tones', swatch: '#cbbb9f', texture: stoneWaterlineTexture },
   { id: 'mist-porcelain', label: 'Mist porcelain', detail: 'Quiet cloud gray', swatch: '#bbc9c5', texture: stoneWaterlineTexture },
   { id: 'warm-travertine', label: 'Warm travertine', detail: 'Natural sand with soft movement', swatch: '#c8b293', texture: stoneWaterlineTexture },
-  { id: 'sea-glass', label: 'Sea glass', detail: 'Hand-cut pale aqua', swatch: '#79aaa5', texture: glassWaterlineTexture },
-  { id: 'lagoon-glass', label: 'Lagoon glass', detail: 'Layered coastal teal', swatch: '#478e8e', texture: glassWaterlineTexture },
-  { id: 'ocean-blue-glass', label: 'Ocean-blue glass', detail: 'Clear blue iridescence', swatch: '#568fa7', texture: glassWaterlineTexture },
-  { id: 'deep-navy-glass', label: 'Deep navy glass', detail: 'Inky blue contrast', swatch: '#344d66', texture: glassWaterlineTexture },
-  { id: 'charcoal-mosaic', label: 'Charcoal mosaic', detail: 'Architectural dark gray', swatch: '#4a5353', texture: glassWaterlineTexture },
+  { id: 'sea-glass', label: 'Sea glass', detail: 'Hand-cut pale aqua', swatch: '#a9ccc5', texture: glassWaterlineTexture, tintOpacity: 0.54 },
+  { id: 'lagoon-glass', label: 'Lagoon glass', detail: 'Cove & Stone logo-toned aqua', swatch: '#79a9a7', texture: glassWaterlineTexture, tintOpacity: 0.74 },
+  { id: 'ocean-blue-glass', label: 'Ocean-blue glass', detail: 'Consistent clear-blue glass', swatch: '#187eae', texture: glassWaterlineTexture, tintOpacity: 0.88 },
+  { id: 'deep-navy-glass', label: 'Deep blue glass', detail: 'Very dark midnight blue', swatch: '#071d3a', texture: glassWaterlineTexture, tintOpacity: 0.92 },
+  { id: 'charcoal-mosaic', label: 'Charcoal mosaic', detail: 'Glossy black glass with slightly larger tiles', swatch: '#080b0d', texture: glassWaterlineTexture, tintOpacity: 0.84, grayscale: true, patternScale: 1.25 },
 ];
+
+function getTintedMaterialBackground(swatch: string, texture: string, opacity: number) {
+  const alpha = Math.round(opacity * 255).toString(16).padStart(2, '0');
+  return `linear-gradient(${swatch}${alpha}, ${swatch}${alpha}), url(${texture})`;
+}
 
 const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: string; grout: string; texture: string }> = [
   { id: 'shell-limestone', label: 'Shell limestone', detail: 'Pale coastal stone', swatch: '#d5cbb7', grout: '#bdb39f', texture: deckPaverTexture },
@@ -300,6 +314,9 @@ function PoolShapeMark({ shape }: { shape: PoolShape }) {
 function ConceptScene({ configuration }: { configuration: PoolVisualizerConfiguration }) {
   const finish = FINISHES.find((item) => item.id === configuration.poolFinish) ?? FINISHES[0];
   const tile = TILE_OPTIONS.find((item) => item.id === configuration.waterlineTile) ?? TILE_OPTIONS[0];
+  const tilePatternWidth = 54 * (tile.patternScale ?? 1);
+  const tilePatternHeight = 44 * (tile.patternScale ?? 1);
+  const tileTintOpacity = tile.tintOpacity ?? 0.48;
   const deck = DECK_TILES.find((item) => item.id === configuration.deckTile) ?? DECK_TILES[0];
   const selectedFeatures = new Set(configuration.features);
   const spaEnabled = selectedFeatures.has('spa') || selectedFeatures.has('spa-waterfall');
@@ -345,9 +362,19 @@ function ConceptScene({ configuration }: { configuration: PoolVisualizerConfigur
         <filter id="pool-shadow" x="-30%" y="-30%" width="160%" height="170%">
           <feGaussianBlur stdDeviation="12" />
         </filter>
-        <pattern id="waterline-tile-pattern" width="54" height="44" patternUnits="userSpaceOnUse">
-          <image data-material-texture="true" href={tile.texture} width="54" height="44" preserveAspectRatio="xMidYMid slice" />
-          <rect width="54" height="44" fill={tile.swatch} opacity=".48" />
+        <filter id="waterline-charcoal-filter">
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <pattern id="waterline-tile-pattern" width={tilePatternWidth} height={tilePatternHeight} patternUnits="userSpaceOnUse">
+          <image
+            data-material-texture="true"
+            href={tile.texture}
+            width={tilePatternWidth}
+            height={tilePatternHeight}
+            preserveAspectRatio="xMidYMid slice"
+            filter={tile.grayscale ? 'url(#waterline-charcoal-filter)' : undefined}
+          />
+          <rect width={tilePatternWidth} height={tilePatternHeight} fill={tile.swatch} opacity={tileTintOpacity} />
         </pattern>
         <pattern id="continuous-deck-tile" width="96" height="72" patternUnits="userSpaceOnUse">
           <image data-material-texture="true" href={deck.texture} width="96" height="72" preserveAspectRatio="xMidYMid slice" />
@@ -1002,7 +1029,15 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.waterlineTile === tile.id}
                   data-testid={`button-waterline-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}66, ${tile.swatch}66), url(${tile.texture})` }} />
+                  <span
+                    className="pool-visualizer__material-swatch pool-visualizer__material-swatch--tile"
+                    aria-hidden="true"
+                    style={{
+                      backgroundImage: getTintedMaterialBackground(tile.swatch, tile.texture, tile.tintOpacity ?? 0.4),
+                      backgroundSize: tile.patternScale ? `${tile.patternScale * 100}% ${tile.patternScale * 100}%` : 'cover',
+                      filter: tile.grayscale ? 'grayscale(1) contrast(1.18)' : undefined,
+                    }}
+                  />
                   <strong>{tile.label}</strong>
                 </button>
               ))}

@@ -50,7 +50,7 @@ const TILE_LABELS = {
   "sea-glass": "Sea glass",
   "lagoon-glass": "Lagoon glass",
   "ocean-blue-glass": "Ocean-blue glass",
-  "deep-navy-glass": "Deep navy glass",
+  "deep-navy-glass": "Deep blue glass",
   "charcoal-mosaic": "Charcoal mosaic",
 } as const;
 
