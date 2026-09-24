@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
 import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
-import kitchenReferenceImage from '@assets/IMG_7976_1790212751526.jpeg';
+import kitchenWallConceptImage from '@assets/generated_images/outdoor-kitchen-wall-concept.jpg';
 
 export default function OutdoorLiving() {
   return (
@@ -153,14 +153,14 @@ export default function OutdoorLiving() {
                 View our complete environments
               </Link>
             </div>
-            <div className="relative aspect-[4/5]" data-testid="outdoor-kitchen-reference">
+            <div className="relative aspect-[4/5]" data-testid="outdoor-kitchen-wall-concept">
               <img 
-                src={kitchenReferenceImage} 
-                alt="Reference photograph of a covered outdoor kitchen with a built-in grill, pizza oven, sink and linear storage"
+                src={kitchenWallConceptImage} 
+                alt="Concept visualization of a pale stone outdoor kitchen with long cabinetry, a built-in grill and pizza oven, sink, open slatted pergola and warm wood-look flooring"
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                Outdoor kitchen reference
+                Outdoor kitchen concept
               </div>
             </div>
           </div>

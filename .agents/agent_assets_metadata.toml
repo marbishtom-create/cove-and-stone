@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "rzStULpf0zJ6yx-E3BpdM"
+uri = "file://attached_assets/generated_images/outdoor-kitchen-wall-concept.jpg"
+type = "image"
+title = "Outdoor kitchen wall concept"
+description = "Original concept visualization inspired by the uploaded style reference, now used beside The cohesive approach on the Cove & Stone outdoor-living page."
+logical_id = "8607f05a-a791-41bd-bef0-0d7e85070ace"
+content_hash = "sha256:bab7ffa752a34774ddf04938f4ab0445f2ab9894d2ee74f9fc744cbf202c172c"
+size = 190671
+mtime_ms = 1790220080518
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/8607f05a-a791-41bd-bef0-0d7e85070ace/fb7208df-15d3-4e43-84ea-7733b5d8c7dd"
+storage_version_token = "1790220185478491"
+content_type = "image/jpeg"
