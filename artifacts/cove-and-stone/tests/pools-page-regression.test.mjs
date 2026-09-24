@@ -13,5 +13,6 @@ test("keeps the pools philosophy visual framed and transparent", () => {
   assert.match(poolsPage, /St\. Johns River concept/);
   assert.match(poolsPage, /bg-white\/10/);
   assert.match(poolsPage, /backdrop-blur-md/);
+  assert.match(poolsPage, /-bottom-12 -right-6 hidden h-52 w-52/);
   assert.match(poolsPage, /Purity of Form/);
 });

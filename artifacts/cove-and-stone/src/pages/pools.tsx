@@ -45,7 +45,7 @@ export default function Pools() {
                   St. Johns River concept
                 </div>
               </div>
-              <div className="absolute -bottom-8 -right-8 hidden h-64 w-64 flex-col justify-center border border-white/40 bg-white/10 p-8 text-white shadow-2xl backdrop-blur-md md:flex">
+              <div className="absolute -bottom-12 -right-6 hidden h-52 w-52 flex-col justify-center border border-white/40 bg-white/10 p-6 text-white shadow-2xl backdrop-blur-md md:flex">
                 <Droplet className="mb-4 w-8 h-8 text-secondary" />
                 <h4 className="mb-2 font-serif text-xl">Purity of Form</h4>
                 <p className="text-sm text-white/75">Every angle, depth, and finish is calculated for aesthetic impact and hydraulic efficiency.</p>
