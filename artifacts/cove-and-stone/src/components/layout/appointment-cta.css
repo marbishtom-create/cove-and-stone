@@ -38,8 +38,9 @@
   background:
     url("/brand/cove-water-caustics.svg"),
     radial-gradient(ellipse 24% 78% at 24% 26%, rgba(188, 255, 248, 0.48), transparent 78%),
-    linear-gradient(108deg, #078a9a 0%, #0ab7c0 34%, #18c9c7 53%, #068e9c 100%);
-  background-size: 120px 84px, 100% 100%, 220% 100%;
+    linear-gradient(108deg, #078e9e 0%, #10c1c6 34%, #2bd2cb 53%, #0799a7 100%);
+  background-size: 88px 62px, 100% 100%, 220% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
   content: '';
   inset: 0;
   pointer-events: none;
@@ -69,7 +70,7 @@
   content: '';
   inset: 0;
   mix-blend-mode: screen;
-  opacity: 0.72;
+  opacity: 0.82;
   pointer-events: none;
   position: absolute;
   animation: cove-water-glint 4.5s linear infinite;
@@ -107,7 +108,7 @@
 .layout-appointment-cta__title {
   color: #142438;
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.1;
@@ -116,7 +117,7 @@
 
 .layout-appointment-cta__arrow-shell {
   align-items: center;
-  background: #157b83;
+  background: #12848b;
   border: 2px solid rgba(255, 255, 255, 0.96);
   border-radius: 9999px;
   box-shadow:
@@ -203,18 +204,18 @@
     background-position: 0 0, 0 0, 0 0;
   }
   to {
-    background-position: 120px 84px, 0 0, 100% 0;
+    background-position: 88px 62px, 0 0, 100% 0;
   }
 }
 
 @keyframes cove-water-glint {
   from {
     background-position: -110px 0, 0 0;
-    opacity: 0.42;
+    opacity: 0.54;
   }
   to {
     background-position: 150px 0, 100% 0;
-    opacity: 0.78;
+    opacity: 0.9;
   }
 }
 

@@ -52,7 +52,7 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(waterTexture, /<circle/);
   assert.match(ctaStyles, /background-blend-mode: normal, normal, normal, normal, normal/);
   assert.match(ctaStyles, /linear-gradient\(115deg, #f7f8f6 0%, #f8f8f6 69%, #eee7da 100%\)/);
-  assert.match(ctaStyles, /linear-gradient\(108deg, #078a9a 0%, #0ab7c0 34%, #18c9c7 53%, #068e9c 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(108deg, #078e9e 0%, #10c1c6 34%, #2bd2cb 53%, #0799a7 100%\)/);
   assert.match(ctaStyles, /@keyframes cove-water-current/);
   assert.match(ctaStyles, /@keyframes cove-water-flow/);
   assert.match(ctaStyles, /@keyframes cove-water-glint/);
