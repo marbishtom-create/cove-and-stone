@@ -50,19 +50,19 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
                 href="/contact/" 
-                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
+                className="border border-white/30 bg-secondary/80 text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm backdrop-blur-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Design My Backyard
               </Link>
               <Link 
                 href="/projects/" 
-                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
+                className="border border-white/30 bg-secondary/80 text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm backdrop-blur-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Visit the Showroom
               </Link>
               <Link
                 href="/financing/"
-                className="border border-secondary bg-secondary text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
+                className="border border-white/30 bg-secondary/80 text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm backdrop-blur-sm hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"
               >
                 Explore Financing
               </Link>

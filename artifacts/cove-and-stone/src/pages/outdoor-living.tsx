@@ -1,8 +1,9 @@
 import { Flame, Trees, ChefHat, Sofa } from 'lucide-react';
 import { Link } from 'wouter';
 import heroImage from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673.png';
-import projectImage from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import kitchenImage from '@assets/generated_images/outdoor-living.jpg';
+import kitchenLoungeConceptImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept.jpg';
+import kitchenLoungeConceptMobileImage from '@assets/generated_images/outdoor-kitchen-turf-screen-concept-mobile.jpg';
 import kitchenReferencePhoto from '@assets/generated_images/outdoor-kitchen-user-photo-clean.jpg';
 
 export default function OutdoorLiving() {
@@ -81,13 +82,17 @@ export default function OutdoorLiving() {
               </div>
             </div>
             <div className="relative z-10 ml-auto mt-[-2.5rem] w-[82%] border-8 border-primary bg-primary shadow-2xl sm:mt-[-4rem] sm:w-[68%]">
-              <img
-                src={projectImage}
-                alt="Concept visualization of a pool and raised spa beside a covered outdoor kitchen and seating area"
-                className="aspect-[4/3] w-full object-cover"
-              />
+              <picture className="block">
+                <source media="(max-width: 767px)" srcSet={kitchenLoungeConceptMobileImage} />
+                <img
+                  src={kitchenLoungeConceptImage}
+                  alt="Concept visualization of a covered outdoor kitchen with a stone island, large mounted television, screened enclosure, and turf lounge seating"
+                  className="aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                />
+              </picture>
               <div className="absolute bottom-3 left-3 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 backdrop-blur-sm">
-                Pool + spa / Outdoor room 02
+                Outdoor kitchen + turf lounge / Concept 02
               </div>
             </div>
           </div>
