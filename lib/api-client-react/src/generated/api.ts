@@ -26,7 +26,8 @@ import type {
   DesignConceptEmailResponse,
   HealthStatus,
   PoolConceptRenderRequest,
-  PoolConceptRenderResponse
+  PoolConceptRenderResponse,
+  PoolConceptVideoJobStatus
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -232,8 +233,8 @@ export const getGeneratePoolConceptRenderUrl = () => {
 }
 
 /**
- * Creates a photorealistic illustrative after-image from the customer's uploaded backyard photo and selected pool details.
- * @summary Generate an AI pool concept from a backyard photo
+ * Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
+ * @summary Generate an AI pool concept and walkthrough job from a backyard photo
  */
 export const generatePoolConceptRender = async (poolConceptRenderRequest: PoolConceptRenderRequest, options?: Parameters<typeof customFetch>[1]): Promise<PoolConceptRenderResponse> => {
 
@@ -299,7 +300,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type GeneratePoolConceptRenderMutationVariables = {data: BodyType<PoolConceptRenderRequest>}
 
     /**
- * @summary Generate an AI pool concept from a backyard photo
+ * @summary Generate an AI pool concept and walkthrough job from a backyard photo
  */
 export const useGeneratePoolConceptRender = <TError = ErrorType<void>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generatePoolConceptRender>>, TError,GeneratePoolConceptRenderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
@@ -311,6 +312,160 @@ export const useGeneratePoolConceptRender = <TError = ErrorType<void>,
       > => {
       return useMutation(getGeneratePoolConceptRenderMutationOptions(options));
     }
+
+export const getGetPoolConceptVideoJobUrl = (videoJobId: string,) => {
+
+
+
+
+  return `/api/design-concepts/video-jobs/${videoJobId}`
+}
+
+/**
+ * @summary Check a pool concept walkthrough job
+ */
+export const getPoolConceptVideoJob = async (videoJobId: string, options?: Parameters<typeof customFetch>[1]): Promise<PoolConceptVideoJobStatus> => {
+
+  return customFetch<PoolConceptVideoJobStatus>(getGetPoolConceptVideoJobUrl(videoJobId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPoolConceptVideoJobQueryKey = (videoJobId: string,) => {
+    return [
+    `/api/design-concepts/video-jobs/${videoJobId}`
+    ] as const;
+    }
+
+
+export const getGetPoolConceptVideoJobQueryOptions = <TData = Awaited<ReturnType<typeof getPoolConceptVideoJob>>, TError = ErrorType<void>>(videoJobId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideoJob>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPoolConceptVideoJobQueryKey(videoJobId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPoolConceptVideoJob>>> = ({ signal }) => getPoolConceptVideoJob(videoJobId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: videoJobId !== null && videoJobId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideoJob>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPoolConceptVideoJobQueryResult = NonNullable<Awaited<ReturnType<typeof getPoolConceptVideoJob>>>
+export type GetPoolConceptVideoJobQueryError = ErrorType<void>
+
+
+/**
+ * @summary Check a pool concept walkthrough job
+ */
+
+export function useGetPoolConceptVideoJob<TData = Awaited<ReturnType<typeof getPoolConceptVideoJob>>, TError = ErrorType<void>>(
+ videoJobId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideoJob>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPoolConceptVideoJobQueryOptions(videoJobId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+export const getGetPoolConceptVideoUrl = (videoId: string,) => {
+
+
+
+
+  return `/api/design-concepts/videos/${videoId}`
+}
+
+/**
+ * @summary Stream a generated pool concept walkthrough
+ */
+export const getPoolConceptVideo = async (videoId: string, options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
+
+  return customFetch<Blob>(getGetPoolConceptVideoUrl(videoId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPoolConceptVideoQueryKey = (videoId: string,) => {
+    return [
+    `/api/design-concepts/videos/${videoId}`
+    ] as const;
+    }
+
+
+export const getGetPoolConceptVideoQueryOptions = <TData = Awaited<ReturnType<typeof getPoolConceptVideo>>, TError = ErrorType<void>>(videoId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPoolConceptVideoQueryKey(videoId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPoolConceptVideo>>> = ({ signal }) => getPoolConceptVideo(videoId, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: videoId !== null && videoId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPoolConceptVideoQueryResult = NonNullable<Awaited<ReturnType<typeof getPoolConceptVideo>>>
+export type GetPoolConceptVideoQueryError = ErrorType<void>
+
+
+/**
+ * @summary Stream a generated pool concept walkthrough
+ */
+
+export function useGetPoolConceptVideo<TData = Awaited<ReturnType<typeof getPoolConceptVideo>>, TError = ErrorType<void>>(
+ videoId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPoolConceptVideoQueryOptions(videoId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getRequestAppointmentUrl = () => {
 

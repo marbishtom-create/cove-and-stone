@@ -33,7 +33,7 @@
     radial-gradient(ellipse 24% 78% at 24% 26%, rgba(188, 255, 248, 0.48), transparent 78%),
     linear-gradient(108deg, #087d8d 0%, #0b93a3 18%, #20bec2 36%, #4adbd0 49%, #078394 65%, #087c8f 79%, #3bcfc5 91%, #087e8d 100%),
     linear-gradient(105deg, transparent 2%, rgba(2, 88, 107, 0.42) 17%, transparent 31%, rgba(111, 239, 221, 0.46) 43%, transparent 57%, rgba(0, 102, 122, 0.36) 72%, rgba(99, 229, 215, 0.4) 84%, transparent 96%);
-  background-size: 64px 45px, 100% 100%, 240% 100%, 250% 100%;
+  background-size: 120px 84px, 100% 100%, 240% 100%, 250% 100%;
   background-position: 0 0, 0 0, 0 0, 0 0;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat;
   content: '';
@@ -41,10 +41,14 @@
   pointer-events: none;
   position: absolute;
   clip-path: polygon(
-    0 40%, 3% 40%, 6% 42%, 9% 45%, 12% 49%, 15% 55%, 18% 62%, 21% 68%,
-    24% 74%, 27% 79%, 30% 82%, 34% 84%, 38% 85%, 42% 86%, 46% 86%, 50% 86%,
-    54% 86%, 58% 85%, 62% 83%, 66% 80%, 70% 75%, 74% 69%, 78% 65%, 82% 63%,
-    86% 63%, 90% 65%, 94% 69%, 97% 74%, 100% 79%, 100% 100%, 0 100%
+    0 40%, 2% 40%, 4% 41%, 6% 42%, 8% 44%, 10% 47%, 12% 50%, 14% 54%,
+    16% 59%, 18% 64%, 20% 69%, 22% 73%, 24% 77%, 26% 81%, 28% 84%,
+    30% 87%, 32% 89%, 34% 91%, 36% 93%, 38% 94%, 40% 95%, 42% 95%,
+    44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%,
+    58% 90%, 60% 87%, 62% 84%, 64% 80%, 66% 76%, 68% 72%, 70% 68%,
+    72% 65%, 74% 63%, 76% 61%, 78% 60%, 80% 60%, 82% 61%, 84% 62%,
+    86% 64%, 88% 66%, 90% 69%, 92% 72%, 94% 75%, 96% 78%, 98% 81%,
+    100% 83%, 100% 100%, 0 100%
   );
   animation: cove-water-current 7.2s ease-in-out infinite, cove-water-flow 10s linear infinite;
   z-index: 0;
@@ -56,10 +60,14 @@
     radial-gradient(ellipse 28% 62% at 64% 52%, rgba(117, 244, 220, 0.28), transparent 82%);
   background-size: 190% 150%, 120% 100%;
   clip-path: polygon(
-    0 40%, 3% 40%, 6% 42%, 9% 45%, 12% 49%, 15% 55%, 18% 62%, 21% 68%,
-    24% 74%, 27% 79%, 30% 82%, 34% 84%, 38% 85%, 42% 86%, 46% 86%, 50% 86%,
-    54% 86%, 58% 85%, 62% 83%, 66% 80%, 70% 75%, 74% 69%, 78% 65%, 82% 63%,
-    86% 63%, 90% 65%, 94% 69%, 97% 74%, 100% 79%, 100% 100%, 0 100%
+    0 40%, 2% 40%, 4% 41%, 6% 42%, 8% 44%, 10% 47%, 12% 50%, 14% 54%,
+    16% 59%, 18% 64%, 20% 69%, 22% 73%, 24% 77%, 26% 81%, 28% 84%,
+    30% 87%, 32% 89%, 34% 91%, 36% 93%, 38% 94%, 40% 95%, 42% 95%,
+    44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%,
+    58% 90%, 60% 87%, 62% 84%, 64% 80%, 66% 76%, 68% 72%, 70% 68%,
+    72% 65%, 74% 63%, 76% 61%, 78% 60%, 80% 60%, 82% 61%, 84% 62%,
+    86% 64%, 88% 66%, 90% 69%, 92% 72%, 94% 75%, 96% 78%, 98% 81%,
+    100% 83%, 100% 100%, 0 100%
   );
   content: '';
   inset: 0;
@@ -89,6 +97,15 @@
 .layout-appointment-cta__arrow-shell {
   position: relative;
   z-index: 3;
+}
+
+.layout-appointment-cta__waterline {
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
 }
 
 .layout-appointment-cta__copy {
@@ -142,6 +159,32 @@
 .layout-appointment-cta__arrow {
   flex: 0 0 auto;
   color: #fff;
+  opacity: 1;
+  transition: opacity 160ms ease;
+}
+
+.layout-appointment-cta__duck {
+  height: 1.65rem;
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.74) rotate(-8deg);
+  transition: opacity 180ms ease, transform 220ms ease;
+  width: 1.9rem;
+}
+
+.layout-appointment-cta__arrow-shell:hover .layout-appointment-cta__arrow,
+.layout-appointment-cta:focus-visible .layout-appointment-cta__arrow {
+  opacity: 0;
+  transition-delay: 3.05s;
+}
+
+.layout-appointment-cta__arrow-shell:hover .layout-appointment-cta__duck,
+.layout-appointment-cta:focus-visible .layout-appointment-cta__duck {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0);
+  transition-delay: 3.05s;
 }
 
 .layout-appointment-cta:hover,
@@ -218,7 +261,8 @@
   .layout-appointment-cta::after,
   .layout-appointment-cta__copy,
   .layout-appointment-cta__arrow-shell,
-  .layout-appointment-cta__arrow {
+  .layout-appointment-cta__arrow,
+  .layout-appointment-cta__duck {
     animation: none;
     transition-duration: 0.01ms;
   }

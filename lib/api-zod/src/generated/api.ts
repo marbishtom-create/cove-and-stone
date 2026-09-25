@@ -64,7 +64,8 @@ export const EmailDesignConceptBody = zod.object({
   "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'pool-pergola-rainfall', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower'])),
   "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax),
   "originalPhotoDataUrl": zod.string().max(emailDesignConceptBodyOriginalPhotoDataUrlMax).regex(emailDesignConceptBodyOriginalPhotoDataUrlRegExp).optional(),
-  "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional()
+  "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional(),
+  "videoId": zod.string().uuid().optional()
 })
 
 export const EmailDesignConceptResponse = zod.object({
@@ -73,8 +74,8 @@ export const EmailDesignConceptResponse = zod.object({
 
 
 /**
- * Creates a photorealistic illustrative after-image from the customer's uploaded backyard photo and selected pool details.
- * @summary Generate an AI pool concept from a backyard photo
+ * Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
+ * @summary Generate an AI pool concept and walkthrough job from a backyard photo
  */
 export const generatePoolConceptRenderBodyPhotoDataUrlMin = 40;
 export const generatePoolConceptRenderBodyPhotoDataUrlMax = 2900000;
@@ -109,8 +110,34 @@ export const generatePoolConceptRenderResponseImageDataUrlRegExp = new RegExp('^
 
 
 export const GeneratePoolConceptRenderResponse = zod.object({
-  "imageDataUrl": zod.string().min(generatePoolConceptRenderResponseImageDataUrlMin).max(generatePoolConceptRenderResponseImageDataUrlMax).regex(generatePoolConceptRenderResponseImageDataUrlRegExp)
+  "imageDataUrl": zod.string().min(generatePoolConceptRenderResponseImageDataUrlMin).max(generatePoolConceptRenderResponseImageDataUrlMax).regex(generatePoolConceptRenderResponseImageDataUrlRegExp),
+  "videoJobId": zod.string().uuid()
 })
+
+
+/**
+ * @summary Check a pool concept walkthrough job
+ */
+export const GetPoolConceptVideoJobParams = zod.object({
+  "videoJobId": zod.coerce.string().uuid()
+})
+
+export const GetPoolConceptVideoJobResponse = zod.object({
+  "status": zod.enum(['processing', 'ready', 'failed']),
+  "videoId": zod.string().uuid().optional(),
+  "videoUrl": zod.string().optional(),
+  "message": zod.string().optional()
+})
+
+
+/**
+ * @summary Stream a generated pool concept walkthrough
+ */
+export const GetPoolConceptVideoParams = zod.object({
+  "videoId": zod.coerce.string().uuid()
+})
+
+export const GetPoolConceptVideoResponse = zod.unknown()
 
 
 /**

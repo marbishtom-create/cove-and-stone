@@ -2,8 +2,9 @@ import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
-import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 import './appointment-cta.css';
+import { AppointmentCtaArrow, AppointmentCtaSurface } from './appointment-cta-elements';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
@@ -118,14 +119,12 @@ export default function Layout({ children }: { children: ReactNode }) {
             className="layout-appointment-cta min-h-[4.1rem] w-[19.8rem]"
             data-testid="link-desktop-appointment-cta"
           >
-            <span className="layout-appointment-cta__surface" aria-hidden="true" />
+            <AppointmentCtaSurface />
             <span className="layout-appointment-cta__copy">
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <span className="layout-appointment-cta__arrow-shell" aria-hidden="true">
-              <ArrowRight className="layout-appointment-cta__arrow" size={22} strokeWidth={1.8} />
-            </span>
+            <AppointmentCtaArrow />
           </Link>
         </div>
       )}
@@ -166,14 +165,12 @@ export default function Layout({ children }: { children: ReactNode }) {
             className="layout-appointment-cta mx-auto min-h-[4.1rem] w-[90%]"
             data-testid="link-mobile-appointment-cta"
           >
-            <span className="layout-appointment-cta__surface" aria-hidden="true" />
+            <AppointmentCtaSurface />
             <span className="layout-appointment-cta__copy">
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <span className="layout-appointment-cta__arrow-shell" aria-hidden="true">
-              <ArrowRight className="layout-appointment-cta__arrow" size={22} strokeWidth={1.8} />
-            </span>
+            <AppointmentCtaArrow />
           </Link>
         </div>
       </div>

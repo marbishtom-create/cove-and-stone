@@ -20,6 +20,10 @@ const projectDetailSource = await readFile(
   resolve(artifactRoot, 'src/pages/project-detail.tsx'),
   'utf8',
 );
+const ctaElements = await readFile(
+  resolve(artifactRoot, 'src/components/layout/appointment-cta-elements.tsx'),
+  'utf8',
+);
 
 test('matches the consultation CTA reference with a round teal arrow badge', () => {
   assert.match(layoutSource, /data-testid="link-desktop-appointment-cta"/);
@@ -32,9 +36,14 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
     'desktop and mobile CTAs should use the same direct call to action',
   );
   assert.doesNotMatch(layoutSource, /<Waves\b/);
-  assert.equal((layoutSource.match(/layout-appointment-cta__arrow-shell/g) ?? []).length, 2);
-  assert.equal((layoutSource.match(/layout-appointment-cta__surface/g) ?? []).length, 2);
-  assert.match(layoutSource, /<ArrowRight\b/);
+  assert.equal((layoutSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 2);
+  assert.equal((layoutSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 2);
+  assert.match(ctaElements, /<ArrowRight\b/);
+  assert.match(ctaElements, /fill="#fff"[\s\S]*?stroke="#15969a"/);
+  assert.match(ctaElements, /waterlinePoints/);
+  assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
+  assert.match(ctaStyles, /transition-delay: 3\.05s/);
+  assert.match(ctaStyles, /layout-appointment-cta__arrow-shell:hover \.layout-appointment-cta__duck/);
 });
 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
@@ -44,7 +53,8 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
   );
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
   assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-\[19\.8rem\] max-w-\[90%\]/);
-  assert.equal((projectDetailSource.match(/layout-appointment-cta__surface/g) ?? []).length, 1);
+  assert.equal((projectDetailSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 1);
+  assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {
@@ -52,14 +62,19 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(ctaStyles, /url\("\/brand\/cove-water-caustics\.svg"\)/);
   assert.match(waterTexture, /<path/);
   assert.match(waterTexture, /<circle/);
+  assert.match(waterTexture, /stroke-opacity="\.25" stroke-width="\.85"/);
+  assert.match(waterTexture, /opacity="\.42"/);
+  assert.doesNotMatch(waterTexture, /<path d="M12 4\.5/);
   assert.match(ctaStyles, /background-blend-mode: normal, normal, normal/);
   assert.match(ctaStyles, /linear-gradient\(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%\)/);
   assert.match(ctaStyles, /\.layout-appointment-cta__surface[\s\S]*?clip-path: polygon/);
   assert.match(ctaStyles, /linear-gradient\(108deg, #087d8d 0%, #0b93a3 18%, #20bec2 36%, #4adbd0 49%/);
   assert.match(ctaStyles, /rgba\(2, 88, 107, 0\.42\)/);
   assert.match(ctaStyles, /rgba\(111, 239, 221, 0\.46\)/);
+  assert.match(ctaStyles, /background-size: 120px 84px, 100% 100%, 240% 100%, 250% 100%/);
   assert.doesNotMatch(ctaStyles, /drop-shadow\(0 -2px 0 rgba\(255, 255, 255/);
-  assert.match(ctaStyles, /46% 86%, 50% 86%,\s*54% 86%/);
+  assert.equal((ctaStyles.match(/50% 94%/g) ?? []).length, 2);
+  assert.match(ctaStyles, /42% 95%, 44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%/);
   assert.equal(
     (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
     2,

@@ -60,4 +60,5 @@ export interface DesignConceptEmailRequest {
      * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
      */
   aiRenderDataUrl?: string;
+  videoId?: string;
 }

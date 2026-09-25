@@ -117,6 +117,13 @@ paths:
               schema:
                 type: string
                 format: binary
+        "206":
+          description: Byte range of the generated MP4 walkthrough
+          content:
+            video/mp4:
+              schema:
+                type: string
+                format: binary
         "404":
           description: Walkthrough expired or not found
   /appointments/request:

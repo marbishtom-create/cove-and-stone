@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="84" viewBox="0 0 120 84" fill="none">
   <defs>
     <radialGradient id="caustic-glow">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
-      <stop offset=".32" stop-color="#d8fffa" stop-opacity=".7"/>
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".58"/>
+      <stop offset=".32" stop-color="#d8fffa" stop-opacity=".4"/>
       <stop offset="1" stop-color="#d8fffa" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <g stroke="#cafff7" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".42" stroke-width="1.15">
+  <g stroke="#cafff7" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".25" stroke-width=".85">
     <path d="M-2 16Q5 14 12 8Q20 8 29 15Q37 14 45 6Q54 9 63 14Q72 10 80 5Q89 8 98 14Q109 9 122 7"/>
     <path d="M-2 43Q7 38 14 34Q23 37 31 43Q40 37 49 32Q57 36 66 41Q75 35 83 31Q93 35 101 40Q112 35 122 33"/>
     <path d="M-2 70Q6 66 13 61Q22 65 31 70Q39 65 48 58Q57 63 66 67Q75 61 84 57Q94 64 102 68Q112 63 122 59"/>
@@ -14,31 +14,15 @@
     <path d="M14 34C17 44 10 53 13 61S24 67 31 70M31 43C33 51 28 60 31 70M49 32C52 42 46 51 48 58M66 41C68 49 63 58 66 67M83 31C87 41 81 51 84 57M101 40C103 49 98 59 102 68"/>
   </g>
   <g fill="url(#caustic-glow)">
-    <circle cx="12" cy="8" r="5"/>
-    <circle cx="45" cy="6" r="4.5"/>
-    <circle cx="80" cy="5" r="5"/>
-    <circle cx="31" cy="43" r="4.5"/>
-    <circle cx="66" cy="41" r="5"/>
-    <circle cx="102" cy="68" r="4.5"/>
+    <circle cx="12" cy="8" r="3.5"/>
+    <circle cx="66" cy="41" r="3.5"/>
+    <circle cx="102" cy="68" r="3.5"/>
   </g>
-  <g fill="#f2fffd" opacity=".9">
+  <g fill="#f2fffd" opacity=".42">
     <circle cx="12" cy="8" r="1.5"/>
-    <circle cx="29" cy="15" r="1.2"/>
-    <circle cx="45" cy="6" r="1.5"/>
-    <circle cx="63" cy="14" r="1.2"/>
-    <circle cx="80" cy="5" r="1.5"/>
-    <circle cx="14" cy="34" r="1.2"/>
     <circle cx="31" cy="43" r="1.5"/>
-    <circle cx="49" cy="32" r="1.2"/>
     <circle cx="66" cy="41" r="1.6"/>
     <circle cx="84" cy="57" r="1.2"/>
-    <circle cx="31" cy="70" r="1.3"/>
-    <circle cx="66" cy="67" r="1.2"/>
     <circle cx="102" cy="68" r="1.5"/>
-  </g>
-  <g fill="#f4fffd" opacity=".9">
-    <path d="M12 4.5c.55 2.4 1.1 2.95 3.5 3.5-2.4.55-2.95 1.1-3.5 3.5-.55-2.4-1.1-2.95-3.5-3.5 2.4-.55 2.95-1.1 3.5-3.5Z"/>
-    <path d="M66 37.5c.55 2.4 1.1 2.95 3.5 3.5-2.4.55-2.95 1.1-3.5 3.5-.55-2.4-1.1-2.95-3.5-3.5 2.4-.55 2.95-1.1 3.5-3.5Z"/>
-    <path d="M102 64.5c.55 2.4 1.1 2.95 3.5 3.5-2.4.55-2.95 1.1-3.5 3.5-.55-2.4-1.1-2.95-3.5-3.5 2.4-.55 2.95-1.1 3.5-3.5Z"/>
   </g>
 </svg>

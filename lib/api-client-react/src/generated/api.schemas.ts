@@ -176,6 +176,7 @@ export interface DesignConceptEmailRequest {
      * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
      */
   aiRenderDataUrl?: string;
+  videoId?: string;
 }
 
 export type PoolConceptRenderRequestShape = typeof PoolConceptRenderRequestShape[keyof typeof PoolConceptRenderRequestShape];
@@ -291,6 +292,23 @@ export interface PoolConceptRenderResponse {
      * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
      */
   imageDataUrl: string;
+  videoJobId: string;
+}
+
+export type PoolConceptVideoJobStatusStatus = typeof PoolConceptVideoJobStatusStatus[keyof typeof PoolConceptVideoJobStatusStatus];
+
+
+export const PoolConceptVideoJobStatusStatus = {
+  processing: 'processing',
+  ready: 'ready',
+  failed: 'failed',
+} as const;
+
+export interface PoolConceptVideoJobStatus {
+  status: PoolConceptVideoJobStatusStatus;
+  videoId?: string;
+  videoUrl?: string;
+  message?: string;
 }
 
 export type DesignConceptEmailResponseStatus = typeof DesignConceptEmailResponseStatus[keyof typeof DesignConceptEmailResponseStatus];
