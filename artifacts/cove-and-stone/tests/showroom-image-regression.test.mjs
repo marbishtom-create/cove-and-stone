@@ -98,11 +98,13 @@ test('serves the approved showroom photo at mobile and desktop resolutions', asy
 });
 
 test('uses the mobile showroom source below the desktop breakpoint', () => {
+  assert.match(showroomSource, /src:\s*showroomPhotoDesktop,[\s\S]*?mobileSrc:\s*showroomPhotoMobile/);
   assert.match(
     showroomSource,
-    /<picture>\s*<source media="\(max-width: 767px\)" srcSet=\{showroomPhotoMobile\}/,
+    /<source media="\(max-width: 767px\)" srcSet=\{image\.mobileSrc\}/,
   );
-  assert.match(showroomSource, /<img\s+src=\{showroomPhotoDesktop\}/);
+  assert.match(showroomSource, /<img\s+src=\{image\.src\}/);
+  assert.match(showroomSource, /ShowroomGalleryCard image=\{showroomMainPhoto\} highPriority/);
 });
 
 test('uses the supplied Jacksonville showroom image and gives it slightly more room', () => {
@@ -113,7 +115,10 @@ test('uses the supplied Jacksonville showroom image and gives it slightly more r
 
 test('places the pool-finish lounge display directly below the main showroom photo', () => {
   const heroStackStart = showroomSource.indexOf('<div className="space-y-6">');
-  const heroCaption = showroomSource.indexOf('Cove & Stone Jacksonville showroom', heroStackStart);
+  const mainPhotoCard = showroomSource.indexOf(
+    '<ShowroomGalleryCard image={showroomMainPhoto} highPriority />',
+    heroStackStart,
+  );
   const loungeCard = showroomSource.indexOf(
     '<ShowroomGalleryCard image={showroomLoungeFeature} />',
     heroStackStart,
@@ -124,9 +129,19 @@ test('places the pool-finish lounge display directly below the main showroom pho
   );
 
   assert.ok(heroStackStart >= 0, 'the hero image and lounge card share a column');
-  assert.ok(heroCaption < loungeCard, 'the lounge card follows the showroom photo');
+  assert.ok(mainPhotoCard < loungeCard, 'the lounge card follows the showroom photo');
   assert.ok(loungeCard < detailsColumn, 'the lounge card comes before the showroom details');
   assert.match(showroomSource, /showroomGallery\.slice\(1\)\.map/);
+});
+
+test('shows the remaining equipment and kitchen photos side by side', () => {
+  assert.match(showroomSource, /grid-cols-1 gap-8 sm:grid-cols-2/);
+  assert.match(showroomSource, /function ShowroomGalleryCard/);
+  assert.match(
+    showroomSource,
+    /<figure className="overflow-hidden border border-border bg-card shadow-sm">/,
+  );
+  assert.match(showroomSource, /<figcaption className="border-t border-border p-5">/);
 });
 
 test('keeps the approved showroom accessibility text and visible caption', () => {

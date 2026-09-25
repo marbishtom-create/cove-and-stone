@@ -66,7 +66,7 @@ test("collects the required customer details and submits through the generated a
   assert.match(appointmentPage, /not reserved until our team confirms/);
   assert.doesNotMatch(appointmentPage, /Monday through Friday/);
   assert.match(appointmentCss, /prefers-reduced-motion:\s*reduce/);
-  assert.match(themeConfig, /hours:\s*"Friday: Closes at 5:00 PM • Saturday: Closed"/);
+  assert.match(themeConfig, /hours:\s*"By appointment: Sunday–Thursday, 9:00 AM–10:00 PM • Friday, 9:00 AM–5:00 PM • Saturday: Closed"/);
 });
 
 test("validates and emails preferred appointment requests for staff confirmation", () => {

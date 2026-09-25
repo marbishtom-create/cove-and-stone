@@ -9,15 +9,29 @@ import showroomOutdoorKitchen from '@assets/IMG_8055_1790304907300-sharpened.jpg
 
 type ShowroomGalleryItem = {
   src: string;
+  mobileSrc?: string;
   alt: string;
   title: string;
+  width: number;
+  height: number;
   credit?: string;
+};
+
+const showroomMainPhoto: ShowroomGalleryItem = {
+  src: showroomPhotoDesktop,
+  mobileSrc: showroomPhotoMobile,
+  alt: 'Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating',
+  title: 'Cove & Stone Jacksonville showroom',
+  width: 1440,
+  height: 1078,
 };
 
 const showroomLoungeFeature: ShowroomGalleryItem = {
   src: showroomLoungeDisplay,
   alt: 'Showroom pool-finish display with a lounge area and water feature',
   title: 'Pool finishes and lounge display',
+  width: 676,
+  height: 506,
 };
 
 const showroomGallery: ShowroomGalleryItem[] = [
@@ -26,28 +40,44 @@ const showroomGallery: ShowroomGalleryItem[] = [
     src: showroomEquipmentDisplay,
     alt: 'Pool filtration, pumps, and plumbing equipment on display in the showroom',
     title: 'Pool equipment and plumbing',
+    width: 676,
+    height: 506,
     credit: 'Equipment supplier: Gorman Company',
   },
   {
     src: showroomOutdoorKitchen,
     alt: 'Outdoor kitchen display with grills, counters, and storage cabinets',
     title: 'Outdoor kitchen displays',
+    width: 676,
+    height: 506,
   },
 ];
 
-function ShowroomGalleryCard({ image }: { image: ShowroomGalleryItem }) {
+function ShowroomGalleryCard({
+  image,
+  highPriority = false,
+}: {
+  image: ShowroomGalleryItem;
+  highPriority?: boolean;
+}) {
   return (
     <figure className="overflow-hidden border border-border bg-card shadow-sm">
       <div className="aspect-[4/3] overflow-hidden">
-        <img
-          src={image.src}
-          alt={image.alt}
-          width={676}
-          height={506}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover"
-        />
+        <picture className="block h-full w-full">
+          {image.mobileSrc && (
+            <source media="(max-width: 767px)" srcSet={image.mobileSrc} />
+          )}
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            loading={highPriority ? 'eager' : 'lazy'}
+            fetchPriority={highPriority ? 'high' : 'auto'}
+            decoding="async"
+            className="block h-full w-full object-cover"
+          />
+        </picture>
       </div>
       <figcaption className="border-t border-border p-5">
         <h3 className="font-serif text-lg text-primary">{image.title}</h3>
@@ -76,22 +106,7 @@ export default function Showroom() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-16 items-start">
             <div className="space-y-6">
-              <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
-                <picture>
-                  <source media="(max-width: 767px)" srcSet={showroomPhotoMobile} />
-                  <img
-                    src={showroomPhotoDesktop}
-                    alt="Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating"
-                    className="w-full h-full object-cover"
-                    width={1440}
-                    height={1078}
-                    fetchPriority="high"
-                  />
-                </picture>
-                <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                  Cove & Stone Jacksonville showroom
-                </div>
-              </div>
+              <ShowroomGalleryCard image={showroomMainPhoto} highPriority />
               <ShowroomGalleryCard image={showroomLoungeFeature} />
             </div>
 
@@ -187,7 +202,7 @@ export default function Showroom() {
               Compare pool finishes, equipment and outdoor-kitchen details in the Jacksonville design studio.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             {showroomGallery.slice(1).map((image) => (
               <ShowroomGalleryCard key={image.title} image={image} />
             ))}
