@@ -9,7 +9,5 @@ import type { PoolConceptVideoJobStatusStatus } from './poolConceptVideoJobStatu
 
 export interface PoolConceptVideoJobStatus {
   status: PoolConceptVideoJobStatusStatus;
-  videoId?: string;
-  videoUrl?: string;
   message?: string;
 }

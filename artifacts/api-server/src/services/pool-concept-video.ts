@@ -10,7 +10,7 @@ const MAX_VIDEO_POLL_ATTEMPTS = 120;
 const VIDEO_ID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const VIDEO_FAILURE_MESSAGE =
-  "The AI pool video could not be created. Please try the rendering again.";
+  "The MP4 could not be created. Your photo and AI rendering are unchanged; retry the MP4 without recreating the image.";
 
 type VideoJob =
   | { status: "processing"; expiresAt: number }
@@ -279,7 +279,7 @@ export async function startPoolConceptVideoJob(
       body: JSON.stringify({
         model: "MiniMax-Hailuo-2.3",
         prompt:
-          "Create a 10-second illustrative architectural pool-design walkthrough from this exact first frame. Preserve the backyard, pool outline and position, pool scale, water color, edge treatment, materials, deck, house, landscaping, and selected features. Use one continuous, stabilized, slow camera glide toward the pool with only subtle natural water ripples, reflections, and foliage movement. Do not change the layout, add structures or pool features, add people, add text, add logos, or use cuts. Keep the result realistic and consistent with the supplied design image.",
+          "Create a full-scene 10-second architectural pool-design walkthrough from this exact first frame, not a still image with only a small zoom. Keep the complete backyard and pool readable during one continuous, smooth, stabilized camera glide that reveals the pool, deck, and surrounding yard. Animate every motion-capable element already visible: water surface and reflections, selected waterfalls or bubblers, tree and plant foliage, and visible fire or pool lighting. Preserve the backyard, pool outline and position, pool scale, water color, edge treatment, materials, deck, house, landscaping, and selected features. Keep fixed structures and pool geometry stable and straight. Do not add structures, pool features, people, text, or logos; do not warp or duplicate objects; do not use cuts. Match the supplied design image.",
         first_frame_image: firstFrameDataUrl,
         duration: 10,
         resolution: "768P",
@@ -309,16 +309,18 @@ export function getPoolConceptVideoJob(jobId: string) {
   const job = videoJobs.get(jobId);
   if (!job) return null;
   if (job.status === "ready") {
-    return {
-      status: "ready" as const,
-      videoId: job.videoId,
-      videoUrl: `/api/design-concepts/videos/${job.videoId}`,
-    };
+    return { status: "ready" as const };
   }
   if (job.status === "failed") {
     return { status: "failed" as const, message: job.message };
   }
   return { status: "processing" as const };
+}
+
+export function getReadyPoolConceptVideoId(jobId: string) {
+  pruneExpiredJobs();
+  const job = videoJobs.get(jobId);
+  return job?.status === "ready" ? job.videoId : null;
 }
 
 export async function readPoolConceptVideo(videoId: string) {

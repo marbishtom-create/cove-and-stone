@@ -18,7 +18,7 @@ export const HealthCheckResponse = zod.object({
 
 
 /**
- * Sends the completed concept SVG and configuration summary to the Cove & Stone team.
+ * Sends the completed concept SVG and configuration summary to the Cove & Stone team, attaching the private walkthrough from its server-side job ID when ready.
  * @summary Email a completed pool concept internally
  */
 export const emailDesignConceptBodyCustomerNameMin = 2;
@@ -65,7 +65,7 @@ export const EmailDesignConceptBody = zod.object({
   "svg": zod.string().min(1).max(emailDesignConceptBodySvgMax),
   "originalPhotoDataUrl": zod.string().max(emailDesignConceptBodyOriginalPhotoDataUrlMax).regex(emailDesignConceptBodyOriginalPhotoDataUrlRegExp).optional(),
   "aiRenderDataUrl": zod.string().max(emailDesignConceptBodyAiRenderDataUrlMax).regex(emailDesignConceptBodyAiRenderDataUrlRegExp).optional(),
-  "videoId": zod.string().uuid().optional()
+  "videoJobId": zod.string().uuid().optional()
 })
 
 export const EmailDesignConceptResponse = zod.object({
@@ -74,7 +74,7 @@ export const EmailDesignConceptResponse = zod.object({
 
 
 /**
- * Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
+ * Creates an illustrative after-image and starts a private image-to-video walkthrough job from the same concept.
  * @summary Generate an AI pool concept and walkthrough job from a backyard photo
  */
 export const generatePoolConceptRenderBodyPhotoDataUrlMin = 40;
@@ -137,6 +137,26 @@ export const GeneratePoolConceptRenderResponse = zod.object({
 
 
 /**
+ * Starts a new private walkthrough job without regenerating the AI image.
+ * @summary Retry a pool concept walkthrough from an existing AI image
+ */
+export const startPoolConceptWalkthroughBodyImageDataUrlMin = 40;
+export const startPoolConceptWalkthroughBodyImageDataUrlMax = 6000000;
+
+
+export const startPoolConceptWalkthroughBodyImageDataUrlRegExp = new RegExp('^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$');
+
+
+export const StartPoolConceptWalkthroughBody = zod.object({
+  "imageDataUrl": zod.string().min(startPoolConceptWalkthroughBodyImageDataUrlMin).max(startPoolConceptWalkthroughBodyImageDataUrlMax).regex(startPoolConceptWalkthroughBodyImageDataUrlRegExp)
+})
+
+export const StartPoolConceptWalkthroughResponse = zod.object({
+  "videoJobId": zod.string().uuid()
+})
+
+
+/**
  * @summary Check a pool concept walkthrough job
  */
 export const GetPoolConceptVideoJobParams = zod.object({
@@ -145,20 +165,8 @@ export const GetPoolConceptVideoJobParams = zod.object({
 
 export const GetPoolConceptVideoJobResponse = zod.object({
   "status": zod.enum(['processing', 'ready', 'failed']),
-  "videoId": zod.string().uuid().optional(),
-  "videoUrl": zod.string().optional(),
   "message": zod.string().optional()
 })
-
-
-/**
- * @summary Stream a generated pool concept walkthrough
- */
-export const GetPoolConceptVideoParams = zod.object({
-  "videoId": zod.coerce.string().uuid()
-})
-
-export const GetPoolConceptVideoResponse = zod.unknown()
 
 
 /**

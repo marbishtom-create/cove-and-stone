@@ -15,7 +15,6 @@ import {
   Sun,
   Undo2,
   Upload,
-  Video,
   Waves,
   X,
 } from 'lucide-react';
@@ -23,6 +22,7 @@ import {
   emailDesignConcept,
   generatePoolConceptRender,
   getPoolConceptVideoJob,
+  startPoolConceptWalkthrough,
 } from '@workspace/api-client-react';
 import {
   ChangeEvent,
@@ -58,6 +58,17 @@ import {
   type PoolLayoutElementId,
   type PoolLayoutElements,
 } from './pool-layout';
+
+function getApiErrorMessage(error: unknown, fallback: string) {
+  if (error && typeof error === 'object' && 'data' in error) {
+    const data = (error as { data?: unknown }).data;
+    if (data && typeof data === 'object' && 'message' in data) {
+      const message = (data as { message?: unknown }).message;
+      if (typeof message === 'string' && message.trim()) return message;
+    }
+  }
+  return fallback;
+}
 
 export type PoolShape = 'rectangular' | 'freeform' | 'kidney' | 'l-shape';
 export type WaterFinish =
@@ -764,10 +775,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [uploadError, setUploadError] = useState('');
   const [aiRenderDataUrl, setAiRenderDataUrl] = useState<string | null>(null);
   const [aiRenderStatus, setAiRenderStatus] = useState<'idle' | 'generating' | 'ready' | 'error'>('idle');
+  const [aiRenderError, setAiRenderError] = useState('');
   const [videoJobId, setVideoJobId] = useState<string | null>(null);
-  const [videoId, setVideoId] = useState<string | null>(null);
   const [videoStatus, setVideoStatus] = useState<'idle' | 'processing' | 'ready' | 'error'>('idle');
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [videoError, setVideoError] = useState('');
   const [isSendingConcept, setIsSendingConcept] = useState(false);
   const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
@@ -830,17 +840,17 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   useEffect(() => {
     if (!videoJobId) return;
     let isCurrent = true;
+    let statusCheckFailures = 0;
     let pollTimer: number | undefined;
 
     const pollVideoStatus = async () => {
       try {
         const result = await getPoolConceptVideoJob(videoJobId);
         if (!isCurrent) return;
+        statusCheckFailures = 0;
 
-        if (result.status === 'ready' && result.videoId && result.videoUrl) {
+        if (result.status === 'ready') {
           setVideoStatus('ready');
-          setVideoId(result.videoId);
-          setVideoUrl(result.videoUrl);
           setVideoError('');
           return;
         }
@@ -854,8 +864,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         pollTimer = window.setTimeout(pollVideoStatus, 5000);
       } catch {
         if (!isCurrent) return;
+        statusCheckFailures += 1;
+        if (statusCheckFailures <= 3) {
+          setVideoStatus('processing');
+          pollTimer = window.setTimeout(pollVideoStatus, 2000);
+          return;
+        }
         setVideoStatus('error');
-        setVideoError('The pool walkthrough status could not be checked. Regenerate the AI rendering to try again.');
+        setVideoError('The walkthrough status could not be checked. Your photo and AI rendering are unchanged.');
       }
     };
 
@@ -877,10 +893,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     setAiRenderDataUrl(null);
     setIsLayoutEditing(false);
     setAiRenderStatus('idle');
+    setAiRenderError('');
     setVideoJobId(null);
-    setVideoId(null);
     setVideoStatus('idle');
-    setVideoUrl(null);
     setVideoError('');
   };
 
@@ -1159,11 +1174,11 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   };
 
   const sendConceptToTeam = async (customer: CustomerContact) => {
-    if (aiRenderDataUrl && (videoStatus !== 'ready' || !videoId)) {
+    if (aiRenderDataUrl && (videoStatus !== 'ready' || !videoJobId)) {
       setConceptSendStatus('error');
       setConceptSendError(
         videoStatus === 'error'
-          ? 'The MP4 walkthrough is not available yet. Regenerate the AI rendering before sending the design.'
+          ? 'The MP4 is not ready. Retry the MP4 without recreating the AI rendering before sending the design.'
           : 'Wait for the MP4 walkthrough to finish before sending the design.',
       );
       return;
@@ -1196,7 +1211,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         svg: await serializeEmailConceptSvg(svg),
         originalPhotoDataUrl: configuration.photoUrl ?? undefined,
         aiRenderDataUrl: aiRenderDataUrl ?? undefined,
-        videoId: videoStatus === 'ready' ? videoId ?? undefined : undefined,
+        videoJobId: videoStatus === 'ready' ? videoJobId ?? undefined : undefined,
       });
       setConceptSendStatus('sent');
     } catch (error) {
@@ -1212,6 +1227,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
     const renderVersion = ++renderVersionRef.current;
     setAiRenderStatus('generating');
+    setAiRenderError('');
 
     try {
       const result = await generatePoolConceptRender({
@@ -1234,14 +1250,37 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       setAiRenderStatus('ready');
       setIsLayoutEditing(false);
       setVideoJobId(result.videoJobId);
-      setVideoId(null);
       setVideoStatus('processing');
-      setVideoUrl(null);
       setVideoError('');
-    } catch {
+    } catch (error) {
       if (renderVersion === renderVersionRef.current) {
         setAiRenderStatus('error');
+        setAiRenderError(
+          getApiErrorMessage(
+            error,
+            'AI rendering failed. Your uploaded photo and visualizer are unchanged; please try again.',
+          ),
+        );
       }
+    }
+  };
+
+  const retryPoolWalkthrough = async () => {
+    if (!aiRenderDataUrl || videoStatus === 'processing') return;
+    setVideoStatus('processing');
+    setVideoError('');
+
+    try {
+      const result = await startPoolConceptWalkthrough({ imageDataUrl: aiRenderDataUrl });
+      setVideoJobId(result.videoJobId);
+    } catch (error) {
+      setVideoStatus('error');
+      setVideoError(
+        getApiErrorMessage(
+          error,
+          'The MP4 retry could not be started. Your photo and AI rendering are unchanged.',
+        ),
+      );
     }
   };
 
@@ -1272,7 +1311,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             : aiRenderStatus === 'ready'
               ? 'AI rendering ready. Slide to compare it with the original photo.'
               : aiRenderStatus === 'error'
-                ? 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
+                ? aiRenderError || 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
                 : 'Your photo is sent to AI to make this design. The original and rendering are emailed to our team only when you choose to send.'}
         </p>
         {(aiRenderDataUrl || aiRenderStatus === 'generating') && (
@@ -1283,15 +1322,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             data-testid="status-ai-walkthrough"
           >
             {videoStatus === 'processing'
-              ? 'Creating a 10-second MP4 walkthrough from this exact AI rendering.'
+              ? 'Creating a full-scene 10-second MP4 walkthrough from this exact AI rendering. It will only be sent to our team.'
               : videoStatus === 'ready'
-                ? 'MP4 walkthrough ready; it will be included with your design for our team.'
+                ? 'MP4 walkthrough ready. It will only be attached to the email sent to our team.'
                 : videoStatus === 'error'
-                  ? `${videoError} Regenerate the AI rendering before sending.`
+                  ? `${videoError} Your photo and AI rendering remain unchanged. Retry the MP4 without recreating the image.`
                   : aiRenderStatus === 'generating'
                     ? 'A matching MP4 walkthrough will start after the rendering is ready.'
                     : ''}
           </p>
+        )}
+        {aiRenderDataUrl && videoStatus === 'error' && (
+          <button
+            className="pool-visualizer__ai-button"
+            type="button"
+            onClick={retryPoolWalkthrough}
+            data-testid="button-retry-ai-walkthrough"
+          >
+            <RefreshCcw size={15} />
+            Retry MP4 only
+          </button>
         )}
       </div>
     </div>
@@ -1341,7 +1391,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             disabled={
               isSendingConcept ||
               aiRenderStatus === 'generating' ||
-              Boolean(aiRenderDataUrl && (videoStatus !== 'ready' || !videoId))
+              Boolean(aiRenderDataUrl && (videoStatus !== 'ready' || !videoJobId))
             }
             data-testid="button-send-concept"
           >
@@ -1670,26 +1720,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               </button>
             </div>}
           </div>
-          {videoUrl && (
-            <section className="pool-visualizer__walkthrough" aria-label="AI pool walkthrough preview">
-              <div className="pool-visualizer__walkthrough-heading">
-                <Video size={16} aria-hidden="true" />
-                <div>
-                  <span className="pool-visualizer__kicker">AI walkthrough</span>
-                  <h4>Preview the pool design in motion</h4>
-                </div>
-              </div>
-              <video
-                className="pool-visualizer__walkthrough-video"
-                src={videoUrl}
-                controls
-                playsInline
-                preload="metadata"
-                aria-label="Illustrative AI-generated pool walkthrough"
-              />
-              <p>Illustrative only. Confirm site conditions, dimensions, materials, and scope with the Cove &amp; Stone team.</p>
-            </section>
-          )}
           <div className="pool-visualizer__comparison-legend">
             <span><i className="is-aqua" /> Drag or use arrow keys to compare</span>
             <span><i className="is-ivory" /> AI designs are illustrative only, not completed-project photography or construction drawings.</span>

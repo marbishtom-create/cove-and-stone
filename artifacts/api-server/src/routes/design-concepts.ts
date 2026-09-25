@@ -1,12 +1,15 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Response } from "express";
 import {
   EmailDesignConceptBody,
   GeneratePoolConceptRenderBody,
   GeneratePoolConceptRenderResponse,
+  StartPoolConceptWalkthroughBody,
+  StartPoolConceptWalkthroughResponse,
 } from "@workspace/api-zod";
 import { renderBackyardPool } from "@workspace/integrations-gemini-ai";
 import { ReplitConnectors } from "@replit/connectors-sdk";
 import {
+  getReadyPoolConceptVideoId,
   getPoolConceptVideoJob,
   readPoolConceptVideo,
   startPoolConceptVideoJob,
@@ -21,7 +24,9 @@ const UNVERIFIED_SENDER_MESSAGE =
 const MAX_RENDER_IMAGE_BYTES = 2 * 1024 * 1024;
 const RENDER_RATE_WINDOW_MS = 15 * 60 * 1000;
 const MAX_RENDERS_PER_WINDOW = 3;
+const MAX_VIDEO_RETRIES_PER_WINDOW = 3;
 const renderRequestsByIp = new Map<string, number[]>();
+const videoRetryRequestsByIp = new Map<string, number[]>();
 
 const FINISH_LABELS = {
   "white-plaster": "White plaster",
@@ -153,27 +158,50 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#039;");
 }
 
-function allowRenderRequest(ip: string, now = Date.now()) {
-  const recentRequests = (renderRequestsByIp.get(ip) ?? []).filter(
+function registerLimitedRequest(
+  requestsByIp: Map<string, number[]>,
+  ip: string,
+  maxRequests: number,
+  now = Date.now(),
+) {
+  const recentRequests = (requestsByIp.get(ip) ?? []).filter(
     (timestamp) => now - timestamp < RENDER_RATE_WINDOW_MS,
   );
-  if (recentRequests.length >= MAX_RENDERS_PER_WINDOW) {
-    renderRequestsByIp.set(ip, recentRequests);
-    return false;
+  if (recentRequests.length >= maxRequests) {
+    requestsByIp.set(ip, recentRequests);
+    return {
+      allowed: false,
+      retryAfterSeconds: Math.max(
+        1,
+        Math.ceil((recentRequests[0] + RENDER_RATE_WINDOW_MS - now) / 1000),
+      ),
+    };
   }
 
   recentRequests.push(now);
-  renderRequestsByIp.set(ip, recentRequests);
+  requestsByIp.set(ip, recentRequests);
 
-  if (renderRequestsByIp.size > 5_000) {
-    for (const [key, timestamps] of renderRequestsByIp) {
+  if (requestsByIp.size > 5_000) {
+    for (const [key, timestamps] of requestsByIp) {
       if (!timestamps.some((timestamp) => now - timestamp < RENDER_RATE_WINDOW_MS)) {
-        renderRequestsByIp.delete(key);
+        requestsByIp.delete(key);
       }
     }
   }
 
-  return true;
+  return { allowed: true, retryAfterSeconds: 0 };
+}
+
+function rejectRateLimitedGeneration(
+  res: Response,
+  retryAfterSeconds: number,
+  maxRequests: number,
+  action: "renders" | "video retries",
+) {
+  const retryMinutes = Math.max(1, Math.ceil(retryAfterSeconds / 60));
+  res.set("Retry-After", String(retryAfterSeconds)).status(429).json({
+    message: `You've reached the limit of ${maxRequests} AI ${action} per 15 minutes. Try again in about ${retryMinutes} minute${retryMinutes === 1 ? "" : "s"}.`,
+  });
 }
 
 function imageAttachment(
@@ -230,10 +258,18 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     return;
   }
 
-  if (!allowRenderRequest(req.ip || req.socket.remoteAddress || "unknown")) {
-    res.status(429).json({
-      message: "Please wait before creating another AI rendering.",
-    });
+  const rateLimit = registerLimitedRequest(
+    renderRequestsByIp,
+    req.ip || req.socket.remoteAddress || "unknown",
+    MAX_RENDERS_PER_WINDOW,
+  );
+  if (!rateLimit.allowed) {
+    rejectRateLimitedGeneration(
+      res,
+      rateLimit.retryAfterSeconds,
+      MAX_RENDERS_PER_WINDOW,
+      "renders",
+    );
     return;
   }
 
@@ -266,6 +302,7 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
       ? `Follow the user's edited layout and relative feature proportions: ${layoutInstructions.join("; ")}. Keep the entered pool dimensions unchanged and keep all elements plausible within the photographed property.`
       : "Use a balanced, physically plausible arrangement for the selected pool and outdoor features.",
     "Make the pool and surrounding hardscape look physically plausible and integrated with the original photograph.",
+    "Keep architectural lines, pool edges, and tile joints straight and continuous. Avoid warped or duplicated objects, melted surfaces, floating items, broken perspective, and accidental additions.",
     "Show only the finished proposed scene, not a before-and-after split. Do not add text, labels, logos, people, or unsupported buildings.",
     "This is an illustrative design concept, not a construction drawing; preserve the image's landscape orientation when possible.",
   ].join(" ");
@@ -337,59 +374,46 @@ router.get("/design-concepts/video-jobs/:videoJobId", (req, res) => {
   res.json(status);
 });
 
-router.get("/design-concepts/videos/:videoId", async (req, res): Promise<void> => {
+router.post("/design-concepts/walkthrough", async (req, res): Promise<void> => {
+  const parsed = StartPoolConceptWalkthroughBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ message: "The AI rendering cannot be used as a video frame." });
+    return;
+  }
+
+  const rateLimit = registerLimitedRequest(
+    videoRetryRequestsByIp,
+    req.ip || req.socket.remoteAddress || "unknown",
+    MAX_VIDEO_RETRIES_PER_WINDOW,
+  );
+  if (!rateLimit.allowed) {
+    rejectRateLimitedGeneration(
+      res,
+      rateLimit.retryAfterSeconds,
+      MAX_VIDEO_RETRIES_PER_WINDOW,
+      "video retries",
+    );
+    return;
+  }
+
   try {
-    const video = await readPoolConceptVideo(req.params.videoId);
-    if (!video) {
-      res.status(404).json({ message: "The pool walkthrough expired or was not found." });
+    const videoJobId = await startPoolConceptVideoJob(
+      connectors,
+      parsed.data.imageDataUrl,
+      (error) => {
+        req.log.error({ err: error }, "AI pool walkthrough retry failed");
+      },
+    );
+    const response = StartPoolConceptWalkthroughResponse.safeParse({ videoJobId });
+    if (!response.success) {
+      req.log.error({ err: response.error }, "AI walkthrough retry response was invalid");
+      res.status(502).json({ message: "The MP4 retry could not be started." });
       return;
     }
-
-    const rangeHeader = req.headers.range;
-    res.set({
-      "Accept-Ranges": "bytes",
-      "Cache-Control": "private, max-age=0, no-store",
-      "Content-Type": "video/mp4",
-      "X-Content-Type-Options": "nosniff",
-    });
-
-    if (rangeHeader) {
-      const range = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
-      if (!range || (!range[1] && !range[2])) {
-        res.set("Content-Range", `bytes */${video.length}`);
-        res.status(416).end();
-        return;
-      }
-
-      const start = range[1]
-        ? Number(range[1])
-        : Math.max(0, video.length - Number(range[2]));
-      const requestedEnd = range[2] ? Number(range[2]) : video.length - 1;
-      if (
-        !Number.isSafeInteger(start) ||
-        !Number.isSafeInteger(requestedEnd) ||
-        start < 0 ||
-        start >= video.length ||
-        requestedEnd < start
-      ) {
-        res.set("Content-Range", `bytes */${video.length}`);
-        res.status(416).end();
-        return;
-      }
-
-      const end = Math.min(requestedEnd, video.length - 1);
-      const chunk = video.subarray(start, end + 1);
-      res.status(206).set({
-        "Content-Length": String(chunk.length),
-        "Content-Range": `bytes ${start}-${end}/${video.length}`,
-      }).send(chunk);
-      return;
-    }
-
-    res.status(200).set("Content-Length", String(video.length)).send(video);
+    res.status(202).json(response.data);
   } catch (error) {
-    req.log.error({ err: error }, "Pool concept walkthrough could not be read");
-    res.status(502).json({ message: "The pool walkthrough could not be loaded." });
+    req.log.error({ err: error }, "AI pool walkthrough retry could not be started");
+    res.status(502).json({ message: "The MP4 retry could not be started." });
   }
 });
 
@@ -412,7 +436,7 @@ router.post("/design-concepts/email", async (req, res) => {
   const subject = `Pool concept · ${safeCustomerName} · ${concept.width}′ × ${concept.length}′ ${SHAPE_LABELS[concept.shape]}`;
   const featureList = concept.features.map((feature) => FEATURE_LABELS[feature]);
   const features = featureList.length ? featureList.join(", ") : "No optional features selected";
-  if (concept.aiRenderDataUrl && !concept.videoId) {
+  if (concept.aiRenderDataUrl && !concept.videoJobId) {
     res.status(400).json({
       message: "The AI walkthrough is not ready. Wait for it to finish before sending the design.",
     });
@@ -456,10 +480,18 @@ router.post("/design-concepts/email", async (req, res) => {
     attachments.push(aiRender);
   }
 
-  if (concept.videoId) {
+  if (concept.videoJobId) {
+    const videoId = getReadyPoolConceptVideoId(concept.videoJobId);
+    if (!videoId) {
+      res.status(400).json({
+        message: "The pool walkthrough is not ready or has expired. Retry the MP4 before sending the design.",
+      });
+      return;
+    }
+
     let video: Buffer | null;
     try {
-      video = await readPoolConceptVideo(concept.videoId);
+      video = await readPoolConceptVideo(videoId);
     } catch (error) {
       req.log.error({ err: error }, "Pool walkthrough could not be prepared for email");
       res.status(502).json({ message: "The pool walkthrough could not be attached." });

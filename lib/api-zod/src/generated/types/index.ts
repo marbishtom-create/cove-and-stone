@@ -31,3 +31,5 @@ export * from './poolConceptRenderRequestWaterlineTile';
 export * from './poolConceptRenderResponse';
 export * from './poolConceptVideoJobStatus';
 export * from './poolConceptVideoJobStatusStatus';
+export * from './poolConceptWalkthroughRequest';
+export * from './poolConceptWalkthroughResponse';

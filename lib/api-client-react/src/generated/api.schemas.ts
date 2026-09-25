@@ -179,7 +179,7 @@ export interface DesignConceptEmailRequest {
      * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
      */
   aiRenderDataUrl?: string;
-  videoId?: string;
+  videoJobId?: string;
 }
 
 export type PoolConceptRenderRequestShape = typeof PoolConceptRenderRequestShape[keyof typeof PoolConceptRenderRequestShape];
@@ -345,6 +345,19 @@ export interface PoolConceptRenderResponse {
   videoJobId: string;
 }
 
+export interface PoolConceptWalkthroughRequest {
+  /**
+     * @minLength 40
+     * @maxLength 6000000
+     * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  imageDataUrl: string;
+}
+
+export interface PoolConceptWalkthroughResponse {
+  videoJobId: string;
+}
+
 export type PoolConceptVideoJobStatusStatus = typeof PoolConceptVideoJobStatusStatus[keyof typeof PoolConceptVideoJobStatusStatus];
 
 
@@ -356,8 +369,6 @@ export const PoolConceptVideoJobStatusStatus = {
 
 export interface PoolConceptVideoJobStatus {
   status: PoolConceptVideoJobStatusStatus;
-  videoId?: string;
-  videoUrl?: string;
   message?: string;
 }
 

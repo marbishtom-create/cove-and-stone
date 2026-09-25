@@ -33,7 +33,7 @@ paths:
       operationId: emailDesignConcept
       tags: [design-concepts]
       summary: Email a completed pool concept internally
-      description: Sends the completed concept SVG and configuration summary to the Cove & Stone team.
+      description: Sends the completed concept SVG and configuration summary to the Cove & Stone team, attaching the private walkthrough from its server-side job ID when ready.
       requestBody:
         required: true
         content:
@@ -56,7 +56,7 @@ paths:
       operationId: generatePoolConceptRender
       tags: [design-concepts]
       summary: Generate an AI pool concept and walkthrough job from a backyard photo
-      description: Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
+      description: Creates an illustrative after-image and starts a private image-to-video walkthrough job from the same concept.
       requestBody:
         required: true
         content:
@@ -74,8 +74,41 @@ paths:
           description: Invalid image or pool concept
         "429":
           description: Image generation rate limit reached
+          headers:
+            Retry-After:
+              description: Seconds until another image render may be accepted
+              schema:
+                type: integer
         "502":
           description: AI image generation failed
+  /design-concepts/walkthrough:
+    post:
+      operationId: startPoolConceptWalkthrough
+      tags: [design-concepts]
+      summary: Retry a pool concept walkthrough from an existing AI image
+      description: Starts a new private walkthrough job without regenerating the AI image.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PoolConceptWalkthroughRequest"
+      responses:
+        "202":
+          description: Walkthrough generation accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoolConceptWalkthroughResponse"
+        "400":
+          description: Invalid AI image
+        "429":
+          description: AI generation rate limit reached
+          headers:
+            Retry-After:
+              description: Seconds until another video retry may be accepted
+              schema:
+                type: integer
   /design-concepts/video-jobs/{videoJobId}:
     get:
       operationId: getPoolConceptVideoJob
@@ -97,35 +130,6 @@ paths:
                 $ref: "#/components/schemas/PoolConceptVideoJobStatus"
         "404":
           description: Walkthrough job expired or not found
-  /design-concepts/videos/{videoId}:
-    get:
-      operationId: getPoolConceptVideo
-      tags: [design-concepts]
-      summary: Stream a generated pool concept walkthrough
-      parameters:
-        - name: videoId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Generated MP4 walkthrough
-          content:
-            video/mp4:
-              schema:
-                type: string
-                format: binary
-        "206":
-          description: Byte range of the generated MP4 walkthrough
-          content:
-            video/mp4:
-              schema:
-                type: string
-                format: binary
-        "404":
-          description: Walkthrough expired or not found
   /appointments/request:
     post:
       operationId: requestAppointment
@@ -255,7 +259,7 @@ components:
           type: string
           maxLength: 6000000
           pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
-        videoId:
+        videoJobId:
           type: string
           format: uuid
       required:
@@ -361,17 +365,30 @@ components:
       required:
         - imageDataUrl
         - videoJobId
+    PoolConceptWalkthroughRequest:
+      type: object
+      properties:
+        imageDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 6000000
+          pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+      required:
+        - imageDataUrl
+    PoolConceptWalkthroughResponse:
+      type: object
+      properties:
+        videoJobId:
+          type: string
+          format: uuid
+      required:
+        - videoJobId
     PoolConceptVideoJobStatus:
       type: object
       properties:
         status:
           type: string
           enum: [processing, ready, failed]
-        videoId:
-          type: string
-          format: uuid
-        videoUrl:
-          type: string
         message:
           type: string
       required:

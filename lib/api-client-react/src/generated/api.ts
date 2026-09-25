@@ -27,7 +27,9 @@ import type {
   HealthStatus,
   PoolConceptRenderRequest,
   PoolConceptRenderResponse,
-  PoolConceptVideoJobStatus
+  PoolConceptVideoJobStatus,
+  PoolConceptWalkthroughRequest,
+  PoolConceptWalkthroughResponse
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -144,7 +146,7 @@ export const getEmailDesignConceptUrl = () => {
 }
 
 /**
- * Sends the completed concept SVG and configuration summary to the Cove & Stone team.
+ * Sends the completed concept SVG and configuration summary to the Cove & Stone team, attaching the private walkthrough from its server-side job ID when ready.
  * @summary Email a completed pool concept internally
  */
 export const emailDesignConcept = async (designConceptEmailRequest: DesignConceptEmailRequest, options?: Parameters<typeof customFetch>[1]): Promise<DesignConceptEmailResponse> => {
@@ -233,7 +235,7 @@ export const getGeneratePoolConceptRenderUrl = () => {
 }
 
 /**
- * Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
+ * Creates an illustrative after-image and starts a private image-to-video walkthrough job from the same concept.
  * @summary Generate an AI pool concept and walkthrough job from a backyard photo
  */
 export const generatePoolConceptRender = async (poolConceptRenderRequest: PoolConceptRenderRequest, options?: Parameters<typeof customFetch>[1]): Promise<PoolConceptRenderResponse> => {
@@ -313,6 +315,95 @@ export const useGeneratePoolConceptRender = <TError = ErrorType<void>,
       return useMutation(getGeneratePoolConceptRenderMutationOptions(options));
     }
 
+export const getStartPoolConceptWalkthroughUrl = () => {
+
+
+
+
+  return `/api/design-concepts/walkthrough`
+}
+
+/**
+ * Starts a new private walkthrough job without regenerating the AI image.
+ * @summary Retry a pool concept walkthrough from an existing AI image
+ */
+export const startPoolConceptWalkthrough = async (poolConceptWalkthroughRequest: PoolConceptWalkthroughRequest, options?: Parameters<typeof customFetch>[1]): Promise<PoolConceptWalkthroughResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PoolConceptWalkthroughResponse>(getStartPoolConceptWalkthroughUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(poolConceptWalkthroughRequest)
+  }
+);}
+
+
+
+
+
+export const getStartPoolConceptWalkthroughMutationKey = () => ['startPoolConceptWalkthrough'] as const;
+
+export const getStartPoolConceptWalkthroughMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof startPoolConceptWalkthrough>>, TError,StartPoolConceptWalkthroughMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof startPoolConceptWalkthrough>>, TError,StartPoolConceptWalkthroughMutationVariables, TContext> => {
+
+const mutationKey = getStartPoolConceptWalkthroughMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof startPoolConceptWalkthrough>>, StartPoolConceptWalkthroughMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  startPoolConceptWalkthrough(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type StartPoolConceptWalkthroughMutationResult = NonNullable<Awaited<ReturnType<typeof startPoolConceptWalkthrough>>>
+    export type StartPoolConceptWalkthroughMutationBody = BodyType<PoolConceptWalkthroughRequest>
+    export type StartPoolConceptWalkthroughMutationError = ErrorType<void>
+    export type StartPoolConceptWalkthroughMutationVariables = {data: BodyType<PoolConceptWalkthroughRequest>}
+
+    /**
+ * @summary Retry a pool concept walkthrough from an existing AI image
+ */
+export const useStartPoolConceptWalkthrough = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof startPoolConceptWalkthrough>>, TError,StartPoolConceptWalkthroughMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof startPoolConceptWalkthrough>>,
+        TError,
+        StartPoolConceptWalkthroughMutationVariables,
+        TContext
+      > => {
+      return useMutation(getStartPoolConceptWalkthroughMutationOptions(options));
+    }
+
 export const getGetPoolConceptVideoJobUrl = (videoJobId: string,) => {
 
 
@@ -378,83 +469,6 @@ export function useGetPoolConceptVideoJob<TData = Awaited<ReturnType<typeof getP
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetPoolConceptVideoJobQueryOptions(videoJobId,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
-
-export const getGetPoolConceptVideoUrl = (videoId: string,) => {
-
-
-
-
-  return `/api/design-concepts/videos/${videoId}`
-}
-
-/**
- * @summary Stream a generated pool concept walkthrough
- */
-export const getPoolConceptVideo = async (videoId: string, options?: Parameters<typeof customFetch>[1]): Promise<Blob> => {
-
-  return customFetch<Blob>(getGetPoolConceptVideoUrl(videoId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getGetPoolConceptVideoQueryKey = (videoId: string,) => {
-    return [
-    `/api/design-concepts/videos/${videoId}`
-    ] as const;
-    }
-
-
-export const getGetPoolConceptVideoQueryOptions = <TData = Awaited<ReturnType<typeof getPoolConceptVideo>>, TError = ErrorType<void>>(videoId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetPoolConceptVideoQueryKey(videoId);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPoolConceptVideo>>> = ({ signal }) => getPoolConceptVideo(videoId, { signal, ...requestOptions });
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: videoId !== null && videoId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData> & { queryKey: QueryKey }
-}
-
-export type GetPoolConceptVideoQueryResult = NonNullable<Awaited<ReturnType<typeof getPoolConceptVideo>>>
-export type GetPoolConceptVideoQueryError = ErrorType<void>
-
-
-/**
- * @summary Stream a generated pool concept walkthrough
- */
-
-export function useGetPoolConceptVideo<TData = Awaited<ReturnType<typeof getPoolConceptVideo>>, TError = ErrorType<void>>(
- videoId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPoolConceptVideo>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
-
- ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getGetPoolConceptVideoQueryOptions(videoId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

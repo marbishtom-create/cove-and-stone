@@ -105,10 +105,14 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /src=\{aiRenderDataUrl\}/);
   assert.match(component, /aiRenderDataUrl: aiRenderDataUrl \?\? undefined/);
   assert.match(component, /getPoolConceptVideoJob/);
+  assert.match(component, /startPoolConceptWalkthrough/);
+  assert.match(component, /statusCheckFailures <= 3/);
+  assert.match(component, /window\.setTimeout\(pollVideoStatus, 2000\)/);
   assert.match(component, /status-ai-walkthrough/);
-  assert.match(component, /pool-visualizer__walkthrough-video/);
-  assert.match(component, /videoId: videoStatus === 'ready' \? videoId \?\? undefined : undefined/);
-  assert.match(component, /videoStatus !== 'ready' \|\| !videoId/);
+  assert.match(component, /data-testid="button-retry-ai-walkthrough"/);
+  assert.doesNotMatch(component, /<video\b/);
+  assert.match(component, /videoJobId: videoStatus === 'ready' \? videoJobId \?\? undefined : undefined/);
+  assert.match(component, /videoStatus !== 'ready' \|\| !videoJobId/);
   assert.match(component, /customerName: customer\.customerName/);
   assert.match(component, /customerAddress: customer\.customerAddress/);
   assert.match(component, /customerPhone: customer\.customerPhone/);
@@ -122,11 +126,15 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /Your photo is sent to AI/);
   assert.match(designConceptRoute, /renderBackyardPool/);
   assert.match(designConceptRoute, /startPoolConceptVideoJob/);
+  assert.match(designConceptRoute, /getReadyPoolConceptVideoId/);
+  assert.match(designConceptRoute, /router\.post\("\/design-concepts\/walkthrough"/);
   assert.match(designConceptRoute, /router\.get\("\/design-concepts\/video-jobs\/:videoJobId"/);
-  assert.match(designConceptRoute, /router\.get\("\/design-concepts\/videos\/:videoId"/);
+  assert.doesNotMatch(designConceptRoute, /router\.get\("\/design-concepts\/videos\/:videoId"/);
   assert.match(designConceptRoute, /pool-walkthrough\.mp4/);
   assert.match(designConceptRoute, /content_type: "video\/mp4"/);
+  assert.match(designConceptRoute, /Retry-After/);
   assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
+  assert.match(designConceptRoute, /MAX_VIDEO_RETRIES_PER_WINDOW = 3/);
   assert.match(designConceptRoute, /cove-stone-ai-pool-design/);
   assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
   assert.match(designConceptRoute, /providerMessage\.toLowerCase\(\)\.includes\("domain"\)/);
@@ -135,8 +143,10 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerAddress\)/);
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerPhone\)/);
   assert.match(apiSpec, /\/design-concepts\/render/);
-  assert.match(apiSpec, /\/design-concepts\/videos\/\{videoId\}/);
-  assert.match(apiSpec, /video\/mp4/);
+  assert.match(apiSpec, /\/design-concepts\/walkthrough/);
+  assert.doesNotMatch(apiSpec, /\/design-concepts\/videos\/\{videoId\}/);
+  assert.doesNotMatch(apiSpec, /video\/mp4/);
+  assert.match(apiSpec, /videoJobId:/);
   assert.match(apiSpec, /aiRenderDataUrl/);
   assert.match(apiSpec, /originalPhotoDataUrl/);
   assert.match(apiSpec, /customerName:/);
@@ -301,9 +311,10 @@ test("keeps the spa spillover and pergola waterfall distinct in the local and AI
 });
 
 test("retries missing Gemini image payloads without changing the supported model", () => {
-  assert.match(geminiImageHelper, /for \(let attempt = 0; attempt < 2; attempt \+= 1\)/);
+  assert.match(geminiImageHelper, /const maxAttempts = 3/);
   assert.match(geminiImageHelper, /candidates[\s\S]*?flatMap/);
-  assert.match(geminiImageHelper, /if \(attempt === 0\)/);
+  assert.match(geminiImageHelper, /isValidGeneratedImage/);
+  assert.match(geminiImageHelper, /isRetryableProviderError/);
   assert.match(geminiImageHelper, /model: "gemini-2\.5-flash-image"/);
   assert.match(geminiImageHelper, /did not return a pool concept image after retrying/);
 });
