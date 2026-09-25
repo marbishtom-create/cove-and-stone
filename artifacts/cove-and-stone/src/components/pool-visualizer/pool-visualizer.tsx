@@ -319,6 +319,8 @@ function PoolShapeMark({ shape }: { shape: PoolShape }) {
   );
 }
 
+const VISUAL_TILE_SCALE = 1.25;
+
 interface ConceptSceneProps {
   configuration: PoolVisualizerConfiguration;
   selectedLayoutId?: PoolLayoutElementId | null;
@@ -336,10 +338,13 @@ interface ConceptSceneProps {
 function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, onLayoutKeyDown, onLayoutFocus }: ConceptSceneProps) {
   const finish = FINISHES.find((item) => item.id === configuration.poolFinish) ?? FINISHES[0];
   const tile = TILE_OPTIONS.find((item) => item.id === configuration.waterlineTile) ?? TILE_OPTIONS[0];
-  const tilePatternWidth = 54 * (tile.patternScale ?? 1);
-  const tilePatternHeight = 44 * (tile.patternScale ?? 1);
+  const tilePatternScale = VISUAL_TILE_SCALE * (tile.patternScale ?? 1);
+  const tilePatternWidth = 54 * tilePatternScale;
+  const tilePatternHeight = 44 * tilePatternScale;
   const tileTintOpacity = tile.tintOpacity ?? 0.48;
   const deck = DECK_TILES.find((item) => item.id === configuration.deckTile) ?? DECK_TILES[0];
+  const deckPatternWidth = 96 * VISUAL_TILE_SCALE;
+  const deckPatternHeight = 72 * VISUAL_TILE_SCALE;
   const selectedFeatures = new Set(configuration.features);
   const spaEnabled = selectedFeatures.has('spa') || selectedFeatures.has('spa-waterfall');
   const pergolaWaterEnabled = selectedFeatures.has('pergola') && selectedFeatures.has('pool-pergola-rainfall');
@@ -449,10 +454,16 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
           />
           <rect width={tilePatternWidth} height={tilePatternHeight} fill={tile.swatch} opacity={tileTintOpacity} />
         </pattern>
-        <pattern id="continuous-deck-tile" width="96" height="72" patternUnits="userSpaceOnUse">
-          <image data-material-texture="true" href={deck.texture} width="96" height="72" preserveAspectRatio="xMidYMid slice" />
-          <rect width="96" height="72" fill={deck.swatch} opacity=".42" />
-          <path d="M96 0H0V72M48 0V72M0 36H96" fill="none" stroke={deck.grout} strokeOpacity=".58" strokeWidth="1.4" />
+        <pattern id="continuous-deck-tile" width={deckPatternWidth} height={deckPatternHeight} patternUnits="userSpaceOnUse">
+          <image data-material-texture="true" href={deck.texture} width={deckPatternWidth} height={deckPatternHeight} preserveAspectRatio="xMidYMid slice" />
+          <rect width={deckPatternWidth} height={deckPatternHeight} fill={deck.swatch} opacity=".42" />
+          <path
+            d={`M${deckPatternWidth} 0H0V${deckPatternHeight}M${deckPatternWidth / 2} 0V${deckPatternHeight}M0 ${deckPatternHeight / 2}H${deckPatternWidth}`}
+            fill="none"
+            stroke={deck.grout}
+            strokeOpacity=".58"
+            strokeWidth="1.4"
+          />
         </pattern>
         <clipPath id="pool-clip">
           <path d={poolPath} />
@@ -1515,7 +1526,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                     aria-hidden="true"
                     style={{
                       backgroundImage: getTintedMaterialBackground(tile.swatch, tile.texture, tile.tintOpacity ?? 0.4),
-                      backgroundSize: tile.patternScale ? `${tile.patternScale * 100}% ${tile.patternScale * 100}%` : 'cover',
+                      backgroundSize: `${VISUAL_TILE_SCALE * (tile.patternScale ?? 1) * 100}% ${VISUAL_TILE_SCALE * (tile.patternScale ?? 1) * 100}%`,
                       filter: tile.grayscale ? 'grayscale(1) contrast(1.18)' : undefined,
                     }}
                   />
@@ -1540,7 +1551,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.deckTile === tile.id}
                   data-testid={`button-deck-tile-${tile.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}66, ${tile.swatch}66), url(${tile.texture})` }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--deck" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${tile.swatch}66, ${tile.swatch}66), url(${tile.texture})`, backgroundSize: `${VISUAL_TILE_SCALE * 100}% ${VISUAL_TILE_SCALE * 100}%` }} />
                   <strong>{tile.label}</strong>
                 </button>
               ))}
@@ -1599,6 +1610,15 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   alt="AI-generated pool rendering using your uploaded backyard photo"
                   draggable="false"
                 />
+              )}
+              {(!aiRenderDataUrl || isLayoutEditing) && (
+                <div className="pool-visualizer__drag-hint" role="note">
+                  <MoveHorizontal size={15} aria-hidden="true" />
+                  <span>
+                    <strong>Drag &amp; play</strong>
+                    <small>Move pool items to explore the layout.</small>
+                  </span>
+                </div>
               )}
               <span className="pool-visualizer__comparison-label pool-visualizer__comparison-label--after">
                 {isLayoutEditing

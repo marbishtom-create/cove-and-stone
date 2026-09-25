@@ -6,6 +6,10 @@ const component = await readFile(
   new URL("../src/components/pool-visualizer/pool-visualizer.tsx", import.meta.url),
   "utf8",
 );
+const componentStyles = await readFile(
+  new URL("../src/components/pool-visualizer/pool-visualizer.css", import.meta.url),
+  "utf8",
+);
 const homePage = await readFile(
   new URL("../src/pages/home.tsx", import.meta.url),
   "utf8",
@@ -204,6 +208,34 @@ test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /data-testid="button-send-concept"/);
   assert.match(component, /emailDesignConcept/);
   assert.match(component, /AI concepts are illustrative only, not completed-project photography or construction drawings/);
+});
+
+test("places AI rendering below the preview, contact details below features, and reset beside history controls", () => {
+  const previewMeta = component.indexOf('className="pool-visualizer__preview-meta"');
+  const aiRender = component.indexOf("{aiRenderActions}", previewMeta);
+  const featureDock = component.indexOf('className="pool-visualizer__feature-dock"');
+  const contact = component.indexOf("{contactActions}", featureDock);
+  assert.ok(previewMeta < aiRender && aiRender < featureDock, "only AI rendering controls should follow the preview");
+  assert.ok(featureDock < contact, "contact details should follow the pool and outdoor feature choices");
+
+  const historyActions = component.indexOf('className="pool-visualizer__history-actions"');
+  const historyEnd = component.indexOf("</div>", historyActions);
+  assert.ok(
+    component.slice(historyActions, historyEnd).includes('data-testid="button-reset-design"'),
+    "Reset should sit with undo and redo",
+  );
+  assert.match(component, /className="pool-visualizer__drag-hint"/);
+  assert.match(component, /<strong>Drag &amp; play<\/strong>/);
+  assert.match(component, /Move pool items to explore the layout\./);
+  assert.match(component, /\(!aiRenderDataUrl \|\| isLayoutEditing\)/);
+
+  const finishSwatchStyles = componentStyles.match(
+    /\.pool-visualizer__material-swatch--finish\s*\{([^}]*)\}/,
+  )?.[1] ?? "";
+  assert.match(finishSwatchStyles, /border-radius:\s*999px/);
+  assert.match(finishSwatchStyles, /width:\s*2\.772rem/);
+  assert.match(finishSwatchStyles, /height:\s*3\.53rem/);
+  assert.match(component, /url\(\$\{finish\.texture\}\)/);
 });
 
 test("keeps edit history accessible without recording comparison-slider movement", () => {

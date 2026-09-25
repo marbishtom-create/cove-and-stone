@@ -465,7 +465,10 @@
 }
 
 .pool-visualizer__material-swatch--finish {
-  border-radius: 50%;
+  border-radius: 999px;
+  height: 3.53rem;
+  margin: 0 auto;
+  width: 2.772rem;
 }
 
 .pool-visualizer__material-swatch--tile {
@@ -1054,6 +1057,47 @@
 
 .pool-visualizer__comparison-label--after {
   right: 1rem;
+}
+
+.pool-visualizer__drag-hint {
+  align-items: flex-start;
+  background: rgba(250, 248, 239, .94);
+  border: 1px solid rgba(255, 255, 255, .84);
+  box-shadow: 0 4px 18px rgba(25, 40, 35, .22);
+  color: var(--pv-charcoal);
+  display: grid;
+  gap: .48rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  max-width: min(15rem, 46%);
+  padding: .6rem .7rem;
+  pointer-events: none;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 6;
+}
+
+.pool-visualizer__drag-hint > svg {
+  color: var(--pv-aqua-dark);
+  flex: none;
+  margin-top: .1rem;
+}
+
+.pool-visualizer__drag-hint span {
+  display: grid;
+  gap: .15rem;
+}
+
+.pool-visualizer__drag-hint strong {
+  font-size: .63rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.pool-visualizer__drag-hint small {
+  color: var(--pv-muted);
+  font-size: .56rem;
+  line-height: 1.4;
 }
 
 .pool-visualizer__slider {
