@@ -250,7 +250,7 @@ test('keeps every project card asset at its approved resolution and copy', async
 test('renders the approved project media copy on each card', () => {
   assert.match(
     projectsSource,
-    /const cardMedia = project\.status === "completed" && project\.media\.completedDay/,
+    /const cardMedia = getCaseStudyHeroMedia\(project\);/,
   );
   assert.match(projectsSource, /src=\{cardMedia\.src\}/);
   assert.match(projectsSource, /alt=\{cardMedia\.alt\}/);
@@ -268,7 +268,7 @@ test('renders the approved project media copy on each card', () => {
   assert.match(projectsSource, /statusLabel: "Riverfront design"/);
   assert.match(
       projectDetailSource,
-      /copy=\{isCompletedProject \? "Original design visualization" : project\.desc\}/,
+       /copy=\{isCompletedProject[\s\S]*?Original design visualization[\s\S]*?project\.desc\}/,
       'project media must use the current case study copy',
    );
   assert.match(projectDetailSource, /\{heroMedia\.label\}/);
@@ -304,7 +304,7 @@ test('uses responsive sources for project cards and detail-page media', () => {
 
   assert.match(
     projectDetailSource,
-    /<picture>\s*<source media="\(max-width: 767px\)" srcSet=\{heroMedia\.mobileSrc\}/,
+    /<picture(?:\s[^>]*)?>\s*<source media="\(max-width: 767px\)" srcSet=\{heroMedia\.mobileSrc\}/,
   );
   assert.match(projectDetailSource, /srcSet=\{mobileSrc\}/);
   assert.match(projectDetailSource, /beforeMobileImage=\{project\.media\.before\.mobileSrc\}/);

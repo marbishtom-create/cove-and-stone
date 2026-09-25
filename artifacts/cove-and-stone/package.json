@@ -12,7 +12,7 @@
     "seo:validate": "node scripts/validate-seo-metadata.mjs",
     "test:header": "node --test tests/header-logo-regression.test.mjs",
     "test:showroom": "node --test tests/showroom-image-regression.test.mjs",
-    "test:location-project-media": "node --test tests/location-project-media-regression.test.mjs",
+    "test:location-project-media": "node --test tests/location-project-media-regression.test.mjs tests/project-portfolio-regression.test.mjs",
     "test:pool-visualizer": "node --test tests/pool-visualizer-regression.test.mjs",
     "test:contact-email": "node --test tests/contact-email-regression.test.mjs",
     "test:appointments": "node --test tests/appointments-regression.test.mjs"

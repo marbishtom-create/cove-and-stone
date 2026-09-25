@@ -143,8 +143,8 @@
       ]
     },
     "/projects": {
-      "title": "Northeast Florida Pool & Backyard Designs | Cove & Stone",
-      "description": "Explore Northeast Florida pool and backyard design directions, with completed work clearly distinguished from illustrative concepts and visualizations."
+      "title": "Pool & Backyard Portfolio: Completed & In-Progress Projects | Cove & Stone",
+      "description": "Browse Cove & Stone pool projects, active construction in Mandarin and completed pool photography in Orlando, alongside clearly labeled design concepts."
     },
     "/projects/ponte-vedra-modern": {
       "title": "Ponte Vedra Modern Pool & Backyard Design | Cove & Stone",
@@ -161,6 +161,14 @@
     "/projects/atlantic-beach-minimalist": {
       "title": "St. Johns River Retreat & Pool Design | Cove & Stone",
       "description": "Explore an illustrative St. Johns River pool and backyard concept with a raised spa, stone deck, covered kitchen, open lawn and private dock."
+    },
+    "/projects/mandarin-pool-outdoor-living": {
+      "title": "Mandarin Pool & Outdoor Living Project | Cove & Stone",
+      "description": "Follow a pool and outdoor-living project under construction in Mandarin, Jacksonville, with current site photos, construction video and separate design renderings."
+    },
+    "/projects/orlando-geometric-pool": {
+      "title": "Orlando Geometric Pool Project | Cove & Stone",
+      "description": "View construction-stage and completed photography from a geometric pool project in Orlando, with photos labeled by project stage and no unsupported before-and-after claim."
     },
     "/projects/ongoing-construction": {
       "title": "Ongoing Pool Construction | Cove & Stone Progress Log",
@@ -668,6 +676,8 @@
     "jacksonville-waterfront": "Jacksonville Waterfront",
     "nocatee-resort": "Nocatee Resort Backyard",
     "atlantic-beach-minimalist": "St. Johns River Retreat",
+    "mandarin-pool-outdoor-living": "Mandarin Pool & Outdoor Living",
+    "orlando-geometric-pool": "Orlando Geometric Pool",
     "ongoing-construction": "Ongoing Construction"
   },
   "locationNames": {
