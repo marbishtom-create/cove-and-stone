@@ -38,8 +38,10 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(projectDetail, /max-w-\[18\.27rem\]\s+sm:max-w-\[24\.948rem\]/);
   assert.match(layoutCtaCss, /layout-appointment-cta__reference-art/);
   assert.match(layoutCtaCss, /cove-cta-water-flow/);
-  assert.match(layoutCtaCss, /animation:\s*cove-cta-water-flow\s+12s\s+linear\s+infinite/);
-  assert.match(layoutCtaCss, /animation:\s*cove-cta-water-glint\s+7\.5s\s+linear\s+infinite/);
+  assert.match(layoutCtaCss, /animation:\s*cove-cta-water-flow\s+6s\s+linear\s+infinite/);
+  assert.match(layoutCtaCss, /animation:\s*cove-cta-water-glint\s+4s\s+linear\s+infinite/);
+  assert.match(layoutCtaCss, /opacity:\s*0\.78/);
+  assert.match(layoutCtaCss, /opacity:\s*0\.9/);
   assert.match(layoutCtaCss, /animation:\s*cove-cta-sparkle\s+6s\s+ease-in-out\s+infinite/);
   assert.match(layoutCtaCss, /left:\s*37%/);
   assert.match(layoutCtaCss, /left:\s*70%/);
@@ -54,6 +56,12 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /layout-appointment-cta__copy-backdrop/);
   assert.match(layoutCtaCss, /layout-appointment-cta__eyebrow/);
   assert.match(layoutCtaCss, /transition-delay:\s*3s/);
+  assert.match(
+    layoutCtaCss,
+    /animation:\s*cove-cta-duck-bounce\s+2\.8s\s+ease-in-out\s+5s\s+infinite/,
+  );
+  assert.match(layoutCtaCss, /@keyframes cove-cta-duck-bounce/);
+  assert.match(layoutCtaCss, /layout-appointment-cta__duck-art\s*\{\s*animation:\s*none;/);
   assert.match(layoutCtaCss, /width:\s*172%/);
   assert.match(layoutCtaCss, /drop-shadow\(/);
   assert.match(layoutCtaCss, /cubic-bezier\(0\.2,\s*1\.55/);

@@ -30,7 +30,7 @@ const minimumFeatureImageWidth = 1024;
 const minimumFeatureImageHeight = 768;
 const approvedLocationAsset = 'generated_images/hero-pool.jpg';
 const approvedLocationConceptAlt =
-  'Concept visualization of a modern pool and outdoor-living environment';
+  'Design visualization of a modern pool and outdoor-living environment';
 const approvedLocationLabel = 'Pool Builder';
 const approvedProjectMedia = [
   {
@@ -46,16 +46,16 @@ const approvedProjectMedia = [
     asset: 'generated_images/project-2.jpg',
     mobileImportName: 'p2Mobile',
     mobileAsset: 'generated_images/project-2-mobile.jpg',
-    alt: 'Illustrative curved pool concept with a raised spa and fire features',
-    label: 'Concept rendering',
+    alt: 'Illustrative curved pool design with a raised spa and fire features',
+    label: 'Design rendering',
   },
   {
     importName: 'conceptNight',
     asset: 'BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png',
     mobileImportName: 'conceptNightMobile',
     mobileAsset: 'BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed-mobile.jpg',
-    alt: 'Illustrative resort-style backyard concept with a cabana and pool',
-    label: 'Concept rendering',
+    alt: 'Illustrative resort-style backyard design with a cabana and pool',
+    label: 'Design rendering',
   },
   {
     importName: 'stJohnsRiverRetreat',
@@ -255,7 +255,7 @@ test('renders the approved project media copy on each card', () => {
   assert.match(projectsSource, /src=\{cardMedia\.src\}/);
   assert.match(projectsSource, /alt=\{cardMedia\.alt\}/);
   assert.match(projectsSource, /\{cardMedia\.label\}/);
-  assert.match(projectsSource, /label: "Concept rendering"/);
+  assert.match(projectsSource, /label: "Design rendering"/);
   assert.match(projectsSource, /label: "Fully Enclosed · Smart Use of Space"/);
   assert.match(projectsSource, /title: "St\. Johns River Retreat"/);
   assert.match(projectsSource, /title: "St\. Johns River Retreat"[\s\S]*?label: "Design visualization"/);
@@ -280,7 +280,7 @@ test('renders the approved project media copy on each card', () => {
     );
 });
 
-test('labels only the right Selected Works image as a concept rendering', () => {
+test('labels only the right Selected Works image as a design rendering', () => {
   const selectedWorksStart = homeSource.indexOf('>Selected Works</h2>');
   const selectedWorksEnd = homeSource.indexOf('{/* 6. Project Levels */}');
   const selectedWorks = homeSource.slice(selectedWorksStart, selectedWorksEnd);
@@ -290,9 +290,9 @@ test('labels only the right Selected Works image as a concept rendering', () => 
   const rightCard = selectedWorks.slice(rightCardStart);
 
   assert.match(leftCard, /src=\{ponteVedraRetreat\}/);
-  assert.doesNotMatch(leftCard, /Concept rendering/);
+  assert.doesNotMatch(leftCard, /Design rendering/);
   assert.match(rightCard, /src=\{nocateeResortRealistic\}/);
-  assert.match(rightCard, /Concept rendering/);
+  assert.match(rightCard, /Design rendering/);
 });
 
 test('uses responsive sources for project cards and detail-page media', () => {

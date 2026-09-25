@@ -13,7 +13,7 @@ test("turns an unverified Resend sender response into a safe Sales fallback", ()
   assert.match(apiRoute, /providerMessage\.toLowerCase\(\)\.includes\("not verified"\)/);
   assert.match(
     apiRoute,
-    /We could not send your concept right now\. Please contact Sales directly at Sales@coveandstonepools\.com\./,
+    /We could not send your design right now\. Please contact Sales directly at Sales@coveandstonepools\.com\./,
   );
   assert.match(apiRoute, /res\.status\(502\)\.json\(\{ message: UNVERIFIED_SENDER_MESSAGE \}\)/);
   assert.match(apiRoute, /req\.log\.error\(\s*\{ providerStatus: response\.status, providerMessage \}/s);

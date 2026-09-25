@@ -42,7 +42,7 @@ test("serves video files with an iPhone-compatible type and byte ranges", () => 
 test("keeps the internal concept email contract and Sales recipient wired", () => {
   assert.match(apiRoute, /Sales@coveandstonepools\.com/);
   assert.match(apiRoute, /attachments/);
-  assert.match(apiRoute, /concept\.svg/);
+  assert.match(apiRoute, /design\.svg/);
   assert.match(apiRoute, /connectors\.proxy\("resend", "\/emails"/);
   assert.match(apiSpec, /\/design-concepts\/email:/);
   assert.match(apiSpec, /DesignConceptEmailRequest/);

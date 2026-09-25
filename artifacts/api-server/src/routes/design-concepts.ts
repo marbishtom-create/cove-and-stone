@@ -17,7 +17,7 @@ const connectors = new ReplitConnectors();
 const INTERNAL_RECIPIENT = "Sales@coveandstonepools.com";
 const SENDER = "Cove & Stone Pools <Sales@coveandstonepools.com>";
 const UNVERIFIED_SENDER_MESSAGE =
-  "We could not send your concept right now. Please contact Sales directly at Sales@coveandstonepools.com.";
+  "We could not send your design right now. Please contact Sales directly at Sales@coveandstonepools.com.";
 const MAX_RENDER_IMAGE_BYTES = 2 * 1024 * 1024;
 const RENDER_RATE_WINDOW_MS = 15 * 60 * 1000;
 const MAX_RENDERS_PER_WINDOW = 3;
@@ -402,7 +402,7 @@ router.post("/design-concepts/email", async (req, res) => {
       "Invalid internal design concept email payload",
     );
     res.status(400).json({
-      message: "Some contact details or concept information are missing or invalid. Check them and try again.",
+      message: "Some contact details or design information are missing or invalid. Check them and try again.",
     });
     return;
   }
@@ -414,14 +414,14 @@ router.post("/design-concepts/email", async (req, res) => {
   const features = featureList.length ? featureList.join(", ") : "No optional features selected";
   if (concept.aiRenderDataUrl && !concept.videoId) {
     res.status(400).json({
-      message: "The AI walkthrough is not ready. Wait for it to finish before sending the concept.",
+      message: "The AI walkthrough is not ready. Wait for it to finish before sending the design.",
     });
     return;
   }
 
   const attachments = [
     {
-      filename: `cove-stone-${concept.width}x${concept.length}-concept.svg`,
+      filename: `cove-stone-${concept.width}x${concept.length}-design.svg`,
       content: Buffer.from(concept.svg, "utf8").toString("base64"),
       content_type: "image/svg+xml",
     },
@@ -446,7 +446,7 @@ router.post("/design-concepts/email", async (req, res) => {
     const extension = mimeType === "image/png" ? "png" : "jpg";
     const aiRender = imageAttachment(
       concept.aiRenderDataUrl,
-      `cove-stone-ai-pool-concept.${extension}`,
+      `cove-stone-ai-pool-design.${extension}`,
       ["image/png", "image/jpeg"],
     );
     if (!aiRender) {

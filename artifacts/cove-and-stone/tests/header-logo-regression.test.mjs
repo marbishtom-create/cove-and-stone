@@ -33,8 +33,8 @@ const representativeInteriorRoutes = [
   { path: '/contact/', component: 'Contact' },
 ];
 const headerViewports = [
-  { name: 'mobile', width: 'w-\\[122px\\]' },
-  { name: 'desktop', width: 'md:w-\\[137px\\]' },
+  { name: 'mobile', width: 'w-\\[159px\\]' },
+  { name: 'desktop', width: 'md:w-\\[178px\\]' },
 ];
 
 test('uses the complete transparent logo lockup in the header', () => {
@@ -67,6 +67,9 @@ test('animates the logo water without rebuilding the approved lockup', () => {
   assert.match(logoMotionStyles, /cove-and-stone-water-mask\.png/);
   assert.match(logoMotionStyles, /@keyframes cove-logo-water-flow/);
   assert.match(logoMotionStyles, /@keyframes cove-logo-water-glint/);
+  assert.match(logoMotionStyles, /animation:\s*cove-logo-water-flow\s+6s\s+linear\s+infinite/);
+  assert.match(logoMotionStyles, /opacity:\s*0\.78/);
+  assert.match(logoMotionStyles, /opacity:\s*0\.9/);
   assert.match(logoMotionStyles, /prefers-reduced-motion: reduce/);
 
   const width = waterMaskAsset.readUInt32BE(16);
@@ -79,7 +82,7 @@ test('animates the logo water without rebuilding the approved lockup', () => {
 test('keeps the logo aspect ratio stable across mobile and desktop widths', () => {
   assert.match(
     logoSource,
-    /w-\[122px\] md:w-\[137px\]/,
+    /w-\[159px\] md:w-\[178px\]/,
   );
   assert.match(logoSource, /data-testid="site-logo-image"/);
 });
@@ -98,7 +101,7 @@ test('covers the complete lockup on representative interior routes at both viewp
   assert.match(layoutSource, /data-testid="site-header"/);
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
 
   for (const viewport of headerViewports) {
@@ -131,8 +134,8 @@ test('keeps photo-backed headers in color and uses the white lockup in the dark 
 });
 
 test('enlarges the shared logo and outdoor-living watermark', async () => {
-  assert.match(logoSource, /w-\[122px\] md:w-\[137px\]/);
-  assert.match(layoutSource, /w-\[127px\] md:w-\[169px\]/);
+  assert.match(logoSource, /w-\[159px\] md:w-\[178px\]/);
+  assert.match(layoutSource, /w-\[165px\] md:w-\[220px\]/);
   const outdoorLivingSource = await readFile(
     resolve(artifactRoot, 'src/pages/outdoor-living.tsx'),
     'utf8',
@@ -161,7 +164,7 @@ test('keeps the complete logo readable while the mobile menu opens and closes', 
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
 });
 
@@ -213,7 +216,7 @@ test('resets the header state when navigating between interior routes', () => {
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[127px\] md:w-\[169px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
   assert.match(
     layoutSource,

@@ -1,0 +1,90 @@
+.logo-picture {
+  isolation: isolate;
+}
+
+.logo-picture[data-logo-water-motion="active"]::before,
+.logo-picture[data-logo-water-motion="active"]::after {
+  content: "";
+  inset: 0;
+  -webkit-mask-image: url("/__mockup/images/cove-and-stone-water-mask.png");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: url("/__mockup/images/cove-and-stone-water-mask.png");
+  mask-mode: alpha;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  pointer-events: none;
+  position: absolute;
+}
+
+.logo-picture[data-logo-water-motion="active"]::before {
+  animation: cove-logo-water-flow 6s linear infinite;
+  background-image:
+    radial-gradient(ellipse 34% 48% at 20% 35%, rgba(202, 255, 248, 0.36), transparent 78%),
+    repeating-linear-gradient(
+      38deg,
+      transparent 0 17px,
+      rgba(220, 255, 251, 0.28) 18px 19px,
+      transparent 20px 36px
+    ),
+    repeating-linear-gradient(
+      142deg,
+      transparent 0 17px,
+      rgba(202, 255, 249, 0.19) 18px 19px,
+      transparent 20px 36px
+    ),
+    linear-gradient(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%);
+  background-position: 0 0, 0 0, 12px 9px, 0 0;
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-size: 100% 100%, 24px 19px, 24px 19px, 220% 100%;
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  z-index: 1;
+}
+
+.logo-picture[data-logo-water-motion="active"]::after {
+  animation: cove-logo-water-glint 3.2s linear infinite;
+  background-image:
+    linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.5) 42%, transparent 70%),
+    repeating-linear-gradient(
+      116deg,
+      transparent 0 18px,
+      rgba(240, 255, 251, 0.3) 19px 20px,
+      transparent 21px 38px
+    );
+  background-position: -60px 0, 0 0;
+  background-repeat: no-repeat, repeat;
+  background-size: 190% 150%, 25px 19px;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+@keyframes cove-logo-water-flow {
+  from {
+    background-position: 0 0, 0 0, 12px 9px, 0 0;
+  }
+  to {
+    background-position: 0 0, 48px 38px, 60px 47px, 100% 0;
+  }
+}
+
+@keyframes cove-logo-water-glint {
+  from {
+    background-position: -60px 0, 0 0;
+    opacity: 0.54;
+  }
+  to {
+    background-position: 100% 0, 25px 19px;
+    opacity: 0.98;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-picture[data-logo-water-motion="active"]::before,
+  .logo-picture[data-logo-water-motion="active"]::after {
+    animation: none;
+  }
+}

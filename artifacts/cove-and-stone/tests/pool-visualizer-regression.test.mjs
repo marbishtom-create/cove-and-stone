@@ -95,8 +95,8 @@ test("renders configured values in the concept preview instead of only storing t
 
 test("uses an uploaded backyard photo as the after-concept canvas", () => {
   assert.match(component, /href=\{configuration\.photoUrl\}/);
-  assert.match(component, /PHOTO-BASED CONCEPT/);
-  assert.match(component, /After · photo concept/);
+  assert.match(component, /PHOTO-BASED DESIGN/);
+  assert.match(component, /After · photo design/);
 });
 
 test("creates a real AI rendering from a backyard photo and sends it to Sales", () => {
@@ -127,7 +127,7 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(designConceptRoute, /pool-walkthrough\.mp4/);
   assert.match(designConceptRoute, /content_type: "video\/mp4"/);
   assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
-  assert.match(designConceptRoute, /cove-stone-ai-pool-concept/);
+  assert.match(designConceptRoute, /cove-stone-ai-pool-design/);
   assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
   assert.match(designConceptRoute, /providerMessage\.toLowerCase\(\)\.includes\("domain"\)/);
   assert.match(designConceptRoute, /providerMessage\.toLowerCase\(\)\.includes\("not verified"\)/);
@@ -228,7 +228,7 @@ test("keeps the before/after comparison and export controls available", () => {
   assert.match(component, /data-testid="button-reset-design"/);
   assert.match(component, /data-testid="button-send-concept"/);
   assert.match(component, /emailDesignConcept/);
-  assert.match(component, /AI concepts are illustrative only, not completed-project photography or construction drawings/);
+  assert.match(component, /AI designs are illustrative only, not completed-project photography or construction drawings/);
 });
 
 test("places AI rendering below the preview, contact details below features, and reset beside history controls", () => {

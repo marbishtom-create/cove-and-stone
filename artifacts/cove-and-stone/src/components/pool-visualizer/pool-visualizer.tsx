@@ -1136,7 +1136,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = `cove-stone-${configuration.width}x${configuration.length}-ai-pool-concept.${extension}`;
+      anchor.download = `cove-stone-${configuration.width}x${configuration.length}-ai-pool-design.${extension}`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
@@ -1151,7 +1151,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `cove-stone-${configuration.width}x${configuration.length}-concept.svg`;
+    anchor.download = `cove-stone-${configuration.width}x${configuration.length}-design.svg`;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();

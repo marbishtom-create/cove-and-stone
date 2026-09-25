@@ -10,7 +10,7 @@ const poolsPage = await readFile(
 test("keeps the pools philosophy visual framed and transparent", () => {
   assert.match(poolsPage, /generated_images\/hero-pool\.jpg/);
   assert.match(poolsPage, /0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673\.png/);
-  assert.match(poolsPage, /St\. Johns River concept/);
+  assert.match(poolsPage, /St\. Johns River design/);
   assert.match(poolsPage, /bg-white\/10/);
   assert.match(poolsPage, /backdrop-blur-md/);
   assert.match(poolsPage, /-bottom-12 -right-6 hidden h-52 w-52/);
