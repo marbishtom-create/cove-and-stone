@@ -45,14 +45,6 @@ import glassWaterlineTexture from '@assets/generated_images/material-waterline-g
 import deckPaverTexture from '@assets/generated_images/material-deck-pavers-small.jpg';
 import darkGrayDeckTexture from '@assets/generated_images/material-deck-dark-gray-porcelain-small.jpg';
 import blackMarbleDeckTexture from '@assets/generated_images/material-deck-black-marble-porcelain-small.jpg';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import './pool-visualizer.css';
 import {
   clampPoolLayoutTransform,
@@ -386,6 +378,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
           height={descriptor.bounds.height + 24}
           tabIndex={0}
           role="button"
+          aria-describedby="pool-layout-instructions"
           aria-label={`${descriptor.label}. Drag to move${descriptor.resizable ? ', or use the corner handle to resize' : ''}.`}
           onPointerDown={(event) => onLayoutPointerDown?.(event, id, 'move', parentScaleX, parentScaleY)}
           onFocus={() => onLayoutFocus?.(id)}
@@ -413,6 +406,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
       className="pool-visualizer__concept-scene"
       viewBox="0 0 760 430"
       role="group"
+      aria-describedby="pool-layout-instructions"
       aria-label={`Illustrative ${configuration.width} by ${configuration.length} foot ${configuration.shape} pool with ${finish.label} interior, ${tile.label} waterline tile, ${deck.label} continuous flush deck edge${selectedFeatureLabels.length ? `, and ${selectedFeatureLabels.join(', ')}` : ''}`}
     >
       <defs>
@@ -1048,6 +1042,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const onPreviewPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     event.preventDefault();
     setSelectedLayoutId(null);
+    if (isLayoutEditing) return;
     setIsDragging(true);
     updateSlider(event.clientX);
   };
@@ -1234,7 +1229,111 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     ? 100 / (configuration.comparisonPosition / 100)
     : 100;
 
-  const controlActions = (
+  const aiRenderActions = (
+    <div className="pool-visualizer__control-actions">
+      <div className="pool-visualizer__ai-controls">
+        <button
+          className="pool-visualizer__ai-button"
+          type="button"
+          onClick={generateAiRender}
+          disabled={!configuration.photoUrl || aiRenderStatus === 'generating'}
+          data-testid="button-generate-ai-render"
+        >
+          <Sparkles size={15} />
+          {aiRenderStatus === 'generating'
+            ? 'Creating AI rendering…'
+            : aiRenderDataUrl
+              ? 'Regenerate AI rendering'
+              : 'Create AI pool rendering'}
+        </button>
+        <p className={`pool-visualizer__ai-note ${aiRenderStatus === 'error' ? 'is-error' : ''}`} role={aiRenderStatus === 'error' ? 'alert' : 'status'} aria-live="polite" data-testid="status-ai-render">
+          {aiRenderStatus === 'generating'
+            ? 'Creating a realistic pool concept from your backyard photo. This can take a little while.'
+            : aiRenderStatus === 'ready'
+              ? 'AI rendering ready. Slide to compare it with the original photo.'
+              : aiRenderStatus === 'error'
+                ? 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
+                : 'Your photo is sent to AI to make this concept. The original and rendering are emailed to our team only when you choose to send.'}
+        </p>
+        {(aiRenderDataUrl || aiRenderStatus === 'generating') && (
+          <p
+            className={`pool-visualizer__walkthrough-status ${videoStatus === 'error' ? 'is-error' : ''}`}
+            role={videoStatus === 'error' ? 'alert' : 'status'}
+            aria-live="polite"
+            data-testid="status-ai-walkthrough"
+          >
+            {videoStatus === 'processing'
+              ? 'Creating a 10-second MP4 walkthrough from this exact AI rendering.'
+              : videoStatus === 'ready'
+                ? 'MP4 walkthrough ready; it will be included with your concept for our team.'
+                : videoStatus === 'error'
+                  ? `${videoError} Regenerate the AI rendering before sending.`
+                  : aiRenderStatus === 'generating'
+                    ? 'A matching MP4 walkthrough will start after the rendering is ready.'
+                    : ''}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+
+  const contactActions = (
+    <div className="pool-visualizer__contact-actions">
+      <form
+        className="pool-visualizer__contact-form"
+        onSubmit={customerForm.handleSubmit(sendConceptToTeam)}
+        onChange={() => {
+          if (conceptSendError) {
+            setConceptSendError('');
+            setConceptSendStatus('idle');
+          }
+        }}
+        noValidate
+        data-testid="form-send-concept"
+      >
+        <div>
+          <span className="pool-visualizer__kicker">Tie the concept to you</span>
+          <h4>Your contact details</h4>
+          <p className="pool-visualizer__section-note">Required so our team can review this design with you.</p>
+          <p className="pool-visualizer__helper">Your details, selected design, backyard photo and rendering go to Cove &amp; Stone so the team can follow up.</p>
+        </div>
+        <div className="pool-visualizer__contact-fields">
+          <label className="pool-visualizer__contact-field">
+            <span>Full name</span>
+            <input {...customerForm.register('customerName')} type="text" autoComplete="name" maxLength={120} required placeholder="Your name" data-testid="input-customer-name" />
+            {customerForm.formState.errors.customerName?.message && <span className="pool-visualizer__error">{customerForm.formState.errors.customerName.message}</span>}
+          </label>
+          <label className="pool-visualizer__contact-field">
+            <span>Property address</span>
+            <textarea {...customerForm.register('customerAddress')} autoComplete="street-address" maxLength={300} rows={2} required placeholder="Street, city, state, ZIP" data-testid="input-customer-address" />
+            {customerForm.formState.errors.customerAddress?.message && <span className="pool-visualizer__error">{customerForm.formState.errors.customerAddress.message}</span>}
+          </label>
+          <label className="pool-visualizer__contact-field">
+            <span>Phone number</span>
+            <input {...customerForm.register('customerPhone')} type="tel" inputMode="tel" autoComplete="tel" maxLength={30} required placeholder="(555) 555-5555" data-testid="input-customer-phone" />
+            {customerForm.formState.errors.customerPhone?.message && <span className="pool-visualizer__error">{customerForm.formState.errors.customerPhone.message}</span>}
+          </label>
+        </div>
+        <div className="pool-visualizer__handoff">
+          <button
+            className="pool-visualizer__send-button"
+            type="submit"
+            disabled={
+              isSendingConcept ||
+              aiRenderStatus === 'generating' ||
+              Boolean(aiRenderDataUrl && (videoStatus !== 'ready' || !videoId))
+            }
+            data-testid="button-send-concept"
+          >
+            <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
+          </button>
+          <span className="pool-visualizer__saved-status" data-send-state={conceptSendStatus} role="status" aria-live="polite" data-testid="status-generated">
+            <span /> {conceptSendStatus === 'sent' ? 'Sent to our team' : conceptSendStatus === 'error' ? 'Could not send' : 'Concept updated'}
+          </span>
+          {conceptSendError && <p className="pool-visualizer__error" role="alert" data-testid="status-send-error">{conceptSendError}</p>}
+        </div>
+      </form>
+    </div>
   );
 
   return (
@@ -1379,7 +1478,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   aria-pressed={configuration.poolFinish === finish.id}
                   data-testid={`button-finish-${finish.id}`}
                 >
-                  <span className="pool-visualizer__material-swatch" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${finish.swatch}66, ${finish.swatch}66), url(${finish.texture})` }} />
+                  <span className="pool-visualizer__material-swatch pool-visualizer__material-swatch--finish" aria-hidden="true" style={{ backgroundImage: `linear-gradient(${finish.swatch}66, ${finish.swatch}66), url(${finish.texture})` }} />
                   <strong>{finish.label}</strong>
                 </button>
               ))}
