@@ -147,11 +147,11 @@ test('shows the remaining equipment and kitchen photos side by side', () => {
 test('keeps the approved showroom accessibility text and visible caption', () => {
   assert.match(
     showroomSource,
-    new RegExp(`alt="${approvedAltText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"`),
+    new RegExp(`alt:\\s*'${approvedAltText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'`),
   );
   assert.match(
     showroomSource,
-    new RegExp(approvedCaption.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+    new RegExp(`title:\\s*'${approvedCaption.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'`),
   );
 });
 
@@ -175,5 +175,5 @@ test('includes the supplied showroom gallery photos at their source resolution',
   }
 
   assert.match(showroomSource, /Equipment supplier: Gorman Company/);
-  assert.match(showroomSource, /loading="lazy"/);
+  assert.match(showroomSource, /loading=\{highPriority \? 'eager' : 'lazy'\}/);
 });
