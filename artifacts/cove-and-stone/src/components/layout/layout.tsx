@@ -10,7 +10,6 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileStickyCtaVisible, setMobileStickyCtaVisible] = useState(false);
   const headerLogoVariant =
     isScrolled || mobileMenuOpen
       ? "light"
@@ -31,31 +30,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     setMobileMenuOpen(false);
     setIsScrolled(false);
     window.scrollTo(0, 0);
-  }, [location]);
-
-  useEffect(() => {
-    if (location.startsWith("/projects/")) {
-      setMobileStickyCtaVisible(false);
-      return;
-    }
-
-    const heroActions = document.querySelector("[data-mobile-sticky-cta-stop]");
-    if (!heroActions) {
-      setMobileStickyCtaVisible(true);
-      return;
-    }
-
-    const updateVisibility = () => {
-      const { top, bottom } = heroActions.getBoundingClientRect();
-      setMobileStickyCtaVisible(bottom <= 0 || top >= window.innerHeight);
-    };
-    updateVisibility();
-
-    const observer = new IntersectionObserver(([entry]) => {
-      setMobileStickyCtaVisible(!entry.isIntersecting);
-    });
-    observer.observe(heroActions);
-    return () => observer.disconnect();
   }, [location]);
 
   useEffect(() => {
@@ -151,8 +125,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       )}
 
-      {!location.startsWith("/projects/") && mobileStickyCtaVisible && !mobileMenuOpen && (
-        <div className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:hidden">
+      {!mobileMenuOpen && (
+        <div
+          className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:hidden"
+          data-cta-location={location === "/" ? "home" : "interior"}
+        >
           <Link
             href="/appointments/"
             className="layout-appointment-cta min-h-[4.1rem] w-full"

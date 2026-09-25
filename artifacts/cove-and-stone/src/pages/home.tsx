@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <div className="w-full overflow-hidden">
       {/* 1. Cinematic Hero */}
-      <section className="relative min-h-[100dvh] w-full flex items-center justify-center pt-[8.5rem] lg:h-[100dvh] lg:pt-20">
+      <section className="relative min-h-[100dvh] w-full flex items-center justify-center pt-[6rem] lg:h-[100dvh] lg:pt-20">
         <div className="absolute inset-0 z-0">
           <img 
               src={jacksonvilleDayPool} 
@@ -35,7 +35,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
         </div>
         
-        <div className="relative z-10 container mx-auto px-6 max-w-7xl flex w-full min-h-[calc(100dvh-6rem)] flex-col items-start justify-start pt-[4.5rem] pb-20 lg:h-full lg:min-h-0 lg:translate-y-[4.5rem] lg:justify-center lg:pt-0">
+        <div className="relative z-10 container mx-auto px-6 max-w-7xl flex w-full min-h-[calc(100dvh-6rem)] flex-col items-start justify-start pt-[1.25rem] pb-20 lg:h-full lg:min-h-0 lg:translate-y-[4.5rem] lg:justify-center lg:pt-0">
           <div className="max-w-3xl animate-in slide-in-from-bottom-8 duration-1000 ease-out fade-in fill-mode-both">
             <span className="relative top-8 text-[#c9eee7] uppercase tracking-[0.3em] text-sm md:text-base font-semibold mb-6 block drop-shadow-[0_2px_7px_rgba(0,0,0,0.65)]">
               Jacksonville Outdoor Living, Reimagined.
@@ -44,10 +44,10 @@ export default function Home() {
               Custom Pools. <br />
               <span className="italic font-light opacity-90">Elevated Outdoor Living in Jacksonville.</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-12 font-light leading-relaxed">
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-8 lg:mb-12 font-light leading-relaxed">
               Modern custom pools inspired by Los Angeles design, Miami living and European architecture—built for Northeast Florida.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6" data-mobile-sticky-cta-stop>
+            <div className="flex flex-col sm:flex-row gap-6">
               <Link 
                 href="/contact/" 
                 className="border border-white/30 bg-secondary/90 text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm backdrop-blur-md hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"

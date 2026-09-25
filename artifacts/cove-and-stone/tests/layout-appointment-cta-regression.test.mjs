@@ -57,7 +57,7 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.match(ctaElements, /strokeWidth="0\.9"/);
   assert.match(ctaStyles, /aspect-ratio: 4\.82 \/ 1/);
   assert.match(ctaStyles, /width: min\(19\.8rem, calc\(100vw - 5rem\)\)/);
-  assert.match(ctaStyles, /padding: 0\.4rem 4% 0\.4rem 16\.5%/);
+  assert.match(ctaStyles, /padding: 0\.4rem 4% 0\.4rem 17\.5%/);
   assert.match(ctaStyles, /container-type: inline-size/);
   assert.match(ctaStyles, /transition-delay: 3\.05s/);
   assert.match(ctaStyles, /layout-appointment-cta__arrow-shell:hover \.layout-appointment-cta__duck/);
@@ -71,24 +71,23 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
 
-test('shows a safe-area-aware sticky CTA on mobile outside the menu and project detail', () => {
+test('keeps the mobile CTA fixed at route-specific bottom corners', () => {
+  assert.match(layoutSource, /\{!mobileMenuOpen && \(/);
   assert.match(
     layoutSource,
-    /\{!location\.startsWith\("\/projects\/"\) && mobileStickyCtaVisible && !mobileMenuOpen && \(/,
-  );
-  assert.match(
-    layoutSource,
-    /className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 .*? lg:hidden"/,
+    /className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 .*? lg:hidden"[\s\S]*?data-cta-location=\{location === "\/" \? "home" : "interior"\}/,
   );
   assert.match(layoutSource, /data-testid="link-mobile-sticky-appointment-cta"/);
   assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile \{/);
   assert.match(ctaStyles, /bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\)/);
   assert.match(ctaStyles, /left: max\(0\.75rem, env\(safe-area-inset-left\)\)/);
   assert.match(ctaStyles, /width: min\(18rem, calc\(100vw - 1\.5rem\)\)/);
-  assert.match(homeSource, /data-mobile-sticky-cta-stop/);
-  assert.match(layoutSource, /document\.querySelector\("\[data-mobile-sticky-cta-stop\]"\)/);
-  assert.match(layoutSource, /new IntersectionObserver/);
-  assert.match(layoutSource, /setMobileStickyCtaVisible\(!entry\.isIntersecting\)/);
+  assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile\[data-cta-location="home"\]/);
+  assert.match(ctaStyles, /right: max\(0\.75rem, env\(safe-area-inset-right\)\)/);
+  assert.doesNotMatch(layoutSource, /mobileStickyCtaVisible|IntersectionObserver/);
+  assert.match(homeSource, /pt-\[6rem\] lg:h-\[100dvh\]/);
+  assert.match(homeSource, /pt-\[1\.25rem\] pb-20/);
+  assert.match(homeSource, /mb-8 lg:mb-12 font-light/);
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {
@@ -120,7 +119,7 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   );
   assert.match(ctaStyles, /48% 88\.7%,\s*50% 89\.5%,\s*52% 90%,\s*54% 90\.2%/);
   assert.match(ctaStyles, /linear-gradient\(rgba\(255, 255, 255, 0\.16\)/);
-  assert.match(ctaStyles, /54% 79\.7%, 52% 79\.5%, 50% 79\.5%/);
+  assert.match(ctaStyles, /54% 77\.2%, 52% 77%, 50% 77%/);
   assert.equal(
     (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
     2,
