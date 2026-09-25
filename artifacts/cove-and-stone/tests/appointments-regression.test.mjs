@@ -40,8 +40,12 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /cove-cta-water-flow/);
   assert.match(layoutCtaCss, /animation:\s*cove-cta-water-flow\s+12s\s+linear\s+infinite/);
   assert.match(layoutCtaCss, /animation:\s*cove-cta-water-glint\s+7\.5s\s+linear\s+infinite/);
-  assert.match(layoutCtaCss, /at 37% 93%/);
-  assert.match(layoutCtaCss, /at 70% 93%/);
+  assert.match(layoutCtaCss, /animation:\s*cove-cta-sparkle\s+6s\s+ease-in-out\s+infinite/);
+  assert.match(layoutCtaCss, /left:\s*37%/);
+  assert.match(layoutCtaCss, /left:\s*70%/);
+  assert.match(ctaElements, /layout-appointment-cta__sparkle-layer/);
+  assert.match(ctaElements, /layout-appointment-cta__sparkle--one/);
+  assert.match(ctaElements, /layout-appointment-cta__sparkle--two/);
   assert.match(layoutCtaCss, /repeating-linear-gradient\(\s*0deg/);
   assert.match(layoutCtaCss, /appointment-cta-water-mask\.svg/);
   assert.match(waterMask, /M0 179/);

@@ -15,6 +15,13 @@ export function AppointmentCtaSurface() {
         aria-hidden="true"
       />
       <span
+        className="layout-appointment-cta__sparkle-layer"
+        aria-hidden="true"
+      >
+        <span className="layout-appointment-cta__sparkle layout-appointment-cta__sparkle--one" />
+        <span className="layout-appointment-cta__sparkle layout-appointment-cta__sparkle--two" />
+      </span>
+      <span
         className="layout-appointment-cta__duck-medallion"
         aria-hidden="true"
       >
