@@ -19,6 +19,8 @@ const VIDEO_ID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const VIDEO_FAILURE_MESSAGE =
   "The MP4 could not be created. Your AI rendering is ready and unchanged.";
+const VIDEO_AUTH_FAILURE_MESSAGE =
+  "MiniMax rejected its API key. A site owner must update the existing MiniMax connection with a Global/International API key before retrying. Your AI rendering is ready and unchanged.";
 
 type VideoJob =
   | { status: "processing"; expiresAt: number; conceptImageSha256: string }
@@ -93,6 +95,15 @@ function delay(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
+function getVideoFailureMessage(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  const isMiniMaxAuthFailure =
+    /MiniMax .+failed with status (?:1004|2049)\b/i.test(message) ||
+    /MiniMax .+failed with HTTP 401\b/i.test(message);
+
+  return isMiniMaxAuthFailure ? VIDEO_AUTH_FAILURE_MESSAGE : VIDEO_FAILURE_MESSAGE;
+}
+
 async function readMiniMaxJson(
   response: Response,
   operation: string,
@@ -112,12 +123,13 @@ async function readMiniMaxJson(
   }
 
   const baseResponse = asRecord(payload.base_resp);
-  if (
-    baseResponse &&
-    Number(baseResponse.status_code ?? 0) !== 0
-  ) {
+  if (baseResponse && Number(baseResponse.status_code ?? 0) !== 0) {
+    const statusMessage =
+      typeof baseResponse.status_msg === "string"
+        ? baseResponse.status_msg.replace(/\s+/g, " ").trim().slice(0, 200)
+        : "";
     throw new Error(
-      `MiniMax ${operation} failed with status ${String(baseResponse.status_code)}.`,
+      `MiniMax ${operation} failed with status ${String(baseResponse.status_code)}${statusMessage ? ` (${statusMessage})` : ""}.`,
     );
   }
 
@@ -357,7 +369,7 @@ async function finishVideoJob(
   } catch (error) {
     videoJobs.set(jobId, {
       status: "failed",
-      message: VIDEO_FAILURE_MESSAGE,
+      message: getVideoFailureMessage(error),
       expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
       conceptImageSha256,
     });
@@ -406,7 +418,7 @@ export async function startPoolConceptVideoJob(
   } catch (error) {
     videoJobs.set(jobId, {
       status: "failed",
-      message: VIDEO_FAILURE_MESSAGE,
+      message: getVideoFailureMessage(error),
       expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
       conceptImageSha256,
     });

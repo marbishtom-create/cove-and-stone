@@ -28,3 +28,11 @@ test("internal MP4 attachments require a matching render image", () => {
     /getReadyPoolConceptVideoId\(\s*concept\.videoJobId,\s*concept\.aiRenderDataUrl \?\? "",?\s*\)/,
   );
 });
+
+test("MiniMax authorization failures point to the required Global connection key", () => {
+  assert.match(service, /VIDEO_AUTH_FAILURE_MESSAGE/);
+  assert.ok(service.includes("status (?:1004|2049)\\b"));
+  assert.match(service, /failed with HTTP 401/);
+  assert.match(service, /Global\/International API key/);
+  assert.equal((service.match(/message: getVideoFailureMessage\(error\)/g) ?? []).length, 2);
+});
