@@ -6,6 +6,11 @@ import {
 } from "@workspace/api-zod";
 import { renderBackyardPool } from "@workspace/integrations-gemini-ai";
 import { ReplitConnectors } from "@replit/connectors-sdk";
+import {
+  getPoolConceptVideoJob,
+  readPoolConceptVideo,
+  startPoolConceptVideoJob,
+} from "../services/pool-concept-video";
 
 const router: IRouter = Router();
 const connectors = new ReplitConnectors();
@@ -232,12 +237,99 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
       return;
     }
 
-    res.json(responseBody.data);
+    const videoJobId = await startPoolConceptVideoJob(
+      connectors,
+      responseBody.data.imageDataUrl,
+      (error) => {
+        req.log.error({ err: error }, "AI pool walkthrough generation failed");
+      },
+    );
+    const completeResponse = GeneratePoolConceptRenderResponse.safeParse({
+      ...responseBody.data,
+      videoJobId,
+    });
+    if (!completeResponse.success) {
+      req.log.error(
+        { err: completeResponse.error },
+        "AI pool concept walkthrough did not match the response contract",
+      );
+      res.status(502).json({
+        message: "The AI rendering was created, but its walkthrough could not be started.",
+      });
+      return;
+    }
+
+    res.json(completeResponse.data);
   } catch (error) {
     req.log.error({ err: error }, "AI pool concept generation failed");
     res.status(502).json({
       message: "The AI rendering could not be created. Your uploaded photo is unchanged.",
     });
+  }
+});
+
+router.get("/design-concepts/video-jobs/:videoJobId", (req, res) => {
+  const status = getPoolConceptVideoJob(req.params.videoJobId);
+  if (!status) {
+    res.status(404).json({ message: "The pool walkthrough job expired or was not found." });
+    return;
+  }
+  res.json(status);
+});
+
+router.get("/design-concepts/videos/:videoId", async (req, res): Promise<void> => {
+  try {
+    const video = await readPoolConceptVideo(req.params.videoId);
+    if (!video) {
+      res.status(404).json({ message: "The pool walkthrough expired or was not found." });
+      return;
+    }
+
+    const rangeHeader = req.headers.range;
+    res.set({
+      "Accept-Ranges": "bytes",
+      "Cache-Control": "private, max-age=0, no-store",
+      "Content-Type": "video/mp4",
+      "X-Content-Type-Options": "nosniff",
+    });
+
+    if (rangeHeader) {
+      const range = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
+      if (!range || (!range[1] && !range[2])) {
+        res.set("Content-Range", `bytes */${video.length}`);
+        res.status(416).end();
+        return;
+      }
+
+      const start = range[1]
+        ? Number(range[1])
+        : Math.max(0, video.length - Number(range[2]));
+      const requestedEnd = range[2] ? Number(range[2]) : video.length - 1;
+      if (
+        !Number.isSafeInteger(start) ||
+        !Number.isSafeInteger(requestedEnd) ||
+        start < 0 ||
+        start >= video.length ||
+        requestedEnd < start
+      ) {
+        res.set("Content-Range", `bytes */${video.length}`);
+        res.status(416).end();
+        return;
+      }
+
+      const end = Math.min(requestedEnd, video.length - 1);
+      const chunk = video.subarray(start, end + 1);
+      res.status(206).set({
+        "Content-Length": String(chunk.length),
+        "Content-Range": `bytes ${start}-${end}/${video.length}`,
+      }).send(chunk);
+      return;
+    }
+
+    res.status(200).set("Content-Length", String(video.length)).send(video);
+  } catch (error) {
+    req.log.error({ err: error }, "Pool concept walkthrough could not be read");
+    res.status(502).json({ message: "The pool walkthrough could not be loaded." });
   }
 });
 
@@ -260,6 +352,13 @@ router.post("/design-concepts/email", async (req, res) => {
   const subject = `Pool concept · ${safeCustomerName} · ${concept.width}′ × ${concept.length}′ ${SHAPE_LABELS[concept.shape]}`;
   const featureList = concept.features.map((feature) => FEATURE_LABELS[feature]);
   const features = featureList.length ? featureList.join(", ") : "No optional features selected";
+  if (concept.aiRenderDataUrl && !concept.videoId) {
+    res.status(400).json({
+      message: "The AI walkthrough is not ready. Wait for it to finish before sending the concept.",
+    });
+    return;
+  }
+
   const attachments = [
     {
       filename: `cove-stone-${concept.width}x${concept.length}-concept.svg`,
@@ -297,6 +396,28 @@ router.post("/design-concepts/email", async (req, res) => {
     attachments.push(aiRender);
   }
 
+  if (concept.videoId) {
+    let video: Buffer | null;
+    try {
+      video = await readPoolConceptVideo(concept.videoId);
+    } catch (error) {
+      req.log.error({ err: error }, "Pool walkthrough could not be prepared for email");
+      res.status(502).json({ message: "The pool walkthrough could not be attached." });
+      return;
+    }
+    if (!video) {
+      res.status(400).json({
+        message: "The pool walkthrough is no longer available. Create a new AI rendering and try again.",
+      });
+      return;
+    }
+    attachments.push({
+      filename: `cove-stone-${concept.width}x${concept.length}-pool-walkthrough.mp4`,
+      content: video.toString("base64"),
+      content_type: "video/mp4",
+    });
+  }
+
   const html = `
     <h1>Internal pool concept record</h1>
     <p>This message is for the Cove &amp; Stone team only. Do not send it automatically to the customer.</p>
@@ -316,7 +437,7 @@ router.post("/design-concepts/email", async (req, res) => {
       <li><strong>Pool edge treatment:</strong> ${escapeHtml(concept.edgeTreatment)}</li>
       <li><strong>Individually selected features:</strong> ${escapeHtml(features)}</li>
     </ul>
-    <p>The attached SVG is an illustrative concept study generated from the customer's selections. ${concept.aiRenderDataUrl ? "The AI-generated pool rendering and original backyard photo are also attached for internal review." : "The original backyard photo is attached when one was provided; no AI rendering was generated for this concept."}</p>
+    <p>The attached SVG is an illustrative concept study generated from the customer's selections. ${concept.aiRenderDataUrl ? "The AI-generated pool rendering, MP4 walkthrough, and original backyard photo are also attached for internal review." : "The original backyard photo is attached when one was provided; no AI rendering or walkthrough was generated for this concept."}</p>
     <p>AI images are visual references only. Confirm site conditions, engineering, dimensions, and project scope with the customer before treating any concept as a build document.</p>
   `;
 

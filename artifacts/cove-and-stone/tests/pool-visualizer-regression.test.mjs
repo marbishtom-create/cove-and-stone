@@ -100,6 +100,11 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /data-testid="button-generate-ai-render"/);
   assert.match(component, /src=\{aiRenderDataUrl\}/);
   assert.match(component, /aiRenderDataUrl: aiRenderDataUrl \?\? undefined/);
+  assert.match(component, /getPoolConceptVideoJob/);
+  assert.match(component, /status-ai-walkthrough/);
+  assert.match(component, /pool-visualizer__walkthrough-video/);
+  assert.match(component, /videoId: videoStatus === 'ready' \? videoId \?\? undefined : undefined/);
+  assert.match(component, /videoStatus !== 'ready' \|\| !videoId/);
   assert.match(component, /customerName: customer\.customerName/);
   assert.match(component, /customerAddress: customer\.customerAddress/);
   assert.match(component, /customerPhone: customer\.customerPhone/);
@@ -112,6 +117,11 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /querySelectorAll\('\[data-background-photo="true"\]'\)/);
   assert.match(component, /Your photo is sent to AI/);
   assert.match(designConceptRoute, /renderBackyardPool/);
+  assert.match(designConceptRoute, /startPoolConceptVideoJob/);
+  assert.match(designConceptRoute, /router\.get\("\/design-concepts\/video-jobs\/:videoJobId"/);
+  assert.match(designConceptRoute, /router\.get\("\/design-concepts\/videos\/:videoId"/);
+  assert.match(designConceptRoute, /pool-walkthrough\.mp4/);
+  assert.match(designConceptRoute, /content_type: "video\/mp4"/);
   assert.match(designConceptRoute, /MAX_RENDERS_PER_WINDOW = 3/);
   assert.match(designConceptRoute, /cove-stone-ai-pool-concept/);
   assert.match(designConceptRoute, /customer-backyard-before\.jpg/);
@@ -121,6 +131,8 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerAddress\)/);
   assert.match(designConceptRoute, /escapeHtml\(concept\.customerPhone\)/);
   assert.match(apiSpec, /\/design-concepts\/render/);
+  assert.match(apiSpec, /\/design-concepts\/videos\/\{videoId\}/);
+  assert.match(apiSpec, /video\/mp4/);
   assert.match(apiSpec, /aiRenderDataUrl/);
   assert.match(apiSpec, /originalPhotoDataUrl/);
   assert.match(apiSpec, /customerName:/);

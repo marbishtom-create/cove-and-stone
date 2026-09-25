@@ -1219,3 +1219,54 @@
     transition-duration: .01ms !important;
   }
 }
+
+.pool-visualizer__walkthrough-status {
+  color: #506167;
+  font-size: .82rem;
+  line-height: 1.5;
+  margin: .55rem 0 0;
+}
+
+.pool-visualizer__walkthrough-status.is-error {
+  color: #9a3f35;
+}
+
+.pool-visualizer__walkthrough {
+  background: #f8f6f0;
+  border: 1px solid #ddd7ca;
+  display: grid;
+  gap: .9rem;
+  margin-top: 1.2rem;
+  padding: 1rem;
+}
+
+.pool-visualizer__walkthrough-heading {
+  align-items: center;
+  color: #197d83;
+  display: flex;
+  gap: .75rem;
+}
+
+.pool-visualizer__walkthrough-heading h4 {
+  color: #18313a;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: .2rem 0 0;
+}
+
+.pool-visualizer__walkthrough-video {
+  aspect-ratio: 16 / 9;
+  background: #102428;
+  display: block;
+  max-height: 64svh;
+  object-fit: contain;
+  width: 100%;
+}
+
+.pool-visualizer__walkthrough > p {
+  color: #5c6867;
+  font-size: .76rem;
+  line-height: 1.5;
+  margin: 0;
+}

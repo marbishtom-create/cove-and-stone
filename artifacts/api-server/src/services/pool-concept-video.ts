@@ -1,11 +1,8 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, readdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
 import type { ReplitConnectors } from "@replit/connectors-sdk";
 
-const VIDEO_CACHE_DIRECTORY = join(tmpdir(), "cove-stone-pool-concept-videos");
-const VIDEO_CACHE_TTL_MS = 8 * 60 * 60 * 1000;
+const REPLIT_SIDECAR_ENDPOINT = "http://127.0.0.1:1106";
+const PRIVATE_VIDEO_PREFIX = "pool-concept-videos";
 const VIDEO_JOB_TTL_MS = 20 * 60 * 1000;
 const MAX_VIDEO_BYTES = 12 * 1024 * 1024;
 const VIDEO_POLL_INTERVAL_MS = 5_000;
@@ -21,6 +18,56 @@ type VideoJob =
   | { status: "failed"; message: string; expiresAt: number };
 
 const videoJobs = new Map<string, VideoJob>();
+
+function getVideoObjectLocation(videoId: string) {
+  const privateObjectDir = process.env.PRIVATE_OBJECT_DIR;
+  if (!privateObjectDir) {
+    throw new Error("App Storage is not configured for pool walkthroughs.");
+  }
+
+  const fullPath = `${privateObjectDir.replace(/\/+$/, "")}/${PRIVATE_VIDEO_PREFIX}/${videoId}.mp4`;
+  const [bucketName, ...objectNameParts] = fullPath.split("/").filter(Boolean);
+  if (!bucketName || objectNameParts.length === 0) {
+    throw new Error("The pool walkthrough storage path is invalid.");
+  }
+
+  return { bucketName, objectName: objectNameParts.join("/") };
+}
+
+async function getSignedVideoObjectUrl(
+  videoId: string,
+  method: "GET" | "PUT",
+) {
+  const { bucketName, objectName } = getVideoObjectLocation(videoId);
+  const response = await fetch(
+    `${REPLIT_SIDECAR_ENDPOINT}/object-storage/signed-object-url`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        bucket_name: bucketName,
+        object_name: objectName,
+        method,
+        expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+      }),
+      signal: AbortSignal.timeout(30_000),
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`App Storage could not sign the pool video ${method} request.`);
+  }
+
+  const payload: unknown = await response.json();
+  const signedUrl = asRecord(payload)?.signed_url;
+  if (typeof signedUrl !== "string") {
+    throw new Error("App Storage returned an invalid pool video URL.");
+  }
+  const parsedUrl = new URL(signedUrl);
+  if (parsedUrl.protocol !== "https:") {
+    throw new Error("App Storage returned an insecure pool video URL.");
+  }
+  return signedUrl;
+}
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object"
@@ -144,33 +191,17 @@ async function downloadGeneratedVideo(
   return video;
 }
 
-async function removeExpiredVideoFiles() {
-  await mkdir(VIDEO_CACHE_DIRECTORY, { recursive: true });
-  const entries = await readdir(VIDEO_CACHE_DIRECTORY, { withFileTypes: true });
-  const cutoff = Date.now() - VIDEO_CACHE_TTL_MS;
-
-  await Promise.all(
-    entries
-      .filter(
-        (entry) => entry.isFile() && VIDEO_ID_PATTERN.test(entry.name.replace(/\.mp4$/, "")),
-      )
-      .map(async (entry) => {
-        const filePath = join(VIDEO_CACHE_DIRECTORY, entry.name);
-        const details = await stat(filePath).catch(() => null);
-        if (details && details.mtimeMs < cutoff) {
-          await unlink(filePath).catch(() => undefined);
-        }
-      }),
-  );
-}
-
-async function saveGeneratedVideo(video: Buffer) {
-  await removeExpiredVideoFiles();
-  const videoId = randomUUID();
-  await writeFile(join(VIDEO_CACHE_DIRECTORY, `${videoId}.mp4`), video, {
-    flag: "wx",
+async function saveGeneratedVideo(videoId: string, video: Buffer) {
+  const signedUrl = await getSignedVideoObjectUrl(videoId, "PUT");
+  const response = await fetch(signedUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "video/mp4" },
+    body: new Blob([new Uint8Array(video)], { type: "video/mp4" }),
+    signal: AbortSignal.timeout(120_000),
   });
-  return videoId;
+  if (!response.ok) {
+    throw new Error(`App Storage could not save the pool video (HTTP ${response.status}).`);
+  }
 }
 
 function pruneExpiredJobs() {
@@ -201,7 +232,8 @@ async function finishVideoJob(
           throw new Error("MiniMax completed without returning a video file.");
         }
         const video = await downloadGeneratedVideo(connectors, fileId);
-        const videoId = await saveGeneratedVideo(video);
+        const videoId = randomUUID();
+        await saveGeneratedVideo(videoId, video);
         videoJobs.set(jobId, {
           status: "ready",
           videoId,
@@ -233,32 +265,42 @@ export async function startPoolConceptVideoJob(
     throw new Error("The AI rendering cannot be used as a video frame.");
   }
 
-  const response = await connectors.proxy("minimax", "/v1/video_generation", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "MiniMax-Hailuo-2.3",
-      prompt:
-        "Create a 10-second illustrative architectural pool-design walkthrough from this exact first frame. Preserve the backyard, pool outline and position, pool scale, water color, edge treatment, materials, deck, house, landscaping, and selected features. Use one continuous, stabilized, slow camera glide toward the pool with only subtle natural water ripples, reflections, and foliage movement. Do not change the layout, add structures or pool features, add people, add text, add logos, or use cuts. Keep the result realistic and consistent with the supplied design image.",
-      first_frame_image: firstFrameDataUrl,
-      duration: 10,
-      resolution: "768P",
-      prompt_optimizer: false,
-    }),
-  });
-  const payload = await readMiniMaxJson(response, "video generation request");
-  const taskId = payload.task_id;
-  if (typeof taskId !== "string" || !taskId) {
-    throw new Error("MiniMax did not return a video task ID.");
-  }
-
   pruneExpiredJobs();
   const jobId = randomUUID();
   videoJobs.set(jobId, {
     status: "processing",
     expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
   });
-  void finishVideoJob(connectors, jobId, taskId, onFailure);
+
+  try {
+    const response = await connectors.proxy("minimax", "/v1/video_generation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "MiniMax-Hailuo-2.3",
+        prompt:
+          "Create a 10-second illustrative architectural pool-design walkthrough from this exact first frame. Preserve the backyard, pool outline and position, pool scale, water color, edge treatment, materials, deck, house, landscaping, and selected features. Use one continuous, stabilized, slow camera glide toward the pool with only subtle natural water ripples, reflections, and foliage movement. Do not change the layout, add structures or pool features, add people, add text, add logos, or use cuts. Keep the result realistic and consistent with the supplied design image.",
+        first_frame_image: firstFrameDataUrl,
+        duration: 10,
+        resolution: "768P",
+        prompt_optimizer: false,
+      }),
+    });
+    const payload = await readMiniMaxJson(response, "video generation request");
+    const taskId = payload.task_id;
+    if (typeof taskId !== "string" || !taskId) {
+      throw new Error("MiniMax did not return a video task ID.");
+    }
+    void finishVideoJob(connectors, jobId, taskId, onFailure);
+  } catch (error) {
+    videoJobs.set(jobId, {
+      status: "failed",
+      message: VIDEO_FAILURE_MESSAGE,
+      expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
+    });
+    onFailure?.(error);
+  }
+
   return jobId;
 }
 
@@ -281,19 +323,22 @@ export function getPoolConceptVideoJob(jobId: string) {
 
 export async function readPoolConceptVideo(videoId: string) {
   if (!VIDEO_ID_PATTERN.test(videoId)) return null;
-  const filePath = join(VIDEO_CACHE_DIRECTORY, `${videoId}.mp4`);
-  const details = await stat(filePath).catch(() => null);
-  if (!details || Date.now() - details.mtimeMs > VIDEO_CACHE_TTL_MS) {
-    if (details) await unlink(filePath).catch(() => undefined);
-    return null;
+  const signedUrl = await getSignedVideoObjectUrl(videoId, "GET");
+  const response = await fetch(signedUrl, {
+    signal: AbortSignal.timeout(120_000),
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    throw new Error(`App Storage could not read the pool video (HTTP ${response.status}).`);
   }
-  const video = await readFile(filePath);
+  const contentLength = Number(response.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_VIDEO_BYTES) return null;
+  const video = Buffer.from(await response.arrayBuffer());
   if (
     video.length < 12 ||
     video.length > MAX_VIDEO_BYTES ||
     video.subarray(4, 8).toString("ascii") !== "ftyp"
   ) {
-    await unlink(filePath).catch(() => undefined);
     return null;
   }
   return video;

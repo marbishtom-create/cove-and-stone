@@ -14,15 +14,10 @@
     <path d="M14 34C17 44 10 53 13 61S24 67 31 70M31 43C33 51 28 60 31 70M49 32C52 42 46 51 48 58M66 41C68 49 63 58 66 67M83 31C87 41 81 51 84 57M101 40C103 49 98 59 102 68"/>
   </g>
   <g fill="url(#caustic-glow)">
-    <circle cx="12" cy="8" r="3.5"/>
     <circle cx="66" cy="41" r="3.5"/>
-    <circle cx="102" cy="68" r="3.5"/>
   </g>
   <g fill="#f2fffd" opacity=".42">
-    <circle cx="12" cy="8" r="1.5"/>
     <circle cx="31" cy="43" r="1.5"/>
-    <circle cx="66" cy="41" r="1.6"/>
     <circle cx="84" cy="57" r="1.2"/>
-    <circle cx="102" cy="68" r="1.5"/>
   </g>
 </svg>

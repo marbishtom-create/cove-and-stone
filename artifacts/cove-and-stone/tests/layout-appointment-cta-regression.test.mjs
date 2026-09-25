@@ -40,8 +40,9 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.equal((layoutSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 2);
   assert.match(ctaElements, /<ArrowRight\b/);
   assert.match(ctaElements, /fill="#fff"[\s\S]*?stroke="#15969a"/);
-  assert.match(ctaElements, /waterlinePoints/);
+  assert.match(ctaElements, /d="M 0 40 C 16 39, 27 90, 43 95 C 58 100, 68 89, 79 67 C 87 53, 95 72, 100 83"/);
   assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
+  assert.match(ctaElements, /strokeWidth="0\.9"/);
   assert.match(ctaStyles, /transition-delay: 3\.05s/);
   assert.match(ctaStyles, /layout-appointment-cta__arrow-shell:hover \.layout-appointment-cta__duck/);
 });
@@ -62,6 +63,11 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(ctaStyles, /url\("\/brand\/cove-water-caustics\.svg"\)/);
   assert.match(waterTexture, /<path/);
   assert.match(waterTexture, /<circle/);
+  assert.equal(
+    (waterTexture.match(/<circle /g) ?? []).length,
+    3,
+    'keep only three restrained water glints in the repeating texture',
+  );
   assert.match(waterTexture, /stroke-opacity="\.25" stroke-width="\.85"/);
   assert.match(waterTexture, /opacity="\.42"/);
   assert.doesNotMatch(waterTexture, /<path d="M12 4\.5/);
@@ -73,8 +79,14 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(ctaStyles, /rgba\(111, 239, 221, 0\.46\)/);
   assert.match(ctaStyles, /background-size: 120px 84px, 100% 100%, 240% 100%, 250% 100%/);
   assert.doesNotMatch(ctaStyles, /drop-shadow\(0 -2px 0 rgba\(255, 255, 255/);
-  assert.equal((ctaStyles.match(/50% 94%/g) ?? []).length, 2);
-  assert.match(ctaStyles, /42% 95%, 44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%/);
+  assert.match(ctaStyles, /--appointment-water-mask: polygon/);
+  assert.equal(
+    (ctaStyles.match(/clip-path: var\(--appointment-water-mask\)/g) ?? []).length,
+    2,
+    'water color and glint should share the exact same smooth mask',
+  );
+  assert.match(ctaStyles, /48% 96\.1%,\s*50% 96\.2%,\s*52% 96\.1%,\s*54% 95\.7%/);
+  assert.match(ctaStyles, /linear-gradient\(rgba\(255, 255, 255, 0\.11\)/);
   assert.equal(
     (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
     2,
