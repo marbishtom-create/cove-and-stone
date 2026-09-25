@@ -108,7 +108,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      {!location.startsWith("/projects/") && (
+      {location === "/" && (
         <div className="layout-appointment-cta__dock fixed z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex">
           <Link
             href="/appointments/"

@@ -9,17 +9,17 @@ Keep the CTA's pale upper panel distinct from limestone. Reveal a clearly visibl
 
 **How to apply:** Keep the SVG waterline aligned to the CSS water mask and preserve separate masks for the pale panel, exposed stone, and water when changing CTA size, motion, placement, or textures.
 
-The desktop consultation CTA should stay a compact, centered pill with its lettering slightly inset to the right. Keep the same proportions as it narrows on smaller screens.
+Keep the compact desktop and mobile floating CTAs only on the homepage, both fixed at bottom-right with the same reference proportions.
 
-**Why:** The user corrected the enlarged banner as the wrong size and preferred the earlier compact CTA.
+**Why:** The user wants both responsive versions in the same bottom-right homepage position, with no floating dock on other routes.
 
-**How to apply:** Keep the desktop dock near its earlier 19.8rem width; shift the copy right modestly without enlarging the badge or the CTA.
+**How to apply:** Preserve the desktop dock's compact 19.8rem width, use safe-area-aware right alignment at both breakpoints, and keep other-route CTAs in their page flow.
 
 On mobile, show the compact fixed consultation CTA only on the homepage, at bottom-right. The menu's own CTA remains available while the navigation is open; respect device safe areas.
 
 **Why:** The user simplified the mobile placement to one persistent CTA on the homepage rather than a dock across every page.
 
-**How to apply:** Reuse the shared CTA surface and arrow, position the mobile dock at the homepage's safe-area-aware bottom-right, and leave other pages to their in-flow CTAs. Keep the separate desktop CTA unchanged unless asked otherwise.
+**How to apply:** Reuse the shared CTA surface and arrow, position the mobile dock at the homepage's safe-area-aware bottom-right, and leave other pages to their in-flow CTAs.
 
 On narrow screens, keep the project-detail CTA compact while retaining the reference pill's 4.82:1 proportions and desktop size.
 

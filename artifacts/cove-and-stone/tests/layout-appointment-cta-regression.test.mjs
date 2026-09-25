@@ -64,12 +64,13 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
 });
 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
-  assert.match(layoutSource, /\{!location\.startsWith\("\/projects\/"\) && \(/);
+  assert.match(layoutSource, /\{location === "\/" && \(/);
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
   assert.match(projectDetailSource, /layout-appointment-cta--compact-mobile/);
   assert.match(projectDetailSource, /min-h-\[3rem\] w-full max-w-\[14\.5rem\] sm:min-h-\[4\.1rem\] sm:max-w-\[19\.8rem\]/);
   assert.equal((projectDetailSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 1);
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
+  assert.match(ctaStyles, /\.layout-appointment-cta__dock \{[\s\S]*?right: max\(0\.75rem, env\(safe-area-inset-right\)\)/);
 });
 
 test('keeps the mobile CTA fixed at the homepage bottom-right only', () => {
@@ -115,7 +116,7 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(ctaStyles, /linear-gradient\(108deg, #0ea0aa 0%, #16b3b8 18%, #23c9c5 36%, #53ddd1 49%/);
   assert.match(ctaStyles, /rgba\(2, 88, 107, 0\.42\)/);
   assert.match(ctaStyles, /rgba\(111, 239, 221, 0\.46\)/);
-  assert.match(ctaStyles, /background-size: 240px 168px, 100% 100%, 240% 100%, 250% 100%/);
+  assert.match(ctaStyles, /background-size: 25cqw 17\.5cqw, 100% 100%, 240% 100%, 250% 100%/);
   assert.doesNotMatch(ctaStyles, /drop-shadow\(0 -2px 0 rgba\(255, 255, 255/);
   assert.match(ctaStyles, /--appointment-water-mask: polygon/);
   assert.equal(
@@ -134,6 +135,9 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(ctaStyles, /@keyframes cove-water-current/);
   assert.match(ctaStyles, /@keyframes cove-water-flow/);
   assert.match(ctaStyles, /@keyframes cove-water-glint/);
+  assert.match(ctaStyles, /background-position: 6\.8cqw 4\.8cqw, 0 0, 100% 0, 100% 0/);
+  assert.match(ctaStyles, /background-position: -11\.7cqw 0, 0 0/);
+  assert.match(ctaStyles, /background-position: 15\.9cqw 0, 100% 0/);
   assert.match(ctaStyles, /layout-appointment-cta__arrow-shell/);
   assert.match(ctaStyles, /@media \(prefers-reduced-motion: reduce\)/);
 });
