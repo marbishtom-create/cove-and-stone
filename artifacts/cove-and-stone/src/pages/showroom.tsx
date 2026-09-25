@@ -1,8 +1,8 @@
 import { ArrowRight, MapPin, Clock, Building, Eye, PencilRuler, WalletCards, Hammer } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Link } from 'wouter';
-import showroomPhotoDesktop from '@assets/0_IMG_7080_1790117937906-high-res-sharpened.jpg';
-import showroomPhotoMobile from '@assets/0_IMG_7080_1790117937906-mobile-sharpened.jpg';
+import showroomPhotoDesktop from '@assets/IMG_8065_1790307659407-showroom-desktop.jpg';
+import showroomPhotoMobile from '@assets/IMG_8065_1790307659407-showroom-mobile.jpg';
 import showroomLoungeDisplay from '@assets/IMG_8053_1790304907299-sharpened.jpg';
 import showroomEquipmentDisplay from '@assets/IMG_8054_1790304907300-sharpened.jpg';
 import showroomOutdoorKitchen from '@assets/IMG_8055_1790304907300-sharpened.jpg';
@@ -39,16 +39,16 @@ export default function Showroom() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-16 items-start">
           <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
             <picture>
               <source media="(max-width: 767px)" srcSet={showroomPhotoMobile} />
               <img
                 src={showroomPhotoDesktop}
-                alt="Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays"
+                alt="Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating"
                 className="w-full h-full object-cover"
                 width={1440}
-                height={1000}
+                height={1078}
                 fetchPriority="high"
               />
             </picture>

@@ -8,7 +8,7 @@ const showroomSourcePath = resolve(artifactRoot, 'src/pages/showroom.tsx');
 const showroomSource = await readFile(showroomSourcePath, 'utf8');
 
 const approvedAltText =
-  'Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays';
+  'Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating';
 const approvedCaption = 'Cove & Stone Jacksonville showroom';
 const minimumDesktopWidth = 1440;
 const minimumDesktopHeight = 1000;
@@ -103,6 +103,12 @@ test('uses the mobile showroom source below the desktop breakpoint', () => {
     /<picture>\s*<source media="\(max-width: 767px\)" srcSet=\{showroomPhotoMobile\}/,
   );
   assert.match(showroomSource, /<img\s+src=\{showroomPhotoDesktop\}/);
+});
+
+test('uses the supplied Jacksonville showroom image and gives it slightly more room', () => {
+  assert.match(showroomSource, /IMG_8065_1790307659407-showroom-desktop\.jpg/);
+  assert.match(showroomSource, /IMG_8065_1790307659407-showroom-mobile\.jpg/);
+  assert.match(showroomSource, /lg:grid-cols-\[1\.08fr_0\.92fr\]/);
 });
 
 test('keeps the approved showroom accessibility text and visible caption', () => {

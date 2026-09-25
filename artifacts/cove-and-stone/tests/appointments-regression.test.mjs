@@ -4,7 +4,7 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, apiRoute, apiSpec, seoText, sitemap, themeConfig] =
+const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, apiRoute, apiSpec, seoText, sitemap, themeConfig, projectDetail] =
   await Promise.all([
     read("../src/App.tsx"),
     read("../src/components/layout/layout.tsx"),
@@ -17,6 +17,7 @@ const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, 
     read("../src/config/seo-routes.json"),
     read("../public/sitemap.xml"),
     read("../src/config/theme.ts"),
+    read("../src/pages/project-detail.tsx"),
   ]);
 const seo = JSON.parse(seoText);
 
@@ -31,13 +32,19 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /prefers-reduced-motion:\s*reduce/);
   assert.match(layoutCtaCss, /border-radius:\s*9999px/);
   assert.match(layoutCtaCss, /aspect-ratio:\s*2007\s*\/\s*420/);
-  assert.match(layoutCtaCss, /width:\s*min\(15\.84rem/);
-  assert.match(layoutCtaCss, /width:\s*min\(12rem/);
+  assert.match(layoutCtaCss, /width:\s*min\(19\.9584rem/);
+  assert.match(layoutCtaCss, /width:\s*min\(15\.12rem/);
+  assert.match(projectDetail, /max-w-\[18\.27rem\]\s+sm:max-w-\[24\.948rem\]/);
   assert.match(layoutCtaCss, /layout-appointment-cta__reference-art/);
   assert.match(layoutCtaCss, /cove-cta-water-flow/);
+  assert.match(layoutCtaCss, /animation:\s*cove-cta-water-flow\s+8s\s+linear\s+infinite/);
+  assert.match(layoutCtaCss, /repeating-linear-gradient\(\s*0deg/);
   assert.match(layoutCtaCss, /appointment-cta-water-mask\.svg/);
   assert.match(layoutCtaCss, /layout-appointment-cta__copy-backdrop/);
   assert.match(layoutCtaCss, /layout-appointment-cta__eyebrow/);
+  assert.match(layoutCtaCss, /transition-delay:\s*3s/);
+  assert.match(ctaElements, /layout-appointment-cta__duck-medallion/);
+  assert.match(ctaElements, /viewBox="0 0 48 48"/);
   assert.match(ctaElements, /src="\/brand\/appointment-cta-reference\.png"/);
   assert.match(ctaElements, /aria-hidden="true"/);
   assert.match(layoutCtaCss, /clip-path:\s*inset\(50%\)/);

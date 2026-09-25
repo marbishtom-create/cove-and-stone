@@ -3,7 +3,7 @@
   left: auto;
   right: max(0.75rem, env(safe-area-inset-right));
   transform: none;
-  width: min(15.84rem, calc(80vw - 4rem));
+  width: min(19.9584rem, calc(100.8vw - 5.04rem));
 }
 
 .layout-appointment-cta__dock--mobile {
@@ -11,7 +11,7 @@
   left: auto;
   right: max(0.75rem, env(safe-area-inset-right));
   transform: none;
-  width: min(12rem, calc(80vw - 1.2rem));
+  width: min(15.12rem, calc(100.8vw - 1.512rem));
 }
 
 .layout-appointment-cta {
@@ -63,6 +63,38 @@
   z-index: 4;
 }
 
+.layout-appointment-cta__duck-medallion {
+  align-items: center;
+  aspect-ratio: 1;
+  background: #0b8996;
+  border: 1px solid rgba(247, 246, 244, 0.92);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(247, 246, 244, 0.86);
+  display: grid;
+  opacity: 0;
+  position: absolute;
+  right: 4.15%;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  transition: opacity 180ms ease, transform 180ms ease;
+  transition-delay: 0s;
+  width: 11%;
+  z-index: 5;
+}
+
+.layout-appointment-cta:hover .layout-appointment-cta__duck-medallion,
+.layout-appointment-cta:focus-visible .layout-appointment-cta__duck-medallion {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  transition-delay: 3s;
+}
+
+.layout-appointment-cta__duck-art {
+  display: block;
+  height: 76%;
+  width: 76%;
+}
+
 .layout-appointment-cta__eyebrow {
   color: #142438;
   display: block;
@@ -104,7 +136,7 @@
 }
 
 .layout-appointment-cta::before {
-  animation: cove-cta-water-flow 10s linear infinite;
+  animation: cove-cta-water-flow 8s linear infinite;
   background-image:
     radial-gradient(ellipse 34% 48% at 20% 35%, rgba(202, 255, 248, 0.36), transparent 78%),
     repeating-linear-gradient(
@@ -119,12 +151,18 @@
       rgba(202, 255, 249, 0.19) 18px 19px,
       transparent 20px 36px
     ),
-    linear-gradient(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%);
-  background-position: 0 0, 0 0, 12px 9px, 0 0;
-  background-repeat: no-repeat, repeat, repeat, no-repeat;
-  background-size: 100% 100%, 9cqw 7cqw, 9cqw 7cqw, 220% 100%;
+    linear-gradient(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 7px,
+      rgba(220, 255, 251, 0.18) 8px 9px,
+      transparent 10px 18px
+    );
+  background-position: 0 0, 0 0, 12px 9px, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat, no-repeat, repeat;
+  background-size: 100% 100%, 9cqw 7cqw, 9cqw 7cqw, 220% 100%, 100% 18px;
   mix-blend-mode: screen;
-  opacity: 0.45;
+  opacity: 0.5;
   z-index: 1;
 }
 
@@ -163,10 +201,10 @@
 
 @keyframes cove-cta-water-flow {
   from {
-    background-position: 0 0, 0 0, 12px 9px, 0 0;
+    background-position: 0 0, 0 0, 12px 9px, 0 0, 0 0;
   }
   to {
-    background-position: 0 0, 9cqw 7cqw, 21cqw 16cqw, 100% 0;
+    background-position: 0 0, 9cqw 7cqw, 21cqw 16cqw, 100% 0, 0 18px;
   }
 }
 
@@ -184,7 +222,8 @@
 @media (prefers-reduced-motion: reduce) {
   .layout-appointment-cta,
   .layout-appointment-cta::before,
-  .layout-appointment-cta::after {
+  .layout-appointment-cta::after,
+  .layout-appointment-cta__duck-medallion {
     animation: none;
     transition-duration: 0.01ms;
   }
