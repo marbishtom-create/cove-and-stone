@@ -13,7 +13,7 @@ export const Logo = ({
   const imageSource =
     variant === "dark"
       ? "/brand/cove-and-stone-approved-white.png"
-      : "/brand/cove-and-stone-approved.png";
+      : "/brand/cove-and-stone-approved-black-type.png";
 
   return (
     <Link

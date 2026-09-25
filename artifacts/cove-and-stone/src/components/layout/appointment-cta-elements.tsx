@@ -10,7 +10,7 @@ export function AppointmentCtaSurface() {
     <>
       <img
         className="layout-appointment-cta__reference-art"
-        src="/brand/appointment-cta-reference.png"
+        src="/brand/appointment-cta-reference-arrow-small.png"
         alt=""
         aria-hidden="true"
       />

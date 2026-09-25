@@ -16,11 +16,11 @@ test("keeps all three mobile hero CTAs vibrant with a subtle frosted-glass treat
   assert.match(heroSection, /Visit the Showroom/);
   assert.match(heroSection, /Explore Financing/);
   assert.equal(
-    (heroSection.match(/bg-secondary\/90 text-secondary-foreground/g) ?? []).length,
+    (heroSection.match(/bg-brand-aqua\/60 text-secondary-foreground/g) ?? []).length,
     3,
   );
   assert.equal((heroSection.match(/backdrop-blur-md/g) ?? []).length, 3);
-  assert.equal((heroSection.match(/border-white\/30/g) ?? []).length, 3);
+  assert.equal((heroSection.match(/border-white\/40/g) ?? []).length, 3);
   assert.match(heroSection, /hover:bg-white hover:text-primary/);
   assert.match(heroSection, /focus-visible:bg-white focus-visible:text-primary/);
   assert.match(heroSection, /active:bg-white active:text-primary/);

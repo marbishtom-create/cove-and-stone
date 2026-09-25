@@ -1,10 +1,10 @@
 ---
 name: Image-edit aspect ratios
-description: Check AI-edited media dimensions and responsive crops before replacing site imagery.
+description: Check AI-edited media dimensions, object scale, and responsive crops before replacing site imagery.
 ---
 
-AI image edits can change the source aspect ratio even when the instruction asks to preserve framing.
+AI image edits can change the source aspect ratio and the scale of individual objects, even when the instruction asks to preserve framing or make a measured size change.
 
-**Why:** A landscape source produced a square edit, which can change which parts remain visible when a page uses `object-fit: cover`.
+**Why:** A landscape crop produced a square edit, and an object-size adjustment came back larger than requested. A polished-looking image can still have the wrong geometry.
 
-**How to apply:** Compare the edited asset's dimensions with the source, then inspect its actual desktop and mobile crops before wiring it into a page.
+**How to apply:** Use pixel-based edits for exact size changes. Compare image dimensions and object bounds, then inspect the actual desktop and mobile crops before wiring an edit into a page.

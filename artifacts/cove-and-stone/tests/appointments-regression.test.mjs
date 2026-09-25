@@ -71,7 +71,7 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(ctaElements, /linearGradient/);
   assert.equal((ctaElements.match(/fill="#080c10"/g) ?? []).length, 2);
   assert.match(ctaElements, /M18\.7 22\.4/);
-  assert.match(ctaElements, /src="\/brand\/appointment-cta-reference\.png"/);
+  assert.match(ctaElements, /src="\/brand\/appointment-cta-reference-arrow-small\.png"/);
   assert.match(ctaElements, /aria-hidden="true"/);
   assert.match(layoutCtaCss, /clip-path:\s*inset\(50%\)/);
 });

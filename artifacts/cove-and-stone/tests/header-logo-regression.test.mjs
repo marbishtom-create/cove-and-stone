@@ -9,7 +9,7 @@ const logoSource = await readFile(
   'utf8',
 );
 const logoAsset = await readFile(
-  resolve(artifactRoot, 'public/brand/cove-and-stone-approved.png'),
+  resolve(artifactRoot, 'public/brand/cove-and-stone-approved-black-type.png'),
 );
 const whiteLogoAsset = await readFile(
   resolve(artifactRoot, 'public/brand/cove-and-stone-approved-white.png'),
@@ -39,7 +39,7 @@ const headerViewports = [
 
 test('uses the complete transparent logo lockup in the header', () => {
   assert.match(logoSource, /src=\{imageSource\}/);
-  assert.match(logoSource, /cove-and-stone-approved\.png/);
+  assert.match(logoSource, /cove-and-stone-approved-black-type\.png/);
   assert.match(logoSource, /cove-and-stone-approved-white\.png/);
   assert.match(logoSource, /alt="Cove & Stone Pools, Spas & Outdoor Living"/);
   assert.doesNotMatch(logoSource, /cove-and-stone-(monogram|wordmark-exact)\.png/);
