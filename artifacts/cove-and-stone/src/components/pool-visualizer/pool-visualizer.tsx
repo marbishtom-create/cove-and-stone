@@ -1367,6 +1367,16 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               <button className="pool-visualizer__history-button" type="button" onClick={redo} disabled={!future.length} aria-label="Redo last design change" data-testid="button-redo">
                 <Redo2 size={14} />
               </button>
+              <button
+                className="pool-visualizer__history-button"
+                type="button"
+                onClick={resetDesign}
+                aria-label="Reset pool design"
+                title="Reset design"
+                data-testid="button-reset-design"
+              >
+                <RefreshCcw size={14} />
+              </button>
             </div>
           </div>
 
@@ -1660,7 +1670,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedFinish.label} pool finish</span></div>
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedDeck.label} · flush edge</span></div>
           </div>
-          {controlActions}
+          {aiRenderActions}
           <section className="pool-visualizer__feature-dock" aria-label="Pool and outdoor feature selections">
             <div className="pool-visualizer__feature-dock-heading">
               <div>
@@ -1723,6 +1733,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               </div>
             </div>
           </section>
+          {contactActions}
         </div>
       </div>
     </section>
