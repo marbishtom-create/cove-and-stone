@@ -6,6 +6,7 @@ import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import nocateeResortRealistic from '@assets/generated_images/nocatee-resort-backyard-realistic.jpg';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
+import { BeforeAfter } from '@/components/ui/before-after';
 import { THEME_CONFIG } from '@/config/theme';
 import { 
   ArrowRight, 
@@ -121,31 +122,19 @@ export default function Home() {
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-serif mb-6 text-primary">Pool & Backyard Design Inspiration</h2>
             <p className="text-muted-foreground">
-              Review a backyard reference alongside a separate illustrative pool design. These images are not views of the same property or completed-project photographs.
+              Slide between the existing fenced backyard and an illustrative pool design based on the same view. The design is a concept, not a photograph of completed construction.
             </p>
           </div>
           
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
-            <figure className="overflow-hidden border border-border bg-card">
-              <img
-                src={backyardReference}
-                alt="Residential backyard reference with lawn, planting and no pool shown"
-                className="aspect-square w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Backyard reference image</figcaption>
-            </figure>
-            <figure className="overflow-hidden border border-border bg-card">
-              <img
-                src={poolDesignStudy}
-                alt="Illustrative modern pool design with pale stone decking and outdoor seating"
-                className="aspect-square w-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Illustrative pool design</figcaption>
-            </figure>
+          <div className="mx-auto max-w-5xl overflow-hidden border border-border bg-card shadow-xl">
+            <BeforeAfter
+              beforeImage={backyardReference}
+              afterImage={poolDesignStudy}
+              beforeAlt="Existing fenced backyard with lawn and planting before the pool design"
+              afterAlt="Illustrative pool design based on the same backyard view, with pale stone decking"
+              beforeLabel="Before · Existing backyard"
+              afterLabel="After · Illustrative design"
+            />
           </div>
         </div>
       </section>

@@ -7,11 +7,13 @@ const [home, renovations] = await Promise.all([
   readFile(new URL("../src/pages/renovations.tsx", import.meta.url), "utf8"),
 ]);
 
-test("homepage design references are not presented as a same-property transformation", () => {
-  assert.doesNotMatch(home, /BeforeAfter/);
-  assert.match(home, /Backyard reference image/);
-  assert.match(home, /Illustrative pool design/);
-  assert.match(home, /not views of the same property or completed-project photographs/);
+test("homepage provides a labeled slider for the backyard photo and illustrative pool concept", () => {
+  assert.match(home, /<BeforeAfter/);
+  assert.match(home, /beforeImage=\{backyardReference\}/);
+  assert.match(home, /afterImage=\{poolDesignStudy\}/);
+  assert.match(home, /beforeLabel="Before · Existing backyard"/);
+  assert.match(home, /afterLabel="After · Illustrative design"/);
+  assert.match(home, /concept, not a photograph of completed construction/);
 });
 
 test("renovation references are shown separately with a clear provenance disclaimer", () => {
