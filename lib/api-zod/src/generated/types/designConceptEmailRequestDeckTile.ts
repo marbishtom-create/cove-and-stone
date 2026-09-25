@@ -19,4 +19,7 @@ export const DesignConceptEmailRequestDeckTile = {
   'charcoal-porcelain': 'charcoal-porcelain',
   'dark-gray-porcelain': 'dark-gray-porcelain',
   'black-marble-porcelain': 'black-marble-porcelain',
+  'terracotta-clay-pavers': 'terracotta-clay-pavers',
+  'blue-gray-bluestone': 'blue-gray-bluestone',
+  'warm-gray-concrete-pavers': 'warm-gray-concrete-pavers',
 } as const;

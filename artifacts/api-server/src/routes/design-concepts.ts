@@ -69,6 +69,9 @@ const DECK_TILE_LABELS = {
   "charcoal-porcelain": "Charcoal porcelain",
   "dark-gray-porcelain": "Dark gray porcelain",
   "black-marble-porcelain": "Black marble-look porcelain",
+  "terracotta-clay-pavers": "Terracotta clay pavers",
+  "blue-gray-bluestone": "Blue-gray bluestone",
+  "warm-gray-concrete-pavers": "Warm-gray concrete pavers",
 } as const;
 
 const FEATURE_LABELS = {
@@ -205,7 +208,13 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
       ? "matte dark gray porcelain pavers with restrained fine stone grain"
       : concept.deckTile === "black-marble-porcelain"
         ? "near-black marble-look porcelain pavers with subtle pale veining"
-        : `${DECK_TILE_LABELS[concept.deckTile].toLowerCase()} tile`;
+        : concept.deckTile === "terracotta-clay-pavers"
+          ? "warm terracotta clay pavers with subtle natural surface variation"
+          : concept.deckTile === "blue-gray-bluestone"
+            ? "blue-gray natural bluestone pavers with quiet mineral grain"
+            : concept.deckTile === "warm-gray-concrete-pavers"
+              ? "warm-gray architectural concrete pavers with lightly exposed fine aggregate"
+              : `${DECK_TILE_LABELS[concept.deckTile].toLowerCase()} tile`;
   const photoMatch =
     /^data:image\/jpeg;base64,([A-Za-z0-9+/]+={0,2})$/.exec(
       concept.photoDataUrl,

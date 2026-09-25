@@ -43,6 +43,9 @@ import pebbleFinishTexture from '@assets/generated_images/material-pool-pebble-s
 import stoneWaterlineTexture from '@assets/generated_images/material-waterline-stone-tile-small.jpg';
 import glassWaterlineTexture from '@assets/generated_images/material-waterline-glass-tile-small.jpg';
 import deckPaverTexture from '@assets/generated_images/material-deck-pavers-small.jpg';
+import terracottaPaverTexture from '@assets/generated_images/material-deck-terracotta-pavers.jpg';
+import bluestonePaverTexture from '@assets/generated_images/material-deck-bluestone-pavers.jpg';
+import concretePaverTexture from '@assets/generated_images/material-deck-concrete-pavers.jpg';
 import darkGrayDeckTexture from '@assets/generated_images/material-deck-dark-gray-porcelain-small.jpg';
 import blackMarbleDeckTexture from '@assets/generated_images/material-deck-black-marble-porcelain-small.jpg';
 import './pool-visualizer.css';
@@ -86,7 +89,10 @@ export type DeckTile =
   | 'coastal-shellstone'
   | 'charcoal-porcelain'
   | 'dark-gray-porcelain'
-  | 'black-marble-porcelain';
+  | 'black-marble-porcelain'
+  | 'terracotta-clay-pavers'
+  | 'blue-gray-bluestone'
+  | 'warm-gray-concrete-pavers';
 export type PoolFeature =
   | 'spa'
   | 'spa-waterfall'
@@ -262,6 +268,9 @@ const DECK_TILES: Array<{ id: DeckTile; label: string; detail: string; swatch: s
   { id: 'charcoal-porcelain', label: 'Charcoal porcelain', detail: 'Deep architectural slate', swatch: '#747b77', grout: '#5c6461', texture: deckPaverTexture },
   { id: 'dark-gray-porcelain', label: 'Dark gray porcelain', detail: 'Matte graphite with fine stone grain', swatch: '#414649', grout: '#303638', texture: darkGrayDeckTexture },
   { id: 'black-marble-porcelain', label: 'Black marble-look porcelain', detail: 'Near-black stone with subtle pale veining', swatch: '#17191a', grout: '#363839', texture: blackMarbleDeckTexture },
+  { id: 'terracotta-clay-pavers', label: 'Terracotta clay pavers', detail: 'Warm clay with subtle surface variation', swatch: '#b66d50', grout: '#92563f', texture: terracottaPaverTexture },
+  { id: 'blue-gray-bluestone', label: 'Blue-gray bluestone', detail: 'Cool natural stone with quiet mineral grain', swatch: '#687a81', grout: '#526268', texture: bluestonePaverTexture },
+  { id: 'warm-gray-concrete-pavers', label: 'Warm-gray concrete pavers', detail: 'Soft gray with lightly exposed aggregate', swatch: '#a9a69f', grout: '#88867f', texture: concretePaverTexture },
 ];
 
 const POOL_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; icon: ReactElement }> = [

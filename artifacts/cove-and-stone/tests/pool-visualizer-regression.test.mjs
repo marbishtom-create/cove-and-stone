@@ -176,16 +176,37 @@ test("shows distinct material tones and supports darker porcelain deck choices",
   assert.match(apiSpec, /black-marble-porcelain/);
 });
 
+test("offers three additional paver styles in the preview, handoff, and API contract", () => {
+  const paverOptions = [
+    ["terracotta-clay-pavers", "Terracotta clay pavers", "material-deck-terracotta-pavers.jpg"],
+    ["blue-gray-bluestone", "Blue-gray bluestone", "material-deck-bluestone-pavers.jpg"],
+    ["warm-gray-concrete-pavers", "Warm-gray concrete pavers", "material-deck-concrete-pavers.jpg"],
+  ];
+
+  for (const [id, label, texture] of paverOptions) {
+    assert.match(component, new RegExp(`id: '${id}', label: '${label}'`));
+    assert.match(component, new RegExp(texture));
+    assert.match(designConceptRoute, new RegExp(`"${id}": "${label}"`));
+    assert.match(designConceptRoute, new RegExp(id));
+    assert.equal((apiSpec.match(new RegExp(id, "g")) ?? []).length, 2, `${id} must be accepted by both design endpoints`);
+  }
+});
+
 test("keeps glass waterline colors and charcoal tile scale visually distinct", () => {
   assert.match(component, /id: 'sea-glass'.*swatch: '#a9ccc5'/);
   assert.match(component, /id: 'lagoon-glass'.*swatch: '#79a9a7'.*tintOpacity: 0\.74/);
   assert.match(component, /id: 'ocean-blue-glass'.*swatch: '#187eae'.*tintOpacity: 0\.88/);
   assert.match(component, /label: 'Deep blue glass', detail: 'Very dark midnight blue', swatch: '#071d3a'.*tintOpacity: 0\.92/);
   assert.match(component, /swatch: '#080b0d'.*tintOpacity: 0\.84, grayscale: true, patternScale: 1\.25/);
-  assert.match(component, /const tilePatternWidth = 54 \* \(tile\.patternScale \?\? 1\)/);
+  assert.match(component, /const VISUAL_TILE_SCALE = 1\.25/);
+  assert.match(component, /const tilePatternScale = VISUAL_TILE_SCALE \* \(tile\.patternScale \?\? 1\)/);
+  assert.match(component, /const tilePatternWidth = 54 \* tilePatternScale/);
+  assert.match(component, /const deckPatternWidth = 96 \* VISUAL_TILE_SCALE/);
+  assert.match(component, /const deckPatternHeight = 72 \* VISUAL_TILE_SCALE/);
+  assert.match(component, /backgroundSize: `\$\{VISUAL_TILE_SCALE \* \(tile\.patternScale \?\? 1\) \* 100\}%/);
+  assert.match(component, /backgroundSize: `\$\{VISUAL_TILE_SCALE \* 100\}%/);
   assert.match(component, /opacity=\{tileTintOpacity\}/);
   assert.match(component, /filter=\{tile\.grayscale \? 'url\(#waterline-charcoal-filter\)' : undefined\}/);
-  assert.match(component, /backgroundSize: tile\.patternScale \?/);
   assert.match(designConceptRoute, /"deep-navy-glass": "Deep blue glass"/);
 });
 
