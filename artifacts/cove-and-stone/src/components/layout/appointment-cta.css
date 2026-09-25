@@ -163,7 +163,7 @@
 }
 
 .layout-appointment-cta::before {
-  animation: cove-cta-water-flow 8s linear infinite;
+  animation: cove-cta-water-flow 12s linear infinite;
   background-image:
     radial-gradient(ellipse 34% 48% at 20% 35%, rgba(202, 255, 248, 0.36), transparent 78%),
     repeating-linear-gradient(
@@ -194,8 +194,12 @@
 }
 
 .layout-appointment-cta::after {
-  animation: cove-cta-water-glint 4.5s linear infinite;
+  animation: cove-cta-water-glint 7.5s linear infinite;
   background-image:
+    radial-gradient(ellipse 0.2cqw 1.1cqw at 37% 93%, rgba(255, 255, 255, 0.94) 0 25%, rgba(255, 255, 255, 0.6) 48%, transparent 100%),
+    radial-gradient(ellipse 1.1cqw 0.2cqw at 37% 93%, rgba(255, 255, 255, 0.94) 0 25%, rgba(255, 255, 255, 0.6) 48%, transparent 100%),
+    radial-gradient(ellipse 0.2cqw 1.1cqw at 70% 93%, rgba(255, 255, 255, 0.9) 0 25%, rgba(255, 255, 255, 0.54) 48%, transparent 100%),
+    radial-gradient(ellipse 1.1cqw 0.2cqw at 70% 93%, rgba(255, 255, 255, 0.9) 0 25%, rgba(255, 255, 255, 0.54) 48%, transparent 100%),
     linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.5) 42%, transparent 70%),
     repeating-linear-gradient(
       116deg,
@@ -203,9 +207,9 @@
       rgba(240, 255, 251, 0.3) 19px 20px,
       transparent 21px 38px
     );
-  background-position: -60px 0, 0 0;
-  background-repeat: no-repeat, repeat;
-  background-size: 190% 150%, 9.5cqw 7cqw;
+  background-position: 0 0, 0 0, 0 0, 0 0, -60px 0, 0 0;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 190% 150%, 9.5cqw 7cqw;
   mix-blend-mode: screen;
   opacity: 0.68;
   z-index: 2;
@@ -237,11 +241,11 @@
 
 @keyframes cove-cta-water-glint {
   from {
-    background-position: -60px 0, 0 0;
+    background-position: 0 0, 0 0, 0 0, 0 0, -60px 0, 0 0;
     opacity: 0.38;
   }
   to {
-    background-position: 100% 0, 9.5cqw 7cqw;
+    background-position: 0 0, 0 0, 0 0, 0 0, 100% 0, 9.5cqw 7cqw;
     opacity: 0.78;
   }
 }
