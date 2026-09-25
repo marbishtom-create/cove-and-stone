@@ -42,6 +42,7 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /repeating-linear-gradient\(\s*0deg/);
   assert.match(layoutCtaCss, /appointment-cta-water-mask\.svg/);
   assert.match(waterMask, /M0 179/);
+  assert.match(waterMask, /C1000 366 1090 363 1200 364/);
   assert.match(waterMask, /2007 412\s+L2007 420/);
   assert.match(layoutCtaCss, /layout-appointment-cta__copy-backdrop/);
   assert.match(layoutCtaCss, /layout-appointment-cta__eyebrow/);

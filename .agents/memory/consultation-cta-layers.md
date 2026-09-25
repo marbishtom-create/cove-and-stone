@@ -29,9 +29,9 @@ Apply every requested size increase consistently across desktop, mobile, and in-
 
 Keep the reference image as the CTA's base art, overlay a more legible live "Design consultation" label, and animate only the water area using masked caustic flow and a moving glint similar to the logo.
 
-**Why:** The user asked for the small label to be easier to read and for the water to move like the logo, without losing the approved reference artwork.
+**Why:** The user asked for moving water effects but noticed haze on the stone, especially in the middle of the button.
 
-**How to apply:** Keep the artwork decorative and the link's text accessible; keep the water mask below the stone boundary so highlights never create haze on limestone, and stop animation under reduced-motion preferences.
+**How to apply:** Keep the artwork decorative and the link's text accessible; lower the middle of the water mask well below the limestone boundary while keeping the effect visible at the bottom, and stop animation under reduced-motion preferences.
 
 After three seconds of continuous hover or visible keyboard focus, replace the arrow medallion with an enlarged, front-facing rubber duck wearing black sunglasses; let the duck visibly overlap the original circle.
 
