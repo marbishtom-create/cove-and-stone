@@ -4,7 +4,7 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, apiRoute, apiSpec, seoText, sitemap, themeConfig, projectDetail] =
+const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, apiRoute, apiSpec, seoText, sitemap, themeConfig, projectDetail, waterMask] =
   await Promise.all([
     read("../src/App.tsx"),
     read("../src/components/layout/layout.tsx"),
@@ -18,6 +18,7 @@ const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, 
     read("../public/sitemap.xml"),
     read("../src/config/theme.ts"),
     read("../src/pages/project-detail.tsx"),
+    read("../public/brand/appointment-cta-water-mask.svg"),
   ]);
 const seo = JSON.parse(seoText);
 
@@ -40,6 +41,8 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /animation:\s*cove-cta-water-flow\s+8s\s+linear\s+infinite/);
   assert.match(layoutCtaCss, /repeating-linear-gradient\(\s*0deg/);
   assert.match(layoutCtaCss, /appointment-cta-water-mask\.svg/);
+  assert.match(waterMask, /M0 179/);
+  assert.match(waterMask, /2007 412\s+L2007 420/);
   assert.match(layoutCtaCss, /layout-appointment-cta__copy-backdrop/);
   assert.match(layoutCtaCss, /layout-appointment-cta__eyebrow/);
   assert.match(layoutCtaCss, /transition-delay:\s*3s/);
