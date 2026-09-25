@@ -20,13 +20,13 @@ export default function Design() {
                 3D Pool & Backyard Design in Jacksonville, FL
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Our in-house design studio uses photorealistic 3D rendering to bring your concepts to life. Walk through your new backyard digitally before any ground is broken.
+                 Our in-house design studio uses photorealistic 3D rendering to bring your ideas to life. Walk through your new backyard digitally before any ground is broken.
               </p>
             </div>
             <div className="flex-1 relative w-full">
               <img
                 src={designImage}
-                alt="3D backyard pool concept displayed on a design tablet"
+                 alt="3D backyard pool design displayed on a design tablet"
                 className="block aspect-square w-full object-cover shadow-2xl md:aspect-video"
               />
             </div>
@@ -42,13 +42,13 @@ export default function Design() {
               See your future backyard before construction begins.
             </h2>
             <p className="mb-8 max-w-xl text-lg leading-relaxed text-primary-foreground/75">
-              Our 3D design process turns the property, pool, materials and outdoor-living details into a visual direction you can review together. This concept walkthrough shows how the finished environment can be explored before the build begins.
+               Our 3D design process turns the property, pool, materials and outdoor-living details into a visual direction you can review together. This design walkthrough shows how the finished environment can be explored before the build begins.
             </p>
             <div className="grid max-w-xl grid-cols-1 gap-4 border-t border-primary-foreground/20 pt-6 sm:grid-cols-3">
               {[
                 ['01', 'Place the pool', 'Review proportion and placement in the backyard.'],
                 ['02', 'Shape the details', 'Coordinate water, materials, lighting and outdoor rooms.'],
-                ['03', 'Walk the direction', 'Use the visual concept to make decisions with confidence.'],
+                ['03', 'Walk the direction', 'Use the visual design to make decisions with confidence.'],
               ].map(([number, title, copy]) => (
                 <div key={number}>
                   <span className="mb-3 block font-mono text-xs tracking-[0.2em] text-secondary">{number}</span>
@@ -87,7 +87,7 @@ export default function Design() {
                   playsInline
                   preload="none"
                   onError={() => setWalkthroughFailed(true)}
-                  aria-label="3D pool and backyard design walkthrough showing a future pool concept in a backyard"
+                  aria-label="3D pool and backyard design walkthrough showing a future pool design in a backyard"
                 >
                   <source src={designWalkthrough} type="video/mp4" />
                 </video>
@@ -177,7 +177,7 @@ export default function Design() {
               <Link href="/outdoor-living/" className="text-primary hover:text-secondary transition-colors">Outdoor living</Link>
               <Link href="/showroom/" className="text-primary hover:text-secondary transition-colors">Visit the showroom</Link>
               <Link href="/financing/" className="text-primary hover:text-secondary transition-colors">Explore financing</Link>
-              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View concepts</Link>
+              <Link href="/projects/" className="text-primary hover:text-secondary transition-colors">View designs</Link>
               <Link href="/contact/" className="text-primary hover:text-secondary transition-colors">Start a consultation</Link>
             </div>
           </nav>

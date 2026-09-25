@@ -22,7 +22,7 @@ export default function Contact() {
             <div>
               <h1 className="text-4xl md:text-5xl font-serif mb-6 text-primary">Start the conversation.</h1>
               <p className="text-muted-foreground leading-relaxed">
-                Whether you have complete architectural plans or just a blank backyard, our design team is ready to conceptualize your space.
+                Whether you have complete architectural plans or just a blank backyard, our design team is ready to shape your space.
               </p>
             </div>
 

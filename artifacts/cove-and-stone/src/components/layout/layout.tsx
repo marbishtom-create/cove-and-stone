@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       >
         <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
            <div className="relative shrink-0 lg:mr-8">
-              <Logo variant={headerLogoVariant} imageClassName="w-[127px] md:w-[169px]" />
+               <Logo variant={headerLogoVariant} imageClassName="w-[165px] md:w-[220px]" />
            </div>
 
           {/* Desktop Nav */}

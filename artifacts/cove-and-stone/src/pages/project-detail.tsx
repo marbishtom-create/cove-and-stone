@@ -79,7 +79,7 @@ export default function ProjectDetail() {
             <div>
               <div className="text-muted-foreground uppercase tracking-widest mb-1 text-xs">Status</div>
               <div className="font-medium text-primary text-base">
-                {project.statusLabel || (isCompletedProject ? "Completed project" : "Illustrative concept direction")}
+                {project.statusLabel || (isCompletedProject ? "Completed project" : "Illustrative design direction")}
               </div>
             </div>
             <div>

@@ -11,12 +11,12 @@ export default function Pools() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Concept visualization of a modern waterfront pool beside an enclosed contemporary home" 
+             alt="Design visualization of a modern waterfront pool beside an enclosed contemporary home"
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
           <div className="absolute bottom-6 right-6 border border-white/30 bg-black/20 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-            Waterfront concept
+             Waterfront design
           </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-white">
@@ -38,11 +38,11 @@ export default function Pools() {
               <div className="relative h-full overflow-hidden">
                 <img 
                   src={projectImage} 
-                  alt="Concept visualization of a modern pool and spa overlooking the St. Johns River and Jacksonville skyline"
+                   alt="Design visualization of a modern pool and spa overlooking the St. Johns River and Jacksonville skyline"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-4 left-4 border border-white/30 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                  St. Johns River concept
+                   St. Johns River design
                 </div>
               </div>
               <div className="absolute -bottom-12 -right-6 hidden h-52 w-52 flex-col justify-center border border-white/40 bg-white/10 p-6 text-white shadow-2xl backdrop-blur-md md:flex">
@@ -66,7 +66,7 @@ export default function Pools() {
               <ul className="mt-10 space-y-4">
                 {[
                   "Modern geometric pool construction",
-                  "Infinity-edge, zero-edge and perimeter-overflow concepts",
+                   "Infinity-edge, zero-edge and perimeter-overflow designs",
                   "Raised spas and integrated sun shelves",
                   "Waterfalls, sheer descents, bubblers and fire-water features",
                   "Pool lighting, equipment upgrades and automation",
@@ -145,18 +145,18 @@ export default function Pools() {
               },
               {
                 question: "Can a spa be integrated with a custom pool?",
-                answer: "Yes. A pool concept can include an integrated or raised spa, sun shelves and other connected water elements when they fit the property and the overall design.",
+                 answer: "Yes. A pool design can include an integrated or raised spa, sun shelves and other connected water elements when they fit the property and the overall design.",
               },
               {
                 question: "What pool features can be included in a design?",
-                answer: "Depending on the property and design direction, features may include infinity-edge, zero-edge or perimeter-overflow concepts, waterfalls, sheer descents, bubblers, fire-and-water features, lighting, equipment upgrades and automation.",
+                 answer: "Depending on the property and design direction, features may include infinity-edge, zero-edge or perimeter-overflow designs, waterfalls, sheer descents, bubblers, fire-and-water features, lighting, equipment upgrades and automation.",
               },
               {
                 question: "How are pool finishes and materials selected?",
                 answer: "Selections are coordinated around the architecture and palette of the home. Options can include porcelain, marble, travertine, natural stone, glass tile and other premium interior, coping and decking finishes.",
               },
               {
-                question: "Can I review a 3D visualization of my pool concept?",
+                 question: "Can I review a 3D visualization of my pool design?",
                 answer: "The design studio can develop a photorealistic 3D visualization so the layout, materials and relationship to the home can be reviewed before construction begins.",
               },
               {
@@ -189,7 +189,7 @@ export default function Pools() {
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-3xl md:text-5xl font-serif mb-6">Ready to break ground?</h2>
           <p className="text-lg text-white/70 mb-10 font-light">
-            Schedule a consultation to discuss your vision and learn how we translate concepts into concrete.
+             Schedule a consultation to discuss your vision and learn how we translate designs into concrete.
           </p>
           <Link 
             href="/contact/" 

@@ -65,7 +65,7 @@ export default function Commercial() {
             <div className="bg-card border border-border p-10 flex flex-col justify-center">
               <h3 className="text-2xl font-serif text-primary mb-6">Discuss a Development</h3>
               <p className="text-muted-foreground mb-8">
-                Provide us with your civil drawings or conceptual plans for a comprehensive review and proposal.
+                Provide us with your civil drawings or preliminary plans for a comprehensive review and proposal.
               </p>
               <form className="space-y-4">
                 <div>

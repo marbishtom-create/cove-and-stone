@@ -100,7 +100,7 @@ export default function Showroom() {
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Jacksonville Design Studio & Showroom</span>
           <h1 className="text-4xl md:text-6xl font-serif mb-6 text-primary">Pool & Outdoor Living Showroom in Jacksonville, FL</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Our in-house design showroom at 7662 Philips Hwy, Unit 32 brings the whole backyard into view. Compare materials at full scale, build a cohesive palette and review photorealistic concepts before construction begins.
+             Our in-house design showroom at 7662 Philips Hwy, Unit 32 brings the whole backyard into view. Compare materials at full scale, build a cohesive palette and review photorealistic renderings before construction begins.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export default function Showroom() {
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
               {[
                 { icon: Eye, title: "See it", copy: "Experience finishes, textures and proportions at full scale." },
-                { icon: PencilRuler, title: "Design it", copy: "Shape a cohesive pool and whole-backyard concept." },
+                 { icon: PencilRuler, title: "Design it", copy: "Shape a cohesive pool and whole-backyard direction." },
                 { icon: WalletCards, title: "Finance it", copy: "Explore current options for your project scope." },
                 { icon: Hammer, title: "Build it", copy: "Move from approved design to coordinated construction." },
               ].map((item) => (

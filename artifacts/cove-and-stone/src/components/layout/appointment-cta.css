@@ -130,6 +130,7 @@
 
 .layout-appointment-cta:hover .layout-appointment-cta__duck-medallion,
 .layout-appointment-cta:focus-visible .layout-appointment-cta__duck-medallion {
+  animation: cove-cta-duck-bounce 2.8s ease-in-out 5s infinite;
   opacity: 1;
   transform: translateY(-50%) scale(1.04);
   transition-delay: 3s;
@@ -202,7 +203,7 @@
 }
 
 .layout-appointment-cta::before {
-  animation: cove-cta-water-flow 12s linear infinite;
+  animation: cove-cta-water-flow 6s linear infinite;
   background-image:
     radial-gradient(ellipse 34% 48% at 20% 35%, rgba(202, 255, 248, 0.36), transparent 78%),
     repeating-linear-gradient(
@@ -228,12 +229,12 @@
   background-repeat: no-repeat, repeat, repeat, no-repeat, repeat;
   background-size: 100% 100%, 9cqw 7cqw, 9cqw 7cqw, 220% 100%, 100% 18px;
   mix-blend-mode: screen;
-  opacity: 0.5;
+  opacity: 0.78;
   z-index: 1;
 }
 
 .layout-appointment-cta::after {
-  animation: cove-cta-water-glint 7.5s linear infinite;
+  animation: cove-cta-water-glint 4s linear infinite;
   background-image:
     linear-gradient(105deg, transparent 10%, rgba(255, 255, 255, 0.5) 42%, transparent 70%),
     repeating-linear-gradient(
@@ -246,7 +247,7 @@
   background-repeat: no-repeat, repeat;
   background-size: 190% 150%, 9.5cqw 7cqw;
   mix-blend-mode: screen;
-  opacity: 0.68;
+  opacity: 0.9;
   z-index: 2;
 }
 
@@ -270,18 +271,29 @@
     background-position: 0 0, 0 0, 12px 9px, 0 0, 0 0;
   }
   to {
-    background-position: 0 0, 9cqw 7cqw, 21cqw 16cqw, 100% 0, 0 18px;
+    background-position: 0 0, 18cqw 14cqw, 48cqw 37cqw, 100% 0, 0 18px;
   }
 }
 
 @keyframes cove-cta-water-glint {
   from {
     background-position: -60px 0, 0 0;
-    opacity: 0.38;
+    opacity: 0.54;
   }
   to {
     background-position: 100% 0, 9.5cqw 7cqw;
-    opacity: 0.78;
+    opacity: 0.98;
+  }
+}
+
+@keyframes cove-cta-duck-bounce {
+  0%,
+  14%,
+  100% {
+    transform: translateY(-50%) scale(1.04);
+  }
+  6% {
+    transform: translateY(calc(-50% - 3px)) scale(1.04);
   }
 }
 
@@ -302,9 +314,18 @@
   .layout-appointment-cta::before,
   .layout-appointment-cta::after,
   .layout-appointment-cta__sparkle,
-  .layout-appointment-cta__duck-medallion {
+  .layout-appointment-cta__duck-medallion,
+  .layout-appointment-cta__duck-art {
     animation: none;
     transition-duration: 0.01ms;
+  }
+
+  .layout-appointment-cta:hover .layout-appointment-cta__duck-medallion,
+  .layout-appointment-cta:focus-visible .layout-appointment-cta__duck-medallion,
+  .layout-appointment-cta:hover .layout-appointment-cta__duck-art,
+  .layout-appointment-cta:focus-visible .layout-appointment-cta__duck-art {
+    animation: none;
+    transition-delay: 0s;
   }
 
   .layout-appointment-cta:hover,

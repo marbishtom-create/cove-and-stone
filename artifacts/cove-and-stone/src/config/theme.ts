@@ -51,7 +51,7 @@ export const THEME_CONFIG = {
   },
   salesProcess: [
     { name: "Dream", label: "01", description: "Share your address, property photos, survey if available, inspiration and the way you want to live outside." },
-    { name: "Design", label: "02", description: "Create the complete outdoor concept, from pool and spa geometry to outdoor rooms, materials, lighting and landscape coordination." },
+    { name: "Design", label: "02", description: "Create the complete outdoor design, from pool and spa geometry to outdoor rooms, materials, lighting and landscape coordination." },
     { name: "Showroom", label: "03", description: "Select tile, pool finish, stone, pavers, turf, coping, kitchen finishes and lighting in one coordinated setting." },
     { name: "Price", label: "04", description: "Review one coordinated proposal that brings the selected scope and materials together." },
     { name: "Finance", label: "05", description: "Consider cash or available financing programs, including Lyon Financial and other financing partners." },

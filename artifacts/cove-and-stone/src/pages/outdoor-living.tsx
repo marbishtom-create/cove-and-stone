@@ -13,12 +13,12 @@ export default function OutdoorLiving() {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Concept visualization of a Jacksonville outdoor living environment with a stone-backed gourmet kitchen, pool, fire and water features"
+            alt="Design visualization of a Jacksonville outdoor living environment with a stone-backed gourmet kitchen, pool, fire and water features"
             className="w-full h-full object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           <div className="absolute bottom-6 right-6 border border-border bg-background/80 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-sm">
-            Concept visualization
+            Design visualization
           </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-foreground pt-32">

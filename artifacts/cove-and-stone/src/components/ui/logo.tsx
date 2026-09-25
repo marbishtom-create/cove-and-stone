@@ -25,7 +25,7 @@ export const Logo = ({
     >
       <picture
         data-logo-water-motion={variant === "dark" ? undefined : "active"}
-        className={`logo-picture relative block shrink-0 ${imageClassName || "w-[122px] md:w-[137px]"}`}
+        className={`logo-picture relative block shrink-0 ${imageClassName || "w-[159px] md:w-[178px]"}`}
       >
         {variant === "hero" && (
           <source

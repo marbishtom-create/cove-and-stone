@@ -28,7 +28,7 @@ export default function Renovations() {
                 beforeImage={beforeImg} 
                 afterImage={afterImg} 
                 beforeAlt="Illustrative unfinished yard at the same property"
-                afterAlt="Concept visualization for a modern geometric renovation"
+                afterAlt="Design visualization for a modern geometric renovation"
               />
             )}
           </div>
@@ -114,7 +114,7 @@ export default function Renovations() {
               },
               {
                 question: "Can a renovation add a spa, sun shelf or water feature?",
-                answer: "A renovation concept may include a raised or integrated spa, sun shelf, zero-edge element, waterfall, sheer descent, bubbler or fire-and-water feature when the property and existing structure support the design.",
+                 answer: "A renovation design may include a raised or integrated spa, sun shelf, zero-edge element, waterfall, sheer descent, bubbler or fire-and-water feature when the property and existing structure support the design.",
               },
               {
                 question: "Can you update the pool's coping, tile and decking?",

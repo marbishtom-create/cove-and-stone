@@ -61,7 +61,7 @@ export default function About() {
               <div className="bg-card border border-border p-8">
                 <Users className="w-9 h-9 text-secondary mb-6" />
                 <h4 className="text-xl font-serif text-primary mb-3">Design team</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">Translates your address, photos, inspiration and priorities into a complete outdoor concept and photorealistic visualization.</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">Translates your address, photos, inspiration and priorities into a complete outdoor design and photorealistic visualization.</p>
               </div>
               <div className="bg-card border border-border p-8">
                 <ClipboardCheck className="w-9 h-9 text-secondary mb-6" />

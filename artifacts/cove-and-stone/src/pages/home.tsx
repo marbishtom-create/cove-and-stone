@@ -29,7 +29,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <img 
               src={jacksonvilleDayPool} 
-              alt="Concept visualization of a modern Jacksonville waterfront pool with infinity edges and raised water features" 
+              alt="Design visualization of a modern Jacksonville waterfront pool with infinity edges and raised water features"
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
@@ -107,7 +107,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                 <img 
                   src={jacksonvilleNightPool} 
-                  alt="Concept visualization of a dramatic Jacksonville outdoor living environment with pool, fire and water features" 
+                  alt="Design visualization of a dramatic Jacksonville outdoor living environment with pool, fire and water features"
                   className="w-full h-full object-cover"
                 />
               <div className="absolute -bottom-6 -left-6 w-3/4 h-3/4 border border-secondary -z-10" />
@@ -132,9 +132,9 @@ export default function Home() {
                 beforeImage={beforePool} 
                 afterImage={afterPool} 
                 beforeAlt="Reference backyard before a pool transformation"
-                afterAlt="Concept visualization of a luxury modern pool transformation"
+                afterAlt="Design visualization of a luxury modern pool transformation"
                 beforeLabel="Before reference"
-                afterLabel="Concept rendering"
+                afterLabel="Design rendering"
               />
             ) : (
               <div className="aspect-video bg-muted flex items-center justify-center">
@@ -204,13 +204,13 @@ export default function Home() {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex justify-between items-end mb-16">
             <h2 className="text-3xl md:text-5xl font-serif text-primary">Selected Works</h2>
-            <div className="text-sm uppercase tracking-widest text-muted-foreground border border-border px-3 py-1">Concept Gallery</div>
+            <div className="text-sm uppercase tracking-widest text-muted-foreground border border-border px-3 py-1">Design Gallery</div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <Link href="/projects/ponte-vedra-modern/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={ponteVedraRetreat} alt="Private Ponte Vedra Beach backyard pool concept with a privacy wall, palms and live oak" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={ponteVedraRetreat} alt="Private Ponte Vedra Beach backyard pool design with a privacy wall, palms and live oak" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Ponte Vedra Modern</h3>
@@ -219,10 +219,10 @@ export default function Home() {
             
             <Link href="/projects/nocatee-resort/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={nocateeResortRealistic} alt="More realistic concept rendering of a Florida backyard pool, cabana and outdoor-living area" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={nocateeResortRealistic} alt="More realistic design rendering of a Florida backyard pool, cabana and outdoor-living area" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                 <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
-                  Concept rendering
+                  Design rendering
                 </div>
               </div>
               <h3 className="text-2xl font-serif text-primary mb-2 group-hover:text-secondary transition-colors">Nocatee Resort Backyard</h3>
@@ -239,7 +239,7 @@ export default function Home() {
             <span className="text-secondary uppercase tracking-widest text-sm mb-4 block">Project direction</span>
             <h2 className="text-3xl md:text-5xl font-serif text-primary mb-6">Choose the scale of your transformation.</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Cove, Stone and Signature are design and sales concepts that help us frame the conversation. Your final scope, materials and proposal are developed around your property and priorities—not a rigid package or fixed price.
+              Cove, Stone and Signature are design and sales frameworks that help us frame the conversation. Your final scope, materials and proposal are developed around your property and priorities—not a rigid package or fixed price.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

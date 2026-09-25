@@ -16,7 +16,7 @@ type LowerLocationContent = {
 const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
   'queens-harbour': {
     h1: 'Queens Harbour Pool & Outdoor Living Design',
-    hero: 'Waterfront-oriented outdoor living concepts shaped around the harbour and lagoon setting associated with Queens Harbour in Jacksonville.',
+    hero: 'Waterfront-oriented outdoor living designs shaped around the harbour and lagoon setting associated with Queens Harbour in Jacksonville.',
     introHeading: 'Let the setting guide the outdoor room.',
     intro: [
       'Queens Harbour is associated with a yacht and country-club community and a harbour and lagoon lock setting. That context can inform how a backyard is composed: where views are held, how circulation moves between the home and pool, and how shade and gathering areas frame the water-oriented experience.',
@@ -31,7 +31,7 @@ const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
   },
   'deerwood': {
     h1: 'Refined Pool & Outdoor Living Design for Deerwood',
-    hero: 'Estate-style pool and outdoor-living concepts considered for Deerwood’s established, gated Jacksonville setting and mature residential character.',
+    hero: 'Estate-style pool and outdoor-living designs considered for Deerwood’s established, gated Jacksonville setting and mature residential character.',
     introHeading: 'A composed setting for established homes.',
     intro: [
       'Deerwood is an established gated Jacksonville community associated with Deerwood Country Club, mature residential character and larger homes. Those facts provide general design context for an outdoor environment that should feel proportional to the architecture and settled into its surroundings.',
@@ -46,7 +46,7 @@ const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
   },
   'e-town': {
     h1: 'Clean Contemporary Pool Design for eTown',
-    hero: 'Contemporary pool and outdoor-living concepts shaped around eTown’s modern master-planned Jacksonville setting and emphasis on thoughtful design.',
+    hero: 'Contemporary pool and outdoor-living designs shaped around eTown’s modern master-planned Jacksonville setting and emphasis on thoughtful design.',
     introHeading: 'A clean direction for connected outdoor living.',
     intro: [
       'eTown is associated with a modern master-planned Jacksonville community that emphasizes thoughtful design, technology, convenience and sustainability. Those public characteristics can provide a general lens for a backyard with clear geometry, useful circulation and a deliberate relationship between the home and landscape.',
@@ -61,11 +61,11 @@ const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
   },
   'tamaya': {
     h1: 'Tamaya Pool & Outdoor Living Design',
-    hero: 'Cohesive pool and outdoor-living concepts for Tamaya’s gated Jacksonville setting, with material direction shaped by its Spanish, Tuscan and Mediterranean-influenced architecture.',
+    hero: 'Cohesive pool and outdoor-living designs for Tamaya’s gated Jacksonville setting, with material direction shaped by its Spanish, Tuscan and Mediterranean-influenced architecture.',
     introHeading: 'Let the architecture carry outside.',
     intro: [
       'Tamaya is a gated and master-planned Jacksonville community known for Spanish, Tuscan and Mediterranean-influenced residential architecture and a location between the city and the beaches. That architectural context can guide the relationship between pool geometry, shade, materials and the home.',
-      'Cove & Stone can develop a complete direction around a custom pool or renovation, spa, pavers, porcelain, marble, turf, outdoor kitchen, pergola, fire feature and lighting. The concepts shown here are general design guidance and do not represent completed Tamaya projects.',
+      'Cove & Stone can develop a complete direction around a custom pool or renovation, spa, pavers, porcelain, marble, turf, outdoor kitchen, pergola, fire feature and lighting. The designs shown here are general design guidance and do not represent completed Tamaya projects.',
     ],
     cards: [
       { title: 'Architectural alignment', text: 'Pool edges, coping, shade structures and outdoor rooms can echo the home’s proportions and material language.' },
@@ -76,7 +76,7 @@ const LOWER_LOCATION_CONTENT: Record<string, LowerLocationContent> = {
   },
   'julington-creek': {
     h1: 'Julington Creek Pool & Outdoor Living Design',
-    hero: 'Family-focused pool and outdoor-living concepts shaped around the lakes, nature-preserve and recreation setting associated with Julington Creek Plantation.',
+    hero: 'Family-focused pool and outdoor-living designs shaped around the lakes, nature-preserve and recreation setting associated with Julington Creek Plantation.',
     introHeading: 'A backyard that supports everyday life.',
     intro: [
       'Julington Creek Plantation is a large community in northwest St. Johns County associated with lakes, nature-preserve areas and recreation. That broader setting can inform a family-focused backyard with clear zones for swimming, gathering, shade, play and connection to the landscape.',
@@ -116,7 +116,7 @@ export default function LocationPage() {
         <div className="absolute inset-0">
           <img 
             src={heroImg} 
-            alt="Concept visualization of a modern pool and outdoor-living environment"
+            alt="Design visualization of a modern pool and outdoor-living environment"
             className="w-full h-full object-cover opacity-40 grayscale-[30%]"
             width={1600}
             height={900}
@@ -203,7 +203,7 @@ export default function LocationPage() {
                   </p>
                 </div>
                 <div className="bg-card border border-border p-8">
-                  <h3 className="text-2xl font-serif text-primary mb-5">Coordinated from concept to scope.</h3>
+                  <h3 className="text-2xl font-serif text-primary mb-5">Coordinated from design to scope.</h3>
                   <p className="text-muted-foreground leading-relaxed mb-5">
                     Engineering coordination and permitting requirements are reviewed where applicable. The specific path depends on the property, scope and applicable local jurisdiction.
                   </p>

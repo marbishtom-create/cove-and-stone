@@ -638,7 +638,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
         <path d="M38 353h46v20H38z" /><path d="M92 346h27v27H92z" /><path d="M613 354h58v18H613z" />
       </g>
       <text x="28" y="400" fill="#f8f4eb" fontSize="10" letterSpacing="2.2" fontFamily="sans-serif">
-        {configuration.photoUrl ? 'PHOTO-BASED CONCEPT / MATERIAL + LAYOUT' : 'CONCEPT STUDY / MATERIAL + LAYOUT'}
+        {configuration.photoUrl ? 'PHOTO-BASED DESIGN / MATERIAL + LAYOUT' : 'DESIGN STUDY / MATERIAL + LAYOUT'}
       </text>
     </svg>
   );
@@ -680,9 +680,9 @@ function blobToDataUrl(blob: Blob) {
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === 'string') resolve(reader.result);
-      else reject(new Error('A material texture could not be attached to the concept.'));
+      else reject(new Error('A material texture could not be attached to the design.'));
     };
-    reader.onerror = () => reject(new Error('A material texture could not be attached to the concept.'));
+    reader.onerror = () => reject(new Error('A material texture could not be attached to the design.'));
     reader.readAsDataURL(blob);
   });
 }
@@ -695,7 +695,7 @@ async function serializeEmailConceptSvg(svg: SVGSVGElement) {
     const href = image.getAttribute('href');
     if (!href || href.startsWith('data:')) return;
     const response = await fetch(href);
-    if (!response.ok) throw new Error('A material texture could not be attached to the concept.');
+    if (!response.ok) throw new Error('A material texture could not be attached to the design.');
     image.setAttribute('href', await blobToDataUrl(await response.blob()));
   }));
   return new XMLSerializer().serializeToString(copy);
@@ -709,7 +709,7 @@ function getEmailFailureMessage(error: unknown) {
       if (typeof message === 'string' && message.trim()) return message;
     }
   }
-  return 'We could not send your concept. Check your connection and try again.';
+  return 'We could not send your design. Check your connection and try again.';
 }
 
 async function compressBackyardPhoto(file: File) {
@@ -1163,8 +1163,8 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       setConceptSendStatus('error');
       setConceptSendError(
         videoStatus === 'error'
-          ? 'The MP4 walkthrough is not available yet. Regenerate the AI rendering before sending the concept.'
-          : 'Wait for the MP4 walkthrough to finish before sending the concept.',
+          ? 'The MP4 walkthrough is not available yet. Regenerate the AI rendering before sending the design.'
+          : 'Wait for the MP4 walkthrough to finish before sending the design.',
       );
       return;
     }
@@ -1172,7 +1172,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     const svg = previewRef.current?.querySelector('.pool-visualizer__after-art svg');
     if (!(svg instanceof SVGSVGElement)) {
       setConceptSendStatus('error');
-      setConceptSendError('The concept preview is not ready yet. Please try again.');
+      setConceptSendError('The design preview is not ready yet. Please try again.');
       return;
     }
 
@@ -1268,12 +1268,12 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         </button>
         <p className={`pool-visualizer__ai-note ${aiRenderStatus === 'error' ? 'is-error' : ''}`} role={aiRenderStatus === 'error' ? 'alert' : 'status'} aria-live="polite" data-testid="status-ai-render">
           {aiRenderStatus === 'generating'
-            ? 'Creating a realistic pool concept from your backyard photo. This can take a little while.'
+            ? 'Creating a realistic pool design from your backyard photo. This can take a little while.'
             : aiRenderStatus === 'ready'
               ? 'AI rendering ready. Slide to compare it with the original photo.'
               : aiRenderStatus === 'error'
                 ? 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
-                : 'Your photo is sent to AI to make this concept. The original and rendering are emailed to our team only when you choose to send.'}
+                : 'Your photo is sent to AI to make this design. The original and rendering are emailed to our team only when you choose to send.'}
         </p>
         {(aiRenderDataUrl || aiRenderStatus === 'generating') && (
           <p
@@ -1285,7 +1285,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             {videoStatus === 'processing'
               ? 'Creating a 10-second MP4 walkthrough from this exact AI rendering.'
               : videoStatus === 'ready'
-                ? 'MP4 walkthrough ready; it will be included with your concept for our team.'
+                ? 'MP4 walkthrough ready; it will be included with your design for our team.'
                 : videoStatus === 'error'
                   ? `${videoError} Regenerate the AI rendering before sending.`
                   : aiRenderStatus === 'generating'
@@ -1312,7 +1312,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         data-testid="form-send-concept"
       >
         <div>
-          <span className="pool-visualizer__kicker">Tie the concept to you</span>
+          <span className="pool-visualizer__kicker">Tie the design to you</span>
           <h4>Your contact details</h4>
           <p className="pool-visualizer__section-note">Required so our team can review this design with you.</p>
           <p className="pool-visualizer__helper">Your details, selected design, backyard photo and rendering go to Cove &amp; Stone so the team can follow up.</p>
@@ -1348,7 +1348,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <Mail size={14} /> {isSendingConcept ? 'Sending…' : 'Finish & send to our team'}
           </button>
           <span className="pool-visualizer__saved-status" data-send-state={conceptSendStatus} role="status" aria-live="polite" data-testid="status-generated">
-            <span /> {conceptSendStatus === 'sent' ? 'Sent to our team' : conceptSendStatus === 'error' ? 'Could not send' : 'Concept updated'}
+            <span /> {conceptSendStatus === 'sent' ? 'Sent to our team' : conceptSendStatus === 'error' ? 'Could not send' : 'Design updated'}
           </span>
           {conceptSendError && <p className="pool-visualizer__error" role="alert" data-testid="status-send-error">{conceptSendError}</p>}
         </div>
@@ -1374,7 +1374,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       </div>
 
       <div className="pool-visualizer__workspace">
-        <aside className="pool-visualizer__controls" aria-label="Pool concept controls">
+        <aside className="pool-visualizer__controls" aria-label="Pool design controls">
           <div className="pool-visualizer__control-head">
             <div>
               <span className="pool-visualizer__kicker">Your brief</span>
@@ -1572,7 +1572,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         <div className="pool-visualizer__preview-column">
           <div className="pool-visualizer__preview-header">
             <div>
-              <span className="pool-visualizer__kicker">Live concept</span>
+              <span className="pool-visualizer__kicker">Live design</span>
               <h3>Compare the direction</h3>
             </div>
             <div className="pool-visualizer__preview-header-actions">
@@ -1588,7 +1588,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 </button>
               )}
               <button className="pool-visualizer__export-button" type="button" onClick={exportConcept} data-testid="button-export-concept">
-                <Download size={16} /> <span>{aiRenderDataUrl && !isLayoutEditing ? 'Download AI render' : 'Export concept'}</span>
+                <Download size={16} /> <span>{aiRenderDataUrl && !isLayoutEditing ? 'Download AI render' : 'Export design'}</span>
               </button>
             </div>
           </div>
@@ -1635,15 +1635,15 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   : aiRenderDataUrl
                     ? 'After · AI rendering'
                     : configuration.photoUrl
-                      ? 'After · photo concept'
-                      : 'After · concept'}
+                      ? 'After · photo design'
+                      : 'After · design'}
               </span>
             </div>
             <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%`, display: isLayoutEditing ? 'none' : undefined }}>
               {configuration.photoUrl ? (
                 <img
                   src={configuration.photoUrl}
-                  alt="Your uploaded backyard, before the pool concept"
+                  alt="Your uploaded backyard, before the pool design"
                   draggable="false"
                   style={{ width: `${beforeImageWidth}%` }}
                 />
@@ -1676,7 +1676,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 <Video size={16} aria-hidden="true" />
                 <div>
                   <span className="pool-visualizer__kicker">AI walkthrough</span>
-                  <h4>Preview the pool concept in motion</h4>
+                  <h4>Preview the pool design in motion</h4>
                 </div>
               </div>
               <video
@@ -1692,7 +1692,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           )}
           <div className="pool-visualizer__comparison-legend">
             <span><i className="is-aqua" /> Drag or use arrow keys to compare</span>
-            <span><i className="is-ivory" /> AI concepts are illustrative only, not completed-project photography or construction drawings.</span>
+            <span><i className="is-ivory" /> AI designs are illustrative only, not completed-project photography or construction drawings.</span>
           </div>
           <div className="pool-visualizer__preview-meta">
             <div><ImageIcon size={16} /><span>{aiRenderDataUrl ? 'AI rendering based on your photo' : 'Illustrative preview updates with every selection'}</span></div>
@@ -1706,7 +1706,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 <span className="pool-visualizer__kicker">Shape the experience</span>
                 <h4>Pool & outdoor features</h4>
               </div>
-              <p>Choose any combination. The concept above updates with every selection.</p>
+              <p>Choose any combination. The design above updates with every selection.</p>
             </div>
             <div className="pool-visualizer__feature-groups">
               <div className="pool-visualizer__feature-group">
