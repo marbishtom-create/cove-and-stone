@@ -21,6 +21,12 @@ On mobile, show the compact fixed consultation CTA only on the homepage, at bott
 
 **How to apply:** Reuse the shared CTA surface and arrow, position the mobile dock at the homepage's safe-area-aware bottom-right, and leave other pages to their in-flow CTAs. Keep the separate desktop CTA unchanged unless asked otherwise.
 
+On narrow screens, keep the project-detail CTA compact while retaining the reference pill's 4.82:1 proportions and desktop size.
+
+**Why:** The user found the full-width desktop CTA too large and visually out of proportion when it appeared inside mobile project content.
+
+**How to apply:** Scale the in-flow mobile CTA, arrow badge, lettering, and caustic texture together; restore the existing larger dimensions at tablet/desktop widths.
+
 Keep the water caustics irregular and organic rather than a fine uniform grid, with a clear turquoise base and restrained sparkle points.
 
 **Why:** A regular wire-mesh pattern and dark water made the CTA look unlike the bright, natural water in the supplied reference.

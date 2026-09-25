@@ -131,7 +131,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         >
           <Link
             href="/appointments/"
-            className="layout-appointment-cta min-h-[4.1rem] w-full"
+            className="layout-appointment-cta layout-appointment-cta--compact-mobile min-h-[3rem] w-full"
             data-testid="link-mobile-sticky-appointment-cta"
           >
             <AppointmentCtaSurface />

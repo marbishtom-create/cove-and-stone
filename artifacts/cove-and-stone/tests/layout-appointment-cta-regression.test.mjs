@@ -66,7 +66,8 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
   assert.match(layoutSource, /\{!location\.startsWith\("\/projects\/"\) && \(/);
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
-  assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-full max-w-\[19\.8rem\]/);
+  assert.match(projectDetailSource, /layout-appointment-cta--compact-mobile/);
+  assert.match(projectDetailSource, /min-h-\[3rem\] w-full max-w-\[14\.5rem\] sm:min-h-\[4\.1rem\] sm:max-w-\[19\.8rem\]/);
   assert.equal((projectDetailSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 1);
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
@@ -82,8 +83,13 @@ test('keeps the mobile CTA fixed at the homepage bottom-right only', () => {
   assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile \{/);
   assert.match(ctaStyles, /bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\)/);
   assert.match(ctaStyles, /left: auto/);
-  assert.match(ctaStyles, /width: min\(18rem, calc\(100vw - 1\.5rem\)\)/);
+  assert.match(ctaStyles, /width: min\(15rem, calc\(100vw - 1\.5rem\)\)/);
+  assert.match(layoutSource, /layout-appointment-cta--compact-mobile min-h-\[3rem\] w-full/);
   assert.match(ctaStyles, /right: max\(0\.75rem, env\(safe-area-inset-right\)\)/);
+  assert.match(ctaStyles, /background-size: 25cqw 17\.5cqw, 100% 100%, 240% 100%, 250% 100%/);
+  assert.match(ctaStyles, /10\.6cqw/);
+  assert.match(ctaStyles, /7\.6cqw/);
+  assert.match(ctaStyles, /@media \(max-width: 639px\)/);
   assert.doesNotMatch(layoutSource, /mobileStickyCtaVisible|IntersectionObserver/);
   assert.match(homeSource, /pt-\[6rem\] lg:h-\[100dvh\]/);
   assert.match(homeSource, /pt-\[1\.25rem\] pb-20/);
