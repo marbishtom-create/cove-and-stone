@@ -55,8 +55,8 @@ paths:
     post:
       operationId: generatePoolConceptRender
       tags: [design-concepts]
-      summary: Generate an AI pool concept from a backyard photo
-      description: Creates a photorealistic illustrative after-image from the customer's uploaded backyard photo and selected pool details.
+      summary: Generate an AI pool concept and walkthrough job from a backyard photo
+      description: Creates an illustrative after-image and starts a short image-to-video walkthrough job from the same concept.
       requestBody:
         required: true
         content:
@@ -76,6 +76,49 @@ paths:
           description: Image generation rate limit reached
         "502":
           description: AI image generation failed
+  /design-concepts/video-jobs/{videoJobId}:
+    get:
+      operationId: getPoolConceptVideoJob
+      tags: [design-concepts]
+      summary: Check a pool concept walkthrough job
+      parameters:
+        - name: videoJobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Current walkthrough generation status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoolConceptVideoJobStatus"
+        "404":
+          description: Walkthrough job expired or not found
+  /design-concepts/videos/{videoId}:
+    get:
+      operationId: getPoolConceptVideo
+      tags: [design-concepts]
+      summary: Stream a generated pool concept walkthrough
+      parameters:
+        - name: videoId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Generated MP4 walkthrough
+          content:
+            video/mp4:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Walkthrough expired or not found
   /appointments/request:
     post:
       operationId: requestAppointment
@@ -205,6 +248,9 @@ components:
           type: string
           maxLength: 6000000
           pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+        videoId:
+          type: string
+          format: uuid
       required:
         - customerName
         - customerAddress
@@ -273,8 +319,27 @@ components:
           minLength: 40
           maxLength: 6000000
           pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+        videoJobId:
+          type: string
+          format: uuid
       required:
         - imageDataUrl
+        - videoJobId
+    PoolConceptVideoJobStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [processing, ready, failed]
+        videoId:
+          type: string
+          format: uuid
+        videoUrl:
+          type: string
+        message:
+          type: string
+      required:
+        - status
     DesignConceptEmailResponse:
       type: object
       properties:
