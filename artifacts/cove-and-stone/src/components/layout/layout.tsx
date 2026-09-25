@@ -125,6 +125,23 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       )}
 
+      {!location.startsWith("/projects/") && !mobileMenuOpen && (
+        <div className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:hidden">
+          <Link
+            href="/appointments/"
+            className="layout-appointment-cta min-h-[4.1rem] w-full"
+            data-testid="link-mobile-sticky-appointment-cta"
+          >
+            <AppointmentCtaSurface />
+            <span className="layout-appointment-cta__copy">
+              <span className="layout-appointment-cta__eyebrow">Design consultation</span>
+              <span className="layout-appointment-cta__title">Start your project today</span>
+            </span>
+            <AppointmentCtaArrow />
+          </Link>
+        </div>
+      )}
+
       {/* Mobile Menu Overlay */}
       <div 
         id="mobile-navigation"

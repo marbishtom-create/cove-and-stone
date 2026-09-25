@@ -67,6 +67,22 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
 
+test('shows a safe-area-aware sticky CTA on mobile outside the menu and project detail', () => {
+  assert.match(
+    layoutSource,
+    /\{!location\.startsWith\("\/projects\/"\) && !mobileMenuOpen && \(/,
+  );
+  assert.match(
+    layoutSource,
+    /className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 .*? lg:hidden"/,
+  );
+  assert.match(layoutSource, /data-testid="link-mobile-sticky-appointment-cta"/);
+  assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile \{/);
+  assert.match(ctaStyles, /bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\)/);
+  assert.match(ctaStyles, /left: max\(0\.75rem, env\(safe-area-inset-left\)\)/);
+  assert.match(ctaStyles, /width: min\(18rem, calc\(100vw - 1\.5rem\)\)/);
+});
+
 test('animates a saturated horizontal water sweep over the stone surface', () => {
   assert.match(ctaStyles, /url\("\/brand\/cove-stone-button-texture\.webp"\)/);
   assert.match(ctaStyles, /url\("\/brand\/cove-water-caustics\.svg"\)/);

@@ -5,6 +5,13 @@
   width: min(19.8rem, calc(100vw - 5rem));
 }
 
+.layout-appointment-cta__dock--mobile {
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  left: max(0.75rem, env(safe-area-inset-left));
+  transform: none;
+  width: min(18rem, calc(100vw - 1.5rem));
+}
+
 .layout-appointment-cta {
   aspect-ratio: 4.82 / 1;
   --appointment-water-mask: polygon(
