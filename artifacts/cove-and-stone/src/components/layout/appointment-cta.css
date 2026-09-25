@@ -7,7 +7,7 @@
 }
 
 .layout-appointment-cta__dock--mobile {
-  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  bottom: max(0.375rem, env(safe-area-inset-bottom));
   left: auto;
   right: max(0.75rem, env(safe-area-inset-right));
   transform: none;
