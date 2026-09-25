@@ -1,4 +1,8 @@
 import { randomUUID } from "node:crypto";
+import { spawn } from "node:child_process";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { ReplitConnectors } from "@replit/connectors-sdk";
 
 const REPLIT_SIDECAR_ENDPOINT = "http://127.0.0.1:1106";
@@ -7,6 +11,10 @@ const VIDEO_JOB_TTL_MS = 20 * 60 * 1000;
 const MAX_VIDEO_BYTES = 12 * 1024 * 1024;
 const VIDEO_POLL_INTERVAL_MS = 5_000;
 const MAX_VIDEO_POLL_ATTEMPTS = 120;
+const POOL_WALKTHROUGH_MUSIC_PATH = join(
+  process.cwd(),
+  "pool-walkthrough-music.mp3",
+);
 const VIDEO_ID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const VIDEO_FAILURE_MESSAGE =
@@ -191,6 +199,97 @@ async function downloadGeneratedVideo(
   return video;
 }
 
+function runMediaCommand(command: string, args: string[]) {
+  return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
+    const process = spawn(command, args, {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+    process.stdout.setEncoding("utf8");
+    process.stderr.setEncoding("utf8");
+    process.stdout.on("data", (chunk: string) => {
+      stdout = `${stdout}${chunk}`.slice(-8_000);
+    });
+    process.stderr.on("data", (chunk: string) => {
+      stderr = `${stderr}${chunk}`.slice(-8_000);
+    });
+    process.on("error", reject);
+    process.on("close", (code) => {
+      if (code === 0) {
+        resolve({ stdout, stderr });
+      } else {
+        reject(new Error(`${command} failed (${code}): ${stderr.trim()}`));
+      }
+    });
+  });
+}
+
+async function addMusicBed(video: Buffer) {
+  const tempDir = await mkdtemp(join(tmpdir(), "pool-walkthrough-"));
+  const inputPath = join(tempDir, "walkthrough.mp4");
+  const outputPath = join(tempDir, "walkthrough-with-music.mp4");
+
+  try {
+    await writeFile(inputPath, video);
+    await runMediaCommand("ffmpeg", [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-y",
+      "-i",
+      inputPath,
+      "-stream_loop",
+      "-1",
+      "-i",
+      POOL_WALKTHROUGH_MUSIC_PATH,
+      "-map",
+      "0:v:0",
+      "-map",
+      "1:a:0",
+      "-c:v",
+      "copy",
+      "-af",
+      "loudnorm=I=-18:TP=-1.5:LRA=7,volume=0.82,afade=t=in:st=0:d=0.45,afade=t=out:st=8.9:d=1",
+      "-c:a",
+      "aac",
+      "-b:a",
+      "128k",
+      "-shortest",
+      "-movflags",
+      "+faststart",
+      outputPath,
+    ]);
+
+    const audioCheck = await runMediaCommand("ffprobe", [
+      "-v",
+      "error",
+      "-select_streams",
+      "a:0",
+      "-show_entries",
+      "stream=codec_type",
+      "-of",
+      "default=noprint_wrappers=1:nokey=1",
+      outputPath,
+    ]);
+    if (audioCheck.stdout.trim() !== "audio") {
+      throw new Error("The finished pool walkthrough is missing its music track.");
+    }
+
+    const videoWithMusic = await readFile(outputPath);
+    if (
+      videoWithMusic.length < 12 ||
+      videoWithMusic.length > MAX_VIDEO_BYTES ||
+      videoWithMusic.subarray(4, 8).toString("ascii") !== "ftyp"
+    ) {
+      throw new Error("The finished pool walkthrough MP4 is invalid or too large.");
+    }
+    return videoWithMusic;
+  } finally {
+    await rm(tempDir, { recursive: true, force: true });
+  }
+}
+
 async function saveGeneratedVideo(videoId: string, video: Buffer) {
   const signedUrl = await getSignedVideoObjectUrl(videoId, "PUT");
   const response = await fetch(signedUrl, {
@@ -231,7 +330,8 @@ async function finishVideoJob(
         if (typeof fileId !== "string" || !fileId) {
           throw new Error("MiniMax completed without returning a video file.");
         }
-        const video = await downloadGeneratedVideo(connectors, fileId);
+        const silentVideo = await downloadGeneratedVideo(connectors, fileId);
+        const video = await addMusicBed(silentVideo);
         const videoId = randomUUID();
         await saveGeneratedVideo(videoId, video);
         videoJobs.set(jobId, {
