@@ -1,8 +1,30 @@
 import { ArrowRight, MapPin, Clock, Building, Eye, PencilRuler, WalletCards, Hammer } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Link } from 'wouter';
-import showroomPhotoDesktop from '@assets/0_IMG_7080_1790117937906-high-res.jpeg';
-import showroomPhotoMobile from '@assets/0_IMG_7080_1790117937906.jpeg';
+import showroomPhotoDesktop from '@assets/0_IMG_7080_1790117937906-high-res-sharpened.jpg';
+import showroomPhotoMobile from '@assets/0_IMG_7080_1790117937906-mobile-sharpened.jpg';
+import showroomLoungeDisplay from '@assets/IMG_8053_1790304907299-sharpened.jpg';
+import showroomEquipmentDisplay from '@assets/IMG_8054_1790304907300-sharpened.jpg';
+import showroomOutdoorKitchen from '@assets/IMG_8055_1790304907300-sharpened.jpg';
+
+const showroomGallery = [
+  {
+    src: showroomLoungeDisplay,
+    alt: 'Showroom pool-finish display with a lounge area and water feature',
+    title: 'Pool finishes and lounge display',
+  },
+  {
+    src: showroomEquipmentDisplay,
+    alt: 'Pool filtration, pumps, and plumbing equipment on display in the showroom',
+    title: 'Pool equipment and plumbing',
+    credit: 'Equipment supplier: Gorman Company',
+  },
+  {
+    src: showroomOutdoorKitchen,
+    alt: 'Outdoor kitchen display with grills, counters, and storage cabinets',
+    title: 'Outdoor kitchen displays',
+  },
+];
 
 export default function Showroom() {
   return (
@@ -25,8 +47,8 @@ export default function Showroom() {
                 src={showroomPhotoDesktop}
                 alt="Cove & Stone Jacksonville Design Studio & Showroom with pool finishes, water features and outdoor living displays"
                 className="w-full h-full object-cover"
-                width={1600}
-                height={1200}
+                width={1440}
+                height={1000}
                 fetchPriority="high"
               />
             </picture>
@@ -116,6 +138,43 @@ export default function Showroom() {
             </Link>
           </div>
         </div>
+
+        <section className="mt-24 border-t border-border pt-16" aria-labelledby="showroom-gallery-title">
+          <div className="mx-auto mb-12 max-w-4xl text-center">
+            <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block">Explore the showroom</span>
+            <h2 id="showroom-gallery-title" className="text-3xl md:text-5xl font-serif text-primary mb-5">
+              See pool and outdoor-living displays up close.
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground leading-relaxed">
+              Compare pool finishes, equipment and outdoor-kitchen details in the Jacksonville design studio.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {showroomGallery.map((image) => (
+              <figure key={image.title} className="overflow-hidden border border-border bg-card shadow-sm">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    width={676}
+                    height={506}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption className="border-t border-border p-5">
+                  <h3 className="font-serif text-lg text-primary">{image.title}</h3>
+                  {image.credit && (
+                    <p className="mt-2 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                      {image.credit}
+                    </p>
+                  )}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
 
         <section className="mt-24 pt-16 border-t border-border">
           <div className="max-w-4xl mx-auto">

@@ -86,14 +86,28 @@ router.post("/appointments/request", async (req, res): Promise<void> => {
     preferredTime: parsed.data.preferredTime,
   };
   const phoneDigits = request.phone.replace(/\D/g, "");
+  const preferredDateIsValid = isValidCalendarDate(request.preferredDate);
+  const preferredDateDayOfWeek = preferredDateIsValid
+    ? new Date(`${request.preferredDate}T00:00:00.000Z`).getUTCDay()
+    : null;
   if (
     request.fullName.length < 2 ||
     request.address.length < 5 ||
     phoneDigits.length < 7 ||
-    !isValidCalendarDate(request.preferredDate) ||
+    !preferredDateIsValid ||
     request.preferredDate < todayInEasternTime()
   ) {
     res.status(400).json({ message: "Please enter valid contact details and a current or future date." });
+    return;
+  }
+  if (preferredDateDayOfWeek === 6) {
+    res.status(400).json({ message: "We are closed on Saturdays. Please choose another date." });
+    return;
+  }
+  if (preferredDateDayOfWeek === 5 && request.preferredTime === "17:00") {
+    res.status(400).json({
+      message: "Friday appointments must finish by 5:00 PM Eastern Time. Please choose 4:30 PM or earlier.",
+    });
     return;
   }
 

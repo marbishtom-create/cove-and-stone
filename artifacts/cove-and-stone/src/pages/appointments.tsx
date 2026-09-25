@@ -42,6 +42,13 @@ const getEasternDate = () => {
   return `${parts.year}-${parts.month}-${parts.day}`;
 };
 
+const getDateDayOfWeek = (value: string): number | null => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.toISOString().slice(0, 10) === value ? date.getUTCDay() : null;
+};
+
 const formatTime = (value: string) => {
   const [hour, minute] = value.split(':').map(Number);
   const suffix = hour >= 12 ? 'PM' : 'AM';
@@ -74,6 +81,22 @@ const appointmentSchema = z.object({
   preferredTime: z.enum(TIME_OPTIONS as [string, ...string[]], {
     errorMap: () => ({ message: 'Choose a preferred time.' }),
   }),
+}).superRefine(({ preferredDate, preferredTime }, context) => {
+  const dayOfWeek = getDateDayOfWeek(preferredDate);
+  if (dayOfWeek === 6) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['preferredDate'],
+      message: 'We are closed on Saturdays. Please choose another date.',
+    });
+  }
+  if (dayOfWeek === 5 && preferredTime === '17:00') {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['preferredTime'],
+      message: 'Friday appointments must finish by 5:00 PM ET. Please choose 4:30 PM or earlier.',
+    });
+  }
 });
 
 export default function Appointments() {
@@ -91,6 +114,9 @@ export default function Appointments() {
     },
     mode: 'onBlur',
   });
+  const selectedDateDay = getDateDayOfWeek(form.watch('preferredDate'));
+  const availableTimeOptions =
+    selectedDateDay === 5 ? TIME_OPTIONS.filter((time) => time !== '17:00') : TIME_OPTIONS;
 
   const handleSubmit = (values: AppointmentFormValues) => {
     mutation.mutate(
@@ -164,7 +190,7 @@ export default function Appointments() {
                 Tell us where you are, then choose a time that suits you. We&apos;ll listen to the way you want to live outdoors and shape the next conversation around your property.
               </p>
               <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
-                Choose a preferred date and time in Eastern Time. Our team will contact you to confirm availability.
+                Choose a preferred date and time in Eastern Time. We are closed Saturdays, and Friday appointments must finish by 5:00 PM.
               </p>
             </div>
           </div>
@@ -188,7 +214,7 @@ export default function Appointments() {
                 </div>
                 <div className="flex gap-3">
                   <Clock3 className="mt-0.5 shrink-0 text-secondary" size={18} aria-hidden="true" />
-                  <span>30-minute windows from 10:00 AM through 5:00 PM Eastern Time.</span>
+                  <span>30-minute preferred-time windows · Friday appointments must finish by 5:00 PM · closed Saturdays.</span>
                 </div>
                 <div className="flex gap-3">
                   <Phone className="mt-0.5 shrink-0 text-secondary" size={18} aria-hidden="true" />
@@ -261,9 +287,24 @@ export default function Appointments() {
                       <FormItem>
                         <FormLabel className="text-xs uppercase tracking-[0.16em] text-primary">Preferred date</FormLabel>
                         <FormControl>
-                          <input {...field} className="appointment-field" type="date" min={minimumDate} data-testid="input-preferred-date" />
+                          <input
+                            {...field}
+                            onChange={(event) => {
+                              field.onChange(event);
+                              if (
+                                getDateDayOfWeek(event.target.value) === 5 &&
+                                form.getValues('preferredTime') === '17:00'
+                              ) {
+                                form.setValue('preferredTime', '', { shouldDirty: true });
+                              }
+                            }}
+                            className="appointment-field"
+                            type="date"
+                            min={minimumDate}
+                            data-testid="input-preferred-date"
+                          />
                         </FormControl>
-                        <FormDescription>Dates are interpreted in Eastern Time.</FormDescription>
+                        <FormDescription>Saturdays are unavailable. Friday appointments must finish by 5:00 PM ET.</FormDescription>
                         <FormMessage data-testid="error-preferred-date" />
                       </FormItem>
                     )}
@@ -277,12 +318,12 @@ export default function Appointments() {
                         <FormControl>
                           <select {...field} className="appointment-field" data-testid="select-preferred-time">
                             <option value="">Choose a time</option>
-                            {TIME_OPTIONS.map((time) => (
+                            {availableTimeOptions.map((time) => (
                               <option key={time} value={time}>{formatTime(time)}</option>
                             ))}
                           </select>
                         </FormControl>
-                        <FormDescription>30-minute windows · 10:00 AM–5:00 PM ET.</FormDescription>
+                        <FormDescription>30-minute windows · Friday&apos;s latest start is 4:30 PM ET.</FormDescription>
                         <FormMessage data-testid="error-preferred-time" />
                       </FormItem>
                     )}

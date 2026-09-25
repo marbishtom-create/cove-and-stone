@@ -115,3 +115,26 @@ test('keeps the approved showroom accessibility text and visible caption', () =>
     new RegExp(approvedCaption.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
   );
 });
+
+test('includes the supplied showroom gallery photos at their source resolution', async () => {
+  const galleryPhotos = [
+    { importName: 'showroomLoungeDisplay', width: 676, height: 506 },
+    { importName: 'showroomEquipmentDisplay', width: 676, height: 506 },
+    { importName: 'showroomOutdoorKitchen', width: 676, height: 506 },
+  ];
+
+  for (const photo of galleryPhotos) {
+    const assetPath = getShowroomAssetPath(photo.importName);
+    await assert.doesNotReject(
+      () => access(assetPath),
+      `showroom gallery asset is missing: ${assetPath}`,
+    );
+    assert.deepEqual(readImageDimensions(await readFile(assetPath)), {
+      width: photo.width,
+      height: photo.height,
+    });
+  }
+
+  assert.match(showroomSource, /Equipment supplier: Gorman Company/);
+  assert.match(showroomSource, /loading="lazy"/);
+});

@@ -36,7 +36,7 @@ export const THEME_CONFIG = {
     city: "Jacksonville",
     state: "FL",
     zip: "32256",
-    hours: "Open 24 Hours • 7 Days a Week"
+    hours: "Friday: Closes at 5:00 PM • Saturday: Closed"
   },
   contact: {
     email: "Sales@coveandstonepools.com"

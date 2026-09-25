@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 export function AppointmentCtaSurface() {
   return (
     <>
+      <span className="layout-appointment-cta__stone" aria-hidden="true" />
       <span className="layout-appointment-cta__surface" aria-hidden="true" />
       <svg
         className="layout-appointment-cta__waterline"
