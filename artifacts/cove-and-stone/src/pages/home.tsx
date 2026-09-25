@@ -47,7 +47,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mb-12 font-light leading-relaxed">
               Modern custom pools inspired by Los Angeles design, Miami living and European architecture—built for Northeast Florida.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex flex-col sm:flex-row gap-6" data-mobile-sticky-cta-stop>
               <Link 
                 href="/contact/" 
                 className="border border-white/30 bg-secondary/90 text-secondary-foreground px-8 py-4 uppercase tracking-widest text-sm backdrop-blur-md hover:bg-white hover:text-primary focus-visible:bg-white focus-visible:text-primary active:bg-white active:text-primary transition-all duration-300 text-center"

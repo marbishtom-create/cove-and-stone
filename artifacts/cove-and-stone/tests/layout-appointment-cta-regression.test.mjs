@@ -20,6 +20,10 @@ const projectDetailSource = await readFile(
   resolve(artifactRoot, 'src/pages/project-detail.tsx'),
   'utf8',
 );
+const homeSource = await readFile(
+  resolve(artifactRoot, 'src/pages/home.tsx'),
+  'utf8',
+);
 const ctaElements = await readFile(
   resolve(artifactRoot, 'src/components/layout/appointment-cta-elements.tsx'),
   'utf8',
@@ -36,12 +40,12 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.match(layoutSource, /mx-auto min-h-\[4\.1rem\] w-full/);
   assert.equal(
     (layoutSource.match(/Start your project today/g) ?? []).length,
-    2,
-    'desktop and mobile CTAs should use the same direct call to action',
+    3,
+    'desktop, menu, and sticky mobile CTAs should use the same direct call to action',
   );
   assert.doesNotMatch(layoutSource, /<Waves\b/);
-  assert.equal((layoutSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 2);
-  assert.equal((layoutSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 2);
+  assert.equal((layoutSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 3);
+  assert.equal((layoutSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 3);
   assert.match(ctaElements, /<ArrowRight\b/);
   assert.match(ctaElements, /className="layout-appointment-cta__duck"/);
   assert.match(ctaElements, /fill="#f4c64b"/);
@@ -70,7 +74,7 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
 test('shows a safe-area-aware sticky CTA on mobile outside the menu and project detail', () => {
   assert.match(
     layoutSource,
-    /\{!location\.startsWith\("\/projects\/"\) && !mobileMenuOpen && \(/,
+    /\{!location\.startsWith\("\/projects\/"\) && mobileStickyCtaVisible && !mobileMenuOpen && \(/,
   );
   assert.match(
     layoutSource,
@@ -81,6 +85,10 @@ test('shows a safe-area-aware sticky CTA on mobile outside the menu and project 
   assert.match(ctaStyles, /bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\)/);
   assert.match(ctaStyles, /left: max\(0\.75rem, env\(safe-area-inset-left\)\)/);
   assert.match(ctaStyles, /width: min\(18rem, calc\(100vw - 1\.5rem\)\)/);
+  assert.match(homeSource, /data-mobile-sticky-cta-stop/);
+  assert.match(layoutSource, /document\.querySelector\("\[data-mobile-sticky-cta-stop\]"\)/);
+  assert.match(layoutSource, /new IntersectionObserver/);
+  assert.match(layoutSource, /setMobileStickyCtaVisible\(!entry\.isIntersecting\)/);
 });
 
 test('animates a saturated horizontal water sweep over the stone surface', () => {

@@ -15,11 +15,11 @@ The desktop consultation CTA should stay a compact, centered pill with its lette
 
 **How to apply:** Keep the desktop dock near its earlier 19.8rem width; shift the copy right modestly without enlarging the badge or the CTA.
 
-On mobile, keep a compact consultation CTA fixed at bottom-left on pages without an in-flow project-detail CTA. Hide the sticky version while the mobile navigation is open and respect device safe areas.
+On mobile, keep a compact consultation CTA fixed at bottom-left on pages without an in-flow project-detail CTA. Hide it while the menu is open or the homepage's own action group is visible, and respect device safe areas.
 
-**Why:** A persistent mobile action makes consultation easy to reach, but competing copies during navigation or on project details create clutter.
+**Why:** A persistent mobile action makes consultation easy to reach, but it should not cover the homepage's existing hero actions or compete with project-detail CTAs.
 
-**How to apply:** Reuse the shared CTA surface and arrow; position the mobile dock with safe-area insets and suppress it when the menu or page-level CTA is already active.
+**How to apply:** Reuse the shared CTA surface and arrow; position the mobile dock with safe-area insets and suppress it while marked hero actions intersect the viewport, during menu navigation, or on project-detail pages.
 
 Keep the water caustics irregular and organic rather than a fine uniform grid, with a clear turquoise base and restrained sparkle points.
 
