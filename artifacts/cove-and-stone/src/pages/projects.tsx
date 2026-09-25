@@ -39,18 +39,14 @@ import mandarinTurfHeroMobile from '@assets/generated_images/mandarin-pool-turf/
 import mandarinTurfPoster from '@assets/generated_images/mandarin-pool-turf/completed-walkthrough-poster.jpg';
 import mandarinTurfBackyard from '@assets/generated_images/mandarin-pool-turf/backyard-reference.jpg';
 import mandarinTurfBackyardMobile from '@assets/generated_images/mandarin-pool-turf/backyard-reference-mobile.jpg';
-import mandarinTurfCoveredRendering from '@assets/generated_images/mandarin-pool-turf/concept-covered-view.jpg';
-import mandarinTurfCoveredRenderingMobile from '@assets/generated_images/mandarin-pool-turf/concept-covered-view-mobile.jpg';
-import mandarinTurfDesign01 from '@assets/generated_images/mandarin-pool-turf/design-pool-01.jpg';
-import mandarinTurfDesign01Mobile from '@assets/generated_images/mandarin-pool-turf/design-pool-01-mobile.jpg';
-import mandarinTurfDesign02 from '@assets/generated_images/mandarin-pool-turf/design-pool-02.jpg';
-import mandarinTurfDesign02Mobile from '@assets/generated_images/mandarin-pool-turf/design-pool-02-mobile.jpg';
 import mandarinTurfProgressNov24A from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-24-01.jpg';
 import mandarinTurfProgressNov24AMobile from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-24-01-mobile.jpg';
 import mandarinTurfProgressNov24B from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-24-02.jpg';
 import mandarinTurfProgressNov24BMobile from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-24-02-mobile.jpg';
 import mandarinTurfProgressNov26 from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-26.jpg';
 import mandarinTurfProgressNov26Mobile from '@assets/generated_images/mandarin-pool-turf/progress-2021-11-26-mobile.jpg';
+import mandarinTurfProgressDec101104 from '@assets/generated_images/mandarin-pool-turf/progress-2021-12-10-11-04.jpg';
+import mandarinTurfProgressDec101104Mobile from '@assets/generated_images/mandarin-pool-turf/progress-2021-12-10-11-04-mobile.jpg';
 import mandarinTurfProgressDec10A from '@assets/generated_images/mandarin-pool-turf/progress-2021-12-10-01.jpg';
 import mandarinTurfProgressDec10AMobile from '@assets/generated_images/mandarin-pool-turf/progress-2021-12-10-01-mobile.jpg';
 import mandarinTurfProgressDec10B from '@assets/generated_images/mandarin-pool-turf/progress-2021-12-10-02.jpg';
@@ -374,7 +370,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     features: "Custom pool, Two retaining walls, Synthetic turf, Finished outdoor living",
     timeline: "Approximately 8 months",
     image: mandarinTurfHero,
-    desc: "A completed Mandarin backyard project near Hood & Shad, in Jacksonville's 32257 ZIP code. The approximately eight-month build brought together a custom pool, two retaining walls and synthetic turf, with the supplied design studies and construction footage kept clearly separated from the final walkthrough.",
+    desc: "A completed Mandarin backyard project near Hood & Shad, in Jacksonville's 32257 ZIP code. The approximately eight-month build brought together a custom pool, two retaining walls and synthetic turf. The gallery follows the original construction photos and videos through to the final walkthrough.",
     status: "completed",
     statusLabel: "Completed · approximately 8 months",
     media: {
@@ -400,62 +396,48 @@ export const CASE_STUDIES: CaseStudy[] = [
           label: "Backyard site overview",
         }),
         photoTimelineItem(
-          "Design direction · illustrative",
-          mandarinTurfCoveredRendering,
-          mandarinTurfCoveredRenderingMobile,
-          "Illustrative pool and covered-patio design view with a person shown in the rendering.",
-          "Illustrative covered-patio design view",
-        ),
-        photoTimelineItem(
-          "Design direction · illustrative",
-          mandarinTurfDesign01,
-          mandarinTurfDesign01Mobile,
-          "Illustrative design rendering of the proposed pool, house and light-toned deck.",
-          "Pool design rendering · view one",
-        ),
-        photoTimelineItem(
-          "Design direction · illustrative",
-          mandarinTurfDesign02,
-          mandarinTurfDesign02Mobile,
-          "Second illustrative design rendering showing the proposed pool and backyard layout from another angle.",
-          "Pool design rendering · view two",
-        ),
-        photoTimelineItem(
-          "Construction progress",
+          "Nov 24, 2021",
           mandarinTurfProgressNov24A,
           mandarinTurfProgressNov24AMobile,
           "Early construction progress in the Mandarin backyard around the pool and covered outdoor area.",
           "Construction progress · early pool work",
         ),
         photoTimelineItem(
-          "Construction progress",
+          "Nov 24, 2021",
           mandarinTurfProgressNov24B,
           mandarinTurfProgressNov24BMobile,
           "Second view of the pool and backyard during construction.",
           "Construction progress · pool work",
         ),
         photoTimelineItem(
-          "Construction progress",
+          "Nov 26, 2021",
           mandarinTurfProgressNov26,
           mandarinTurfProgressNov26Mobile,
           "Construction crew working along the pool deck and retaining-wall area.",
           "Construction progress · retaining-wall work",
         ),
         photoTimelineItem(
-          "Construction progress",
+          "Dec 10 · 10:33 a.m.",
           mandarinTurfProgressDec10A,
           mandarinTurfProgressDec10AMobile,
           "View of the pool and surrounding hardscape during the Mandarin project build.",
           "Construction progress · pool and hardscape",
         ),
         photoTimelineItem(
-          "Construction progress",
+          "Dec 10 · 10:35 a.m.",
           mandarinTurfProgressDec10B,
           mandarinTurfProgressDec10BMobile,
           "Closer construction view of the pool and the work area beside the deck.",
           "Construction progress · pool detail",
         ),
-        videoTimelineItem("Construction progress", {
+        photoTimelineItem(
+          "Dec 10 · 11:04 a.m.",
+          mandarinTurfProgressDec101104,
+          mandarinTurfProgressDec101104Mobile,
+          "Pool technicians working on the pool interior and steps during midday construction progress.",
+          "Construction progress · pool interior",
+        ),
+        videoTimelineItem("Dec 10 · 11:26 a.m.", {
           desktopSrc: mandarinTurfProgressDec10Video,
           mobileSrc: mandarinTurfProgressDec10VideoMobile,
           poster: mandarinTurfProgressDec10A,
@@ -463,20 +445,20 @@ export const CASE_STUDIES: CaseStudy[] = [
           label: "Pool construction progress · video",
         }),
         photoTimelineItem(
-          "Construction progress",
+          "Dec 10 · 11:28 a.m.",
           mandarinTurfProgressDec10C,
           mandarinTurfProgressDec10CMobile,
           "Pool construction progress with workers and equipment inside the pool area.",
           "Construction progress · pool interior",
         ),
         photoTimelineItem(
-          "Construction progress",
+          "Dec 10 · 12:31 p.m.",
           mandarinTurfProgressDec10D,
           mandarinTurfProgressDec10DMobile,
           "Later construction view of the pool, deck and surrounding backyard.",
           "Construction progress · backyard overview",
         ),
-        videoTimelineItem("Construction progress", {
+        videoTimelineItem("Feb 1, 2022", {
           desktopSrc: mandarinTurfProgressFeb01Video,
           mobileSrc: mandarinTurfProgressFeb01VideoMobile,
           poster: mandarinTurfProgressDec10D,

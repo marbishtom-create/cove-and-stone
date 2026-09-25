@@ -109,12 +109,28 @@ test("Hood & Shad Mandarin project presents an ordered gallery and final walkthr
   assert.match(mandarin, /Two retaining walls/);
   assert.match(mandarin, /Synthetic turf/);
   assert.match(mandarin, /timeline: \[/);
-  assert.match(mandarin, /Design direction · illustrative/);
+  assert.doesNotMatch(mandarin, /mandarinTurf(?:CoveredRendering|Design01|Design02)/);
   assert.match(mandarin, /desktopSrc: mandarinTurfFinalVideo/);
   assert.match(mandarin, /mobileSrc: mandarinTurfFinalVideoMobile/);
   assert.match(mandarin, /label: "Completed project · final walkthrough"/);
-  assert.equal((mandarin.match(/photoTimelineItem\(/g) ?? []).length, 11);
+  assert.equal((mandarin.match(/photoTimelineItem\(/g) ?? []).length, 9);
   assert.equal((mandarin.match(/videoTimelineItem\(/g) ?? []).length, 4);
+
+  const captureOrder = [
+    "mandarinTurfProgressDec10A",
+    "mandarinTurfProgressDec10B",
+    "mandarinTurfProgressDec101104",
+    "mandarinTurfProgressDec10Video",
+    "mandarinTurfProgressDec10C",
+    "mandarinTurfProgressDec10D",
+  ];
+  const timelineStart = mandarin.indexOf("timeline: [");
+  let priorMediaIndex = timelineStart;
+  for (const mediaName of captureOrder) {
+    const mediaIndex = mandarin.indexOf(mediaName, priorMediaIndex);
+    assert.ok(mediaIndex > priorMediaIndex, `${mediaName} should follow the previous capture`);
+    priorMediaIndex = mediaIndex;
+  }
 
   const finalWalkthroughIndex = mandarin.indexOf(
     'videoTimelineItem("Completed project · final walkthrough"',
@@ -130,18 +146,14 @@ test("Hood & Shad Mandarin project presents an ordered gallery and final walkthr
     "mandarinTurfHeroMobile",
     "mandarinTurfBackyard",
     "mandarinTurfBackyardMobile",
-    "mandarinTurfCoveredRendering",
-    "mandarinTurfCoveredRenderingMobile",
-    "mandarinTurfDesign01",
-    "mandarinTurfDesign01Mobile",
-    "mandarinTurfDesign02",
-    "mandarinTurfDesign02Mobile",
     "mandarinTurfProgressNov24A",
     "mandarinTurfProgressNov24AMobile",
     "mandarinTurfProgressNov24B",
     "mandarinTurfProgressNov24BMobile",
     "mandarinTurfProgressNov26",
     "mandarinTurfProgressNov26Mobile",
+    "mandarinTurfProgressDec101104",
+    "mandarinTurfProgressDec101104Mobile",
     "mandarinTurfProgressDec10A",
     "mandarinTurfProgressDec10AMobile",
     "mandarinTurfProgressDec10B",

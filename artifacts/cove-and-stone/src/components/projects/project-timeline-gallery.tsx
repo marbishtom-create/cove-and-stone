@@ -65,8 +65,8 @@ export function ProjectTimelineGallery({ items }: { items: CaseStudyTimelineItem
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground">
-            Follow the project from the existing yard through design and construction
-            to the final walkthrough. Renderings are labeled as illustrative.
+            Follow the project from the existing yard through construction and into the
+            final walkthrough. Progress media is arranged by its original capture time.
           </p>
         </div>
 
