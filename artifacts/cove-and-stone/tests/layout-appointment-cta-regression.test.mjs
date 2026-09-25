@@ -39,8 +39,12 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.equal((layoutSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 2);
   assert.equal((layoutSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 2);
   assert.match(ctaElements, /<ArrowRight\b/);
-  assert.match(ctaElements, /fill="#fff"[\s\S]*?stroke="#15969a"/);
-  assert.match(ctaElements, /d="M 0 40 C 16 39, 27 90, 43 95 C 58 100, 68 89, 79 67 C 87 53, 95 72, 100 83"/);
+  assert.match(ctaElements, /className="layout-appointment-cta__duck"/);
+  assert.match(ctaElements, /fill="#f4c64b"/);
+  assert.match(ctaElements, /fill="#ef9138"/);
+  assert.match(ctaElements, /fill="#f9dc82"/);
+  assert.match(ctaElements, /circle cx="33\.2" cy="12\.1" r="1\.25" fill="#173943"/);
+  assert.match(ctaElements, /d="M 0 40 C 15 39, 28 72, 44 86 C 56 96, 68 88, 79 65 C 84 54, 95 72, 100 83"/);
   assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
   assert.match(ctaElements, /strokeWidth="0\.9"/);
   assert.match(ctaStyles, /transition-delay: 3\.05s/);
@@ -85,8 +89,9 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
     2,
     'water color and glint should share the exact same smooth mask',
   );
-  assert.match(ctaStyles, /48% 96\.1%,\s*50% 96\.2%,\s*52% 96\.1%,\s*54% 95\.7%/);
-  assert.match(ctaStyles, /linear-gradient\(rgba\(255, 255, 255, 0\.11\)/);
+  assert.match(ctaStyles, /48% 88\.7%,\s*50% 89\.5%,\s*52% 90%,\s*54% 90\.2%/);
+  assert.match(ctaStyles, /linear-gradient\(rgba\(255, 255, 255, 0\.16\)/);
+  assert.match(ctaStyles, /54% 85\.2%, 52% 85%, 50% 84\.5%/);
   assert.equal(
     (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
     2,
