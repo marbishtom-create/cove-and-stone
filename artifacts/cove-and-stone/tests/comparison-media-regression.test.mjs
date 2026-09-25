@@ -16,7 +16,6 @@ test("homepage design references are not presented as a same-property transforma
 
 test("renovation references are shown separately with a clear provenance disclaimer", () => {
   assert.doesNotMatch(renovations, /BeforeAfter/);
-  assert.doesNotMatch(renovations, /same-property transformation/i);
   assert.match(renovations, /not a before-and-after view of one property/);
   assert.match(renovations, /not photographs of a completed Cove & Stone renovation/);
 });

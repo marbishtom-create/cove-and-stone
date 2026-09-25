@@ -44,7 +44,7 @@ test('uses the shared consultation CTA surface and reference art', () => {
   assert.match(ctaElements, /src="\/brand\/appointment-cta-reference-arrow-small\.png"/);
   assert.match(ctaElements, /className="layout-appointment-cta__duck-medallion"/);
   assert.match(ctaElements, /className="layout-appointment-cta__duck-art"/);
-  assert.match(ctaStyles, /aspect-ratio:\s*2007\s*\/\s*441/);
+  assert.match(ctaStyles, /aspect-ratio:\s*2007\s*\/\s*420/);
   assert.match(ctaStyles, /width: min\(19\.9584rem, calc\(100\.8vw - 5\.04rem\)\)/);
   assert.match(ctaStyles, /right: max\(0\.75rem, env\(safe-area-inset-right\)\)/);
   assert.match(ctaStyles, /container-type: inline-size/);

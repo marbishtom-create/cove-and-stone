@@ -101,7 +101,7 @@ test('covers the complete lockup on representative interior routes at both viewp
   assert.match(layoutSource, /data-testid="site-header"/);
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[132px\] min-\[375px\]:w-\[140px\] sm:w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
 
   for (const viewport of headerViewports) {
@@ -164,7 +164,7 @@ test('keeps the complete logo readable while the mobile menu opens and closes', 
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[132px\] min-\[375px\]:w-\[140px\] sm:w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
 });
 
@@ -216,7 +216,7 @@ test('resets the header state when navigating between interior routes', () => {
   );
   assert.match(
     layoutSource,
-    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[165px\] md:w-\[220px\]"\s+\/>/,
+    /<Logo\s+variant=\{headerLogoVariant\}\s+imageClassName="w-\[132px\] min-\[375px\]:w-\[140px\] sm:w-\[165px\] md:w-\[220px\]"\s+\/>/,
   );
   assert.match(
     layoutSource,
