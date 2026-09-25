@@ -3,17 +3,11 @@ name: Consultation CTA layers
 description: Reference-driven material separation for the shared consultation CTA.
 ---
 
-Keep the CTA's pale upper panel distinct from limestone. Reveal a clearly visible, continuous stone inlay and right-side cap between that panel and the flowing teal water; do not let the stone and water collapse into hairline bands. Keep the limestone subtly light rather than dark gray, the white water seam very thin, and caustic shimmer inside the water shape.
+Use the user's supplied button reference as the CTA artwork. Preserve its long rounded capsule, taupe outline, pale upper panel, continuous limestone inlay, turquoise water, copy, and arrow as one visual.
 
-**Why:** The reference depends on three visibly separate materials. The earlier mask left the stone and water almost invisible at rendered size, while a full-face texture or overly dark stone obscures that structure.
+**Why:** The user provided an exact replica and corrected multiple approximations; the reference itself is the source of truth for the shape, colors, and material boundaries.
 
-**How to apply:** Keep the SVG waterline aligned to the CSS water mask and preserve separate masks for the pale panel, exposed stone, and water when changing CTA size, motion, placement, or textures.
-
-The CTA's outer outline must read as the Cove & Stone logo badge turned sideways: a horizontal badge with long straight sides and semicircular end caps, not a pure ellipse.
-
-**Why:** The user explicitly corrected an oval treatment and asked for the button to use the logo's shape sideways.
-
-**How to apply:** Extend the badge horizontally while keeping the end radius equal to half the CTA height; preserve the current compact width and keep all material layers inside that outline.
+**How to apply:** Use the latest supplied reference art without altering its proportions. Keep the artwork decorative and retain equivalent link text in HTML for assistive technology.
 
 Keep the compact desktop and mobile floating CTAs only on the homepage, both fixed at bottom-right with the same reference proportions.
 

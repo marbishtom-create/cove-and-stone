@@ -15,297 +15,48 @@
 }
 
 .layout-appointment-cta {
-  aspect-ratio: 4.82 / 1;
-  /* Extend the logo badge sideways: straight long edges with semicircular end caps, not an ellipse. */
-  --appointment-water-mask: polygon(
-    0 40%, 2% 40.1%, 4% 40.5%, 6% 41.3%, 8% 42.5%, 10% 44%, 12% 45.8%,
-    14% 47.8%, 16% 50.1%, 18% 52.5%, 20% 55.2%, 22% 57.9%, 24% 60.7%,
-    26% 63.6%, 28% 66.5%, 30% 69.3%, 32% 72.1%, 34% 74.8%, 36% 77.4%,
-    38% 79.8%, 40% 82.1%, 42% 84.1%, 44% 86%, 46% 87.5%, 48% 88.7%,
-    50% 89.5%, 52% 90%, 54% 90.2%, 56% 90.1%, 58% 89.7%, 60% 88.9%,
-    62% 87.8%, 64% 86.4%, 66% 84.6%, 68% 82.6%, 70% 80.2%, 72% 77.4%,
-    74% 74.3%, 76% 70.9%, 78% 67%, 80% 63.3%, 82% 61.7%, 84% 61.7%,
-    86% 62.6%, 88% 64.2%, 90% 66.3%, 92% 68.9%, 94% 71.9%, 96% 75.2%,
-    98% 78.9%, 100% 83%, 100% 100%, 0 100%
-  );
-  --appointment-stone-mask: polygon(
-    0 38%, 2% 38.3%, 4% 38.8%, 6% 39.5%, 8% 40.5%, 10% 42%, 12% 43.5%,
-    14% 45%, 16% 46.5%, 18% 48.3%, 20% 50.2%, 22% 52.9%, 24% 55.7%,
-    26% 58.6%, 28% 61.5%, 30% 64.3%, 32% 67.1%, 34% 69.8%, 36% 72.4%,
-    38% 74.8%, 40% 76.3%, 42% 77.1%, 44% 77.4%, 46% 77%, 48% 76.8%,
-    50% 77%, 52% 77%, 54% 77.2%, 56% 77.9%, 58% 78.4%, 60% 78.4%,
-    62% 78.3%, 64% 77.6%, 66% 76.3%, 68% 74.6%, 70% 72.2%, 72% 71.4%,
-    74% 68.3%, 76% 64.9%, 78% 61%, 80% 58.3%, 81% 54%, 82% 48%, 83% 42%,
-    84% 35%, 85% 27%, 86% 18%, 87% 9%, 88% 0%, 100% 0%, 100% 83%,
-    98% 78.9%, 96% 75.2%, 94% 71.9%, 92% 68.9%, 90% 66.3%, 88% 64.2%,
-    86% 62.6%, 84% 61.7%, 82% 61.7%, 80% 63.3%, 78% 67%, 76% 70.9%,
-    74% 74.3%, 72% 77.4%, 70% 80.2%, 68% 82.6%, 66% 84.6%, 64% 86.4%,
-    62% 87.8%, 60% 88.9%, 58% 89.7%, 56% 90.1%, 54% 90.2%, 52% 90%,
-    50% 89.5%, 48% 88.7%, 46% 87.5%, 44% 86%, 42% 84.1%, 40% 82.1%,
-    38% 79.8%, 36% 77.4%, 34% 74.8%, 32% 72.1%, 30% 69.3%, 28% 66.5%,
-    26% 63.6%, 24% 60.7%, 22% 57.9%, 20% 55.2%, 18% 52.5%, 16% 50.1%,
-    14% 47.8%, 12% 45.8%, 10% 44%, 8% 42.5%, 6% 41.3%, 4% 40.5%,
-    2% 40.1%, 0 40%
-  );
+  aspect-ratio: 2007 / 420;
   align-items: center;
-  background:
-    linear-gradient(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%);
-  border: 2px solid #978d7f;
-  border-width: clamp(2px, 0.42cqw, 4px);
+  background: #f7f6f4;
+  border: 0;
   border-radius: 9999px;
-  box-shadow:
-    0 10px 22px rgba(6, 24, 28, 0.24),
-    0 0 0 1px rgba(238, 233, 224, 0.88),
-    inset 0 0 0 2px rgba(255, 255, 255, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 -2px 5px rgba(70, 66, 55, 0.1);
-  color: #142438;
+  box-shadow: 0 7px 16px rgba(18, 28, 31, 0.2);
   display: inline-flex;
-  container-type: inline-size;
   isolation: isolate;
-  justify-content: space-between;
+  justify-content: center;
+  min-height: 0;
   overflow: hidden;
-  padding: 0.4rem 4% 0.4rem 20.5%;
+  padding: 0;
   position: relative;
   text-decoration: none;
-  transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
+  transition: box-shadow 220ms ease, transform 220ms ease;
 }
 
-.layout-appointment-cta::before {
-  background:
-    url("/brand/cove-water-caustics.svg"),
-    radial-gradient(ellipse 24% 78% at 24% 26%, rgba(188, 255, 248, 0.48), transparent 78%),
-    linear-gradient(108deg, #0ea0aa 0%, #16b3b8 18%, #23c9c5 36%, #53ddd1 49%, #129aa8 65%, #1092a0 79%, #48d6ca 91%, #1296a2 100%),
-    linear-gradient(105deg, transparent 2%, rgba(2, 88, 107, 0.42) 17%, transparent 31%, rgba(111, 239, 221, 0.46) 43%, transparent 57%, rgba(0, 102, 122, 0.36) 72%, rgba(99, 229, 215, 0.4) 84%, transparent 96%);
-  background-size: 25cqw 17.5cqw, 100% 100%, 240% 100%, 250% 100%;
-  background-position: 0 0, 0 0, 0 0, 0 0;
-  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
-  content: '';
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-  clip-path: var(--appointment-water-mask);
-  animation: cove-water-current 7.2s ease-in-out infinite, cove-water-flow 10s linear infinite;
-  z-index: 0;
-}
-
-.layout-appointment-cta::after {
-  background:
-    linear-gradient(105deg, transparent 10%, rgba(196, 255, 245, 0.34) 42%, transparent 70%),
-    radial-gradient(ellipse 28% 62% at 64% 52%, rgba(117, 244, 220, 0.28), transparent 82%);
-  background-size: 190% 150%, 120% 100%;
-  clip-path: var(--appointment-water-mask);
-  content: '';
-  inset: 0;
-  mix-blend-mode: screen;
-  opacity: 0.82;
-  pointer-events: none;
-  position: absolute;
-  animation: cove-water-current 7.2s ease-in-out infinite, cove-water-glint 4.5s linear infinite;
-  z-index: 2;
-}
-
-.layout-appointment-cta__stone {
-  background:
-    linear-gradient(rgba(104, 82, 55, 0.06), rgba(104, 82, 55, 0.06)),
-    url("/brand/cove-stone-button-texture-enhanced.webp") center / 100% 100% no-repeat;
-  clip-path: var(--appointment-stone-mask);
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: 1;
-}
-
-.layout-appointment-cta__surface {
-  background: linear-gradient(115deg, #f9f9f7 0%, #faf9f5 70%, #f5f3ee 100%);
-  clip-path: polygon(
-    0 0, 88% 0, 87% 9%, 86% 18%, 85% 27%, 84% 35%, 83% 42%, 82% 48%,
-    81% 54%, 80% 58.3%, 78% 61%, 76% 64.9%, 74% 68.3%, 72% 71.4%,
-    70% 72.2%, 68% 74.6%, 66% 76.3%, 64% 77.6%, 62% 78.3%, 60% 78.4%,
-    58% 78.4%, 56% 77.9%, 54% 77.2%, 52% 77%, 50% 77%, 48% 76.8%,
-    46% 77%, 44% 77.4%, 42% 77.1%, 40% 76.3%, 38% 74.8%, 36% 72.4%,
-    34% 69.8%, 32% 67.1%, 30% 64.3%, 28% 61.5%, 26% 58.6%, 24% 55.7%,
-    22% 52.9%, 20% 50.2%, 18% 48.3%, 16% 46.5%, 14% 45%, 12% 43.5%,
-    10% 42%, 8% 40.5%, 6% 39.5%, 4% 38.8%, 2% 38.3%, 0 38%
-  );
-  filter: drop-shadow(0 3px 3px rgba(117, 104, 87, 0.18));
-  inset: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: 2;
-}
-
-.layout-appointment-cta__copy,
-.layout-appointment-cta__arrow-shell {
-  position: relative;
-  z-index: 4;
-}
-
-.layout-appointment-cta__waterline {
+.layout-appointment-cta__reference-art {
+  display: block;
   height: 100%;
   inset: 0;
+  object-fit: fill;
   pointer-events: none;
   position: absolute;
   width: 100%;
-  z-index: 3;
 }
 
 .layout-appointment-cta__copy {
-  align-items: flex-start;
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 0.12rem;
-  min-width: 0;
-  text-align: left;
-  transform: translateY(-0.85rem);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.92);
-}
-
-.layout-appointment-cta__eyebrow {
-  color: #263444;
-  font-family: var(--font-sans);
-  font-size: 0.48rem;
-  font-size: clamp(0.48rem, 2.15cqw, 1.25rem);
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.layout-appointment-cta__title {
-  color: #142438;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-size: clamp(0.9rem, 6cqw, 4rem);
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-@media (max-width: 639px) {
-  .layout-appointment-cta--compact-mobile {
-    border-width: 1px;
-    box-shadow:
-      0 5px 12px rgba(6, 24, 28, 0.24),
-      0 0 0 1px rgba(238, 233, 224, 0.88),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.9),
-      inset 0 1px 0 rgba(255, 255, 255, 0.96),
-      inset 0 -1px 3px rgba(70, 66, 55, 0.1);
-    min-height: 3rem;
-    padding-bottom: 0.28rem;
-    padding-top: 0.28rem;
-  }
-
-  .layout-appointment-cta--compact-mobile .layout-appointment-cta__copy {
-    transform: translateY(-0.48rem);
-  }
-
-  .layout-appointment-cta--compact-mobile .layout-appointment-cta__eyebrow {
-    font-size: clamp(0.36rem, 2cqw, 0.58rem);
-    letter-spacing: 0.24em;
-  }
-
-  .layout-appointment-cta--compact-mobile .layout-appointment-cta__title {
-    font-size: clamp(0.66rem, 5.6cqw, 0.9rem);
-  }
-
-  .layout-appointment-cta--compact-mobile .layout-appointment-cta__arrow-shell {
-    border-width: 1px;
-    flex-basis: 10.6cqw;
-    height: 10.6cqw;
-    width: 10.6cqw;
-  }
-
-  .layout-appointment-cta--compact-mobile .layout-appointment-cta__arrow {
-    height: 7.6cqw;
-    width: 7.6cqw;
-  }
-}
-
-.layout-appointment-cta__arrow-shell {
-  align-items: center;
-  background: #12848b;
-  border: 2px solid rgba(255, 255, 255, 0.96);
-  border-width: clamp(2px, 0.32cqw, 3px);
-  border-radius: 9999px;
-  box-shadow:
-    0 0 0 1px rgba(180, 168, 149, 0.62),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  display: inline-flex;
-  flex: 0 0 2.25rem;
-  height: 2.25rem;
-  flex-basis: clamp(2rem, 10.6cqw, 6rem);
-  height: clamp(2rem, 10.6cqw, 6rem);
-  justify-content: center;
-  transition: transform 220ms ease, background-color 220ms ease;
-  width: 2.25rem;
-  width: clamp(2rem, 10.6cqw, 6rem);
-}
-
-.layout-appointment-cta__arrow {
-  flex: 0 0 auto;
-  color: #fff;
-  height: 1.375rem;
-  opacity: 1;
-  transition: opacity 160ms ease;
-  width: 1.375rem;
-  height: clamp(1rem, 7.6cqw, 4rem);
-  width: clamp(1rem, 7.6cqw, 4rem);
-}
-
-.layout-appointment-cta__duck {
-  height: 1.65rem;
-  left: 50%;
-  opacity: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.74) rotate(-8deg);
-  transition: opacity 180ms ease, transform 220ms ease;
-  width: 1.9rem;
-  height: clamp(1.65rem, 4.8cqw, 2.85rem);
-  width: clamp(1.9rem, 5.7cqw, 3.5rem);
-}
-
-.layout-appointment-cta__arrow-shell:hover .layout-appointment-cta__arrow,
-.layout-appointment-cta:focus-visible .layout-appointment-cta__arrow {
-  opacity: 0;
-  transition-delay: 3.05s;
-}
-
-.layout-appointment-cta__arrow-shell:hover .layout-appointment-cta__duck,
-.layout-appointment-cta:focus-visible .layout-appointment-cta__duck {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1) rotate(0);
-  transition-delay: 3.05s;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .layout-appointment-cta:hover,
 .layout-appointment-cta:focus-visible {
-  border-color: rgba(65, 126, 126, 0.92);
-  box-shadow:
-    0 15px 28px rgba(6, 24, 28, 0.3),
-    0 0 0 3px rgba(67, 177, 169, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    inset 0 -2px 5px rgba(70, 66, 55, 0.1);
+  box-shadow: 0 10px 20px rgba(18, 28, 31, 0.24);
   transform: translateY(-2px);
-}
-
-.layout-appointment-cta:hover::before,
-.layout-appointment-cta:focus-visible::before {
-  animation-duration: 5s, 7s;
-  filter: saturate(1.14) brightness(1.06);
-}
-
-.layout-appointment-cta:hover::after,
-.layout-appointment-cta:focus-visible::after {
-  opacity: 0.95;
-}
-
-.layout-appointment-cta:hover .layout-appointment-cta__arrow-shell,
-.layout-appointment-cta:focus-visible .layout-appointment-cta__arrow-shell {
-  transform: translate(3px, -2px);
 }
 
 .layout-appointment-cta:focus-visible {
@@ -317,53 +68,14 @@
   transform: translateY(0) scale(0.99);
 }
 
-@keyframes cove-water-current {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-1px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes cove-water-flow {
-  from {
-    background-position: 0 0, 0 0, 0 0, 0 0;
-  }
-  to {
-    background-position: 6.8cqw 4.8cqw, 0 0, 100% 0, 100% 0;
-  }
-}
-
-@keyframes cove-water-glint {
-  from {
-    background-position: -11.7cqw 0, 0 0;
-    opacity: 0.54;
-  }
-  to {
-    background-position: 15.9cqw 0, 100% 0;
-    opacity: 0.9;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .layout-appointment-cta,
-  .layout-appointment-cta::before,
-  .layout-appointment-cta::after,
-  .layout-appointment-cta__copy,
-  .layout-appointment-cta__arrow-shell,
-  .layout-appointment-cta__arrow,
-  .layout-appointment-cta__duck {
-    animation: none;
+  .layout-appointment-cta {
     transition-duration: 0.01ms;
-    transition-delay: 0s;
   }
 
   .layout-appointment-cta:hover,
-  .layout-appointment-cta:focus-visible {
+  .layout-appointment-cta:focus-visible,
+  .layout-appointment-cta:active {
     transform: none;
   }
 }

@@ -2,7 +2,7 @@ import { useParams, Link } from 'wouter';
 import { CASE_STUDIES } from './projects';
 import { ArrowLeft, ArrowRight, CheckCircle2, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
 import { BeforeAfter } from '@/components/ui/before-after';
-import { AppointmentCtaArrow, AppointmentCtaSurface } from '@/components/layout/appointment-cta-elements';
+import { AppointmentCtaSurface } from '@/components/layout/appointment-cta-elements';
 import NotFound from '@/pages/not-found';
 
 export default function ProjectDetail() {
@@ -47,7 +47,7 @@ export default function ProjectDetail() {
             </p>
             <Link
               href="/appointments/"
-              className="layout-appointment-cta layout-appointment-cta--compact-mobile mx-auto mb-8 min-h-[3rem] w-full max-w-[14.5rem] sm:min-h-[4.1rem] sm:max-w-[19.8rem]"
+              className="layout-appointment-cta layout-appointment-cta--compact-mobile mx-auto mb-8 w-full max-w-[14.5rem] sm:max-w-[19.8rem]"
               data-testid="link-project-detail-appointment-cta"
             >
               <AppointmentCtaSurface />
@@ -55,7 +55,6 @@ export default function ProjectDetail() {
                 <span className="layout-appointment-cta__eyebrow">Design consultation</span>
                 <span className="layout-appointment-cta__title">Start your project today</span>
               </span>
-              <AppointmentCtaArrow />
             </Link>
             <div className="inline-block bg-secondary/10 text-secondary px-4 py-2 text-xs font-bold uppercase tracking-widest">
               {isCompletedProject

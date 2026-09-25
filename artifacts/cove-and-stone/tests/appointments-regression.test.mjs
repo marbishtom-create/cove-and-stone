@@ -4,13 +4,14 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, apiRoute, apiSpec, seoText, sitemap, themeConfig] =
+const [app, layout, appointmentPage, appointmentCss, layoutCtaCss, ctaElements, apiRoute, apiSpec, seoText, sitemap, themeConfig] =
   await Promise.all([
     read("../src/App.tsx"),
     read("../src/components/layout/layout.tsx"),
     read("../src/pages/appointments.tsx"),
     read("../src/pages/appointments.css"),
     read("../src/components/layout/appointment-cta.css"),
+    read("../src/components/layout/appointment-cta-elements.tsx"),
     read("../../api-server/src/routes/appointments.ts"),
     read("../../../lib/api-spec/openapi.yaml"),
     read("../src/config/seo-routes.json"),
@@ -28,11 +29,14 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layout, /data-testid="link-mobile-appointment-cta"/);
   assert.doesNotMatch(layout, /Design Consultations|Book a design consultation|href="\/financing\/"/);
   assert.match(layoutCtaCss, /prefers-reduced-motion:\s*reduce/);
-  assert.match(layoutCtaCss, /layout-appointment-cta:hover::before/);
   assert.match(layoutCtaCss, /border-radius:\s*9999px/);
+  assert.match(layoutCtaCss, /aspect-ratio:\s*2007\s*\/\s*420/);
   assert.match(layoutCtaCss, /width:\s*min\(15\.84rem/);
   assert.match(layoutCtaCss, /width:\s*min\(12rem/);
-  assert.match(layoutCtaCss, /layout-appointment-cta__stone/);
+  assert.match(layoutCtaCss, /layout-appointment-cta__reference-art/);
+  assert.match(ctaElements, /src="\/brand\/appointment-cta-reference\.png"/);
+  assert.match(ctaElements, /aria-hidden="true"/);
+  assert.match(layoutCtaCss, /clip-path:\s*inset\(50%\)/);
 });
 
 test("collects the required customer details and submits through the generated appointment mutation", () => {

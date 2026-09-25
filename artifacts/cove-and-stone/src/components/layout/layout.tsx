@@ -4,7 +4,7 @@ import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import './appointment-cta.css';
-import { AppointmentCtaArrow, AppointmentCtaSurface } from './appointment-cta-elements';
+import { AppointmentCtaSurface } from './appointment-cta-elements';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
@@ -109,10 +109,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       </header>
 
       {location === "/" && (
-        <div className="layout-appointment-cta__dock fixed z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex">
+        <div className="layout-appointment-cta__dock fixed z-50 hidden lg:flex">
           <Link
             href="/appointments/"
-            className="layout-appointment-cta min-h-[4.1rem] w-full"
+            className="layout-appointment-cta w-full"
             data-testid="link-desktop-appointment-cta"
           >
             <AppointmentCtaSurface />
@@ -120,18 +120,17 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <AppointmentCtaArrow />
           </Link>
         </div>
       )}
 
       {location === "/" && !mobileMenuOpen && (
         <div
-          className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:hidden"
+          className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 lg:hidden"
         >
           <Link
             href="/appointments/"
-            className="layout-appointment-cta layout-appointment-cta--compact-mobile min-h-[3rem] w-full"
+            className="layout-appointment-cta layout-appointment-cta--compact-mobile w-full"
             data-testid="link-mobile-sticky-appointment-cta"
           >
             <AppointmentCtaSurface />
@@ -139,7 +138,6 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <AppointmentCtaArrow />
           </Link>
         </div>
       )}
@@ -177,7 +175,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link
             href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="layout-appointment-cta mx-auto min-h-[4.1rem] w-full"
+            className="layout-appointment-cta mx-auto w-full"
             data-testid="link-mobile-appointment-cta"
           >
             <AppointmentCtaSurface />
@@ -185,7 +183,6 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="layout-appointment-cta__eyebrow">Design consultation</span>
               <span className="layout-appointment-cta__title">Start your project today</span>
             </span>
-            <AppointmentCtaArrow />
           </Link>
         </div>
       </div>
