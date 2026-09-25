@@ -53,9 +53,18 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   assert.match(waterTexture, /<path/);
   assert.match(waterTexture, /<circle/);
   assert.match(ctaStyles, /background-blend-mode: normal, normal, normal/);
-  assert.match(ctaStyles, /linear-gradient\(115deg, #e4ded1 0%, #f0eadf 64%, #e4d8c2 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%\)/);
   assert.match(ctaStyles, /\.layout-appointment-cta__surface[\s\S]*?clip-path: polygon/);
-  assert.match(ctaStyles, /linear-gradient\(108deg, #078e9e 0%, #10c1c6 34%, #2bd2cb 53%, #0799a7 100%\)/);
+  assert.match(ctaStyles, /linear-gradient\(108deg, #087d8d 0%, #0b93a3 18%, #20bec2 36%, #4adbd0 49%/);
+  assert.match(ctaStyles, /rgba\(2, 88, 107, 0\.42\)/);
+  assert.match(ctaStyles, /rgba\(111, 239, 221, 0\.46\)/);
+  assert.doesNotMatch(ctaStyles, /drop-shadow\(0 -2px 0 rgba\(255, 255, 255/);
+  assert.match(ctaStyles, /46% 86%, 50% 86%,\s*54% 86%/);
+  assert.equal(
+    (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
+    2,
+    'the colored water and its glint should move as one surface',
+  );
   assert.match(ctaStyles, /@keyframes cove-water-current/);
   assert.match(ctaStyles, /@keyframes cove-water-flow/);
   assert.match(ctaStyles, /@keyframes cove-water-glint/);
