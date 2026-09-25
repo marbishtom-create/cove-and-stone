@@ -1,8 +1,5 @@
 import { ArrowRight } from "lucide-react";
 
-const waterlinePoints =
-  "0,40 2,40 4,41 6,42 8,44 10,47 12,50 14,54 16,59 18,64 20,69 22,73 24,77 26,81 28,84 30,87 32,89 34,91 36,93 38,94 40,95 42,95 44,94 46,93 48,93 50,94 52,94 54,93 56,92 58,90 60,87 62,84 64,80 66,76 68,72 70,68 72,65 74,63 76,61 78,60 80,60 82,61 84,62 86,64 88,66 90,69 92,72 94,75 96,78 98,81 100,83";
-
 export function AppointmentCtaSurface() {
   return (
     <>
@@ -14,11 +11,11 @@ export function AppointmentCtaSurface() {
         aria-hidden="true"
         focusable="false"
       >
-        <polyline
-          points={waterlinePoints}
+        <path
+          d="M 0 40 C 16 39, 27 90, 43 95 C 58 100, 68 89, 79 67 C 87 53, 95 72, 100 83"
           fill="none"
           stroke="rgba(255,255,255,.78)"
-          strokeWidth="1.15"
+          strokeWidth="0.9"
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"

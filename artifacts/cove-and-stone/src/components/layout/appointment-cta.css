@@ -1,13 +1,25 @@
 .layout-appointment-cta {
+  --appointment-water-mask: polygon(
+    0 40%, 2% 40.1%, 4% 40.8%, 6% 42%, 8% 43.7%, 10% 45.9%, 12% 48.5%,
+    14% 51.6%, 16% 54.9%, 18% 58.5%, 20% 62.3%, 22% 66.2%, 24% 70.2%,
+    26% 74%, 28% 77.8%, 30% 81.3%, 32% 84.5%, 34% 87.4%, 36% 89.8%,
+    38% 91.9%, 40% 93.5%, 42% 94.6%, 44% 95.3%, 46% 95.8%, 48% 96.1%,
+    50% 96.2%, 52% 96.1%, 54% 95.7%, 56% 95.1%, 58% 94.2%, 60% 93%,
+    62% 91.5%, 64% 89.8%, 66% 87.7%, 68% 85.3%, 70% 82.6%, 72% 79.6%,
+    74% 76.3%, 76% 72.8%, 78% 69%, 80% 65.4%, 82% 63.2%, 84% 62.2%,
+    86% 62.2%, 88% 63.1%, 90% 64.9%, 92% 67.5%, 94% 70.7%, 96% 74.4%,
+    98% 78.6%, 100% 83%, 100% 100%, 0 100%
+  );
   align-items: center;
   background:
+    linear-gradient(rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.11)),
     radial-gradient(ellipse 32% 68% at 18% 0%, rgba(255, 255, 255, 0.14), transparent 76%),
     url("/brand/cove-stone-button-texture.webp"),
     linear-gradient(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%);
-  background-blend-mode: normal, normal, normal;
-  background-position: center, center, center;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-blend-mode: normal, normal, normal, normal;
+  background-position: center, center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   border: 2px solid #a69c8e;
   border-radius: 9999px;
   box-shadow:
@@ -40,16 +52,7 @@
   inset: 0;
   pointer-events: none;
   position: absolute;
-  clip-path: polygon(
-    0 40%, 2% 40%, 4% 41%, 6% 42%, 8% 44%, 10% 47%, 12% 50%, 14% 54%,
-    16% 59%, 18% 64%, 20% 69%, 22% 73%, 24% 77%, 26% 81%, 28% 84%,
-    30% 87%, 32% 89%, 34% 91%, 36% 93%, 38% 94%, 40% 95%, 42% 95%,
-    44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%,
-    58% 90%, 60% 87%, 62% 84%, 64% 80%, 66% 76%, 68% 72%, 70% 68%,
-    72% 65%, 74% 63%, 76% 61%, 78% 60%, 80% 60%, 82% 61%, 84% 62%,
-    86% 64%, 88% 66%, 90% 69%, 92% 72%, 94% 75%, 96% 78%, 98% 81%,
-    100% 83%, 100% 100%, 0 100%
-  );
+  clip-path: var(--appointment-water-mask);
   animation: cove-water-current 7.2s ease-in-out infinite, cove-water-flow 10s linear infinite;
   z-index: 0;
 }
@@ -59,16 +62,7 @@
     linear-gradient(105deg, transparent 10%, rgba(196, 255, 245, 0.34) 42%, transparent 70%),
     radial-gradient(ellipse 28% 62% at 64% 52%, rgba(117, 244, 220, 0.28), transparent 82%);
   background-size: 190% 150%, 120% 100%;
-  clip-path: polygon(
-    0 40%, 2% 40%, 4% 41%, 6% 42%, 8% 44%, 10% 47%, 12% 50%, 14% 54%,
-    16% 59%, 18% 64%, 20% 69%, 22% 73%, 24% 77%, 26% 81%, 28% 84%,
-    30% 87%, 32% 89%, 34% 91%, 36% 93%, 38% 94%, 40% 95%, 42% 95%,
-    44% 94%, 46% 93%, 48% 93%, 50% 94%, 52% 94%, 54% 93%, 56% 92%,
-    58% 90%, 60% 87%, 62% 84%, 64% 80%, 66% 76%, 68% 72%, 70% 68%,
-    72% 65%, 74% 63%, 76% 61%, 78% 60%, 80% 60%, 82% 61%, 84% 62%,
-    86% 64%, 88% 66%, 90% 69%, 92% 72%, 94% 75%, 96% 78%, 98% 81%,
-    100% 83%, 100% 100%, 0 100%
-  );
+  clip-path: var(--appointment-water-mask);
   content: '';
   inset: 0;
   mix-blend-mode: screen;
@@ -82,9 +76,14 @@
 .layout-appointment-cta__surface {
   background: linear-gradient(115deg, #f8faf8 0%, #f8f8f6 70%, #f4f3ef 100%);
   clip-path: polygon(
-    0 0, 88% 0, 87% 4%, 85% 10%, 82% 21%, 79% 34%, 76% 47%, 72% 59%,
-    68% 68%, 64% 73%, 60% 76%, 55% 78%, 50% 78%, 45% 76%, 40% 72%, 35% 67%,
-    30% 60%, 25% 53%, 20% 47%, 15% 41%, 10% 37%, 5% 35%, 0 34%
+    0 0, 88% 0, 87.7% 8%, 86.8% 17%, 85.5% 27%, 84% 38%, 82.7% 48%,
+    81.4% 56%, 80% 62.9%, 78% 66.5%, 76% 70.3%, 74% 73.8%, 72% 77.1%,
+    70% 80.1%, 68% 82.8%, 66% 85.2%, 64% 87.3%, 62% 89%, 60% 90.5%,
+    58% 91.7%, 56% 92.6%, 54% 93.2%, 52% 93.6%, 50% 93.7%, 48% 93.6%,
+    46% 93.3%, 44% 92.8%, 42% 92.1%, 40% 91%, 38% 89.4%, 36% 87.3%,
+    34% 84.9%, 32% 82%, 30% 78.8%, 28% 75.3%, 26% 71.5%, 24% 67.7%,
+    22% 63.7%, 20% 59.8%, 18% 56%, 16% 52.4%, 14% 49.1%, 12% 46%,
+    10% 43.4%, 8% 41.2%, 6% 39.5%, 4% 38.3%, 2% 37.6%, 0 37.5%
   );
   filter: drop-shadow(0 3px 3px rgba(117, 104, 87, 0.18));
   inset: 0;
@@ -265,6 +264,7 @@
   .layout-appointment-cta__duck {
     animation: none;
     transition-duration: 0.01ms;
+    transition-delay: 0s;
   }
 
   .layout-appointment-cta:hover,
