@@ -46,9 +46,10 @@ export default function ProjectDetail() {
             </p>
             <Link
               href="/appointments/"
-              className="layout-appointment-cta mb-8 min-h-[4.35rem] w-[19.8rem] max-w-[90%]"
+              className="layout-appointment-cta mb-8 min-h-[4.1rem] w-[19.8rem] max-w-[90%]"
               data-testid="link-project-detail-appointment-cta"
             >
+              <span className="layout-appointment-cta__surface" aria-hidden="true" />
               <span className="layout-appointment-cta__copy">
                 <span className="layout-appointment-cta__eyebrow">Design consultation</span>
                 <span className="layout-appointment-cta__title">Start your project today</span>
