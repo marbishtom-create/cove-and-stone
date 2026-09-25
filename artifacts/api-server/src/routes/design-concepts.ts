@@ -103,6 +103,37 @@ const FEATURE_PROMPTS = {
   "outdoor-shower": "a discreet outdoor shower",
 } as const;
 
+const LAYOUT_ITEM_LABELS = {
+  pool: "pool",
+  pergola: "pergola",
+  "sun-shelf": "sun shelf",
+  "sheer-descent": "sheer-descent waterfall",
+  "pool-lights": "underwater pool lights",
+  "infinity-edge": "infinity edge",
+  bubblers: "sun-shelf bubblers",
+  spa: "raised spa",
+  "outdoor-kitchen": "outdoor kitchen",
+  "sunken-fire-pit": "sunken fire-pit lounge",
+  "fire-bowls": "fire bowls",
+  "outdoor-shower": "outdoor shower",
+} as const;
+
+const FEATURE_LAYOUT_ITEM_IDS: Record<string, string> = {
+  spa: "spa",
+  "spa-waterfall": "spa",
+  "infinity-edge": "infinity-edge",
+  "pool-lights": "pool-lights",
+  "sun-shelf": "sun-shelf",
+  "sheer-descent": "sheer-descent",
+  bubblers: "bubblers",
+  "pool-pergola-rainfall": "pergola",
+  pergola: "pergola",
+  "sunken-fire-pit": "sunken-fire-pit",
+  "outdoor-kitchen": "outdoor-kitchen",
+  "fire-bowls": "fire-bowls",
+  "outdoor-shower": "outdoor-shower",
+};
+
 const SHAPE_LABELS = {
   rectangular: "Rectangular",
   freeform: "Freeform",
@@ -198,6 +229,21 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
   }
 
   const features = concept.features.map((feature) => FEATURE_PROMPTS[feature]);
+  const selectedLayoutItemIds = new Set([
+    "pool",
+    ...concept.features.map((feature) => FEATURE_LAYOUT_ITEM_IDS[feature]),
+  ]);
+  const layoutInstructions = (concept.layoutElements ?? [])
+    .filter((item) => selectedLayoutItemIds.has(item.id))
+    .map((item) => {
+      const horizontal = item.offsetX === 0
+        ? "at its default horizontal position"
+        : `shifted ${Math.abs(item.offsetX).toFixed(1)}% of the scene width ${item.offsetX < 0 ? "left" : "right"} from its default position`;
+      const vertical = item.offsetY === 0
+        ? "at its default vertical position"
+        : `shifted ${Math.abs(item.offsetY).toFixed(1)}% of the scene height ${item.offsetY < 0 ? "up" : "down"} from its default position`;
+      return `${LAYOUT_ITEM_LABELS[item.id]}: ${horizontal}, ${vertical}, width ${Math.round(item.scaleX * 100)}% and depth ${Math.round(item.scaleY * 100)}% of its default proportions`;
+    });
 
   const prompt = [
     "Edit the attached real backyard photo into one photorealistic residential pool design concept.",
@@ -207,6 +253,9 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     `Use ${deckTileAppearance} in a consistent large-format module across the deck and all the way to the water as one continuous, flush surface. Keep the pool edge modern, level, and seamless; do not add a raised, contrasting, bullnose, or differently sized coping band.`,
     `Pool edge treatment: ${concept.edgeTreatment === "flush-continuous" ? "continuous flush deck tile, same module at the water's edge, with no separate coping" : "continuous flush deck tile"}.`,
     features.length ? `Include only the individually selected features: ${features.join(", ")}.` : "Do not add unselected pool or outdoor-living features.",
+    layoutInstructions.length
+      ? `Follow the user's edited layout and relative feature proportions: ${layoutInstructions.join("; ")}. Keep the entered pool dimensions unchanged and keep all elements plausible within the photographed property.`
+      : "Use a balanced, physically plausible arrangement for the selected pool and outdoor features.",
     "Make the pool and surrounding hardscape look physically plausible and integrated with the original photograph.",
     "Show only the finished proposed scene, not a before-and-after split. Do not add text, labels, logos, people, or unsupported buildings.",
     "This is an illustrative design concept, not a construction drawing; preserve the image's landscape orientation when possible.",
@@ -223,7 +272,9 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
       return;
     }
 
-    const responseBody = GeneratePoolConceptRenderResponse.safeParse({
+    const responseBody = GeneratePoolConceptRenderResponse.pick({
+      imageDataUrl: true,
+    }).safeParse({
       imageDataUrl: `data:${result.mimeType};base64,${result.data}`,
     });
     if (!responseBody.success) {
