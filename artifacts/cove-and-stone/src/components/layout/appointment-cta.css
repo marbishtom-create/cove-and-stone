@@ -1,4 +1,12 @@
+.layout-appointment-cta__dock {
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(58.8rem, calc(100vw - 5rem));
+}
+
 .layout-appointment-cta {
+  aspect-ratio: 4.82 / 1;
   --appointment-water-mask: polygon(
     0 40%, 2% 40.1%, 4% 40.5%, 6% 41.3%, 8% 42.5%, 10% 44%, 12% 45.8%,
     14% 47.8%, 16% 50.1%, 18% 52.5%, 20% 55.2%, 22% 57.9%, 24% 60.7%,
@@ -20,7 +28,8 @@
   background-position: center, center, center, center;
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-  border: 2px solid #a69c8e;
+  border: 2px solid #978d7f;
+  border-width: clamp(2px, 0.42cqw, 4px);
   border-radius: 9999px;
   box-shadow:
     0 10px 22px rgba(6, 24, 28, 0.24),
@@ -30,10 +39,11 @@
     inset 0 -2px 5px rgba(70, 66, 55, 0.1);
   color: #142438;
   display: inline-flex;
+  container-type: inline-size;
   isolation: isolate;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0.4rem 0.7rem 0.4rem 3.1rem;
+  padding: 0.4rem 4% 0.4rem 14.8%;
   position: relative;
   text-decoration: none;
   transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
@@ -43,9 +53,9 @@
   background:
     url("/brand/cove-water-caustics.svg"),
     radial-gradient(ellipse 24% 78% at 24% 26%, rgba(188, 255, 248, 0.48), transparent 78%),
-    linear-gradient(108deg, #087d8d 0%, #0b93a3 18%, #20bec2 36%, #4adbd0 49%, #078394 65%, #087c8f 79%, #3bcfc5 91%, #087e8d 100%),
+    linear-gradient(108deg, #0ea0aa 0%, #16b3b8 18%, #23c9c5 36%, #53ddd1 49%, #129aa8 65%, #1092a0 79%, #48d6ca 91%, #1296a2 100%),
     linear-gradient(105deg, transparent 2%, rgba(2, 88, 107, 0.42) 17%, transparent 31%, rgba(111, 239, 221, 0.46) 43%, transparent 57%, rgba(0, 102, 122, 0.36) 72%, rgba(99, 229, 215, 0.4) 84%, transparent 96%);
-  background-size: 120px 84px, 100% 100%, 240% 100%, 250% 100%;
+  background-size: 240px 168px, 100% 100%, 240% 100%, 250% 100%;
   background-position: 0 0, 0 0, 0 0, 0 0;
   background-repeat: repeat, no-repeat, no-repeat, no-repeat;
   content: '';
@@ -77,13 +87,13 @@
   background: linear-gradient(115deg, #f9f9f7 0%, #faf9f5 70%, #f5f3ee 100%);
   clip-path: polygon(
     0 0, 88% 0, 87% 9%, 86% 18%, 85% 27%, 84% 35%, 83% 42%, 82% 48%,
-    81% 54%, 80% 58.3%, 78% 62%, 76% 65.9%, 74% 69.3%, 72% 72.4%,
-    70% 75.2%, 68% 77.6%, 66% 79.6%, 64% 81.4%, 62% 82.8%, 60% 83.9%,
-    58% 84.7%, 56% 85.1%, 54% 85.2%, 52% 85%, 50% 84.5%, 48% 83.7%,
-    46% 82.5%, 44% 81%, 42% 79.1%, 40% 77.1%, 38% 74.8%, 36% 72.4%,
+    81% 54%, 80% 58.3%, 78% 61%, 76% 64.9%, 74% 68.3%, 72% 71.4%,
+    70% 74.2%, 68% 76.6%, 66% 78.6%, 64% 79.9%, 62% 80.8%, 60% 80.9%,
+    58% 80.7%, 56% 80.1%, 54% 79.7%, 52% 79.5%, 50% 79.5%, 48% 79.3%,
+    46% 79.5%, 44% 79%, 42% 78.1%, 40% 77.1%, 38% 74.8%, 36% 72.4%,
     34% 69.8%, 32% 67.1%, 30% 64.3%, 28% 61.5%, 26% 58.6%, 24% 55.7%,
-    22% 52.9%, 20% 50.2%, 18% 47.5%, 16% 45.1%, 14% 42.8%, 12% 40.8%,
-    10% 39%, 8% 37.5%, 6% 36.3%, 4% 35.5%, 2% 35.1%, 0 35%
+    22% 52.9%, 20% 50.2%, 18% 48.3%, 16% 46.5%, 14% 45%, 12% 43.5%,
+    10% 42%, 8% 40.5%, 6% 39.5%, 4% 38.8%, 2% 38.3%, 0 38%
   );
   filter: drop-shadow(0 3px 3px rgba(117, 104, 87, 0.18));
   inset: 0;
@@ -119,10 +129,19 @@
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.92);
 }
 
+.layout-appointment-cta--wide .layout-appointment-cta__copy {
+  transform: translateY(-2rem);
+}
+
+.layout-appointment-cta--wide .layout-appointment-cta__title {
+  transform: translateY(-0.3rem);
+}
+
 .layout-appointment-cta__eyebrow {
   color: #263444;
   font-family: var(--font-sans);
   font-size: 0.48rem;
+  font-size: clamp(0.48rem, 2.15cqw, 1.25rem);
   font-weight: 500;
   letter-spacing: 0.3em;
   line-height: 1;
@@ -133,7 +152,8 @@
   color: #142438;
   font-family: var(--font-serif);
   font-size: 1.1rem;
-  font-weight: 600;
+  font-size: clamp(0.9rem, 6.8cqw, 4rem);
+  font-weight: 400;
   letter-spacing: -0.015em;
   line-height: 1.1;
   white-space: nowrap;
@@ -143,6 +163,7 @@
   align-items: center;
   background: #12848b;
   border: 2px solid rgba(255, 255, 255, 0.96);
+  border-width: clamp(2px, 0.32cqw, 3px);
   border-radius: 9999px;
   box-shadow:
     0 0 0 1px rgba(180, 168, 149, 0.62),
@@ -150,16 +171,23 @@
   display: inline-flex;
   flex: 0 0 2.25rem;
   height: 2.25rem;
+  flex-basis: clamp(2.25rem, 12.6cqw, 6rem);
+  height: clamp(2.25rem, 12.6cqw, 6rem);
   justify-content: center;
   transition: transform 220ms ease, background-color 220ms ease;
   width: 2.25rem;
+  width: clamp(2.25rem, 12.6cqw, 6rem);
 }
 
 .layout-appointment-cta__arrow {
   flex: 0 0 auto;
   color: #fff;
+  height: 1.375rem;
   opacity: 1;
   transition: opacity 160ms ease;
+  width: 1.375rem;
+  height: clamp(1.375rem, 8.4cqw, 4rem);
+  width: clamp(1.375rem, 8.4cqw, 4rem);
 }
 
 .layout-appointment-cta__duck {
@@ -171,6 +199,8 @@
   transform: translate(-50%, -50%) scale(0.74) rotate(-8deg);
   transition: opacity 180ms ease, transform 220ms ease;
   width: 1.9rem;
+  height: clamp(1.65rem, 4.8cqw, 2.85rem);
+  width: clamp(1.9rem, 5.7cqw, 3.5rem);
 }
 
 .layout-appointment-cta__arrow-shell:hover .layout-appointment-cta__arrow,

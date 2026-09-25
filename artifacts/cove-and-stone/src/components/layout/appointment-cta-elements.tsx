@@ -31,7 +31,7 @@ export function AppointmentCtaArrow() {
       <ArrowRight
         className="layout-appointment-cta__arrow"
         size={22}
-        strokeWidth={1.8}
+        strokeWidth={1.2}
       />
       <svg
         className="layout-appointment-cta__duck"

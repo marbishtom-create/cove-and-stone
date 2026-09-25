@@ -28,8 +28,12 @@ const ctaElements = await readFile(
 test('matches the consultation CTA reference with a round teal arrow badge', () => {
   assert.match(layoutSource, /data-testid="link-desktop-appointment-cta"/);
   assert.match(layoutSource, /data-testid="link-mobile-appointment-cta"/);
-  assert.match(layoutSource, /min-h-\[4\.1rem\] w-\[19\.8rem\]/);
-  assert.match(layoutSource, /mx-auto min-h-\[4\.1rem\] w-\[90%\]/);
+  assert.match(
+    layoutSource,
+    /className="layout-appointment-cta__dock fixed z-50 hidden .*? lg:flex"/,
+  );
+  assert.match(layoutSource, /className="layout-appointment-cta layout-appointment-cta--wide min-h-\[4\.1rem\] w-full"/);
+  assert.match(layoutSource, /mx-auto min-h-\[4\.1rem\] w-full/);
   assert.equal(
     (layoutSource.match(/Start your project today/g) ?? []).length,
     2,
@@ -47,17 +51,17 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.match(ctaElements, /d="M 0 40 C 15 39, 28 72, 44 86 C 56 96, 68 88, 79 65 C 84 54, 95 72, 100 83"/);
   assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
   assert.match(ctaElements, /strokeWidth="0\.9"/);
+  assert.match(ctaStyles, /aspect-ratio: 4\.82 \/ 1/);
+  assert.match(ctaStyles, /width: min\(58\.8rem, calc\(100vw - 5rem\)\)/);
+  assert.match(ctaStyles, /container-type: inline-size/);
   assert.match(ctaStyles, /transition-delay: 3\.05s/);
   assert.match(ctaStyles, /layout-appointment-cta__arrow-shell:hover \.layout-appointment-cta__duck/);
 });
 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
-  assert.match(
-    layoutSource,
-    /\{!location\.startsWith\("\/projects\/"\) && \(\s*<div className=\{`fixed bottom-6/,
-  );
+  assert.match(layoutSource, /\{!location\.startsWith\("\/projects\/"\) && \(/);
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
-  assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-\[19\.8rem\] max-w-\[90%\]/);
+  assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-full max-w-\[58\.8rem\]/);
   assert.equal((projectDetailSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 1);
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
@@ -72,16 +76,16 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
     3,
     'keep only three restrained water glints in the repeating texture',
   );
-  assert.match(waterTexture, /stroke-opacity="\.25" stroke-width="\.85"/);
+  assert.match(waterTexture, /stroke-opacity="\.35" stroke-width="\.7"/);
   assert.match(waterTexture, /opacity="\.42"/);
   assert.doesNotMatch(waterTexture, /<path d="M12 4\.5/);
   assert.match(ctaStyles, /background-blend-mode: normal, normal, normal/);
   assert.match(ctaStyles, /linear-gradient\(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%\)/);
   assert.match(ctaStyles, /\.layout-appointment-cta__surface[\s\S]*?clip-path: polygon/);
-  assert.match(ctaStyles, /linear-gradient\(108deg, #087d8d 0%, #0b93a3 18%, #20bec2 36%, #4adbd0 49%/);
+  assert.match(ctaStyles, /linear-gradient\(108deg, #0ea0aa 0%, #16b3b8 18%, #23c9c5 36%, #53ddd1 49%/);
   assert.match(ctaStyles, /rgba\(2, 88, 107, 0\.42\)/);
   assert.match(ctaStyles, /rgba\(111, 239, 221, 0\.46\)/);
-  assert.match(ctaStyles, /background-size: 120px 84px, 100% 100%, 240% 100%, 250% 100%/);
+  assert.match(ctaStyles, /background-size: 240px 168px, 100% 100%, 240% 100%, 250% 100%/);
   assert.doesNotMatch(ctaStyles, /drop-shadow\(0 -2px 0 rgba\(255, 255, 255/);
   assert.match(ctaStyles, /--appointment-water-mask: polygon/);
   assert.equal(
@@ -91,7 +95,7 @@ test('animates a saturated horizontal water sweep over the stone surface', () =>
   );
   assert.match(ctaStyles, /48% 88\.7%,\s*50% 89\.5%,\s*52% 90%,\s*54% 90\.2%/);
   assert.match(ctaStyles, /linear-gradient\(rgba\(255, 255, 255, 0\.16\)/);
-  assert.match(ctaStyles, /54% 85\.2%, 52% 85%, 50% 84\.5%/);
+  assert.match(ctaStyles, /54% 79\.7%, 52% 79\.5%, 50% 79\.5%/);
   assert.equal(
     (ctaStyles.match(/animation: cove-water-current 7\.2s ease-in-out infinite/g) ?? []).length,
     2,

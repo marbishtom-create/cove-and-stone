@@ -14,10 +14,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     isScrolled || mobileMenuOpen
       ? "light"
       : "default";
-  const appointmentCtaPosition =
-    location === "/"
-      ? "right-6 lg:right-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
-      : "left-6 lg:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]";
   const mobileMenuToggleRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const wasMobileMenuOpenRef = useRef(false);
@@ -113,10 +109,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       </header>
 
       {!location.startsWith("/projects/") && (
-        <div className={`fixed bottom-6 z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex ${appointmentCtaPosition}`}>
+        <div className="layout-appointment-cta__dock fixed z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex">
           <Link
             href="/appointments/"
-            className="layout-appointment-cta min-h-[4.1rem] w-[19.8rem]"
+            className="layout-appointment-cta layout-appointment-cta--wide min-h-[4.1rem] w-full"
             data-testid="link-desktop-appointment-cta"
           >
             <AppointmentCtaSurface />
@@ -162,7 +158,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link
             href="/appointments/"
             tabIndex={mobileMenuOpen ? 0 : -1}
-            className="layout-appointment-cta mx-auto min-h-[4.1rem] w-[90%]"
+            className="layout-appointment-cta mx-auto min-h-[4.1rem] w-full"
             data-testid="link-mobile-appointment-cta"
           >
             <AppointmentCtaSurface />

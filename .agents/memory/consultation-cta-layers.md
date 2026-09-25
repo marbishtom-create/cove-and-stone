@@ -9,6 +9,18 @@ Keep the CTA's pale upper panel distinct from limestone. Reveal a clearly visibl
 
 **How to apply:** Keep the SVG waterline aligned to the CSS water mask and preserve separate masks for the pale panel, exposed stone, and water when changing CTA size, motion, placement, or textures.
 
+The consultation CTA should read as a wide, centered banner on desktop, with its text and arrow badge scaled to the banner. Keep the same proportions as it narrows on smaller screens.
+
+**Why:** Keeping a desktop CTA at compact mobile-chip dimensions made it visibly unlike the supplied reference.
+
+**How to apply:** Preserve the reference's long pill proportions and scale internal type and controls with the component width.
+
+Keep the water caustics irregular and organic rather than a fine uniform grid, with a clear turquoise base and restrained sparkle points.
+
+**Why:** A regular wire-mesh pattern and dark water made the CTA look unlike the bright, natural water in the supplied reference.
+
+**How to apply:** Scale the caustic motif to the CTA instead of repeating it as a tiny tile, and keep highlights limited.
+
 The hover reveal should read immediately as a classic rubber duck: yellow body, orange bill, visible eye, and a small wing detail. Avoid monochrome abstract silhouettes.
 
 **Why:** At CTA size, the previous white outline icon did not clearly read as a duck.
