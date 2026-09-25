@@ -7,12 +7,21 @@ import showroomLoungeDisplay from '@assets/IMG_8053_1790304907299-sharpened.jpg'
 import showroomEquipmentDisplay from '@assets/IMG_8054_1790304907300-sharpened.jpg';
 import showroomOutdoorKitchen from '@assets/IMG_8055_1790304907300-sharpened.jpg';
 
-const showroomGallery = [
-  {
-    src: showroomLoungeDisplay,
-    alt: 'Showroom pool-finish display with a lounge area and water feature',
-    title: 'Pool finishes and lounge display',
-  },
+type ShowroomGalleryItem = {
+  src: string;
+  alt: string;
+  title: string;
+  credit?: string;
+};
+
+const showroomLoungeFeature: ShowroomGalleryItem = {
+  src: showroomLoungeDisplay,
+  alt: 'Showroom pool-finish display with a lounge area and water feature',
+  title: 'Pool finishes and lounge display',
+};
+
+const showroomGallery: ShowroomGalleryItem[] = [
+  showroomLoungeFeature,
   {
     src: showroomEquipmentDisplay,
     alt: 'Pool filtration, pumps, and plumbing equipment on display in the showroom',
@@ -25,6 +34,32 @@ const showroomGallery = [
     title: 'Outdoor kitchen displays',
   },
 ];
+
+function ShowroomGalleryCard({ image }: { image: ShowroomGalleryItem }) {
+  return (
+    <figure className="overflow-hidden border border-border bg-card shadow-sm">
+      <div className="aspect-[4/3] overflow-hidden">
+        <img
+          src={image.src}
+          alt={image.alt}
+          width={676}
+          height={506}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      </div>
+      <figcaption className="border-t border-border p-5">
+        <h3 className="font-serif text-lg text-primary">{image.title}</h3>
+        {image.credit && (
+          <p className="mt-2 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            {image.credit}
+          </p>
+        )}
+      </figcaption>
+    </figure>
+  );
+}
 
 export default function Showroom() {
   return (
@@ -40,24 +75,27 @@ export default function Showroom() {
         </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-16 items-start">
-          <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
-            <picture>
-              <source media="(max-width: 767px)" srcSet={showroomPhotoMobile} />
-              <img
-                src={showroomPhotoDesktop}
-                alt="Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating"
-                className="w-full h-full object-cover"
-                width={1440}
-                height={1078}
-                fetchPriority="high"
-              />
-            </picture>
-            <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              Cove & Stone Jacksonville showroom
+            <div className="space-y-6">
+              <div className="relative aspect-[4/3] w-full shadow-2xl border border-border">
+                <picture>
+                  <source media="(max-width: 767px)" srcSet={showroomPhotoMobile} />
+                  <img
+                    src={showroomPhotoDesktop}
+                    alt="Cove & Stone Jacksonville showroom display with a central pool, stone finish walls and lounge seating"
+                    className="w-full h-full object-cover"
+                    width={1440}
+                    height={1078}
+                    fetchPriority="high"
+                  />
+                </picture>
+                <div className="absolute bottom-4 left-4 border border-border bg-background/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Cove & Stone Jacksonville showroom
+                </div>
+              </div>
+              <ShowroomGalleryCard image={showroomLoungeFeature} />
             </div>
-          </div>
 
-          <div className="space-y-12">
+            <div className="space-y-12">
             <div className="bg-card border border-border p-10">
               <h2 className="text-2xl font-serif text-primary mb-8 border-b border-border pb-4">{THEME_CONFIG.showroom.name}</h2>
               
@@ -136,7 +174,7 @@ export default function Showroom() {
             <Link href="/contact/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-secondary transition-colors">
               Schedule a design consultation <ArrowRight size={14} />
             </Link>
-          </div>
+            </div>
         </div>
 
         <section className="mt-24 border-t border-border pt-16" aria-labelledby="showroom-gallery-title">
@@ -150,28 +188,8 @@ export default function Showroom() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {showroomGallery.map((image) => (
-              <figure key={image.title} className="overflow-hidden border border-border bg-card shadow-sm">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    width={676}
-                    height={506}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <figcaption className="border-t border-border p-5">
-                  <h3 className="font-serif text-lg text-primary">{image.title}</h3>
-                  {image.credit && (
-                    <p className="mt-2 text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                      {image.credit}
-                    </p>
-                  )}
-                </figcaption>
-              </figure>
+            {showroomGallery.slice(1).map((image) => (
+              <ShowroomGalleryCard key={image.title} image={image} />
             ))}
           </div>
         </section>

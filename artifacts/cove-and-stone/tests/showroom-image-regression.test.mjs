@@ -111,6 +111,24 @@ test('uses the supplied Jacksonville showroom image and gives it slightly more r
   assert.match(showroomSource, /lg:grid-cols-\[1\.08fr_0\.92fr\]/);
 });
 
+test('places the pool-finish lounge display directly below the main showroom photo', () => {
+  const heroStackStart = showroomSource.indexOf('<div className="space-y-6">');
+  const heroCaption = showroomSource.indexOf('Cove & Stone Jacksonville showroom', heroStackStart);
+  const loungeCard = showroomSource.indexOf(
+    '<ShowroomGalleryCard image={showroomLoungeFeature} />',
+    heroStackStart,
+  );
+  const detailsColumn = showroomSource.indexOf(
+    '<div className="space-y-12">',
+    heroStackStart,
+  );
+
+  assert.ok(heroStackStart >= 0, 'the hero image and lounge card share a column');
+  assert.ok(heroCaption < loungeCard, 'the lounge card follows the showroom photo');
+  assert.ok(loungeCard < detailsColumn, 'the lounge card comes before the showroom details');
+  assert.match(showroomSource, /showroomGallery\.slice\(1\)\.map/);
+});
+
 test('keeps the approved showroom accessibility text and visible caption', () => {
   assert.match(
     showroomSource,
