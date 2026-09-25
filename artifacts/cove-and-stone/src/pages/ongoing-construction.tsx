@@ -13,8 +13,11 @@ import {
   ShieldCheck,
   Waves,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import may14Excavation from '@assets/generated_images/current-pool-build/may14-excavation.mp4';
 import may14ExcavationMobile from '@assets/generated_images/current-pool-build/may14-excavation-mobile.mp4';
 import may14ExcavationPoster from '@assets/generated_images/current-pool-build/may14-excavation-poster.jpg';
+import may14SteelAndShell from '@assets/generated_images/current-pool-build/may14-steel-and-shell.mp4';
 import may14SteelAndShellMobile from '@assets/generated_images/current-pool-build/may14-steel-and-shell-mobile.mp4';
 import may14SteelAndShellPoster from '@assets/generated_images/current-pool-build/may14-steel-and-shell-poster.jpg';
 import may26Shell from '@assets/generated_images/current-pool-build/may26-shell.jpg';
@@ -45,6 +48,7 @@ type VideoProgressCardProps = {
   index: string;
   title: string;
   note: string;
+  desktopSrc: string;
   mobileSrc: string;
   poster: string;
   alt: string;
@@ -184,6 +188,7 @@ export default function OngoingConstruction() {
                   index="01"
                   title="Excavation begins"
                   note="The first cut establishes the pool footprint and opens the site for the work that follows."
+  desktopSrc={may14Excavation}
                   mobileSrc={may14ExcavationMobile}
                   poster={may14ExcavationPoster}
                   alt="Excavation equipment and a freshly opened residential pool work area"
@@ -192,6 +197,7 @@ export default function OngoingConstruction() {
                   index="02"
                   title="Steel, forms & shell work"
                   note="The next record shows reinforcing steel, forms and concrete work taking shape in the excavation."
+  desktopSrc={may14SteelAndShell}
                   mobileSrc={may14SteelAndShellMobile}
                   poster={may14SteelAndShellPoster}
                   alt="Steel reinforcement, wood forms and concrete shell work inside a residential pool excavation"
@@ -389,25 +395,55 @@ function VideoProgressCard({
   index,
   title,
   note,
+  desktopSrc,
   mobileSrc,
   poster,
   alt,
 }: VideoProgressCardProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
+  const videoSource = isMobile ? mobileSrc : desktopSrc;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const updateViewport = () => setIsMobile(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener('change', updateViewport);
+    return () => mediaQuery.removeEventListener('change', updateViewport);
+  }, []);
+
+  useEffect(() => {
+    setHasVideoError(false);
+  }, [videoSource]);
+
   return (
     <figure data-testid={`progress-video-${index}`} className="overflow-hidden border border-border bg-card">
       <div className="relative mx-auto w-full max-w-[28rem] bg-black">
-        <video
-          className="aspect-[9/16] w-full bg-black object-contain"
-          controls
-          playsInline
-          preload="none"
-          poster={poster}
-          aria-label={alt}
-          data-testid={`video-progress-${index}`}
-          src={mobileSrc}
-        >
-          Your browser does not support the progress video.
-        </video>
+        {hasVideoError ? (
+          <div className="relative aspect-[9/16] bg-black">
+            <img src={poster} alt={alt} className="h-full w-full object-contain" />
+            <div className="absolute inset-x-0 bottom-0 space-y-3 bg-primary/90 p-4 text-center text-primary-foreground" aria-live="polite">
+              <p className="text-sm">This browser could not play the construction video inline.</p>
+              <a href={videoSource} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center border border-secondary px-4 text-xs uppercase tracking-widest text-secondary transition-colors hover:bg-secondary hover:text-secondary-foreground">
+                Open the video
+              </a>
+            </div>
+          </div>
+        ) : (
+          <video
+            className="aspect-[9/16] w-full bg-black object-contain"
+            controls
+            playsInline
+            preload="none"
+            poster={poster}
+            aria-label={alt}
+            data-testid={`video-progress-${index}`}
+            src={videoSource}
+            onError={() => setHasVideoError(true)}
+          >
+            Your browser does not support the progress video.
+          </video>
+        )}
         <span className="pointer-events-none absolute left-3 top-3 border border-white/40 bg-primary/75 px-2 py-1 font-mono text-[10px] tracking-[0.16em] text-primary-foreground backdrop-blur-sm">{index}</span>
       </div>
       <figcaption className="p-5 sm:p-6">

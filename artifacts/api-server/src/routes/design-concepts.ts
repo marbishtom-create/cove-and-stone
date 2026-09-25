@@ -481,7 +481,10 @@ router.post("/design-concepts/email", async (req, res) => {
   }
 
   if (concept.videoJobId) {
-    const videoId = getReadyPoolConceptVideoId(concept.videoJobId);
+    const videoId = getReadyPoolConceptVideoId(
+      concept.videoJobId,
+      concept.aiRenderDataUrl ?? "",
+    );
     if (!videoId) {
       res.status(400).json({
         message: "The pool walkthrough is not ready or has expired. Retry the MP4 before sending the design.",

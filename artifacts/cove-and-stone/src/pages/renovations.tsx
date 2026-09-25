@@ -1,8 +1,7 @@
 import { Wrench, RefreshCw, Zap, ShieldAlert } from 'lucide-react';
 import { Link } from 'wouter';
-import { BeforeAfter } from '@/components/ui/before-after';
-import beforeImg from '@assets/generated_images/matched-before-pool.jpg';
-import afterImg from '@assets/generated_images/after-pool.jpg';
+import backyardReference from '@assets/generated_images/matched-before-pool.jpg';
+import poolDesignStudy from '@assets/generated_images/after-pool.jpg';
 
 export default function Renovations() {
   return (
@@ -11,7 +10,7 @@ export default function Renovations() {
         <div className="container mx-auto px-6 max-w-4xl">
           <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-6 block">Pool Renovations & Corrections</span>
           <h1 className="text-4xl md:text-6xl font-serif mb-8 text-primary leading-tight">
-            Resurrecting outdated pools <br className="hidden md:block"/> into modern architecture.
+            Pool Renovation & Remodeling <br className="hidden md:block"/> in Jacksonville, FL
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Whether repairing structural failures or undertaking a complete aesthetic transformation, we bring older pools up to contemporary luxury standards.
@@ -19,21 +18,37 @@ export default function Renovations() {
         </div>
       </header>
 
-      {/* Interactive transformation */}
+      {/* Separate illustrative references, not a same-property transformation */}
       <section className="py-24 bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="shadow-2xl">
-            {beforeImg && afterImg && (
-              <BeforeAfter 
-                beforeImage={beforeImg} 
-                afterImage={afterImg} 
-                beforeAlt="Illustrative unfinished yard at the same property"
-                afterAlt="Design visualization for a modern geometric renovation"
-              />
-            )}
+        <div className="container mx-auto max-w-5xl px-6">
+          <div className="mb-10 text-center">
+            <span className="mb-4 block text-sm uppercase tracking-[0.3em] text-secondary">Design references</span>
+            <h2 className="font-serif text-3xl text-primary md:text-4xl">Pool renovation inspiration</h2>
+            <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-muted-foreground">
+              These separate images are design references, not a before-and-after view of one property or photographs of a completed Cove & Stone renovation.
+            </p>
           </div>
-          <div className="text-center mt-12">
-            <p className="text-sm uppercase tracking-widest text-muted-foreground">Illustrative same-property transformation · drag to explore the design direction</p>
+          <div className="grid gap-8 md:grid-cols-2">
+            <figure className="overflow-hidden border border-border bg-card">
+              <img
+                src={backyardReference}
+                alt="Residential backyard reference with lawn, planting and no pool shown"
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Backyard reference image</figcaption>
+            </figure>
+            <figure className="overflow-hidden border border-border bg-card">
+              <img
+                src={poolDesignStudy}
+                alt="Illustrative modern pool design with pale stone decking and outdoor seating"
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Illustrative pool design</figcaption>
+            </figure>
           </div>
         </div>
       </section>

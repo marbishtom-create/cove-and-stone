@@ -1,11 +1,10 @@
 import { Link } from 'wouter';
-import beforePool from '@assets/generated_images/matched-before-pool.jpg';
-import afterPool from '@assets/generated_images/after-pool.jpg';
+import backyardReference from '@assets/generated_images/matched-before-pool.jpg';
+import poolDesignStudy from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
 import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
 import nocateeResortRealistic from '@assets/generated_images/nocatee-resort-backyard-realistic.jpg';
-import { BeforeAfter } from '@/components/ui/before-after';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { THEME_CONFIG } from '@/config/theme';
 import { 
@@ -116,35 +115,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Interactive Before/After Transformation */}
+      {/* 3. Illustrative Pool & Backyard Design References */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif mb-6 text-primary">The Art of Transformation</h2>
+            <h2 className="text-3xl md:text-5xl font-serif mb-6 text-primary">Pool & Backyard Design Inspiration</h2>
             <p className="text-muted-foreground">
-              See the potential of your property. Drag the slider to reveal how we turn blank canvas backyards into luxury coastal retreats.
+              Review a backyard reference alongside a separate illustrative pool design. These images are not views of the same property or completed-project photographs.
             </p>
           </div>
           
-          <div className="max-w-5xl mx-auto shadow-2xl">
-            {beforePool && afterPool ? (
-              <BeforeAfter 
-                beforeImage={beforePool} 
-                afterImage={afterPool} 
-                beforeAlt="Reference backyard before a pool transformation"
-                afterAlt="Design visualization of a luxury modern pool transformation"
-                beforeLabel="Before reference"
-                afterLabel="Design rendering"
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+            <figure className="overflow-hidden border border-border bg-card">
+              <img
+                src={backyardReference}
+                alt="Residential backyard reference with lawn, planting and no pool shown"
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
-            ) : (
-              <div className="aspect-video bg-muted flex items-center justify-center">
-                <p className="text-muted-foreground">Loading images...</p>
-              </div>
-            )}
+              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Backyard reference image</figcaption>
+            </figure>
+            <figure className="overflow-hidden border border-border bg-card">
+              <img
+                src={poolDesignStudy}
+                alt="Illustrative modern pool design with pale stone decking and outdoor seating"
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption className="p-4 text-center text-sm uppercase tracking-widest text-muted-foreground">Illustrative pool design</figcaption>
+            </figure>
           </div>
-          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mt-6">
-            Illustrative same-property transformation · completed-project photography will be added as approved
-          </p>
         </div>
       </section>
 

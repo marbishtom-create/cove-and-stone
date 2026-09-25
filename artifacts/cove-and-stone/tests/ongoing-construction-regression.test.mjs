@@ -40,9 +40,17 @@ test("construction updates stay in chronological order and clearly show active s
 test("portrait progress videos preserve their orientation and use the lightweight source", () => {
   assert.equal((page.match(/preload="none"/g) ?? []).length, 1);
   assert.match(page, /aspect-\[9\/16\]/);
-  assert.match(page, /src=\{mobileSrc\}/);
+  assert.match(page, /may14-excavation\.mp4/);
+  assert.match(page, /may14-steel-and-shell\.mp4/);
+  assert.match(page, /desktopSrc=\{may14Excavation\}/);
+  assert.match(page, /desktopSrc=\{may14SteelAndShell\}/);
+  assert.match(page, /const videoSource = isMobile \? mobileSrc : desktopSrc/);
+  assert.match(page, /src=\{videoSource\}/);
+  assert.match(page, /onError=\{\(\) => setHasVideoError\(true\)\}/);
+  assert.match(page, /Open the video/);
   assert.match(page, /poster=\{poster\}/);
   assert.match(page, /controls/);
+  assert.match(page, /playsInline/);
 });
 
 test("the dedicated route, Projects card, and SEO sitemap metadata are registered", () => {

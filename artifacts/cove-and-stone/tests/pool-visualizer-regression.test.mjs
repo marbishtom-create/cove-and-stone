@@ -110,6 +110,14 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /window\.setTimeout\(pollVideoStatus, 2000\)/);
   assert.match(component, /status-ai-walkthrough/);
   assert.match(component, /data-testid="button-retry-ai-walkthrough"/);
+  assert.match(
+    component,
+    /videoStatus === 'error'\s*\?\s*videoError \|\| 'The MP4 could not be created\./,
+  );
+  assert.doesNotMatch(
+    component,
+    /\$\{videoError\} Your photo and AI rendering remain unchanged/,
+  );
   assert.doesNotMatch(component, /<video\b/);
   assert.match(component, /videoJobId: videoStatus === 'ready' \? videoJobId \?\? undefined : undefined/);
   assert.match(component, /videoStatus !== 'ready' \|\| !videoJobId/);

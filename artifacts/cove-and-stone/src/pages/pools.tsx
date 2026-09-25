@@ -20,9 +20,9 @@ export default function Pools() {
           </div>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10 text-white">
-          <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">Custom Concrete Pools</span>
-          <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
-            Water, sculpted to <br/>your lifestyle.
+          <span className="text-secondary uppercase tracking-[0.3em] text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">Luxury Pool & Spa Design-Build</span>
+          <h1 className="text-4xl md:text-7xl font-serif mb-6 leading-tight animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+            Luxury Custom Pools<br />in Jacksonville
           </h1>
           <p className="text-lg text-white/80 max-w-xl font-light leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
             From vanishing edges that blend into the horizon to geometric modern centerpieces, we engineer and construct exceptional bodies of water.

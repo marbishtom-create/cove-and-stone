@@ -45,15 +45,7 @@ const data = routeData as {
 
 const BUSINESS_ID = `${SITE_URL}/#business`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
-const SERVICE_AREA_NAMES = [
-  "Jacksonville",
-  "Ponte Vedra Beach",
-  "Nocatee",
-  "St. Johns",
-  "Atlantic Beach",
-  "Jacksonville Beach",
-  "Neptune Beach",
-];
+const SERVICE_AREA_NAMES = Object.values(data.locationNames);
 
 const NOT_FOUND_SEO: RouteSeo = {
   title: "Page not found | Cove & Stone Pools",

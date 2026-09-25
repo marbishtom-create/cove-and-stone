@@ -27,17 +27,9 @@ const DEFAULT_DESCRIPTION =
   "Jacksonville and Ponte Vedra architectural outdoor-living design-build house specializing in custom pools, spas, and complete backyard environments.";
 const BUSINESS_ID = `${SITE_URL}/#business`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
-const SERVICE_AREA_NAMES = [
-  "Jacksonville",
-  "Ponte Vedra Beach",
-  "Nocatee",
-  "St. Johns",
-  "Atlantic Beach",
-  "Jacksonville Beach",
-  "Neptune Beach",
-];
 
 const routeData = JSON.parse(await readFile(routeDataPath, "utf8"));
+const SERVICE_AREA_NAMES = Object.values(routeData.locationNames);
 const template = await readFile(templatePath, "utf8");
 const sitemap = await readFile(sitemapPath, "utf8");
 const { renderApp } = await import(pathToFileURL(serverEntryPath).href);

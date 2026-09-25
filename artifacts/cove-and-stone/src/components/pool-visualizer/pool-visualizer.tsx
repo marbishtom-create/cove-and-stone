@@ -1326,7 +1326,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               : videoStatus === 'ready'
                 ? 'MP4 walkthrough ready. It will only be attached to the email sent to our team.'
                 : videoStatus === 'error'
-                  ? `${videoError} Your photo and AI rendering remain unchanged. Retry the MP4 without recreating the image.`
+                  ? videoError || 'The MP4 could not be created. Your photo and AI rendering are unchanged; retry the MP4 without recreating the image.'
                   : aiRenderStatus === 'generating'
                     ? 'A matching MP4 walkthrough will start after the rendering is ready.'
                     : ''}

@@ -100,7 +100,7 @@ export default function OutdoorLiving() {
           <div className="order-1 lg:order-2">
             <span className="mb-5 block text-sm uppercase tracking-[0.3em] text-secondary">The outdoor kitchen</span>
             <h2 className="mb-6 max-w-xl text-4xl font-serif leading-tight md:text-6xl">
-              The heart of the backyard, designed for the way you host.
+              Jacksonville outdoor kitchens, designed for the way you host.
             </h2>
             <p className="max-w-xl text-lg leading-relaxed text-primary-foreground/75">
               Build beyond the grill. We compose gourmet outdoor kitchens with generous islands, comfortable seating, full bars and the equipment, storage and finish details that make entertaining feel effortless.

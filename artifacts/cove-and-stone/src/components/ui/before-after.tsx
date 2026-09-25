@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from 'react';
+import { useState, useRef, useEffect, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { GripVertical } from 'lucide-react';
 
 interface BeforeAfterProps {
@@ -29,6 +29,7 @@ export function BeforeAfter({
   const handleMove = (clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
+    if (rect.width <= 0) return;
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
     const percent = Math.max(0, Math.min((x / rect.width) * 100, 100));
     setSliderPosition(percent);
@@ -62,7 +63,6 @@ export function BeforeAfter({
   }, [isDragging]);
 
   const startDrag = (e: ReactMouseEvent | ReactTouchEvent) => {
-    e.preventDefault();
     setIsDragging(true);
     if ('touches' in e) {
       handleMove(e.touches[0].clientX);
@@ -71,10 +71,46 @@ export function BeforeAfter({
     }
   };
 
+  const handleKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    const step = e.shiftKey ? 10 : 1;
+    let nextPosition: number | undefined;
+
+    switch (e.key) {
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        nextPosition = Math.max(0, sliderPosition - step);
+        break;
+      case 'ArrowRight':
+      case 'ArrowUp':
+        nextPosition = Math.min(100, sliderPosition + step);
+        break;
+      case 'Home':
+        nextPosition = 0;
+        break;
+      case 'End':
+        nextPosition = 100;
+        break;
+      default:
+        return;
+    }
+
+    e.preventDefault();
+    setSliderPosition(nextPosition);
+  };
+
   return (
     <div 
       ref={containerRef}
-      className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden select-none cursor-ew-resize touch-none"
+      role="slider"
+      tabIndex={0}
+      aria-label="Before and after image comparison"
+      aria-orientation="horizontal"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(sliderPosition)}
+      aria-valuetext={`${Math.round(sliderPosition)}% before`}
+      onKeyDown={handleKeyDown}
+      className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden select-none cursor-ew-resize touch-pan-y focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-secondary focus-visible:ring-inset"
       onMouseDown={startDrag}
       onTouchStart={startDrag}
     >
@@ -109,7 +145,7 @@ export function BeforeAfter({
             src={beforeImage}
             alt={beforeAlt}
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ width: `${100 / (sliderPosition / 100)}%`, maxWidth: 'none' }}
+            style={{ width: `${sliderPosition === 0 ? 100 : 10000 / sliderPosition}%`, maxWidth: 'none' }}
             draggable="false"
           />
         </picture>

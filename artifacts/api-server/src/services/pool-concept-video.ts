@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -21,11 +21,17 @@ const VIDEO_FAILURE_MESSAGE =
   "The MP4 could not be created. Your photo and AI rendering are unchanged; retry the MP4 without recreating the image.";
 
 type VideoJob =
-  | { status: "processing"; expiresAt: number }
-  | { status: "ready"; videoId: string; expiresAt: number }
-  | { status: "failed"; message: string; expiresAt: number };
+  | { status: "processing"; expiresAt: number; conceptImageSha256: string }
+  | { status: "ready"; videoId: string; expiresAt: number; conceptImageSha256: string }
+  | { status: "failed"; message: string; expiresAt: number; conceptImageSha256: string };
 
 const videoJobs = new Map<string, VideoJob>();
+const CONCEPT_IMAGE_DATA_URL = /^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/;
+
+function getConceptImageSha256(dataUrl: string): string | null {
+  if (!CONCEPT_IMAGE_DATA_URL.test(dataUrl)) return null;
+  return createHash("sha256").update(dataUrl).digest("hex");
+}
 
 function getVideoObjectLocation(videoId: string) {
   const privateObjectDir = process.env.PRIVATE_OBJECT_DIR;
@@ -314,6 +320,7 @@ async function finishVideoJob(
   connectors: ReplitConnectors,
   jobId: string,
   taskId: string,
+  conceptImageSha256: string,
   onFailure?: (error: unknown) => void,
 ) {
   try {
@@ -338,6 +345,7 @@ async function finishVideoJob(
           status: "ready",
           videoId,
           expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
+          conceptImageSha256,
         });
         return;
       }
@@ -351,6 +359,7 @@ async function finishVideoJob(
       status: "failed",
       message: VIDEO_FAILURE_MESSAGE,
       expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
+      conceptImageSha256,
     });
     onFailure?.(error);
   }
@@ -361,7 +370,8 @@ export async function startPoolConceptVideoJob(
   firstFrameDataUrl: string,
   onFailure?: (error: unknown) => void,
 ) {
-  if (!/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(firstFrameDataUrl)) {
+  const conceptImageSha256 = getConceptImageSha256(firstFrameDataUrl);
+  if (!conceptImageSha256) {
     throw new Error("The AI rendering cannot be used as a video frame.");
   }
 
@@ -370,6 +380,7 @@ export async function startPoolConceptVideoJob(
   videoJobs.set(jobId, {
     status: "processing",
     expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
+    conceptImageSha256,
   });
 
   try {
@@ -391,12 +402,13 @@ export async function startPoolConceptVideoJob(
     if (typeof taskId !== "string" || !taskId) {
       throw new Error("MiniMax did not return a video task ID.");
     }
-    void finishVideoJob(connectors, jobId, taskId, onFailure);
+    void finishVideoJob(connectors, jobId, taskId, conceptImageSha256, onFailure);
   } catch (error) {
     videoJobs.set(jobId, {
       status: "failed",
       message: VIDEO_FAILURE_MESSAGE,
       expiresAt: Date.now() + VIDEO_JOB_TTL_MS,
+      conceptImageSha256,
     });
     onFailure?.(error);
   }
@@ -417,10 +429,15 @@ export function getPoolConceptVideoJob(jobId: string) {
   return { status: "processing" as const };
 }
 
-export function getReadyPoolConceptVideoId(jobId: string) {
+export function getReadyPoolConceptVideoId(jobId: string, conceptImageDataUrl: string) {
   pruneExpiredJobs();
   const job = videoJobs.get(jobId);
-  return job?.status === "ready" ? job.videoId : null;
+  const conceptImageSha256 = getConceptImageSha256(conceptImageDataUrl);
+  return job?.status === "ready" &&
+    conceptImageSha256 !== null &&
+    job.conceptImageSha256 === conceptImageSha256
+    ? job.videoId
+    : null;
 }
 
 export async function readPoolConceptVideo(videoId: string) {
