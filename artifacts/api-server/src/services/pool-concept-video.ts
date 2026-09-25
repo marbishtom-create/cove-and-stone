@@ -3,6 +3,7 @@ import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { ReplitConnectors } from "@replit/connectors-sdk";
 
 const REPLIT_SIDECAR_ENDPOINT = "http://127.0.0.1:1106";
@@ -11,9 +12,8 @@ const VIDEO_JOB_TTL_MS = 20 * 60 * 1000;
 const MAX_VIDEO_BYTES = 12 * 1024 * 1024;
 const VIDEO_POLL_INTERVAL_MS = 5_000;
 const MAX_VIDEO_POLL_ATTEMPTS = 120;
-const POOL_WALKTHROUGH_MUSIC_PATH = join(
-  process.cwd(),
-  "pool-walkthrough-music.mp3",
+const POOL_WALKTHROUGH_MUSIC_PATH = fileURLToPath(
+  new URL("../pool-walkthrough-music.mp3", import.meta.url),
 );
 const VIDEO_ID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
