@@ -9,11 +9,17 @@ Keep the CTA's pale upper panel distinct from limestone. Reveal a clearly visibl
 
 **How to apply:** Keep the SVG waterline aligned to the CSS water mask and preserve separate masks for the pale panel, exposed stone, and water when changing CTA size, motion, placement, or textures.
 
+The CTA's outer outline must read as the Cove & Stone logo badge turned sideways: a horizontal badge with long straight sides and semicircular end caps, not a pure ellipse.
+
+**Why:** The user explicitly corrected an oval treatment and asked for the button to use the logo's shape sideways.
+
+**How to apply:** Extend the badge horizontally while keeping the end radius equal to half the CTA height; preserve the current compact width and keep all material layers inside that outline.
+
 Keep the compact desktop and mobile floating CTAs only on the homepage, both fixed at bottom-right with the same reference proportions.
 
 **Why:** The user wants both responsive versions in the same bottom-right homepage position, with no floating dock on other routes.
 
-**How to apply:** Preserve the desktop dock's compact 19.8rem width, use safe-area-aware right alignment at both breakpoints, and keep other-route CTAs in their page flow.
+**How to apply:** Keep the desktop dock near 15.84rem and the mobile dock near 12rem, use safe-area-aware right alignment at both breakpoints, and keep other-route CTAs in their page flow.
 
 On mobile, show the compact fixed consultation CTA only on the homepage, at bottom-right. The menu's own CTA remains available while the navigation is open; respect device safe areas.
 

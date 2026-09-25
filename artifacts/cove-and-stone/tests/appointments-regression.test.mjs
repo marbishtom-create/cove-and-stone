@@ -29,7 +29,7 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.doesNotMatch(layout, /Design Consultations|Book a design consultation|href="\/financing\/"/);
   assert.match(layoutCtaCss, /prefers-reduced-motion:\s*reduce/);
   assert.match(layoutCtaCss, /layout-appointment-cta:hover::before/);
-  assert.match(layoutCtaCss, /border-radius:\s*50%/);
+  assert.match(layoutCtaCss, /border-radius:\s*9999px/);
   assert.match(layoutCtaCss, /width:\s*min\(15\.84rem/);
   assert.match(layoutCtaCss, /width:\s*min\(12rem/);
   assert.match(layoutCtaCss, /layout-appointment-cta__stone/);

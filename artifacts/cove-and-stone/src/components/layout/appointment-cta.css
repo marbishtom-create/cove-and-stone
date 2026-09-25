@@ -16,6 +16,7 @@
 
 .layout-appointment-cta {
   aspect-ratio: 4.82 / 1;
+  /* Extend the logo badge sideways: straight long edges with semicircular end caps, not an ellipse. */
   --appointment-water-mask: polygon(
     0 40%, 2% 40.1%, 4% 40.5%, 6% 41.3%, 8% 42.5%, 10% 44%, 12% 45.8%,
     14% 47.8%, 16% 50.1%, 18% 52.5%, 20% 55.2%, 22% 57.9%, 24% 60.7%,
@@ -51,7 +52,7 @@
     linear-gradient(115deg, #ece7dd 0%, #f5f1e9 64%, #eee6d8 100%);
   border: 2px solid #978d7f;
   border-width: clamp(2px, 0.42cqw, 4px);
-  border-radius: 50%;
+  border-radius: 9999px;
   box-shadow:
     0 10px 22px rgba(6, 24, 28, 0.24),
     0 0 0 1px rgba(238, 233, 224, 0.88),
