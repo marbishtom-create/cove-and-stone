@@ -18,6 +18,17 @@ export const Logo = ({
   return (
     <Link
       href="/"
+      onClick={() => {
+        if (window.location.pathname === "/") {
+          const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
+        }
+      }}
       data-testid="site-logo"
       data-logo-variant={variant}
       className={`inline-flex shrink-0 items-center gap-2 group px-2 py-1 rounded-sm bg-transparent transition-colors duration-500 ${variant === "light" ? "bg-brand-ivory/95" : ""} ${className}`}
