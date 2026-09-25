@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { PoolConceptLayoutElement } from './poolConceptLayoutElement';
 import type { PoolConceptRenderRequestDeckTile } from './poolConceptRenderRequestDeckTile';
 import type { PoolConceptRenderRequestEdgeTreatment } from './poolConceptRenderRequestEdgeTreatment';
 import type { PoolConceptRenderRequestFeaturesItem } from './poolConceptRenderRequestFeaturesItem';
@@ -35,4 +36,6 @@ export interface PoolConceptRenderRequest {
   deckTile: PoolConceptRenderRequestDeckTile;
   edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
   features: PoolConceptRenderRequestFeaturesItem[];
+  /** @maxItems 12 */
+  layoutElements?: PoolConceptLayoutElement[];
 }

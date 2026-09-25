@@ -308,6 +308,12 @@ components:
             type: string
             enum: [spa, spa-waterfall, infinity-edge, pool-lights, sun-shelf, sheer-descent, bubblers, pool-pergola-rainfall, sunken-fire-pit, outdoor-kitchen, fire-bowls, pergola, outdoor-shower]
           uniqueItems: true
+        layoutElements:
+          type: array
+          maxItems: 12
+          uniqueItems: true
+          items:
+            $ref: "#/components/schemas/PoolConceptLayoutElement"
       required:
         - photoDataUrl
         - width
@@ -318,6 +324,29 @@ components:
         - deckTile
         - edgeTreatment
         - features
+    PoolConceptLayoutElement:
+      type: object
+      properties:
+        id:
+          type: string
+          enum: [pool, pergola, sun-shelf, sheer-descent, pool-lights, infinity-edge, bubblers, spa, outdoor-kitchen, sunken-fire-pit, fire-bowls, outdoor-shower]
+        offsetX:
+          type: number
+          minimum: -18
+          maximum: 18
+        offsetY:
+          type: number
+          minimum: -14
+          maximum: 14
+        scaleX:
+          type: number
+          minimum: 0.55
+          maximum: 1.8
+        scaleY:
+          type: number
+          minimum: 0.55
+          maximum: 1.8
+      required: [id, offsetX, offsetY, scaleX, scaleY]
     PoolConceptRenderResponse:
       type: object
       properties:

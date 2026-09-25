@@ -874,6 +874,30 @@
   isolation: isolate;
   overflow: hidden;
   position: relative;
+  touch-action: pan-y;
+}
+
+.pool-visualizer__layout-hit {
+  fill: transparent;
+  pointer-events: all;
+  stroke: transparent;
+  stroke-width: 2;
+  touch-action: none;
+}
+
+.pool-visualizer__layout-hit:hover,
+.pool-visualizer__layout-hit:focus-visible,
+.pool-visualizer__layout-hit.is-selected {
+  fill: rgba(226, 240, 233, .12);
+  stroke: rgba(244, 240, 231, .9);
+  stroke-dasharray: 6 4;
+}
+
+.pool-visualizer__layout-resize-handle {
+  fill: var(--pv-paper);
+  pointer-events: all;
+  stroke: var(--pv-aqua-dark);
+  stroke-width: 2;
   touch-action: none;
 }
 

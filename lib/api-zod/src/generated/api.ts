@@ -88,6 +88,20 @@ export const generatePoolConceptRenderBodyWidthMax = 60;
 export const generatePoolConceptRenderBodyLengthMin = 12;
 export const generatePoolConceptRenderBodyLengthMax = 100;
 
+export const generatePoolConceptRenderBodyLayoutElementsItemOffsetXMin = -18;
+export const generatePoolConceptRenderBodyLayoutElementsItemOffsetXMax = 18;
+
+export const generatePoolConceptRenderBodyLayoutElementsItemOffsetYMin = -14;
+export const generatePoolConceptRenderBodyLayoutElementsItemOffsetYMax = 14;
+
+export const generatePoolConceptRenderBodyLayoutElementsItemScaleXMin = 0.55;
+export const generatePoolConceptRenderBodyLayoutElementsItemScaleXMax = 1.8;
+
+export const generatePoolConceptRenderBodyLayoutElementsItemScaleYMin = 0.55;
+export const generatePoolConceptRenderBodyLayoutElementsItemScaleYMax = 1.8;
+
+export const generatePoolConceptRenderBodyLayoutElementsMax = 12;
+
 
 
 export const GeneratePoolConceptRenderBody = zod.object({
@@ -99,7 +113,14 @@ export const GeneratePoolConceptRenderBody = zod.object({
   "waterlineTile": zod.enum(['pale-limestone', 'shellstone', 'mist-porcelain', 'warm-travertine', 'sea-glass', 'lagoon-glass', 'ocean-blue-glass', 'deep-navy-glass', 'charcoal-mosaic']),
   "deckTile": zod.enum(['shell-limestone', 'ivory-porcelain', 'silver-porcelain', 'sand-travertine', 'warm-limestone', 'coastal-shellstone', 'charcoal-porcelain', 'dark-gray-porcelain', 'black-marble-porcelain']),
   "edgeTreatment": zod.enum(['flush-continuous']),
-  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'pool-pergola-rainfall', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower']))
+  "features": zod.array(zod.enum(['spa', 'spa-waterfall', 'infinity-edge', 'pool-lights', 'sun-shelf', 'sheer-descent', 'bubblers', 'pool-pergola-rainfall', 'sunken-fire-pit', 'outdoor-kitchen', 'fire-bowls', 'pergola', 'outdoor-shower'])),
+  "layoutElements": zod.array(zod.object({
+  "id": zod.enum(['pool', 'pergola', 'sun-shelf', 'sheer-descent', 'pool-lights', 'infinity-edge', 'bubblers', 'spa', 'outdoor-kitchen', 'sunken-fire-pit', 'fire-bowls', 'outdoor-shower']),
+  "offsetX": zod.number().min(generatePoolConceptRenderBodyLayoutElementsItemOffsetXMin).max(generatePoolConceptRenderBodyLayoutElementsItemOffsetXMax),
+  "offsetY": zod.number().min(generatePoolConceptRenderBodyLayoutElementsItemOffsetYMin).max(generatePoolConceptRenderBodyLayoutElementsItemOffsetYMax),
+  "scaleX": zod.number().min(generatePoolConceptRenderBodyLayoutElementsItemScaleXMin).max(generatePoolConceptRenderBodyLayoutElementsItemScaleXMax),
+  "scaleY": zod.number().min(generatePoolConceptRenderBodyLayoutElementsItemScaleYMin).max(generatePoolConceptRenderBodyLayoutElementsItemScaleYMax)
+})).max(generatePoolConceptRenderBodyLayoutElementsMax).optional()
 })
 
 export const generatePoolConceptRenderResponseImageDataUrlMin = 40;

@@ -19,6 +19,8 @@ export * from './designConceptEmailRequestWaterlineTile';
 export * from './designConceptEmailResponse';
 export * from './designConceptEmailResponseStatus';
 export * from './healthStatus';
+export * from './poolConceptLayoutElement';
+export * from './poolConceptLayoutElementId';
 export * from './poolConceptRenderRequest';
 export * from './poolConceptRenderRequestDeckTile';
 export * from './poolConceptRenderRequestEdgeTreatment';

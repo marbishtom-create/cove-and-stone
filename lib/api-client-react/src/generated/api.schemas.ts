@@ -260,6 +260,48 @@ export const PoolConceptRenderRequestFeaturesItem = {
   'outdoor-shower': 'outdoor-shower',
 } as const;
 
+export type PoolConceptLayoutElementId = typeof PoolConceptLayoutElementId[keyof typeof PoolConceptLayoutElementId];
+
+
+export const PoolConceptLayoutElementId = {
+  pool: 'pool',
+  pergola: 'pergola',
+  'sun-shelf': 'sun-shelf',
+  'sheer-descent': 'sheer-descent',
+  'pool-lights': 'pool-lights',
+  'infinity-edge': 'infinity-edge',
+  bubblers: 'bubblers',
+  spa: 'spa',
+  'outdoor-kitchen': 'outdoor-kitchen',
+  'sunken-fire-pit': 'sunken-fire-pit',
+  'fire-bowls': 'fire-bowls',
+  'outdoor-shower': 'outdoor-shower',
+} as const;
+
+export interface PoolConceptLayoutElement {
+  id: PoolConceptLayoutElementId;
+  /**
+     * @minimum -18
+     * @maximum 18
+     */
+  offsetX: number;
+  /**
+     * @minimum -14
+     * @maximum 14
+     */
+  offsetY: number;
+  /**
+     * @minimum 0.55
+     * @maximum 1.8
+     */
+  scaleX: number;
+  /**
+     * @minimum 0.55
+     * @maximum 1.8
+     */
+  scaleY: number;
+}
+
 export interface PoolConceptRenderRequest {
   /**
      * @minLength 40
@@ -283,6 +325,8 @@ export interface PoolConceptRenderRequest {
   deckTile: PoolConceptRenderRequestDeckTile;
   edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
   features: PoolConceptRenderRequestFeaturesItem[];
+  /** @maxItems 12 */
+  layoutElements?: PoolConceptLayoutElement[];
 }
 
 export interface PoolConceptRenderResponse {
