@@ -55,7 +55,7 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.match(ctaElements, /d="M 0 40 C 15 39, 28 72, 44 86 C 56 96, 68 88, 79 65 C 84 54, 95 72, 100 83"/);
   assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
   assert.match(ctaElements, /strokeWidth="0\.9"/);
-  assert.match(ctaStyles, /aspect-ratio: 4\.82 \/ 1/);
+  assert.match(ctaStyles, /aspect-ratio:\s*2007\s*\/\s*441/);
   assert.match(ctaStyles, /width: min\(19\.8rem, calc\(100vw - 5rem\)\)/);
   assert.match(ctaStyles, /padding: 0\.4rem 4% 0\.4rem 17\.5%/);
   assert.match(ctaStyles, /container-type: inline-size/);
