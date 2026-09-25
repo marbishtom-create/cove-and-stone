@@ -778,7 +778,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [aiRenderError, setAiRenderError] = useState('');
   const [videoJobId, setVideoJobId] = useState<string | null>(null);
   const [videoStatus, setVideoStatus] = useState<'idle' | 'processing' | 'ready' | 'error'>('idle');
-  const [videoError, setVideoError] = useState('');
   const [isSendingConcept, setIsSendingConcept] = useState(false);
   const [conceptSendStatus, setConceptSendStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [conceptSendError, setConceptSendError] = useState('');
@@ -851,12 +850,10 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
 
         if (result.status === 'ready') {
           setVideoStatus('ready');
-          setVideoError('');
           return;
         }
         if (result.status === 'failed') {
           setVideoStatus('error');
-          setVideoError(result.message || 'The pool walkthrough could not be created.');
           return;
         }
 
@@ -871,7 +868,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           return;
         }
         setVideoStatus('error');
-        setVideoError('The walkthrough status could not be checked. Your photo and AI rendering are unchanged.');
       }
     };
 
@@ -896,7 +892,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     setAiRenderError('');
     setVideoJobId(null);
     setVideoStatus('idle');
-    setVideoError('');
   };
 
   const updateConfiguration = (updates: Partial<PoolVisualizerConfiguration>) => {
@@ -1251,7 +1246,6 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       setIsLayoutEditing(false);
       setVideoJobId(result.videoJobId);
       setVideoStatus('processing');
-      setVideoError('');
     } catch (error) {
       if (renderVersion === renderVersionRef.current) {
         setAiRenderStatus('error');
@@ -1268,19 +1262,12 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const retryPoolWalkthrough = async () => {
     if (!aiRenderDataUrl || videoStatus === 'processing') return;
     setVideoStatus('processing');
-    setVideoError('');
 
     try {
       const result = await startPoolConceptWalkthrough({ imageDataUrl: aiRenderDataUrl });
       setVideoJobId(result.videoJobId);
-    } catch (error) {
+    } catch {
       setVideoStatus('error');
-      setVideoError(
-        getApiErrorMessage(
-          error,
-          'The MP4 retry could not be started. Your photo and AI rendering are unchanged.',
-        ),
-      );
     }
   };
 
@@ -1302,46 +1289,68 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           {aiRenderStatus === 'generating'
             ? 'Creating AI rendering…'
             : aiRenderDataUrl
-              ? 'Regenerate AI rendering'
+              ? 'Create a new AI rendering'
               : 'Create AI pool rendering'}
         </button>
         <p className={`pool-visualizer__ai-note ${aiRenderStatus === 'error' ? 'is-error' : ''}`} role={aiRenderStatus === 'error' ? 'alert' : 'status'} aria-live="polite" data-testid="status-ai-render">
           {aiRenderStatus === 'generating'
             ? 'Creating a realistic pool design from your backyard photo. This can take a little while.'
             : aiRenderStatus === 'ready'
-              ? 'AI rendering ready. Slide to compare it with the original photo.'
+              ? 'Image ready. This button creates a new image; the MP4 walkthrough below is separate. Your photo and rendering are sent to our team only when you send your concept.'
               : aiRenderStatus === 'error'
                 ? aiRenderError || 'AI rendering failed. Your photo and visualizer are unchanged; try again.'
-                : 'Your photo is sent to AI to make this design. The original and rendering are emailed to our team only when you choose to send.'}
+                : 'Step 1 · Create the pool image from your backyard photo. Your photo is sent to AI; it is shared with our team only when you send your concept.'}
         </p>
-        {(aiRenderDataUrl || aiRenderStatus === 'generating') && (
-          <p
-            className={`pool-visualizer__walkthrough-status ${videoStatus === 'error' ? 'is-error' : ''}`}
-            role={videoStatus === 'error' ? 'alert' : 'status'}
-            aria-live="polite"
-            data-testid="status-ai-walkthrough"
+        {aiRenderDataUrl && (
+          <section
+            className={`pool-visualizer__walkthrough-step${videoStatus === 'error' ? ' is-error' : ''}`}
+            aria-labelledby="pool-walkthrough-step-title"
+            data-testid="card-ai-walkthrough"
           >
-            {videoStatus === 'processing'
-              ? 'Creating a full-scene 10-second MP4 walkthrough from this exact AI rendering. It will only be sent to our team.'
-              : videoStatus === 'ready'
-                ? 'MP4 walkthrough ready. It will only be attached to the email sent to our team.'
-                : videoStatus === 'error'
-                  ? videoError || 'The MP4 could not be created. Your photo and AI rendering are unchanged; retry the MP4 without recreating the image.'
-                  : aiRenderStatus === 'generating'
-                    ? 'A matching MP4 walkthrough will start after the rendering is ready.'
-                    : ''}
-          </p>
-        )}
-        {aiRenderDataUrl && videoStatus === 'error' && (
-          <button
-            className="pool-visualizer__ai-button"
-            type="button"
-            onClick={retryPoolWalkthrough}
-            data-testid="button-retry-ai-walkthrough"
-          >
-            <RefreshCcw size={15} />
-            Retry MP4 only
-          </button>
+            <div className="pool-visualizer__walkthrough-step-heading">
+              <div>
+                <span className="pool-visualizer__walkthrough-step-label">Step 2 · Video</span>
+                <h4 id="pool-walkthrough-step-title">10-second MP4 walkthrough</h4>
+              </div>
+              <span className={`pool-visualizer__walkthrough-badge is-${videoStatus}`}>
+                {videoStatus === 'processing'
+                  ? 'Creating'
+                  : videoStatus === 'ready'
+                    ? 'Ready'
+                    : videoStatus === 'error'
+                      ? 'Needs retry'
+                      : 'Waiting'}
+              </span>
+            </div>
+            <p className="pool-visualizer__walkthrough-step-copy">
+              Made from the image above. Retrying the MP4 will not change your photo or AI rendering.
+            </p>
+            <p
+              className="pool-visualizer__walkthrough-status"
+              role={videoStatus === 'error' ? 'alert' : 'status'}
+              aria-live="polite"
+              data-testid="status-ai-walkthrough"
+            >
+              {videoStatus === 'processing'
+                ? 'The full-scene video is being created. It will only be attached when you send your concept to our team.'
+                : videoStatus === 'ready'
+                  ? 'Walkthrough ready. It will only be attached when you send your concept to our team.'
+                  : videoStatus === 'error'
+                    ? 'The MP4 could not be created. Your AI rendering is ready and unchanged. Retry this step without creating the image again.'
+                    : 'The walkthrough will start when the image is ready.'}
+            </p>
+            {videoStatus === 'error' && (
+              <button
+                className="pool-visualizer__walkthrough-retry"
+                type="button"
+                onClick={retryPoolWalkthrough}
+                data-testid="button-retry-ai-walkthrough"
+              >
+                <RefreshCcw size={15} />
+                Retry MP4 only
+              </button>
+            )}
+          </section>
         )}
       </div>
     </div>

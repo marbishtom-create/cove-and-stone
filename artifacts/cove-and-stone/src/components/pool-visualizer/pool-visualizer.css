@@ -660,6 +660,100 @@
   color: #9a4739;
 }
 
+.pool-visualizer__walkthrough-step {
+  background: #f8f6f0;
+  border: 1px solid #d8ded8;
+  display: grid;
+  gap: .55rem;
+  margin-top: .45rem;
+  padding: .8rem;
+}
+
+.pool-visualizer__walkthrough-step.is-error {
+  background: #fbf5f2;
+  border-color: #d8b4aa;
+}
+
+.pool-visualizer__walkthrough-step-heading {
+  align-items: flex-start;
+  display: flex;
+  gap: .6rem;
+  justify-content: space-between;
+}
+
+.pool-visualizer__walkthrough-step-label {
+  color: var(--pv-aqua-dark);
+  display: block;
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  margin-bottom: .15rem;
+  text-transform: uppercase;
+}
+
+.pool-visualizer__walkthrough-step-heading h4 {
+  color: var(--pv-charcoal);
+  font-family: var(--font-serif);
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.pool-visualizer__walkthrough-badge {
+  border: 1px solid #cad8cf;
+  color: #45625c;
+  flex: none;
+  font-size: .55rem;
+  letter-spacing: .06em;
+  padding: .25rem .4rem;
+  text-transform: uppercase;
+}
+
+.pool-visualizer__walkthrough-badge.is-error {
+  background: #f6e9e5;
+  border-color: #d8b4aa;
+  color: #8c4037;
+}
+
+.pool-visualizer__walkthrough-step-copy {
+  color: #65716b;
+  font-size: .6rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.pool-visualizer__walkthrough-step .pool-visualizer__walkthrough-status {
+  color: #506167;
+  font-size: .65rem;
+  margin: 0;
+}
+
+.pool-visualizer__walkthrough-step.is-error .pool-visualizer__walkthrough-status {
+  color: #8c4037;
+}
+
+.pool-visualizer__walkthrough-retry {
+  align-items: center;
+  background: #183d3d;
+  border: 1px solid #183d3d;
+  color: #fff;
+  display: flex;
+  font-size: .67rem;
+  gap: .45rem;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: .55rem .8rem;
+  transition: background-color .2s ease, border-color .2s ease;
+  width: 100%;
+}
+
+.pool-visualizer__walkthrough-retry:hover,
+.pool-visualizer__walkthrough-retry:focus-visible {
+  background: #0f5754;
+  border-color: #0f5754;
+}
+
 .pool-visualizer__handoff {
   align-items: flex-start;
   display: grid;
@@ -1316,10 +1410,6 @@
   font-size: .82rem;
   line-height: 1.5;
   margin: .55rem 0 0;
-}
-
-.pool-visualizer__walkthrough-status.is-error {
-  color: #9a3f35;
 }
 
 .pool-visualizer__walkthrough {

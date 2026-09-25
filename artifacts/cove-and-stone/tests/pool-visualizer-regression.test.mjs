@@ -108,16 +108,21 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /startPoolConceptWalkthrough/);
   assert.match(component, /statusCheckFailures <= 3/);
   assert.match(component, /window\.setTimeout\(pollVideoStatus, 2000\)/);
+  assert.match(component, /data-testid="card-ai-walkthrough"/);
   assert.match(component, /status-ai-walkthrough/);
   assert.match(component, /data-testid="button-retry-ai-walkthrough"/);
   assert.match(
     component,
-    /videoStatus === 'error'\s*\?\s*videoError \|\| 'The MP4 could not be created\./,
+    /videoStatus === 'error'\s*\?\s*'The MP4 could not be created\. Your AI rendering is ready and unchanged\./,
   );
   assert.doesNotMatch(
     component,
-    /\$\{videoError\} Your photo and AI rendering remain unchanged/,
+    /\$\{videoError\}/,
   );
+  assert.match(component, /Step 1 · Create the pool image/);
+  assert.match(component, /Create a new AI rendering/);
+  assert.match(component, /Retrying the MP4 will not change your photo or AI rendering/);
+  assert.match(componentStyles, /\.pool-visualizer__walkthrough-step\.is-error/);
   assert.doesNotMatch(component, /<video\b/);
   assert.match(component, /videoJobId: videoStatus === 'ready' \? videoJobId \?\? undefined : undefined/);
   assert.match(component, /videoStatus !== 'ready' \|\| !videoJobId/);
@@ -132,6 +137,7 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /data-background-photo="true"/);
   assert.match(component, /querySelectorAll\('\[data-background-photo="true"\]'\)/);
   assert.match(component, /Your photo is sent to AI/);
+  assert.match(component, /Your photo and rendering are sent to our team only when you send your concept/);
   assert.match(designConceptRoute, /renderBackyardPool/);
   assert.match(designConceptRoute, /startPoolConceptVideoJob/);
   assert.match(designConceptRoute, /getReadyPoolConceptVideoId/);

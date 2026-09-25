@@ -18,7 +18,7 @@ const POOL_WALKTHROUGH_MUSIC_PATH = fileURLToPath(
 const VIDEO_ID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const VIDEO_FAILURE_MESSAGE =
-  "The MP4 could not be created. Your photo and AI rendering are unchanged; retry the MP4 without recreating the image.";
+  "The MP4 could not be created. Your AI rendering is ready and unchanged.";
 
 type VideoJob =
   | { status: "processing"; expiresAt: number; conceptImageSha256: string }
