@@ -31,10 +31,10 @@ Keep the reference image as the CTA's base art, overlay a more legible live "Des
 
 **Why:** The user asked for the small label to be easier to read and for the water to move like the logo, without losing the approved reference artwork.
 
-**How to apply:** Keep the artwork decorative and the link's text accessible; mask all motion to the water, keep highlights restrained, and stop animation under reduced-motion preferences.
+**How to apply:** Keep the artwork decorative and the link's text accessible; keep the water mask below the stone boundary so highlights never create haze on limestone, and stop animation under reduced-motion preferences.
 
-After three seconds of continuous hover or visible keyboard focus, replace the arrow medallion with an enlarged rubber duck wearing black sunglasses; let the duck visibly overlap the original circle.
+After three seconds of continuous hover or visible keyboard focus, replace the arrow medallion with an enlarged, front-facing rubber duck wearing black sunglasses; let the duck visibly overlap the original circle.
 
-**Why:** The user wants a noticeable duck surprise that looks raised and dimensional, not a small flat icon inside the arrow circle.
+**Why:** The user wants a clearly recognizable, forward-facing duck surprise that looks raised and dimensional, not a small side profile inside the arrow circle.
 
-**How to apply:** Keep the duck decorative, preserve the accessible link label, use glossy shading and a soft cast shadow, and reset the delayed reveal when hover or focus ends.
+**How to apply:** Keep the duck decorative, preserve the accessible link label, use a centered bill, readable black lenses, glossy shading, and a soft cast shadow, and reset the delayed reveal when hover or focus ends.

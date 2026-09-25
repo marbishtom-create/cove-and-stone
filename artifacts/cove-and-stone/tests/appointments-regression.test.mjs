@@ -46,14 +46,15 @@ test("registers the appointments page and combines the old CTAs into one action 
   assert.match(layoutCtaCss, /layout-appointment-cta__copy-backdrop/);
   assert.match(layoutCtaCss, /layout-appointment-cta__eyebrow/);
   assert.match(layoutCtaCss, /transition-delay:\s*3s/);
-  assert.match(layoutCtaCss, /width:\s*164%/);
+  assert.match(layoutCtaCss, /width:\s*172%/);
   assert.match(layoutCtaCss, /drop-shadow\(/);
   assert.match(layoutCtaCss, /cubic-bezier\(0\.2,\s*1\.55/);
   assert.match(ctaElements, /layout-appointment-cta__duck-medallion/);
   assert.match(ctaElements, /viewBox="0 0 48 48"/);
   assert.match(ctaElements, /useId/);
   assert.match(ctaElements, /linearGradient/);
-  assert.match(ctaElements, /fill="#080c10"/);
+  assert.equal((ctaElements.match(/fill="#080c10"/g) ?? []).length, 2);
+  assert.match(ctaElements, /M18\.7 22\.4/);
   assert.match(ctaElements, /src="\/brand\/appointment-cta-reference\.png"/);
   assert.match(ctaElements, /aria-hidden="true"/);
   assert.match(layoutCtaCss, /clip-path:\s*inset\(50%\)/);
