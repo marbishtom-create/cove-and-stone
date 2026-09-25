@@ -112,7 +112,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="layout-appointment-cta__dock fixed z-50 hidden drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:flex">
           <Link
             href="/appointments/"
-            className="layout-appointment-cta layout-appointment-cta--wide min-h-[4.1rem] w-full"
+            className="layout-appointment-cta min-h-[4.1rem] w-full"
             data-testid="link-desktop-appointment-cta"
           >
             <AppointmentCtaSurface />

@@ -32,7 +32,7 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
     layoutSource,
     /className="layout-appointment-cta__dock fixed z-50 hidden .*? lg:flex"/,
   );
-  assert.match(layoutSource, /className="layout-appointment-cta layout-appointment-cta--wide min-h-\[4\.1rem\] w-full"/);
+  assert.match(layoutSource, /className="layout-appointment-cta min-h-\[4\.1rem\] w-full"/);
   assert.match(layoutSource, /mx-auto min-h-\[4\.1rem\] w-full/);
   assert.equal(
     (layoutSource.match(/Start your project today/g) ?? []).length,
@@ -52,7 +52,8 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
   assert.match(ctaElements, /stroke="rgba\(255,255,255,\.78\)"/);
   assert.match(ctaElements, /strokeWidth="0\.9"/);
   assert.match(ctaStyles, /aspect-ratio: 4\.82 \/ 1/);
-  assert.match(ctaStyles, /width: min\(58\.8rem, calc\(100vw - 5rem\)\)/);
+  assert.match(ctaStyles, /width: min\(19\.8rem, calc\(100vw - 5rem\)\)/);
+  assert.match(ctaStyles, /padding: 0\.4rem 4% 0\.4rem 16\.5%/);
   assert.match(ctaStyles, /container-type: inline-size/);
   assert.match(ctaStyles, /transition-delay: 3\.05s/);
   assert.match(ctaStyles, /layout-appointment-cta__arrow-shell:hover \.layout-appointment-cta__duck/);
@@ -61,7 +62,7 @@ test('matches the consultation CTA reference with a round teal arrow badge', () 
 test('keeps the project-detail CTA in the page flow instead of over its copy', () => {
   assert.match(layoutSource, /\{!location\.startsWith\("\/projects\/"\) && \(/);
   assert.match(projectDetailSource, /data-testid="link-project-detail-appointment-cta"/);
-  assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-full max-w-\[58\.8rem\]/);
+  assert.match(projectDetailSource, /min-h-\[4\.1rem\] w-full max-w-\[19\.8rem\]/);
   assert.equal((projectDetailSource.match(/<AppointmentCtaSurface \/>/g) ?? []).length, 1);
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });

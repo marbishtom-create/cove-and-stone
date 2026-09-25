@@ -9,11 +9,11 @@ Keep the CTA's pale upper panel distinct from limestone. Reveal a clearly visibl
 
 **How to apply:** Keep the SVG waterline aligned to the CSS water mask and preserve separate masks for the pale panel, exposed stone, and water when changing CTA size, motion, placement, or textures.
 
-The consultation CTA should read as a wide, centered banner on desktop, with its text and arrow badge scaled to the banner. Keep the same proportions as it narrows on smaller screens.
+The desktop consultation CTA should stay a compact, centered pill with its lettering slightly inset to the right. Keep the same proportions as it narrows on smaller screens.
 
-**Why:** Keeping a desktop CTA at compact mobile-chip dimensions made it visibly unlike the supplied reference.
+**Why:** The user corrected the enlarged banner as the wrong size and preferred the earlier compact CTA.
 
-**How to apply:** Preserve the reference's long pill proportions and scale internal type and controls with the component width.
+**How to apply:** Keep the desktop dock near its earlier 19.8rem width; shift the copy right modestly without enlarging the badge or the CTA.
 
 Keep the water caustics irregular and organic rather than a fine uniform grid, with a clear turquoise base and restrained sparkle points.
 

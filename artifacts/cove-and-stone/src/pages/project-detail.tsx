@@ -47,7 +47,7 @@ export default function ProjectDetail() {
             </p>
             <Link
               href="/appointments/"
-              className="layout-appointment-cta mb-8 min-h-[4.1rem] w-full max-w-[58.8rem]"
+              className="layout-appointment-cta mb-8 min-h-[4.1rem] w-full max-w-[19.8rem]"
               data-testid="link-project-detail-appointment-cta"
             >
               <AppointmentCtaSurface />
