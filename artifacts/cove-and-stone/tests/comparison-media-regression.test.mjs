@@ -8,6 +8,7 @@ const [home, renovations] = await Promise.all([
 ]);
 
 test("homepage provides a labeled slider for the backyard photo and illustrative pool concept", () => {
+  assert.match(home, /id="backyard-pool-comparison"/);
   assert.match(home, /<BeforeAfter/);
   assert.match(home, /beforeImage=\{backyardReference\}/);
   assert.match(home, /afterImage=\{poolDesignStudy\}/);

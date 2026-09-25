@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* 3. Illustrative Pool & Backyard Design References */}
-      <section className="py-24 bg-background">
+      <section id="backyard-pool-comparison" className="scroll-mt-24 py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-serif mb-6 text-primary">Pool & Backyard Design Inspiration</h2>
