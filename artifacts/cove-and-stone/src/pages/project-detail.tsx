@@ -4,6 +4,8 @@ import { CASE_STUDIES, getCaseStudyHeroMedia, type CaseStudyMedia } from './proj
 import { ArrowLeft, ArrowRight, CheckCircle2, HardHat, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { AppointmentCtaSurface } from '@/components/layout/appointment-cta-elements';
+import { ProjectTimelineGallery } from '@/components/projects/project-timeline-gallery';
+import { ProjectAmbientMusic } from '@/components/projects/project-ambient-music';
 import NotFound from '@/pages/not-found';
 
 export default function ProjectDetail() {
@@ -36,7 +38,12 @@ export default function ProjectDetail() {
           />
         </picture>
         <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute bottom-4 right-4 lg:bottom-8 lg:right-8 max-w-[calc(100%-2rem)] border border-white/30 bg-black/35 px-3 py-2 text-[9px] lg:text-[10px] uppercase tracking-[0.14em] lg:tracking-[0.2em] text-white/90 backdrop-blur-sm">
+        {project.media.timeline && (
+          <div className="absolute bottom-4 left-4 z-10 lg:bottom-8 lg:left-8">
+            <ProjectAmbientMusic />
+          </div>
+        )}
+        <div className={`absolute bottom-4 right-4 lg:bottom-8 lg:right-8 ${project.media.timeline ? "max-w-[calc(100%-10rem)] lg:max-w-[calc(100%-2rem)]" : "max-w-[calc(100%-2rem)]"} border border-white/30 bg-black/35 px-3 py-2 text-[9px] lg:text-[10px] uppercase tracking-[0.14em] lg:tracking-[0.2em] text-white/90 backdrop-blur-sm`}>
           {heroMedia.label}
         </div>
         <div className="absolute top-4 left-4 lg:top-8 lg:left-8">
@@ -100,8 +107,8 @@ export default function ProjectDetail() {
           </div>
         </div>
 
-        {/* Transformation Section */}
-        <div className="mb-24">
+        {/* Existing project comparisons and media gallery */}
+        {!project.media.timeline && <div className="mb-24">
           <h2 className="text-3xl font-serif text-primary mb-10 text-center">
             {isCompletedProject
               ? project.media.before ? "The Transformation" : "Completed Pool Project"
@@ -140,10 +147,12 @@ export default function ProjectDetail() {
                 ? "Current construction photos and design renderings are presented as separate project stages"
                 : "Design preview · this visual does not represent a completed Cove & Stone project"}
           </p>
-        </div>
+        </div>}
 
         {/* Case study media slots */}
-        <section className="mb-24">
+        {project.media.timeline ? (
+          <ProjectTimelineGallery items={project.media.timeline} />
+        ) : <section className="mb-24">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
               <span className="text-secondary uppercase tracking-[0.25em] text-xs mb-3 block">Project media</span>
@@ -243,7 +252,7 @@ export default function ProjectDetail() {
               <ProjectVideo video={project.media.video} />
             ) : null}
           </div>
-        </section>
+        </section>}
 
         {/* Features list */}
         <div className="max-w-3xl mx-auto bg-card border border-border p-6 sm:p-12">

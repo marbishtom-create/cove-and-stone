@@ -144,7 +144,7 @@
     },
     "/projects": {
       "title": "Pool & Backyard Portfolio: Completed & In-Progress Projects | Cove & Stone",
-      "description": "Browse Cove & Stone pool projects, active construction in Mandarin and completed pool photography in Orlando, alongside clearly labeled design concepts."
+      "description": "Browse completed pools in Mandarin and Orlando, active construction in Mandarin, and clearly labeled pool and backyard design concepts from Cove & Stone."
     },
     "/projects/ponte-vedra-modern": {
       "title": "Ponte Vedra Modern Pool & Backyard Design | Cove & Stone",
@@ -169,6 +169,10 @@
     "/projects/orlando-geometric-pool": {
       "title": "Orlando Geometric Pool Project | Cove & Stone",
       "description": "View construction-stage and completed photography from a geometric pool project in Orlando, with photos labeled by project stage and no unsupported before-and-after claim."
+    },
+    "/projects/mandarin-pool-turf-retaining-walls": {
+      "title": "Mandarin Pool & Turf Retreat | Hood & Shad, Jacksonville FL | Cove & Stone",
+      "description": "Explore an eight-month completed pool project near Hood & Shad in Mandarin, Jacksonville, FL 32257, with two retaining walls, synthetic turf, construction footage and a final walkthrough."
     },
     "/projects/ongoing-construction": {
       "title": "Ongoing Pool Construction | Cove & Stone Progress Log",
@@ -678,6 +682,7 @@
     "atlantic-beach-minimalist": "St. Johns River Retreat",
     "mandarin-pool-outdoor-living": "Mandarin Pool & Outdoor Living",
     "orlando-geometric-pool": "Orlando Geometric Pool",
+    "mandarin-pool-turf-retaining-walls": "Mandarin Pool & Turf Retreat",
     "ongoing-construction": "Ongoing Construction"
   },
   "locationNames": {
