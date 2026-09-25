@@ -125,10 +125,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       )}
 
-      {!mobileMenuOpen && (
+      {location === "/" && !mobileMenuOpen && (
         <div
           className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 drop-shadow-[0_8px_18px_rgba(0,0,0,0.25)] lg:hidden"
-          data-cta-location={location === "/" ? "home" : "interior"}
         >
           <Link
             href="/appointments/"

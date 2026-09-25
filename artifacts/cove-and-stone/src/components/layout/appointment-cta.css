@@ -7,14 +7,10 @@
 
 .layout-appointment-cta__dock--mobile {
   bottom: max(0.75rem, env(safe-area-inset-bottom));
-  left: max(0.75rem, env(safe-area-inset-left));
-  transform: none;
-  width: min(18rem, calc(100vw - 1.5rem));
-}
-
-.layout-appointment-cta__dock--mobile[data-cta-location="home"] {
   left: auto;
   right: max(0.75rem, env(safe-area-inset-right));
+  transform: none;
+  width: min(18rem, calc(100vw - 1.5rem));
 }
 
 .layout-appointment-cta {

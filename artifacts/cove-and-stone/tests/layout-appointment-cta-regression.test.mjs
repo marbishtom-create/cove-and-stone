@@ -71,18 +71,18 @@ test('keeps the project-detail CTA in the page flow instead of over its copy', (
   assert.equal((projectDetailSource.match(/<AppointmentCtaArrow \/>/g) ?? []).length, 1);
 });
 
-test('keeps the mobile CTA fixed at route-specific bottom corners', () => {
-  assert.match(layoutSource, /\{!mobileMenuOpen && \(/);
+test('keeps the mobile CTA fixed at the homepage bottom-right only', () => {
+  assert.match(layoutSource, /\{location === "\/" && !mobileMenuOpen && \(/);
   assert.match(
     layoutSource,
-    /className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 .*? lg:hidden"[\s\S]*?data-cta-location=\{location === "\/" \? "home" : "interior"\}/,
+    /className="layout-appointment-cta__dock layout-appointment-cta__dock--mobile fixed z-50 .*? lg:hidden"/,
   );
   assert.match(layoutSource, /data-testid="link-mobile-sticky-appointment-cta"/);
+  assert.doesNotMatch(layoutSource, /data-cta-location|mobileStickyCtaVisible|IntersectionObserver/);
   assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile \{/);
   assert.match(ctaStyles, /bottom: max\(0\.75rem, env\(safe-area-inset-bottom\)\)/);
-  assert.match(ctaStyles, /left: max\(0\.75rem, env\(safe-area-inset-left\)\)/);
+  assert.match(ctaStyles, /left: auto/);
   assert.match(ctaStyles, /width: min\(18rem, calc\(100vw - 1\.5rem\)\)/);
-  assert.match(ctaStyles, /\.layout-appointment-cta__dock--mobile\[data-cta-location="home"\]/);
   assert.match(ctaStyles, /right: max\(0\.75rem, env\(safe-area-inset-right\)\)/);
   assert.doesNotMatch(layoutSource, /mobileStickyCtaVisible|IntersectionObserver/);
   assert.match(homeSource, /pt-\[6rem\] lg:h-\[100dvh\]/);

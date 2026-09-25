@@ -15,11 +15,11 @@ The desktop consultation CTA should stay a compact, centered pill with its lette
 
 **How to apply:** Keep the desktop dock near its earlier 19.8rem width; shift the copy right modestly without enlarging the badge or the CTA.
 
-On mobile, keep the compact consultation CTA fixed at bottom-right on the homepage and bottom-left on every other page. The menu's own CTA replaces the dock while the menu is open; respect device safe areas.
+On mobile, show the compact fixed consultation CTA only on the homepage, at bottom-right. The menu's own CTA remains available while the navigation is open; respect device safe areas.
 
-**Why:** The user wants the CTA always anchored to the bottom, with a route-specific mobile corner.
+**Why:** The user simplified the mobile placement to one persistent CTA on the homepage rather than a dock across every page.
 
-**How to apply:** Reuse the shared CTA surface and arrow; use safe-area insets, position the homepage dock to the right and other route docks to the left, and keep the menu's CTA as its only consultation link while open.
+**How to apply:** Reuse the shared CTA surface and arrow, position the mobile dock at the homepage's safe-area-aware bottom-right, and leave other pages to their in-flow CTAs. Keep the separate desktop CTA unchanged unless asked otherwise.
 
 Keep the water caustics irregular and organic rather than a fine uniform grid, with a clear turquoise base and restrained sparkle points.
 
