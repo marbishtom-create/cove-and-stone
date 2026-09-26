@@ -3,6 +3,8 @@ import { ai } from "./client";
 
 interface BackyardPoolRenderInput {
   photoBase64: string;
+  photoMimeType?: "image/jpeg" | "image/png";
+  additionalImages?: Array<{ mimeType: "image/jpeg" | "image/png"; data: string }>;
   prompt: string;
 }
 
@@ -109,6 +111,8 @@ function wait(milliseconds: number) {
 
 export async function renderBackyardPool({
   photoBase64,
+  photoMimeType = "image/jpeg",
+  additionalImages = [],
   prompt,
 }: BackyardPoolRenderInput): Promise<{ data: string; mimeType: string }> {
   const maxAttempts = 3;
@@ -125,10 +129,13 @@ export async function renderBackyardPool({
               { text: prompt },
               {
                 inlineData: {
-                  mimeType: "image/jpeg",
+                  mimeType: photoMimeType,
                   data: photoBase64,
                 },
               },
+              ...additionalImages.map(({ mimeType, data }) => ({
+                inlineData: { mimeType, data },
+              })),
             ],
           },
         ],

@@ -4,15 +4,19 @@ import {
   Camera,
   Download,
   Droplets,
+  Eraser,
   Flame,
   Image as ImageIcon,
   Lightbulb,
   Mail,
   MoveHorizontal,
+  RotateCcw,
+  RotateCw,
   Redo2,
   RefreshCcw,
   Sparkles,
   Sun,
+  Trash2,
   Undo2,
   Upload,
   Waves,
@@ -20,6 +24,7 @@ import {
 } from 'lucide-react';
 import {
   emailDesignConcept,
+  erasePoolConceptArea,
   generatePoolConceptRender,
   getPoolConceptVideoJob,
   startPoolConceptWalkthrough,
@@ -104,6 +109,7 @@ export type DeckTile =
   | 'terracotta-clay-pavers'
   | 'blue-gray-bluestone'
   | 'warm-gray-concrete-pavers';
+export type PergolaFinish = 'white' | 'black' | 'wood';
 export type PoolFeature =
   | 'spa'
   | 'spa-waterfall'
@@ -127,6 +133,7 @@ export interface PoolVisualizerConfiguration {
   poolFinish: WaterFinish;
   waterlineTile: WaterlineTile;
   deckTile: DeckTile;
+  pergolaFinish: PergolaFinish;
   edgeTreatment: PoolEdgeTreatment;
   features: PoolFeature[];
   layoutElements: PoolLayoutElements;
@@ -146,6 +153,7 @@ const DEFAULT_CONFIGURATION: PoolVisualizerConfiguration = {
   poolFinish: 'arctic-quartz',
   waterlineTile: 'sea-glass',
   deckTile: 'shell-limestone',
+  pergolaFinish: 'black',
   edgeTreatment: 'flush-continuous',
   features: ['pool-lights', 'sun-shelf'],
   photoUrl: null,
@@ -301,6 +309,33 @@ const OUTDOOR_FEATURES: Array<{ id: PoolFeature; label: string; detail: string; 
   { id: 'outdoor-shower', label: 'Outdoor shower', detail: 'A simple rinse beside the pool', icon: <Droplets size={17} /> },
 ];
 
+const LAYOUT_ITEM_FEATURES: Record<PoolLayoutElementId, PoolFeature[]> = {
+  pool: [],
+  pergola: ['pergola', 'pool-pergola-rainfall'],
+  'sun-shelf': ['sun-shelf'],
+  'sheer-descent': ['sheer-descent'],
+  'pool-lights': ['pool-lights'],
+  'infinity-edge': ['infinity-edge'],
+  bubblers: ['bubblers'],
+  spa: ['spa', 'spa-waterfall'],
+  'outdoor-kitchen': ['outdoor-kitchen'],
+  'sunken-fire-pit': ['sunken-fire-pit'],
+  'fire-bowls': ['fire-bowls'],
+  'outdoor-shower': ['outdoor-shower'],
+};
+
+const PERGOLA_FINISH_OPTIONS: Array<{ id: PergolaFinish; label: string; swatch: string }> = [
+  { id: 'white', label: 'White', swatch: '#f2f0e9' },
+  { id: 'black', label: 'Black', swatch: '#272b2a' },
+  { id: 'wood', label: 'Wood', swatch: '#8b6948' },
+];
+
+const PERGOLA_FINISH_PALETTE: Record<PergolaFinish, { beam: string; structure: string; rafters: string }> = {
+  white: { beam: '#f4f1e9', structure: '#fffdf6', rafters: '#d9d1c1' },
+  black: { beam: '#242b29', structure: '#313936', rafters: '#59615b' },
+  wood: { beam: '#5b4632', structure: '#e5d9c4', rafters: '#8a7152' },
+};
+
 const SHAPES: Array<{ id: PoolShape; label: string; detail: string }> = [
   { id: 'rectangular', label: 'Rectangular', detail: 'Clean geometry' },
   { id: 'freeform', label: 'Freeform', detail: 'Relaxed contour' },
@@ -350,6 +385,7 @@ interface ConceptSceneProps {
     mode: 'move' | 'resize',
     parentScaleX?: number,
     parentScaleY?: number,
+    parentRotation?: number,
   ) => void;
   onLayoutKeyDown?: (event: KeyboardEvent<SVGElement>, id: PoolLayoutElementId) => void;
   onLayoutFocus?: (id: PoolLayoutElementId) => void;
@@ -365,6 +401,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
   const deck = DECK_TILES.find((item) => item.id === configuration.deckTile) ?? DECK_TILES[0];
   const deckPatternWidth = 96 * VISUAL_TILE_SCALE;
   const deckPatternHeight = 72 * VISUAL_TILE_SCALE;
+  const pergolaFinish = PERGOLA_FINISH_PALETTE[configuration.pergolaFinish] ?? PERGOLA_FINISH_PALETTE.black;
   const selectedFeatures = new Set(configuration.features);
   const spaEnabled = selectedFeatures.has('spa') || selectedFeatures.has('spa-waterfall');
   const pergolaWaterEnabled = selectedFeatures.has('pergola') && selectedFeatures.has('pool-pergola-rainfall');
@@ -382,6 +419,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
     children: ReactElement,
     parentScaleX = 1,
     parentScaleY = 1,
+    parentRotation = 0,
   ) => {
     const descriptor = POOL_LAYOUT_DESCRIPTORS[id];
     const layoutTransform = getPoolLayoutTransform(
@@ -405,7 +443,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
           role="button"
           aria-describedby="pool-layout-instructions"
           aria-label={`${descriptor.label}. Drag to move${descriptor.resizable ? ', or use the corner handle to resize' : ''}.`}
-          onPointerDown={(event) => onLayoutPointerDown?.(event, id, 'move', parentScaleX, parentScaleY)}
+          onPointerDown={(event) => onLayoutPointerDown?.(event, id, 'move', parentScaleX, parentScaleY, parentRotation)}
           onFocus={() => onLayoutFocus?.(id)}
           onKeyDown={(event) => onLayoutKeyDown?.(event, id)}
         />
@@ -419,7 +457,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
             height="24"
             tabIndex={-1}
             aria-hidden="true"
-            onPointerDown={(event) => onLayoutPointerDown?.(event, id, 'resize', parentScaleX, parentScaleY)}
+            onPointerDown={(event) => onLayoutPointerDown?.(event, id, 'resize', parentScaleX, parentScaleY, parentRotation)}
           />
         )}
       </g>
@@ -525,9 +563,9 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
       )}
       {selectedFeatures.has('pergola') && (
         layoutGroup('pergola', <g data-feature-pergola="true" opacity=".84">
-          <path d="M566 150h142" fill="none" stroke="#594c3b" strokeWidth="9" />
-          <path d="M566 147h142M580 150v96M694 150v96" fill="none" stroke="#e5ddca" strokeWidth="5" />
-          <path d="M582 143v14M604 143v14M626 143v14M648 143v14M670 143v14" fill="none" stroke="#806d50" strokeWidth="3" />
+          <path d="M566 150h142" fill="none" stroke={pergolaFinish.beam} strokeWidth="9" />
+          <path d="M566 147h142M580 150v96M694 150v96" fill="none" stroke={pergolaFinish.structure} strokeWidth="5" />
+          <path d="M582 143v14M604 143v14M626 143v14M648 143v14M670 143v14" fill="none" stroke={pergolaFinish.rafters} strokeWidth="3" />
         </g>)
       )}
       <g
@@ -536,7 +574,13 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
       >
       <g transform={poolTransform}>
         <path d={poolPath} transform="translate(0 14)" fill="#294847" opacity=".46" filter="url(#pool-shadow)" />
-        <path d={poolPath} fill="none" stroke="url(#continuous-deck-tile)" strokeWidth="48" />
+        <path
+          data-pool-coping="true"
+          d={poolPath}
+          fill="none"
+          stroke="url(#continuous-deck-tile)"
+          strokeWidth="48"
+        />
         <path d={poolPath} fill={`url(#${poolId})`} stroke="url(#waterline-tile-pattern)" strokeWidth="9" />
         <path d={poolPath} fill="none" stroke={`url(#${poolId})`} strokeWidth="2" opacity=".8" />
         <g clipPath="url(#pool-clip)" opacity=".24" fill="none" stroke="#d8f5ed" strokeWidth="3">
@@ -555,7 +599,7 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
           tabIndex={0}
           role="button"
           aria-label="Pool. Drag to move. Size is controlled by the pool dimensions."
-          onPointerDown={(event) => onLayoutPointerDown?.(event, 'pool', 'move')}
+          onPointerDown={(event) => onLayoutPointerDown?.(event, 'pool', 'move', poolScaleX, poolScaleY)}
           onFocus={() => onLayoutFocus?.('pool')}
           onKeyDown={(event) => onLayoutKeyDown?.(event, 'pool')}
         />
@@ -563,39 +607,64 @@ function ConceptScene({ configuration, selectedLayoutId, onLayoutPointerDown, on
           layoutGroup('sun-shelf', <g>
             <path d="M213 153 H330 Q345 153 345 168 V205 H198 V168 Q198 153 213 153Z" fill="#a7d0c7" opacity=".84" />
             <path d="M209 157 H329" stroke="#dff5e9" strokeWidth="3" opacity=".8" />
-          </g>, poolScaleX, poolScaleY)
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
         {selectedFeatures.has('sheer-descent') && (
           layoutGroup('sheer-descent', <g>
             <path d="M468 125h62v10h-62z" fill="url(#continuous-deck-tile)" />
             <path d="M475 136 C475 159 478 175 481 195 M493 136 C493 159 496 177 499 199 M511 136 C511 160 514 177 517 194" stroke="#d3f4ee" strokeWidth="4" opacity=".8" />
             <path d="M469 128h60" stroke="#fff7e6" strokeWidth="2.5" />
-          </g>, poolScaleX, poolScaleY)
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
         {selectedFeatures.has('pool-lights') && (
           layoutGroup('pool-lights', <g fill="#f4e8b4" stroke="#fff9dd" strokeWidth="3">
             <circle cx="254" cy="280" r="6" /><circle cx="370" cy="292" r="6" /><circle cx="493" cy="278" r="6" />
-          </g>, poolScaleX, poolScaleY)
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
         {selectedFeatures.has('infinity-edge') && (
           layoutGroup('infinity-edge', <g fill="none" stroke="#d4f2ec" strokeLinecap="round">
             <path d="M578 169V278" strokeWidth="3" />
             <path d="M581 181l14 4M581 207l14 4M581 234l14 4M581 261l14 4" strokeWidth="2.5" opacity=".85" />
-          </g>, poolScaleX, poolScaleY)
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
         {selectedFeatures.has('bubblers') && (
           layoutGroup('bubblers', <g fill="#ebfbf3" fillOpacity=".75" stroke="#e7faf2" strokeWidth="1.5">
             <circle cx="242" cy="186" r="4" /><circle cx="242" cy="176" r="3" />
             <circle cx="273" cy="185" r="3.5" /><circle cx="273" cy="174" r="2.5" />
-          </g>, poolScaleX, poolScaleY)
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
         {spaEnabled && (
-          layoutGroup('spa', <g data-feature-spa="true">
-            <ellipse cx="520" cy="271" rx="50" ry="30" fill="url(#continuous-deck-tile)" stroke="#eee9da" strokeWidth="2" />
-            <ellipse cx="520" cy="267" rx="40" ry="22" fill="url(#spa-water)" stroke="url(#waterline-tile-pattern)" strokeWidth="5" />
-            <path d="M492 286 C502 297 538 297 548 286 C546 306 536 315 520 315 C504 315 494 306 492 286Z" fill="url(#spa-water)" stroke="#d8f5ed" strokeWidth="2" opacity=".9" />
-            <path d="M497 265c9-6 18-6 27 0s18 6 27 0" fill="none" stroke="#d8f5ed" strokeWidth="2" opacity=".65" />
-          </g>, poolScaleX, poolScaleY)
+          layoutGroup('spa', <g
+            data-feature-spa="true"
+            aria-label="Champagne spa with matching waterline tile and full-perimeter overflow"
+          >
+            <ellipse cx="520" cy="271" rx="53" ry="33" fill="#163539" opacity=".18" />
+            <ellipse cx="520" cy="267" rx="51" ry="31" fill="url(#continuous-deck-tile)" stroke="#eee9da" strokeWidth="2" />
+            <ellipse
+              data-feature-spa-overflow="true"
+              cx="520"
+              cy="267"
+              rx="48"
+              ry="28"
+              fill="none"
+              stroke="#e8fff7"
+              strokeWidth="4"
+              opacity=".9"
+            />
+            <ellipse
+              data-feature-spa-waterline="true"
+              cx="520"
+              cy="267"
+              rx="45"
+              ry="25"
+              fill="url(#waterline-tile-pattern)"
+              stroke="#f4fffb"
+              strokeWidth="1.5"
+            />
+            <ellipse cx="520" cy="267" rx="38" ry="18" fill="url(#spa-water)" stroke="#c8eee2" strokeWidth="1.5" />
+            <path d="M493 265c9-6 18-6 27 0s18 6 27 0" fill="none" stroke="#d8f5ed" strokeWidth="2" opacity=".72" />
+            <path d="M481 273c1 7 3 12 7 16m64-16c-1 7-3 12-7 16M504 291l-1 8m34-8 1 8" fill="none" stroke="#e8fff7" strokeWidth="2" strokeLinecap="round" opacity=".78" />
+          </g>, poolScaleX, poolScaleY, configuration.layoutElements.pool.rotation)
         )}
       </g>
       </g>
@@ -772,10 +841,17 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
   const [isLayoutDragging, setIsLayoutDragging] = useState(false);
   const [selectedLayoutId, setSelectedLayoutId] = useState<PoolLayoutElementId | null>(null);
   const [isLayoutEditing, setIsLayoutEditing] = useState(false);
+  const [isEraseMode, setIsEraseMode] = useState(false);
+  const [eraseBrushSize, setEraseBrushSize] = useState(2.5);
+  const [hasEraseMarks, setHasEraseMarks] = useState(false);
+  const [isErasing, setIsErasing] = useState(false);
+  const [eraseError, setEraseError] = useState('');
+  const [eraseNotice, setEraseNotice] = useState('');
   const [uploadError, setUploadError] = useState('');
   const [aiRenderDataUrl, setAiRenderDataUrl] = useState<string | null>(null);
   const [aiRenderStatus, setAiRenderStatus] = useState<'idle' | 'generating' | 'ready' | 'error'>('idle');
   const [aiRenderError, setAiRenderError] = useState('');
+  const [aiRenderWasErased, setAiRenderWasErased] = useState(false);
   const [videoJobId, setVideoJobId] = useState<string | null>(null);
   const [videoStatus, setVideoStatus] = useState<'idle' | 'processing' | 'ready' | 'error'>('idle');
   const [isSendingConcept, setIsSendingConcept] = useState(false);
@@ -792,6 +868,10 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     },
   });
   const previewRef = useRef<HTMLDivElement>(null);
+  const aiImageRef = useRef<HTMLImageElement>(null);
+  const eraseOverlayCanvasRef = useRef<HTMLCanvasElement>(null);
+  const eraseMaskCanvasRef = useRef<HTMLCanvasElement>(null);
+  const eraseStrokeRef = useRef<{ pointerId: number; x: number; y: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const renderVersionRef = useRef(0);
@@ -803,6 +883,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     svg: SVGSVGElement;
     parentScaleX: number;
     parentScaleY: number;
+    parentRotation: number;
     startX: number;
     startY: number;
     initial: PoolVisualizerConfiguration;
@@ -888,8 +969,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     renderVersionRef.current += 1;
     setAiRenderDataUrl(null);
     setIsLayoutEditing(false);
+    setIsEraseMode(false);
+    setIsErasing(false);
+    setHasEraseMarks(false);
+    setEraseError('');
+    setEraseNotice('');
     setAiRenderStatus('idle');
     setAiRenderError('');
+    setAiRenderWasErased(false);
     setVideoJobId(null);
     setVideoStatus('idle');
   };
@@ -918,12 +1005,183 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     return { x: point.x, y: point.y };
   };
 
+  const initializeEraseCanvases = () => {
+    const image = aiImageRef.current;
+    const overlay = eraseOverlayCanvasRef.current;
+    const mask = eraseMaskCanvasRef.current;
+    if (!image?.naturalWidth || !image.naturalHeight || !overlay || !mask) return;
+
+    const scale = Math.min(1, 1536 / Math.max(image.naturalWidth, image.naturalHeight));
+    const width = Math.max(1, Math.round(image.naturalWidth * scale));
+    const height = Math.max(1, Math.round(image.naturalHeight * scale));
+    overlay.width = width;
+    overlay.height = height;
+    mask.width = width;
+    mask.height = height;
+    overlay.getContext('2d')?.clearRect(0, 0, width, height);
+    const maskContext = mask.getContext('2d');
+    if (maskContext) {
+      maskContext.fillStyle = '#000000';
+      maskContext.fillRect(0, 0, width, height);
+    }
+    eraseStrokeRef.current = null;
+    setHasEraseMarks(false);
+    setEraseError('');
+  };
+
+  const getBrushPoint = (canvas: HTMLCanvasElement, clientX: number, clientY: number) => {
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height || !canvas.width || !canvas.height) return null;
+    const scale = Math.max(rect.width / canvas.width, rect.height / canvas.height);
+    const drawnWidth = canvas.width * scale;
+    const drawnHeight = canvas.height * scale;
+    const offsetX = (rect.width - drawnWidth) / 2;
+    const offsetY = (rect.height - drawnHeight) / 2;
+    return {
+      x: Math.max(0, Math.min(canvas.width, (clientX - rect.left - offsetX) / scale)),
+      y: Math.max(0, Math.min(canvas.height, (clientY - rect.top - offsetY) / scale)),
+    };
+  };
+
+  const paintEraseSegment = (
+    from: { x: number; y: number },
+    to: { x: number; y: number },
+  ) => {
+    const overlay = eraseOverlayCanvasRef.current;
+    const mask = eraseMaskCanvasRef.current;
+    if (!overlay || !mask) return;
+    const brushWidth = Math.max(6, overlay.width * eraseBrushSize / 100);
+
+    const overlayContext = overlay.getContext('2d');
+    if (overlayContext) {
+      overlayContext.globalCompositeOperation = 'source-over';
+      overlayContext.lineCap = 'round';
+      overlayContext.lineJoin = 'round';
+      overlayContext.lineWidth = brushWidth;
+      overlayContext.strokeStyle = 'rgba(89, 220, 176, .64)';
+      overlayContext.fillStyle = 'rgba(89, 220, 176, .64)';
+      if (from.x === to.x && from.y === to.y) {
+        overlayContext.beginPath();
+        overlayContext.arc(to.x, to.y, brushWidth / 2, 0, Math.PI * 2);
+        overlayContext.fill();
+      } else {
+        overlayContext.beginPath();
+        overlayContext.moveTo(from.x, from.y);
+        overlayContext.lineTo(to.x, to.y);
+        overlayContext.stroke();
+      }
+    }
+
+    const maskContext = mask.getContext('2d');
+    if (maskContext) {
+      maskContext.globalCompositeOperation = 'source-over';
+      maskContext.lineCap = 'round';
+      maskContext.lineJoin = 'round';
+      maskContext.lineWidth = brushWidth;
+      maskContext.strokeStyle = '#ffffff';
+      maskContext.fillStyle = '#ffffff';
+      if (from.x === to.x && from.y === to.y) {
+        maskContext.beginPath();
+        maskContext.arc(to.x, to.y, brushWidth / 2, 0, Math.PI * 2);
+        maskContext.fill();
+      } else {
+        maskContext.beginPath();
+        maskContext.moveTo(from.x, from.y);
+        maskContext.lineTo(to.x, to.y);
+        maskContext.stroke();
+      }
+    }
+  };
+
+  const onEraseBrushPointerDown = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    if (!isEraseMode || isErasing) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const canvas = eraseOverlayCanvasRef.current;
+    if (!canvas) return;
+    const point = getBrushPoint(canvas, event.clientX, event.clientY);
+    if (!point) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    eraseStrokeRef.current = { pointerId: event.pointerId, ...point };
+    paintEraseSegment(point, point);
+    setHasEraseMarks(true);
+    setEraseError('');
+    setEraseNotice('');
+  };
+
+  const onEraseBrushPointerMove = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    const stroke = eraseStrokeRef.current;
+    if (!stroke || stroke.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const canvas = eraseOverlayCanvasRef.current;
+    const point = canvas ? getBrushPoint(canvas, event.clientX, event.clientY) : null;
+    if (!point) return;
+    paintEraseSegment(stroke, point);
+    eraseStrokeRef.current = { pointerId: event.pointerId, ...point };
+  };
+
+  const stopEraseBrush = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+    if (eraseStrokeRef.current?.pointerId === event.pointerId) {
+      eraseStrokeRef.current = null;
+      event.stopPropagation();
+    }
+  };
+
+  const clearEraseMask = () => {
+    const overlay = eraseOverlayCanvasRef.current;
+    const mask = eraseMaskCanvasRef.current;
+    if (overlay) overlay.getContext('2d')?.clearRect(0, 0, overlay.width, overlay.height);
+    if (mask) {
+      const context = mask.getContext('2d');
+      if (context) {
+        context.fillStyle = '#000000';
+        context.fillRect(0, 0, mask.width, mask.height);
+      }
+    }
+    eraseStrokeRef.current = null;
+    setHasEraseMarks(false);
+    setEraseError('');
+    setEraseNotice('');
+  };
+
+  const applyEraseMask = async () => {
+    const mask = eraseMaskCanvasRef.current;
+    if (!aiRenderDataUrl || !mask || !hasEraseMarks || isErasing) return;
+    const renderVersion = renderVersionRef.current;
+    setIsErasing(true);
+    setEraseError('');
+    setEraseNotice('');
+    try {
+      const result = await erasePoolConceptArea({
+        imageDataUrl: aiRenderDataUrl,
+        maskDataUrl: mask.toDataURL('image/png'),
+      });
+      if (renderVersion !== renderVersionRef.current) return;
+      setAiRenderDataUrl(result.imageDataUrl);
+      setAiRenderStatus('ready');
+      setAiRenderWasErased(true);
+      setIsEraseMode(false);
+      setVideoJobId(null);
+      setVideoStatus('error');
+      setEraseNotice('The rendering was edited. Create a new MP4 walkthrough before sending this concept.');
+      setHasEraseMarks(false);
+    } catch (error) {
+      if (renderVersion === renderVersionRef.current) {
+        setEraseError(getApiErrorMessage(error, 'The brushed area could not be edited. Your current rendering is unchanged.'));
+      }
+    } finally {
+      if (renderVersion === renderVersionRef.current) setIsErasing(false);
+    }
+  };
+
   const onLayoutPointerDown = (
     event: ReactPointerEvent<SVGElement>,
     id: PoolLayoutElementId,
     mode: 'move' | 'resize',
     parentScaleX = 1,
     parentScaleY = 1,
+    parentRotation = 0,
   ) => {
     event.preventDefault();
     event.stopPropagation();
@@ -940,6 +1198,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       svg,
       parentScaleX,
       parentScaleY,
+      parentRotation,
       startX: point.x,
       startY: point.y,
       initial: configurationRef.current,
@@ -956,17 +1215,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     if (!gesture || !point) return;
     const descriptor = POOL_LAYOUT_DESCRIPTORS[gesture.id];
     const initial = gesture.initial.layoutElements[gesture.id];
-    const deltaX = ((point.x - gesture.startX) / 7.6);
-    const deltaY = ((point.y - gesture.startY) / 4.3);
+    const sceneDeltaX = point.x - gesture.startX;
+    const sceneDeltaY = point.y - gesture.startY;
+    const radians = (gesture.parentRotation * Math.PI) / 180;
+    const localDelta = descriptor.parent === 'pool'
+      ? {
+          x: sceneDeltaX * Math.cos(radians) + sceneDeltaY * Math.sin(radians),
+          y: -sceneDeltaX * Math.sin(radians) + sceneDeltaY * Math.cos(radians),
+        }
+      : { x: sceneDeltaX, y: sceneDeltaY };
+    const deltaX = localDelta.x / 7.6;
+    const deltaY = localDelta.y / 4.3;
     const next = clampPoolLayoutTransform(gesture.id, {
       ...initial,
       ...(gesture.mode === 'move'
         ? { offsetX: initial.offsetX + deltaX, offsetY: initial.offsetY + deltaY }
         : {
-            scaleX: initial.scaleX + (point.x - gesture.startX) / Math.max(40, descriptor.bounds.width * gesture.parentScaleX),
-            scaleY: initial.scaleY + (point.y - gesture.startY) / Math.max(40, descriptor.bounds.height * gesture.parentScaleY),
+            scaleX: initial.scaleX + localDelta.x / Math.max(40, descriptor.bounds.width * gesture.parentScaleX),
+            scaleY: initial.scaleY + localDelta.y / Math.max(40, descriptor.bounds.height * gesture.parentScaleY),
           }),
-    });
+    }, gesture.parentScaleX, gesture.parentScaleY, gesture.parentRotation);
     const nextConfiguration = {
       ...configurationRef.current,
       layoutElements: { ...configurationRef.current.layoutElements, [gesture.id]: next },
@@ -1015,8 +1283,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     if (event.key === 'Home') next = createDefaultPoolLayoutElements()[id];
     if (next === transform) return;
     event.preventDefault();
+    const parentRotation = POOL_LAYOUT_DESCRIPTORS[id].parent === 'pool'
+      ? current.layoutElements.pool.rotation
+      : 0;
     updateConfiguration({
-      layoutElements: { ...current.layoutElements, [id]: clampPoolLayoutTransform(id, next) },
+      layoutElements: {
+        ...current.layoutElements,
+        [id]: clampPoolLayoutTransform(id, next, 1, 1, parentRotation),
+      },
     });
   };
 
@@ -1025,6 +1299,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       ? configuration.features.filter((selected) => selected !== feature && !(feature === 'pergola' && selected === 'pool-pergola-rainfall'))
       : [...configuration.features, feature];
     updateConfiguration({ features });
+  };
+
+  const removeSelectedLayoutItem = () => {
+    if (!selectedLayoutId || selectedLayoutId === 'pool') return;
+    const removedFeatures = new Set(LAYOUT_ITEM_FEATURES[selectedLayoutId]);
+    updateConfiguration({
+      features: configuration.features.filter((feature) => !removedFeatures.has(feature)),
+    });
+    setSelectedLayoutId(null);
+  };
+
+  const rotatePool = (degrees: number) => {
+    const current = configurationRef.current;
+    const pool = clampPoolLayoutTransform('pool', {
+      ...current.layoutElements.pool,
+      rotation: current.layoutElements.pool.rotation + degrees,
+    });
+    updateConfiguration({
+      layoutElements: { ...current.layoutElements, pool },
+    });
   };
 
   const undo = () => {
@@ -1130,6 +1424,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
       poolFinish: DEFAULT_CONFIGURATION.poolFinish,
       waterlineTile: DEFAULT_CONFIGURATION.waterlineTile,
       deckTile: DEFAULT_CONFIGURATION.deckTile,
+      pergolaFinish: DEFAULT_CONFIGURATION.pergolaFinish,
       edgeTreatment: DEFAULT_CONFIGURATION.edgeTreatment,
       features: [...DEFAULT_CONFIGURATION.features],
       layoutElements: createDefaultPoolLayoutElements(),
@@ -1201,6 +1496,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         poolFinish: configuration.poolFinish,
         waterlineTile: configuration.waterlineTile,
         deckTile: configuration.deckTile,
+        pergolaFinish: configuration.pergolaFinish,
         edgeTreatment: configuration.edgeTreatment,
         features: configuration.features,
         svg: await serializeEmailConceptSvg(svg),
@@ -1221,6 +1517,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
     if (!configuration.photoUrl) return;
 
     const renderVersion = ++renderVersionRef.current;
+    setIsEraseMode(false);
+    setIsErasing(false);
+    setAiRenderWasErased(false);
     setAiRenderStatus('generating');
     setAiRenderError('');
 
@@ -1233,6 +1532,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
         poolFinish: configuration.poolFinish,
         waterlineTile: configuration.waterlineTile,
         deckTile: configuration.deckTile,
+        pergolaFinish: configuration.pergolaFinish,
         edgeTreatment: configuration.edgeTreatment,
         features: configuration.features,
         layoutElements: POOL_LAYOUT_ELEMENT_IDS.map((id) => ({
@@ -1282,7 +1582,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           className="pool-visualizer__ai-button"
           type="button"
           onClick={generateAiRender}
-          disabled={!configuration.photoUrl || aiRenderStatus === 'generating'}
+          disabled={!configuration.photoUrl || aiRenderStatus === 'generating' || isErasing}
           data-testid="button-generate-ai-render"
         >
           <Sparkles size={15} />
@@ -1336,7 +1636,9 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 : videoStatus === 'ready'
                   ? 'Walkthrough ready. It will only be attached when you send your concept to our team.'
                   : videoStatus === 'error'
-                    ? 'The MP4 could not be created. Your AI rendering is ready and unchanged. Retry this step without creating the image again.'
+                    ? aiRenderWasErased
+                      ? 'The rendering was edited, so its walkthrough needs to be created again. Retry this step without changing the edited image.'
+                      : 'The MP4 could not be created. Your AI rendering is ready and unchanged. Retry this step without creating the image again.'
                     : 'The walkthrough will start when the image is ready.'}
             </p>
             {videoStatus === 'error' && (
@@ -1639,7 +1941,14 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 <button
                   className={`pool-visualizer__edit-layout-button${isLayoutEditing ? ' is-editing' : ''}`}
                   type="button"
-                  onClick={() => setIsLayoutEditing((editing) => !editing)}
+                  onClick={() => {
+                    const editing = !isLayoutEditing;
+                    setIsLayoutEditing(editing);
+                    if (editing) {
+                      setIsEraseMode(false);
+                      clearEraseMask();
+                    }
+                  }}
                   aria-pressed={isLayoutEditing}
                   data-testid="button-edit-layout"
                 >
@@ -1648,6 +1957,66 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                   {!isLayoutEditing && (
                     <span className="pool-visualizer__edit-layout-nudge" aria-hidden="true">Try it</span>
                   )}
+                </button>
+              )}
+              {aiRenderDataUrl && !isLayoutEditing && (
+                <button
+                  className={`pool-visualizer__erase-mode-button${isEraseMode ? ' is-active' : ''}`}
+                  type="button"
+                  onClick={() => {
+                    if (!isEraseMode) {
+                      setIsLayoutEditing(false);
+                      clearEraseMask();
+                      setIsEraseMode(true);
+                    } else {
+                      clearEraseMask();
+                      setIsEraseMode(false);
+                    }
+                  }}
+                  aria-pressed={isEraseMode}
+                  disabled={isErasing}
+                  data-testid="button-toggle-erase-mode"
+                >
+                  <Eraser size={15} aria-hidden="true" />
+                  <span>{isEraseMode ? 'Cancel erase' : 'Erase area'}</span>
+                </button>
+              )}
+              {(!aiRenderDataUrl || isLayoutEditing) && selectedLayoutId === 'pool' && (
+                <div className="pool-visualizer__rotation-controls" role="group" aria-label="Rotate pool">
+                  <button
+                    className="pool-visualizer__layout-action-button"
+                    type="button"
+                    onClick={() => rotatePool(-15)}
+                    aria-label="Rotate pool counterclockwise 15 degrees"
+                    title="Rotate counterclockwise"
+                    data-testid="button-rotate-pool-counterclockwise"
+                  >
+                    <RotateCcw size={15} aria-hidden="true" />
+                  </button>
+                  <span aria-live="polite">{Math.round(configuration.layoutElements.pool.rotation)}°</span>
+                  <button
+                    className="pool-visualizer__layout-action-button"
+                    type="button"
+                    onClick={() => rotatePool(15)}
+                    aria-label="Rotate pool clockwise 15 degrees"
+                    title="Rotate clockwise"
+                    data-testid="button-rotate-pool-clockwise"
+                  >
+                    <RotateCw size={15} aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+              {(!aiRenderDataUrl || isLayoutEditing) && selectedLayoutId && selectedLayoutId !== 'pool' && (
+                <button
+                  className="pool-visualizer__layout-action-button pool-visualizer__layout-action-button--remove"
+                  type="button"
+                  onClick={removeSelectedLayoutItem}
+                  aria-label={`Remove selected ${POOL_LAYOUT_DESCRIPTORS[selectedLayoutId].label}`}
+                  title={`Remove ${POOL_LAYOUT_DESCRIPTORS[selectedLayoutId].label}`}
+                  data-testid="button-remove-selected-layout-item"
+                >
+                  <Trash2 size={15} aria-hidden="true" />
+                  <span>Remove</span>
                 </button>
               )}
               <button className="pool-visualizer__export-button" type="button" onClick={exportConcept} data-testid="button-export-concept">
@@ -1660,7 +2029,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
           </p>
 
           <div
-            className={`pool-visualizer__comparison${isLayoutEditing ? ' is-layout-editing' : ''}`}
+            className={`pool-visualizer__comparison${isLayoutEditing ? ' is-layout-editing' : ''}${isEraseMode ? ' is-brush-erasing' : ''}`}
             ref={previewRef}
             onPointerDown={onPreviewPointerDown}
             data-testid="pool-comparison-preview"
@@ -1676,12 +2045,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                 />
               </div>
               {aiRenderDataUrl && !isLayoutEditing && (
-                <img
-                  className="pool-visualizer__concept-scene pool-visualizer__ai-image"
-                  src={aiRenderDataUrl}
-                  alt="AI-generated pool rendering using your uploaded backyard photo"
-                  draggable="false"
-                />
+                <div className="pool-visualizer__ai-edit-layer">
+                  <img
+                    ref={aiImageRef}
+                    className="pool-visualizer__concept-scene pool-visualizer__ai-image"
+                    src={aiRenderDataUrl}
+                    alt="AI-generated pool rendering using your uploaded backyard photo"
+                    onLoad={initializeEraseCanvases}
+                    draggable="false"
+                  />
+                  <canvas
+                    ref={eraseOverlayCanvasRef}
+                    className="pool-visualizer__erase-overlay"
+                    aria-hidden="true"
+                    onPointerDown={onEraseBrushPointerDown}
+                    onPointerMove={onEraseBrushPointerMove}
+                    onPointerUp={stopEraseBrush}
+                    onPointerCancel={stopEraseBrush}
+                  />
+                  <canvas ref={eraseMaskCanvasRef} className="pool-visualizer__erase-mask" aria-hidden="true" />
+                </div>
               )}
               {(!aiRenderDataUrl || isLayoutEditing) && (
                 <div className="pool-visualizer__drag-hint" role="note">
@@ -1702,7 +2085,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                       : 'After · design'}
               </span>
             </div>
-            <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%`, display: isLayoutEditing ? 'none' : undefined }}>
+            <div className="pool-visualizer__before-art" style={{ width: `${configuration.comparisonPosition}%`, display: isLayoutEditing || isEraseMode ? 'none' : undefined }}>
               {configuration.photoUrl ? (
                 <img
                   src={configuration.photoUrl}
@@ -1715,7 +2098,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               )}
               <span className="pool-visualizer__comparison-label pool-visualizer__comparison-label--before">Before · photo</span>
             </div>
-            {!isLayoutEditing && <div className={`pool-visualizer__slider ${isDragging ? 'is-dragging' : ''}`} style={{ left: `${configuration.comparisonPosition}%` }}>
+            {!isLayoutEditing && !isEraseMode && <div className={`pool-visualizer__slider ${isDragging ? 'is-dragging' : ''}`} style={{ left: `${configuration.comparisonPosition}%` }}>
               <button
                 className="pool-visualizer__slider-handle"
                 type="button"
@@ -1733,6 +2116,49 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
               </button>
             </div>}
           </div>
+          {isEraseMode && (
+            <section className="pool-visualizer__erase-panel" aria-label="Brush erase controls">
+              <div className="pool-visualizer__erase-panel-copy">
+                <strong>Brush over the area to remove</strong>
+                <p>Approximate AI edit: pixels outside the brush may also change. Review the full image afterward.</p>
+              </div>
+              <label className="pool-visualizer__brush-size">
+                <span>Brush size <output>{eraseBrushSize.toFixed(1)}%</output></span>
+                <input
+                  type="range"
+                  min="0.6"
+                  max="8"
+                  step="0.2"
+                  value={eraseBrushSize}
+                  onChange={(event) => setEraseBrushSize(Number(event.target.value))}
+                  aria-label="Brush size"
+                  data-testid="range-erase-brush-size"
+                />
+              </label>
+              <div className="pool-visualizer__erase-actions">
+                <button
+                  className="pool-visualizer__layout-action-button"
+                  type="button"
+                  onClick={clearEraseMask}
+                  disabled={!hasEraseMarks || isErasing}
+                  data-testid="button-clear-erase-mask"
+                >
+                  Clear brush
+                </button>
+                <button
+                  className="pool-visualizer__erase-apply-button"
+                  type="button"
+                  onClick={applyEraseMask}
+                  disabled={!hasEraseMarks || isErasing}
+                  data-testid="button-apply-erase"
+                >
+                  <Eraser size={15} aria-hidden="true" />
+                  {isErasing ? 'Editing area…' : 'Apply erase'}
+                </button>
+              </div>
+              {eraseError && <p className="pool-visualizer__erase-message is-error" role="alert">{eraseError}</p>}
+            </section>
+          )}
           <div className="pool-visualizer__comparison-legend">
             <span><i className="is-aqua" /> Drag or use arrow keys to compare</span>
             <span><i className="is-ivory" /> AI designs are illustrative only, not completed-project photography or construction drawings.</span>
@@ -1743,6 +2169,7 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <div><span className="pool-visualizer__meta-rule" /><span>{selectedDeck.label} · flush edge</span></div>
           </div>
           {aiRenderActions}
+          {eraseNotice && <p className="pool-visualizer__erase-message" role="status">{eraseNotice}</p>}
           <section className="pool-visualizer__feature-dock" aria-label="Pool and outdoor feature selections">
             <div className="pool-visualizer__feature-dock-heading">
               <div>
@@ -1789,6 +2216,26 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
                     <span className="pool-visualizer__switch" aria-hidden="true"><i /></span>
                   </label>
                 ))}
+                {configuration.features.includes('pergola') && (
+                  <div className="pool-visualizer__pergola-finishes" role="group" aria-label="Pergola finish">
+                    <span className="pool-visualizer__pergola-finish-label">Pergola finish</span>
+                    <div className="pool-visualizer__pergola-finish-options">
+                      {PERGOLA_FINISH_OPTIONS.map((finish) => (
+                        <button
+                          className={`pool-visualizer__pergola-finish-option${configuration.pergolaFinish === finish.id ? ' is-selected' : ''}`}
+                          key={finish.id}
+                          type="button"
+                          onClick={() => updateConfiguration({ pergolaFinish: finish.id })}
+                          aria-pressed={configuration.pergolaFinish === finish.id}
+                          data-testid={`button-pergola-finish-${finish.id}`}
+                        >
+                          <i style={{ backgroundColor: finish.swatch }} aria-hidden="true" />
+                          {finish.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {configuration.features.includes('pergola') && (
                   <label className="pool-visualizer__toggle pool-visualizer__toggle--child">
                     <span className="pool-visualizer__toggle-icon"><Waves size={17} /></span>

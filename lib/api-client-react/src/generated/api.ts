@@ -25,6 +25,8 @@ import type {
   DesignConceptEmailRequest,
   DesignConceptEmailResponse,
   HealthStatus,
+  PoolConceptEraseInput,
+  PoolConceptEraseResult,
   PoolConceptRenderRequest,
   PoolConceptRenderResponse,
   PoolConceptVideoJobStatus,
@@ -313,6 +315,95 @@ export const useGeneratePoolConceptRender = <TError = ErrorType<void>,
         TContext
       > => {
       return useMutation(getGeneratePoolConceptRenderMutationOptions(options));
+    }
+
+export const getErasePoolConceptAreaUrl = () => {
+
+
+
+
+  return `/api/design-concepts/erase`
+}
+
+/**
+ * Uses the current concept image and a brush mask as image guidance. The model may also change pixels outside the marked area.
+ * @summary Remove a brushed area from an AI pool concept
+ */
+export const erasePoolConceptArea = async (poolConceptEraseInput: PoolConceptEraseInput, options?: Parameters<typeof customFetch>[1]): Promise<PoolConceptEraseResult> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<PoolConceptEraseResult>(getErasePoolConceptAreaUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(poolConceptEraseInput)
+  }
+);}
+
+
+
+
+
+export const getErasePoolConceptAreaMutationKey = () => ['erasePoolConceptArea'] as const;
+
+export const getErasePoolConceptAreaMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof erasePoolConceptArea>>, TError,ErasePoolConceptAreaMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof erasePoolConceptArea>>, TError,ErasePoolConceptAreaMutationVariables, TContext> => {
+
+const mutationKey = getErasePoolConceptAreaMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof erasePoolConceptArea>>, ErasePoolConceptAreaMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  erasePoolConceptArea(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ErasePoolConceptAreaMutationResult = NonNullable<Awaited<ReturnType<typeof erasePoolConceptArea>>>
+    export type ErasePoolConceptAreaMutationBody = BodyType<PoolConceptEraseInput>
+    export type ErasePoolConceptAreaMutationError = ErrorType<void>
+    export type ErasePoolConceptAreaMutationVariables = {data: BodyType<PoolConceptEraseInput>}
+
+    /**
+ * @summary Remove a brushed area from an AI pool concept
+ */
+export const useErasePoolConceptArea = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof erasePoolConceptArea>>, TError,ErasePoolConceptAreaMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof erasePoolConceptArea>>,
+        TError,
+        ErasePoolConceptAreaMutationVariables,
+        TContext
+      > => {
+      return useMutation(getErasePoolConceptAreaMutationOptions(options));
     }
 
 export const getStartPoolConceptWalkthroughUrl = () => {

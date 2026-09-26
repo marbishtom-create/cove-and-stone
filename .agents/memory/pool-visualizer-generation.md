@@ -14,3 +14,9 @@ For internal email, keep the uploaded backyard photo out of the serialized SVG. 
 **Why:** The visualizer preview embeds the photo as an SVG image, while the email already sends that photo separately. Duplicating the bytes made a normal photo-based concept exceed the SVG field limit.
 
 **How to apply:** Strip photo-background nodes from the email-only SVG clone. Preserve the full photo in the live preview and attach it separately to the internal handoff.
+
+For brush edits of Gemini-generated concepts, send the current rendering and a separate white-on-black PNG mask as guidance. The mask is not a pixel-locked inpainting boundary, so tell customers that unmarked pixels may also change. A successful edit invalidates the previous walkthrough; require a new walkthrough before sending the edited concept.
+
+**Why:** Gemini image editing does not guarantee strict mask boundaries, and a walkthrough generated from the pre-edit image would no longer represent the concept being handed off.
+
+**How to apply:** Keep deterministic local previews available, describe mask edits as approximate, preserve the current image on failure, and bind any walkthrough to the exact edited rendering.

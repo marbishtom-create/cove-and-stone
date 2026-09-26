@@ -10,13 +10,13 @@ import type { PoolConceptLayoutElementId } from './poolConceptLayoutElementId';
 export interface PoolConceptLayoutElement {
   id: PoolConceptLayoutElementId;
   /**
-     * @minimum -18
-     * @maximum 18
+     * @minimum -180
+     * @maximum 180
      */
   offsetX: number;
   /**
-     * @minimum -14
-     * @maximum 14
+     * @minimum -180
+     * @maximum 180
      */
   offsetY: number;
   /**
@@ -29,4 +29,9 @@ export interface PoolConceptLayoutElement {
      * @maximum 1.8
      */
   scaleY: number;
+  /**
+     * @minimum -180
+     * @maximum 180
+     */
+  rotation: number;
 }

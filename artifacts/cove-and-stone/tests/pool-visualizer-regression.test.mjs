@@ -44,6 +44,7 @@ test("keeps every requested pool configuration in the generated state", () => {
     "poolFinish",
     "waterlineTile",
     "deckTile",
+    "pergolaFinish",
     "edgeTreatment",
     "features",
   ]) {
@@ -85,12 +86,30 @@ test("renders configured values in the concept preview instead of only storing t
   assert.match(component, /data-feature-pergola-water="true"/);
   assert.match(component, /selectedFeatures\.has\('sunken-fire-pit'\)/);
   assert.match(component, /selectedFeatures\.has\('outdoor-kitchen'\)/);
-  assert.match(component, /stroke="url\(#continuous-deck-tile\)" strokeWidth="48"/);
+  assert.match(component, /data-pool-coping="true"/);
+  assert.match(component, /stroke="url\(#continuous-deck-tile\)"/);
   assert.match(component, /stroke="url\(#waterline-tile-pattern\)" strokeWidth="9"/);
+  assert.match(component, /data-feature-spa-overflow="true"/);
+  assert.match(component, /data-feature-spa-waterline="true"/);
   assert.doesNotMatch(component, /stroke="#eee4ce"/);
   assert.match(component, /poolScaleX/);
   assert.match(component, /poolScaleY/);
   assert.match(component, /aria-label={`Illustrative/);
+});
+
+test("invites customers into layout editing and preserves reduced-motion preferences", () => {
+  assert.match(component, /data-testid="button-edit-layout"/);
+  assert.match(component, /pool-visualizer__edit-layout-nudge/);
+  assert.match(componentStyles, /@keyframes pv-edit-float/);
+  assert.match(componentStyles, /prefers-reduced-motion: reduce/);
+});
+
+test("keeps coping tiles in the deck module and makes spa overflow use the pool waterline tile", () => {
+  assert.match(component, /data-pool-coping="true"[\s\S]*?stroke="url\(#continuous-deck-tile\)"/);
+  assert.match(component, /data-feature-spa-waterline="true"[\s\S]*?fill="url\(#waterline-tile-pattern\)"/);
+  assert.match(designConceptRoute, /consistent large-format module across the deck, flush coping/);
+  assert.match(designConceptRoute, /same selected waterline tile as the pool/);
+  assert.match(designConceptRoute, /full-perimeter overflow using the same selected waterline tile/);
 });
 
 test("uses an uploaded backyard photo as the after-concept canvas", () => {
@@ -111,10 +130,8 @@ test("creates a real AI rendering from a backyard photo and sends it to Sales", 
   assert.match(component, /data-testid="card-ai-walkthrough"/);
   assert.match(component, /status-ai-walkthrough/);
   assert.match(component, /data-testid="button-retry-ai-walkthrough"/);
-  assert.match(
-    component,
-    /videoStatus === 'error'\s*\?\s*'The MP4 could not be created\. Your AI rendering is ready and unchanged\./,
-  );
+  assert.match(component, /videoStatus === 'error'[\s\S]*?The MP4 could not be created\. Your AI rendering is ready and unchanged\./);
+  assert.match(component, /aiRenderWasErased[\s\S]*?walkthrough needs to be created again/);
   assert.doesNotMatch(
     component,
     /\$\{videoError\}/,
@@ -316,7 +333,7 @@ test("keeps the spa spillover and pergola waterfall distinct in the local and AI
   assert.match(component, /M623 156 C623 168 624 181 625 193 Q639 197 653 193 C654 181 655 168 655 156Z/);
   assert.match(
     designConceptRoute,
-    /spa: "a separate raised spa beside the pool, with a clean spillover lip flowing directly into the swimming pool"/,
+    /spa: "a raised champagne spa integrated with the pool, with a continuous full-perimeter overflow/,
   );
   assert.match(
     designConceptRoute,
@@ -331,4 +348,46 @@ test("retries missing Gemini image payloads without changing the supported model
   assert.match(geminiImageHelper, /isRetryableProviderError/);
   assert.match(geminiImageHelper, /model: "gemini-2\.5-flash-image"/);
   assert.match(geminiImageHelper, /did not return a pool concept image after retrying/);
+});
+
+test("keeps pergola finish choices consistent across the preview, AI prompt, and handoff", () => {
+  for (const finish of ["white", "black", "wood"]) {
+    assert.match(component, new RegExp(`id: '${finish}', label: '${finish[0].toUpperCase()}${finish.slice(1)}'`));
+    assert.match(component, new RegExp(`button-pergola-finish-\\$\\{finish\\.id\\}`));
+    assert.match(apiSpec, new RegExp(finish));
+  }
+  assert.match(component, /stroke=\{pergolaFinish\.beam\}/);
+  assert.match(component, /updateConfiguration\(\{ pergolaFinish: finish\.id \}\)/);
+  assert.match(component, /pergolaFinish: configuration\.pergolaFinish/);
+  assert.match(designConceptRoute, /PERGOLA_FINISH_PROMPTS\[concept\.pergolaFinish\]/);
+  assert.match(designConceptRoute, /PERGOLA_FINISH_LABELS\[concept\.pergolaFinish\]/);
+});
+
+test("moves and rotates pool features across the full preview and removes selected items", () => {
+  assert.match(component, /data-testid="button-rotate-pool-clockwise"/);
+  assert.match(component, /data-testid="button-rotate-pool-counterclockwise"/);
+  assert.match(component, /data-testid="button-remove-selected-layout-item"/);
+  assert.match(component, /clampPoolLayoutTransform\(gesture\.id,[\s\S]*?gesture\.parentRotation/);
+  assert.match(component, /rotation: current\.layoutElements\.pool\.rotation \+ degrees/);
+  assert.match(component, /layoutElements: POOL_LAYOUT_ELEMENT_IDS\.map/);
+  assert.match(designConceptRoute, /rotated \$\{item\.rotation > 0 \? "clockwise" : "counterclockwise"\}/);
+  assert.match(apiSpec, /offsetX:[\s\S]*?minimum: -180[\s\S]*?maximum: 180/);
+  assert.match(apiSpec, /rotation:[\s\S]*?minimum: -180[\s\S]*?maximum: 180/);
+});
+
+test("sends white brush masks for approximate AI erasure and warns about spillover changes", () => {
+  assert.match(component, /data-testid="button-toggle-erase-mode"/);
+  assert.match(component, /data-testid="range-erase-brush-size"/);
+  assert.match(component, /data-testid="button-apply-erase"/);
+  assert.match(component, /maskContext\.fillStyle = '#000000'/);
+  assert.match(component, /maskContext\.strokeStyle = '#ffffff'/);
+  assert.match(component, /pixels outside the brush may also change/);
+  assert.match(component, /erasePoolConceptArea\(\{/);
+  assert.match(component, /setVideoStatus\('error'\)/);
+  assert.match(designConceptRoute, /router\.post\("\/design-concepts\/erase"/);
+  assert.match(designConceptRoute, /not a pixel-locked inpainting boundary/);
+  assert.match(designConceptRoute, /additionalImages: \[maskImage\]/);
+  assert.match(geminiImageHelper, /additionalImages\.map/);
+  assert.match(apiSpec, /\/design-concepts\/erase/);
+  assert.match(apiSpec, /maskDataUrl:/);
 });

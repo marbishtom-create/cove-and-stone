@@ -105,6 +105,15 @@ export const DesignConceptEmailRequestDeckTile = {
   'warm-gray-concrete-pavers': 'warm-gray-concrete-pavers',
 } as const;
 
+export type DesignConceptEmailRequestPergolaFinish = typeof DesignConceptEmailRequestPergolaFinish[keyof typeof DesignConceptEmailRequestPergolaFinish];
+
+
+export const DesignConceptEmailRequestPergolaFinish = {
+  white: 'white',
+  black: 'black',
+  wood: 'wood',
+} as const;
+
 export type DesignConceptEmailRequestEdgeTreatment = typeof DesignConceptEmailRequestEdgeTreatment[keyof typeof DesignConceptEmailRequestEdgeTreatment];
 
 
@@ -162,6 +171,7 @@ export interface DesignConceptEmailRequest {
   poolFinish: DesignConceptEmailRequestPoolFinish;
   waterlineTile: DesignConceptEmailRequestWaterlineTile;
   deckTile: DesignConceptEmailRequestDeckTile;
+  pergolaFinish: DesignConceptEmailRequestPergolaFinish;
   edgeTreatment: DesignConceptEmailRequestEdgeTreatment;
   features: DesignConceptEmailRequestFeaturesItem[];
   /**
@@ -240,6 +250,15 @@ export const PoolConceptRenderRequestDeckTile = {
   'warm-gray-concrete-pavers': 'warm-gray-concrete-pavers',
 } as const;
 
+export type PoolConceptRenderRequestPergolaFinish = typeof PoolConceptRenderRequestPergolaFinish[keyof typeof PoolConceptRenderRequestPergolaFinish];
+
+
+export const PoolConceptRenderRequestPergolaFinish = {
+  white: 'white',
+  black: 'black',
+  wood: 'wood',
+} as const;
+
 export type PoolConceptRenderRequestEdgeTreatment = typeof PoolConceptRenderRequestEdgeTreatment[keyof typeof PoolConceptRenderRequestEdgeTreatment];
 
 
@@ -287,13 +306,13 @@ export const PoolConceptLayoutElementId = {
 export interface PoolConceptLayoutElement {
   id: PoolConceptLayoutElementId;
   /**
-     * @minimum -18
-     * @maximum 18
+     * @minimum -180
+     * @maximum 180
      */
   offsetX: number;
   /**
-     * @minimum -14
-     * @maximum 14
+     * @minimum -180
+     * @maximum 180
      */
   offsetY: number;
   /**
@@ -306,6 +325,11 @@ export interface PoolConceptLayoutElement {
      * @maximum 1.8
      */
   scaleY: number;
+  /**
+     * @minimum -180
+     * @maximum 180
+     */
+  rotation: number;
 }
 
 export interface PoolConceptRenderRequest {
@@ -329,10 +353,35 @@ export interface PoolConceptRenderRequest {
   poolFinish: PoolConceptRenderRequestPoolFinish;
   waterlineTile: PoolConceptRenderRequestWaterlineTile;
   deckTile: PoolConceptRenderRequestDeckTile;
+  pergolaFinish: PoolConceptRenderRequestPergolaFinish;
   edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
   features: PoolConceptRenderRequestFeaturesItem[];
   /** @maxItems 12 */
   layoutElements?: PoolConceptLayoutElement[];
+}
+
+export interface PoolConceptEraseInput {
+  /**
+     * @minLength 40
+     * @maxLength 6000000
+     * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  imageDataUrl: string;
+  /**
+     * @minLength 40
+     * @maxLength 6000000
+     * @pattern ^data:image/png;base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  maskDataUrl: string;
+}
+
+export interface PoolConceptEraseResult {
+  /**
+     * @minLength 40
+     * @maxLength 6000000
+     * @pattern ^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$
+     */
+  imageDataUrl: string;
 }
 
 export interface PoolConceptRenderResponse {

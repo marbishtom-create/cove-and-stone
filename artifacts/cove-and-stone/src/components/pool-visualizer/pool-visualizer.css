@@ -538,6 +538,58 @@
   margin-top: -.8rem;
 }
 
+.pool-visualizer__pergola-finishes {
+  background: #f4f5ef;
+  border: 1px solid #e2e5dc;
+  display: grid;
+  gap: .5rem;
+  margin: .55rem 0 .75rem 1.8rem;
+  padding: .65rem;
+}
+
+.pool-visualizer__pergola-finish-label {
+  color: var(--pv-muted);
+  font-size: .57rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.pool-visualizer__pergola-finish-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.pool-visualizer__pergola-finish-option {
+  align-items: center;
+  background: #fffefa;
+  border: 1px solid #dddcd2;
+  border-radius: 999px;
+  color: var(--pv-ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: .6rem;
+  gap: .3rem;
+  padding: .32rem .5rem;
+  transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+}
+
+.pool-visualizer__pergola-finish-option i {
+  border: 1px solid rgba(25, 42, 37, .2);
+  border-radius: 50%;
+  height: .68rem;
+  width: .68rem;
+}
+
+.pool-visualizer__pergola-finish-option:hover,
+.pool-visualizer__pergola-finish-option.is-selected {
+  background: #e6f1ea;
+  border-color: var(--pv-aqua-dark);
+  color: var(--pv-aqua-dark);
+}
+
 .pool-visualizer__toggle {
   align-items: center;
   border-bottom: 1px solid #e6e5dc;
@@ -1043,8 +1095,66 @@
 .pool-visualizer__preview-header-actions {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: .5rem;
   justify-content: flex-end;
+}
+
+.pool-visualizer__rotation-controls {
+  align-items: center;
+  background: #f0f4ef;
+  border: 1px solid #d8e1d9;
+  border-radius: 999px;
+  color: var(--pv-ink-soft);
+  display: inline-flex;
+  font-size: .62rem;
+  gap: .35rem;
+  padding: .18rem .28rem;
+}
+
+.pool-visualizer__rotation-controls > span {
+  font-variant-numeric: tabular-nums;
+  min-width: 2.15rem;
+  text-align: center;
+}
+
+.pool-visualizer__layout-action-button {
+  align-items: center;
+  background: #f3f5f0;
+  border: 1px solid #d9e0d8;
+  border-radius: 999px;
+  color: #45645a;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: .61rem;
+  gap: .3rem;
+  justify-content: center;
+  min-height: 2.1rem;
+  min-width: 2.1rem;
+  padding: .35rem .52rem;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.pool-visualizer__layout-action-button:hover,
+.pool-visualizer__layout-action-button:focus-visible {
+  background: #e0eee5;
+  border-color: #8db29e;
+  color: #245b49;
+  transform: translateY(-1px);
+}
+
+.pool-visualizer__layout-action-button--remove {
+  background: #fff7f3;
+  border-color: #ead7ca;
+  color: #8a5140;
+}
+
+.pool-visualizer__layout-action-button--remove:hover,
+.pool-visualizer__layout-action-button--remove:focus-visible {
+  background: #f8e9df;
+  border-color: #d6a990;
+  color: #743b2c;
 }
 
 .pool-visualizer__layout-instructions {
@@ -1052,6 +1162,34 @@
   font-size: .68rem;
   line-height: 1.5;
   margin: -.35rem 0 .75rem;
+}
+
+.pool-visualizer__erase-mode-button {
+  align-items: center;
+  background: #eef5ef;
+  border: 1px solid #bfd4c6;
+  color: #35644f;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: .64rem;
+  gap: .42rem;
+  min-height: 2.5rem;
+  padding: .65rem .85rem;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.pool-visualizer__erase-mode-button:hover,
+.pool-visualizer__erase-mode-button:focus-visible,
+.pool-visualizer__erase-mode-button.is-active {
+  background: #dceee3;
+  border-color: #8eb8a0;
+  color: #245c45;
+}
+
+.pool-visualizer__erase-mode-button:disabled {
+  cursor: wait;
+  opacity: .65;
 }
 
 .pool-visualizer__export-button {
@@ -1088,6 +1226,11 @@
   cursor: default;
 }
 
+.pool-visualizer__comparison.is-brush-erasing {
+  cursor: crosshair;
+  touch-action: none;
+}
+
 .pool-visualizer__layout-hit {
   cursor: grab;
   fill: transparent;
@@ -1117,6 +1260,7 @@
 .pool-visualizer__before-art,
 .pool-visualizer__concept-scene,
 .pool-visualizer__before-art > img,
+.pool-visualizer__ai-edit-layer,
 .pool-visualizer__backyard-fallback {
   height: 100%;
   inset: 0;
@@ -1134,6 +1278,121 @@
 
 .pool-visualizer__ai-image {
   object-fit: cover;
+}
+
+.pool-visualizer__ai-edit-layer {
+  overflow: hidden;
+}
+
+.pool-visualizer__erase-overlay {
+  cursor: crosshair;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  pointer-events: none;
+  position: absolute;
+  touch-action: none;
+  width: 100%;
+  z-index: 2;
+}
+
+.pool-visualizer__comparison.is-brush-erasing .pool-visualizer__erase-overlay {
+  pointer-events: auto;
+}
+
+.pool-visualizer__erase-mask {
+  display: none;
+}
+
+.pool-visualizer__erase-panel {
+  align-items: end;
+  background: #f3f7f2;
+  border: 1px solid #d5e4d8;
+  display: grid;
+  gap: .8rem;
+  grid-template-columns: minmax(12rem, 1fr) minmax(8rem, .72fr) auto;
+  margin: .7rem 0;
+  padding: .75rem;
+}
+
+.pool-visualizer__erase-panel-copy strong {
+  color: #315d4a;
+  display: block;
+  font-size: .72rem;
+}
+
+.pool-visualizer__erase-panel-copy p {
+  color: var(--pv-muted);
+  font-size: .62rem;
+  line-height: 1.45;
+  margin: .22rem 0 0;
+}
+
+.pool-visualizer__brush-size {
+  color: var(--pv-ink-soft);
+  display: grid;
+  font-size: .61rem;
+  gap: .28rem;
+}
+
+.pool-visualizer__brush-size > span {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pool-visualizer__brush-size output {
+  color: var(--pv-aqua-dark);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.pool-visualizer__brush-size input {
+  accent-color: var(--pv-aqua-dark);
+  width: 100%;
+}
+
+.pool-visualizer__erase-actions {
+  align-items: center;
+  display: flex;
+  gap: .45rem;
+}
+
+.pool-visualizer__erase-apply-button {
+  align-items: center;
+  background: #2d6954;
+  border: 1px solid #2d6954;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: .64rem;
+  gap: .4rem;
+  min-height: 2.15rem;
+  padding: .4rem .68rem;
+}
+
+.pool-visualizer__erase-apply-button:hover,
+.pool-visualizer__erase-apply-button:focus-visible {
+  background: #245541;
+  border-color: #245541;
+}
+
+.pool-visualizer__erase-apply-button:disabled,
+.pool-visualizer__erase-actions .pool-visualizer__layout-action-button:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+  transform: none;
+}
+
+.pool-visualizer__erase-message {
+  color: #35634e;
+  font-size: .68rem;
+  line-height: 1.5;
+  margin: .6rem 0 0;
+}
+
+.pool-visualizer__erase-message.is-error {
+  color: #943f32;
 }
 
 .pool-visualizer__before-art {
@@ -1461,6 +1720,15 @@
 
   .pool-visualizer__preview-header h3 {
     font-size: 1.35rem;
+  }
+
+  .pool-visualizer__erase-panel {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .pool-visualizer__erase-actions {
+    flex-wrap: wrap;
   }
 
   .pool-visualizer__export-button {

@@ -9,6 +9,7 @@ import type { PoolConceptLayoutElement } from './poolConceptLayoutElement';
 import type { PoolConceptRenderRequestDeckTile } from './poolConceptRenderRequestDeckTile';
 import type { PoolConceptRenderRequestEdgeTreatment } from './poolConceptRenderRequestEdgeTreatment';
 import type { PoolConceptRenderRequestFeaturesItem } from './poolConceptRenderRequestFeaturesItem';
+import type { PoolConceptRenderRequestPergolaFinish } from './poolConceptRenderRequestPergolaFinish';
 import type { PoolConceptRenderRequestPoolFinish } from './poolConceptRenderRequestPoolFinish';
 import type { PoolConceptRenderRequestShape } from './poolConceptRenderRequestShape';
 import type { PoolConceptRenderRequestWaterlineTile } from './poolConceptRenderRequestWaterlineTile';
@@ -34,6 +35,7 @@ export interface PoolConceptRenderRequest {
   poolFinish: PoolConceptRenderRequestPoolFinish;
   waterlineTile: PoolConceptRenderRequestWaterlineTile;
   deckTile: PoolConceptRenderRequestDeckTile;
+  pergolaFinish: PoolConceptRenderRequestPergolaFinish;
   edgeTreatment: PoolConceptRenderRequestEdgeTreatment;
   features: PoolConceptRenderRequestFeaturesItem[];
   /** @maxItems 12 */

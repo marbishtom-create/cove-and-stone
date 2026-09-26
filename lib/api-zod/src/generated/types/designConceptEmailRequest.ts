@@ -8,6 +8,7 @@
 import type { DesignConceptEmailRequestDeckTile } from './designConceptEmailRequestDeckTile';
 import type { DesignConceptEmailRequestEdgeTreatment } from './designConceptEmailRequestEdgeTreatment';
 import type { DesignConceptEmailRequestFeaturesItem } from './designConceptEmailRequestFeaturesItem';
+import type { DesignConceptEmailRequestPergolaFinish } from './designConceptEmailRequestPergolaFinish';
 import type { DesignConceptEmailRequestPoolFinish } from './designConceptEmailRequestPoolFinish';
 import type { DesignConceptEmailRequestShape } from './designConceptEmailRequestShape';
 import type { DesignConceptEmailRequestWaterlineTile } from './designConceptEmailRequestWaterlineTile';
@@ -43,6 +44,7 @@ export interface DesignConceptEmailRequest {
   poolFinish: DesignConceptEmailRequestPoolFinish;
   waterlineTile: DesignConceptEmailRequestWaterlineTile;
   deckTile: DesignConceptEmailRequestDeckTile;
+  pergolaFinish: DesignConceptEmailRequestPergolaFinish;
   edgeTreatment: DesignConceptEmailRequestEdgeTreatment;
   features: DesignConceptEmailRequestFeaturesItem[];
   /**

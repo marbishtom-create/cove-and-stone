@@ -1,5 +1,7 @@
 import { Router, type IRouter, type Response } from "express";
 import {
+  ErasePoolConceptAreaBody,
+  ErasePoolConceptAreaResponse,
   EmailDesignConceptBody,
   GeneratePoolConceptRenderBody,
   GeneratePoolConceptRenderResponse,
@@ -64,6 +66,18 @@ const TILE_LABELS = {
   "charcoal-mosaic": "Charcoal mosaic",
 } as const;
 
+const PERGOLA_FINISH_LABELS = {
+  white: "White",
+  black: "Black",
+  wood: "Wood",
+} as const;
+
+const PERGOLA_FINISH_PROMPTS = {
+  white: "white powder-coated pergola beams and posts",
+  black: "matte black powder-coated pergola beams and posts",
+  wood: "warm natural wood pergola beams and posts",
+} as const;
+
 const DECK_TILE_LABELS = {
   "shell-limestone": "Shell limestone",
   "ivory-porcelain": "Ivory porcelain",
@@ -96,8 +110,8 @@ const FEATURE_LABELS = {
 } as const;
 
 const FEATURE_PROMPTS = {
-  spa: "a separate raised spa beside the pool, with a clean spillover lip flowing directly into the swimming pool",
-  "spa-waterfall": "an integrated raised spa with a broad spillover directly into the pool",
+  spa: "a raised champagne spa integrated with the pool, with a continuous full-perimeter overflow using the same selected waterline tile as the pool and an even sheet of water spilling all the way around",
+  "spa-waterfall": "an integrated champagne spa with a full-perimeter spillover, using the same selected waterline tile as the pool around the entire spa waterline",
   "infinity-edge": "an infinity edge with water flowing over one vanishing edge",
   "pool-lights": "subtle underwater pool lighting",
   "sun-shelf": "a shallow sun shelf",
@@ -196,7 +210,7 @@ function rejectRateLimitedGeneration(
   res: Response,
   retryAfterSeconds: number,
   maxRequests: number,
-  action: "renders" | "video retries",
+  action: "renders" | "renders and brush edits" | "video retries",
 ) {
   const retryMinutes = Math.max(1, Math.ceil(retryAfterSeconds / 60));
   res.set("Retry-After", String(retryAfterSeconds)).status(429).json({
@@ -221,6 +235,28 @@ function imageAttachment(
     content: match[2],
     content_type: match[1],
   };
+}
+
+function parseRenderImageDataUrl(
+  dataUrl: string,
+  allowedMimeTypes: readonly ("image/png" | "image/jpeg")[],
+  maxBytes: number,
+) {
+  const match = /^data:(image\/(?:png|jpeg));base64,([A-Za-z0-9+/]+={0,2})$/.exec(dataUrl);
+  if (!match || !allowedMimeTypes.includes(match[1] as "image/png" | "image/jpeg")) {
+    return null;
+  }
+
+  const image = Buffer.from(match[2], "base64");
+  if (
+    image.length === 0 ||
+    image.length > maxBytes ||
+    image.toString("base64").replace(/=+$/, "") !== match[2].replace(/=+$/, "")
+  ) {
+    return null;
+  }
+
+  return { mimeType: match[1] as "image/png" | "image/jpeg", data: match[2] };
 }
 
 router.post("/design-concepts/render", async (req, res): Promise<void> => {
@@ -287,7 +323,10 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
       const vertical = item.offsetY === 0
         ? "at its default vertical position"
         : `shifted ${Math.abs(item.offsetY).toFixed(1)}% of the scene height ${item.offsetY < 0 ? "up" : "down"} from its default position`;
-      return `${LAYOUT_ITEM_LABELS[item.id]}: ${horizontal}, ${vertical}, width ${Math.round(item.scaleX * 100)}% and depth ${Math.round(item.scaleY * 100)}% of its default proportions`;
+      const rotation = item.rotation === 0
+        ? "at its default angle"
+        : `rotated ${item.rotation > 0 ? "clockwise" : "counterclockwise"} by ${Math.abs(item.rotation).toFixed(0)} degrees`;
+      return `${LAYOUT_ITEM_LABELS[item.id]}: ${horizontal}, ${vertical}, ${rotation}, width ${Math.round(item.scaleX * 100)}% and depth ${Math.round(item.scaleY * 100)}% of its default proportions`;
     });
 
   const prompt = [
@@ -295,9 +334,15 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     "Keep the same property, camera angle, perspective, house, fences, trees, major landscaping, and visible site boundaries recognizable.",
     `Add a realistically scaled ${concept.width}-by-${concept.length}-foot ${SHAPE_LABELS[concept.shape].toLowerCase()} in-ground pool that fits the existing yard.`,
     `Use ${FINISH_PROMPTS[concept.poolFinish]} and ${TILE_LABELS[concept.waterlineTile].toLowerCase()} waterline tile.`,
-    `Use ${deckTileAppearance} in a consistent large-format module across the deck and all the way to the water as one continuous, flush surface. Keep the pool edge modern, level, and seamless; do not add a raised, contrasting, bullnose, or differently sized coping band.`,
+    `Use ${deckTileAppearance} in one consistent large-format module across the deck, flush coping, and all the way to the water. Keep the tile size unchanged at the pool edge; do not shrink the coping tiles or add a raised, contrasting, bullnose, or differently sized band.`,
     `Pool edge treatment: ${concept.edgeTreatment === "flush-continuous" ? "continuous flush deck tile, same module at the water's edge, with no separate coping" : "continuous flush deck tile"}.`,
     features.length ? `Include only the individually selected features: ${features.join(", ")}.` : "Do not add unselected pool or outdoor-living features.",
+    concept.features.includes("pergola")
+      ? `Build the pergola with ${PERGOLA_FINISH_PROMPTS[concept.pergolaFinish]}.`
+      : "",
+    concept.features.some((feature) => feature === "spa" || feature === "spa-waterfall")
+      ? "The selected spa must read as a champagne spa: use the exact selected pool waterline tile around its full perimeter and show a continuous, even overflow into the pool on every side, including the side facing the pool interior. If it is centered within the pool, keep the overflow continuous around all 360 degrees; do not leave a dry edge or substitute a different tile."
+      : "",
     layoutInstructions.length
       ? `Follow the user's edited layout and relative feature proportions: ${layoutInstructions.join("; ")}. Keep the entered pool dimensions unchanged and keep all elements plausible within the photographed property.`
       : "Use a balanced, physically plausible arrangement for the selected pool and outdoor features.",
@@ -361,6 +406,86 @@ router.post("/design-concepts/render", async (req, res): Promise<void> => {
     req.log.error({ err: error }, "AI pool concept generation failed");
     res.status(502).json({
       message: "The AI rendering could not be created. Your uploaded photo is unchanged.",
+    });
+  }
+});
+
+router.post("/design-concepts/erase", async (req, res): Promise<void> => {
+  const parsed = ErasePoolConceptAreaBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({
+      message: "The erase request or brush mask is invalid. Paint over part of the current AI rendering and try again.",
+    });
+    return;
+  }
+
+  const sourceImage = parseRenderImageDataUrl(
+    parsed.data.imageDataUrl,
+    ["image/png", "image/jpeg"],
+    4_400_000,
+  );
+  const maskImage = parseRenderImageDataUrl(
+    parsed.data.maskDataUrl,
+    ["image/png"],
+    2_500_000,
+  );
+  if (!sourceImage || !maskImage) {
+    res.status(400).json({
+      message: "The AI rendering or brush mask could not be read. Clear the brush and try again.",
+    });
+    return;
+  }
+
+  const rateLimit = registerLimitedRequest(
+    renderRequestsByIp,
+    req.ip || req.socket.remoteAddress || "unknown",
+    MAX_RENDERS_PER_WINDOW,
+  );
+  if (!rateLimit.allowed) {
+    rejectRateLimitedGeneration(
+      res,
+      rateLimit.retryAfterSeconds,
+      MAX_RENDERS_PER_WINDOW,
+      "renders and brush edits",
+    );
+    return;
+  }
+
+  try {
+    const result = await renderBackyardPool({
+      photoBase64: sourceImage.data,
+      photoMimeType: sourceImage.mimeType,
+      additionalImages: [maskImage],
+      prompt: [
+        "The first attached image is the current AI pool concept. The second attached image is a brush mask: white painted areas are the approximate removal targets, and black areas should be preserved.",
+        "Remove the object or visual detail under the white mask and reconstruct the scene naturally using nearby context. Keep the pool, materials, proportions, and all unmarked details as close to the current image as possible.",
+        "The mask is visual guidance, not a pixel-locked inpainting boundary. Some changes outside the marked area may occur. Do not add text, labels, logos, people, or new structures.",
+      ].join(" "),
+    });
+
+    if (result.mimeType !== "image/png" && result.mimeType !== "image/jpeg") {
+      req.log.error({ mimeType: result.mimeType }, "AI erase edit returned an unsupported image type");
+      res.status(502).json({ message: "The edited rendering returned an unsupported image." });
+      return;
+    }
+
+    const response = ErasePoolConceptAreaResponse.safeParse({
+      imageDataUrl: `data:${result.mimeType};base64,${result.data}`,
+    });
+    if (!response.success) {
+      req.log.error(
+        { imageCharacters: result.data.length, err: response.error },
+        "AI erase edit did not match the response contract",
+      );
+      res.status(502).json({ message: "The edited rendering could not be read. Please try again." });
+      return;
+    }
+
+    res.json(response.data);
+  } catch (error) {
+    req.log.error({ err: error }, "AI pool concept erase failed");
+    res.status(502).json({
+      message: "The selected area could not be edited. Your current rendering is unchanged.",
     });
   }
 });
@@ -529,6 +654,7 @@ router.post("/design-concepts/email", async (req, res) => {
       <li><strong>Pool interior finish:</strong> ${escapeHtml(FINISH_LABELS[concept.poolFinish])}</li>
       <li><strong>Waterline tile:</strong> ${escapeHtml(TILE_LABELS[concept.waterlineTile])}</li>
       <li><strong>Continuous deck / pool edge:</strong> ${escapeHtml(DECK_TILE_LABELS[concept.deckTile])} tile, flush to the water; no separate coping band</li>
+      ${concept.features.includes("pergola") ? `<li><strong>Pergola finish:</strong> ${escapeHtml(PERGOLA_FINISH_LABELS[concept.pergolaFinish])}</li>` : ""}
       <li><strong>Pool edge treatment:</strong> ${escapeHtml(concept.edgeTreatment)}</li>
       <li><strong>Individually selected features:</strong> ${escapeHtml(features)}</li>
     </ul>

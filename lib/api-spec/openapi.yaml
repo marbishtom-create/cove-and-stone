@@ -81,6 +81,36 @@ paths:
                 type: integer
         "502":
           description: AI image generation failed
+  /design-concepts/erase:
+    post:
+      operationId: erasePoolConceptArea
+      tags: [design-concepts]
+      summary: Remove a brushed area from an AI pool concept
+      description: Uses the current concept image and a brush mask as image guidance. The model may also change pixels outside the marked area.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PoolConceptEraseInput"
+      responses:
+        "200":
+          description: AI-edited pool concept image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoolConceptEraseResult"
+        "400":
+          description: Invalid image or erase mask
+        "429":
+          description: Image generation rate limit reached
+          headers:
+            Retry-After:
+              description: Seconds until another image edit may be accepted
+              schema:
+                type: integer
+        "502":
+          description: AI image editing failed
   /design-concepts/walkthrough:
     post:
       operationId: startPoolConceptWalkthrough
@@ -238,6 +268,9 @@ components:
         deckTile:
           type: string
           enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain, dark-gray-porcelain, black-marble-porcelain, terracotta-clay-pavers, blue-gray-bluestone, warm-gray-concrete-pavers]
+        pergolaFinish:
+          type: string
+          enum: [white, black, wood]
         edgeTreatment:
           type: string
           enum: [flush-continuous]
@@ -272,6 +305,7 @@ components:
         - poolFinish
         - waterlineTile
         - deckTile
+        - pergolaFinish
         - edgeTreatment
         - features
         - svg
@@ -303,6 +337,9 @@ components:
         deckTile:
           type: string
           enum: [shell-limestone, ivory-porcelain, silver-porcelain, sand-travertine, warm-limestone, coastal-shellstone, charcoal-porcelain, dark-gray-porcelain, black-marble-porcelain, terracotta-clay-pavers, blue-gray-bluestone, warm-gray-concrete-pavers]
+        pergolaFinish:
+          type: string
+          enum: [white, black, wood]
         edgeTreatment:
           type: string
           enum: [flush-continuous]
@@ -326,6 +363,7 @@ components:
         - poolFinish
         - waterlineTile
         - deckTile
+        - pergolaFinish
         - edgeTreatment
         - features
     PoolConceptLayoutElement:
@@ -336,12 +374,12 @@ components:
           enum: [pool, pergola, sun-shelf, sheer-descent, pool-lights, infinity-edge, bubblers, spa, outdoor-kitchen, sunken-fire-pit, fire-bowls, outdoor-shower]
         offsetX:
           type: number
-          minimum: -18
-          maximum: 18
+          minimum: -180
+          maximum: 180
         offsetY:
           type: number
-          minimum: -14
-          maximum: 14
+          minimum: -180
+          maximum: 180
         scaleX:
           type: number
           minimum: 0.55
@@ -350,7 +388,34 @@ components:
           type: number
           minimum: 0.55
           maximum: 1.8
-      required: [id, offsetX, offsetY, scaleX, scaleY]
+        rotation:
+          type: number
+          minimum: -180
+          maximum: 180
+      required: [id, offsetX, offsetY, scaleX, scaleY, rotation]
+    PoolConceptEraseInput:
+      type: object
+      properties:
+        imageDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 6000000
+          pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+        maskDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 6000000
+          pattern: '^data:image/png;base64,[A-Za-z0-9+/]+={0,2}$'
+      required: [imageDataUrl, maskDataUrl]
+    PoolConceptEraseResult:
+      type: object
+      properties:
+        imageDataUrl:
+          type: string
+          minLength: 40
+          maxLength: 6000000
+          pattern: '^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$'
+      required: [imageDataUrl]
     PoolConceptRenderResponse:
       type: object
       properties:
