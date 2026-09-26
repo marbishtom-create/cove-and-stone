@@ -1637,13 +1637,17 @@ export function PoolVisualizer({ initialPhotoUrl, onConfigurationChange }: PoolV
             <div className="pool-visualizer__preview-header-actions">
               {aiRenderDataUrl && (
                 <button
-                  className="pool-visualizer__text-button"
+                  className={`pool-visualizer__edit-layout-button${isLayoutEditing ? ' is-editing' : ''}`}
                   type="button"
                   onClick={() => setIsLayoutEditing((editing) => !editing)}
                   aria-pressed={isLayoutEditing}
                   data-testid="button-edit-layout"
                 >
-                  {isLayoutEditing ? 'View AI rendering' : 'Edit layout'}
+                  <MoveHorizontal className="pool-visualizer__edit-layout-icon" size={16} aria-hidden="true" />
+                  <span>{isLayoutEditing ? 'View AI rendering' : 'Edit layout'}</span>
+                  {!isLayoutEditing && (
+                    <span className="pool-visualizer__edit-layout-nudge" aria-hidden="true">Try it</span>
+                  )}
                 </button>
               )}
               <button className="pool-visualizer__export-button" type="button" onClick={exportConcept} data-testid="button-export-concept">
