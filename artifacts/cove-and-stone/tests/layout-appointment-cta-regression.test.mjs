@@ -85,7 +85,7 @@ test('makes only the sticky mobile CTA 10% taller and keeps its water flow conta
   );
   assert.doesNotMatch(
     ctaStyles,
-    /\.layout-appointment-cta \{\s*aspect-ratio:\s*2007\s*\/\s*462;/,
+    /^\.layout-appointment-cta \{\s*aspect-ratio:\s*2007\s*\/\s*462;/m,
   );
   assert.match(
     ctaStyles,
