@@ -14,3 +14,17 @@ mtime_ms = 1790220080518
 storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/8607f05a-a791-41bd-bef0-0d7e85070ace/fb7208df-15d3-4e43-84ea-7733b5d8c7dd"
 storage_version_token = "1790220185478491"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "aLtMV21QLOaEQK3toyz5H"
+uri = "file://artifacts/cove-and-stone/public/brand/cove-and-stone-social-share.jpg"
+type = "image"
+title = "Cove & Stone social-sharing image"
+description = "1200×630 Open Graph and X/Twitter card with the approved logo lockup and an explicitly labeled design rendering."
+logical_id = "84446b27-e0ff-46fd-b149-c791ee7556ed"
+content_hash = "sha256:f49cc52c8e1ff5afebc85a8a3023bf189308e2a5dceb78f11b6a1707843d9cc5"
+size = 139434
+mtime_ms = 1790491525666
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/84446b27-e0ff-46fd-b149-c791ee7556ed/6b7d8d07-1b05-42f0-9002-16fb80b64054"
+storage_version_token = "1790491915706225"
+content_type = "image/jpeg"

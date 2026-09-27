@@ -47,6 +47,47 @@ export interface AppointmentRequestResponse {
   status: AppointmentRequestResponseStatus;
 }
 
+export interface ContactInquiryInput {
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /**
+     * @minLength 7
+     * @maxLength 30
+     */
+  phone: string;
+  /** @maxLength 254 */
+  email: string;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  projectCity: string;
+  /** @maxLength 80 */
+  projectType: string;
+  /** @maxLength 120 */
+  budget: string;
+  /** @maxLength 4000 */
+  vision: string;
+  interestedInFinancing: boolean;
+  requestShowroomAppointment: boolean;
+  /** @maxLength 200 */
+  honeypot?: string;
+}
+
+export type ContactInquiryResponseStatus = typeof ContactInquiryResponseStatus[keyof typeof ContactInquiryResponseStatus];
+
+
+export const ContactInquiryResponseStatus = {
+  sent: 'sent',
+} as const;
+
+export interface ContactInquiryResponse {
+  status: ContactInquiryResponseStatus;
+}
+
 export type DesignConceptEmailRequestShape = typeof DesignConceptEmailRequestShape[keyof typeof DesignConceptEmailRequestShape];
 
 

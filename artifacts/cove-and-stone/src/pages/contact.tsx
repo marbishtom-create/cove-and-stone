@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSubmitContactInquiry } from '@workspace/api-client-react';
 import { CheckCircle2, Phone, Mail, MapPin } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
@@ -6,11 +7,24 @@ import { trackEvent } from '@/lib/analytics';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const mutation = useSubmitContactInquiry();
+  const [values, setValues] = useState({
+    fullName: '', phone: '', email: '', projectCity: '',
+    projectType: 'New Custom Pool', budget: 'Exploring the right scope',
+    vision: '', interestedInFinancing: false, requestShowroomAppointment: false,
+    honeypot: '',
+  });
+  const update = (field: keyof typeof values, value: string | boolean) =>
+    setValues((current) => ({ ...current, [field]: value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate submission
-    setSubmitted(true);
+    mutation.mutate({ data: values }, {
+      onSuccess: () => {
+        trackEvent('contact_inquiry_submitted', { source: 'contact_page' });
+        setSubmitted(true);
+      },
+    });
   };
 
   return (
@@ -92,29 +106,29 @@ export default function Contact() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Full Name *</label>
-                      <input required type="text" className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
+                      <input required type="text" value={values.fullName} onChange={(e) => update('fullName', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Phone Number *</label>
-                      <input required type="tel" className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
+                      <input required type="tel" value={values.phone} onChange={(e) => update('phone', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Email Address *</label>
-                      <input required type="email" className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
+                      <input required type="email" value={values.email} onChange={(e) => update('email', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Project City / Zip Code *</label>
-                      <input required type="text" className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
+                      <input required type="text" value={values.projectCity} onChange={(e) => update('projectCity', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Project Type</label>
-                      <select className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary text-primary">
+                      <select value={values.projectType} onChange={(e) => update('projectType', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary text-primary">
                         <option>New Custom Pool</option>
                         <option>Pool Renovation</option>
                         <option>Complete Backyard (Pool + Living)</option>
@@ -124,7 +138,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Approximate Budget</label>
-                      <select className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary text-primary">
+                      <select value={values.budget} onChange={(e) => update('budget', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary text-primary">
                          <option>Exploring the right scope</option>
                          <option>I have a working investment range</option>
                          <option>Let’s discuss the full transformation</option>
@@ -134,22 +148,28 @@ export default function Contact() {
 
                   <div>
                     <label className="block text-xs uppercase tracking-widest text-muted-foreground mb-2">Tell us about your vision</label>
-                    <textarea rows={4} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors"></textarea>
+                    <textarea rows={4} value={values.vision} onChange={(e) => update('vision', e.target.value)} className="w-full bg-background border border-border p-3 focus:outline-none focus:border-secondary transition-colors"></textarea>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" className="accent-secondary" />
+                      <input type="checkbox" checked={values.interestedInFinancing} onChange={(e) => update('interestedInFinancing', e.target.checked)} className="accent-secondary" />
                       <span className="text-sm text-muted-foreground">Interested in financing</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" className="accent-secondary" />
+                      <input type="checkbox" checked={values.requestShowroomAppointment} onChange={(e) => update('requestShowroomAppointment', e.target.checked)} className="accent-secondary" />
                       <span className="text-sm text-muted-foreground">Request showroom appointment</span>
                     </label>
                   </div>
 
-                  <Button type="submit" className="w-full bg-primary text-primary-foreground py-6 uppercase tracking-widest text-sm hover:bg-secondary transition-colors rounded-none mt-6">
-                    Submit Inquiry
+                  <input aria-hidden="true" tabIndex={-1} autoComplete="off" value={values.honeypot} onChange={(e) => update('honeypot', e.target.value)} className="absolute -left-[9999px]" />
+                  {mutation.isError && (
+                    <div role="alert" className="text-sm text-destructive" data-testid="status-contact-error">
+                      We couldn&apos;t send your inquiry right now. Please try again in a moment.
+                    </div>
+                  )}
+                  <Button type="submit" disabled={mutation.isPending} className="w-full bg-primary text-primary-foreground py-6 uppercase tracking-widest text-sm hover:bg-secondary transition-colors rounded-none mt-6">
+                    {mutation.isPending ? 'Sending inquiry…' : 'Submit Inquiry'}
                   </Button>
                 </form>
               )}

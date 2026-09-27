@@ -244,3 +244,46 @@ export const RequestAppointmentResponse = zod.object({
 })
 
 
+/**
+ * Sends a website project inquiry to the Cove & Stone sales team.
+ * @summary Submit a contact inquiry
+ */
+export const submitContactInquiryBodyFullNameMin = 2;
+export const submitContactInquiryBodyFullNameMax = 120;
+
+export const submitContactInquiryBodyPhoneMin = 7;
+export const submitContactInquiryBodyPhoneMax = 30;
+
+export const submitContactInquiryBodyEmailMax = 254;
+
+export const submitContactInquiryBodyProjectCityMin = 2;
+export const submitContactInquiryBodyProjectCityMax = 120;
+
+export const submitContactInquiryBodyProjectTypeMax = 80;
+
+export const submitContactInquiryBodyBudgetMax = 120;
+
+export const submitContactInquiryBodyVisionMax = 4000;
+
+export const submitContactInquiryBodyHoneypotMax = 200;
+
+
+
+export const SubmitContactInquiryBody = zod.object({
+  "fullName": zod.string().min(submitContactInquiryBodyFullNameMin).max(submitContactInquiryBodyFullNameMax),
+  "phone": zod.string().min(submitContactInquiryBodyPhoneMin).max(submitContactInquiryBodyPhoneMax),
+  "email": zod.string().email().max(submitContactInquiryBodyEmailMax),
+  "projectCity": zod.string().min(submitContactInquiryBodyProjectCityMin).max(submitContactInquiryBodyProjectCityMax),
+  "projectType": zod.string().max(submitContactInquiryBodyProjectTypeMax),
+  "budget": zod.string().max(submitContactInquiryBodyBudgetMax),
+  "vision": zod.string().max(submitContactInquiryBodyVisionMax),
+  "interestedInFinancing": zod.boolean(),
+  "requestShowroomAppointment": zod.boolean(),
+  "honeypot": zod.string().max(submitContactInquiryBodyHoneypotMax).optional()
+})
+
+export const SubmitContactInquiryResponse = zod.object({
+  "status": zod.enum(['sent'])
+})
+
+

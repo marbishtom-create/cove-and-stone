@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import {
   absoluteUrl,
   canonicalPathname,
-  SITE_IMAGE,
+  SITE_OG_IMAGE,
   SITE_NAME,
   SITE_URL,
 } from "@/config/site";
@@ -67,15 +67,18 @@ export function SiteMetadata() {
     setMeta("property", "og:title", metadata.title);
     setMeta("property", "og:description", metadata.description);
     setMeta("property", "og:url", canonicalUrl);
-    setMeta("property", "og:image", SITE_IMAGE);
+    setMeta("property", "og:image", SITE_OG_IMAGE);
+    setMeta("property", "og:image:type", "image/jpeg");
+    setMeta("property", "og:image:width", "1200");
+    setMeta("property", "og:image:height", "630");
     setMeta("property", "og:type", "website");
     setMeta("property", "og:site_name", SITE_NAME);
-    setMeta("property", "og:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo");
+    setMeta("property", "og:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo over an illustrative pool-design rendering");
     setMeta("name", "twitter:card", "summary_large_image");
     setMeta("name", "twitter:title", metadata.title);
     setMeta("name", "twitter:description", metadata.description);
-    setMeta("name", "twitter:image", SITE_IMAGE);
-    setMeta("name", "twitter:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo");
+    setMeta("name", "twitter:image", SITE_OG_IMAGE);
+    setMeta("name", "twitter:image:alt", "Cove & Stone Pools, Spas & Outdoor Living logo over an illustrative pool-design rendering");
     setMeta("name", "robots", metadata.robots ?? "index,follow");
     if (metadata.isNotFound) {
       removeCanonical();

@@ -2,9 +2,8 @@ import { Link } from 'wouter';
 import backyardReference from '@assets/generated_images/matched-before-pool.jpg';
 import poolDesignStudy from '@assets/generated_images/after-pool.jpg';
 import jacksonvilleDayPool from '@assets/0A80F847-1F10-44B6-A3D8-67A48A65457B_1790113686673.png';
-import jacksonvilleNightPool from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
+import nocateeResortRendering from '@assets/BB1FECAD-0F80-4070-9FF4-3B414EE0C66A_1790113686673_nocatee-enclosed.png';
 import ponteVedraRetreat from '@assets/generated_images/ponte-vedra-private-retreat.png';
-import nocateeResortRealistic from '@assets/generated_images/nocatee-resort-backyard-realistic.jpg';
 import { PoolVisualizer } from '@/components/pool-visualizer/pool-visualizer';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { THEME_CONFIG } from '@/config/theme';
@@ -106,11 +105,14 @@ export default function Home() {
             
             <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                 <img 
-                  src={jacksonvilleNightPool} 
-                  alt="Design visualization of a dramatic Jacksonville outdoor living environment with pool, fire and water features"
+                  src={nocateeResortRendering} 
+                  alt="Illustrative resort-style pool and outdoor-living design with a cabana"
                   className="w-full h-full object-cover"
                 />
               <div className="absolute -bottom-6 -left-6 w-3/4 h-3/4 border border-secondary -z-10" />
+              <div className="absolute bottom-4 left-4 border border-white/30 bg-black/35 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
+                Design rendering
+              </div>
             </div>
           </div>
         </div>
@@ -210,7 +212,7 @@ export default function Home() {
             
             <Link href="/projects/nocatee-resort/" className="group block">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted mb-6">
-                <img src={nocateeResortRealistic} alt="More realistic design rendering of a Florida backyard pool, cabana and outdoor-living area" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={nocateeResortRendering} alt="Illustrative resort-style backyard design with a cabana and pool" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                 <div className="absolute bottom-4 left-4 border border-white/30 bg-black/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white/85 backdrop-blur-sm">
                   Design rendering

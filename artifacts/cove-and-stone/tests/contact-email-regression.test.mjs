@@ -14,6 +14,10 @@ const layout = await readFile(
   new URL("../src/components/layout/layout.tsx", import.meta.url),
   "utf8",
 );
+const apiRoute = await readFile(
+  new URL("../../api-server/src/routes/contact.ts", import.meta.url),
+  "utf8",
+);
 
 test("publishes a clickable Sales email on the contact page and footer", () => {
   assert.match(theme, /email:\s*"Sales@coveandstonepools\.com"/);
@@ -21,4 +25,18 @@ test("publishes a clickable Sales email on the contact page and footer", () => {
   assert.match(contactPage, /THEME_CONFIG\.contact\.email/);
   assert.match(layout, /mailto:\$\{THEME_CONFIG\.contact\.email\}/);
   assert.match(layout, /THEME_CONFIG\.contact\.email/);
+});
+
+test("submits contact inquiries through the validated internal Resend route", () => {
+  assert.match(contactPage, /useSubmitContactInquiry/);
+  assert.match(contactPage, /mutation\.isPending/);
+  assert.match(contactPage, /status-contact-error/);
+  assert.match(contactPage, /contact_inquiry_submitted/);
+  assert.match(apiRoute, /SubmitContactInquiryBody\.safeParse/);
+  assert.match(apiRoute, /connectors\.proxy\("resend", "\/emails"/);
+  assert.match(apiRoute, /Sales@coveandstonepools\.com/);
+  assert.match(apiRoute, /escapeHtml/);
+  assert.match(apiRoute, /replace\(\/\[\\r\\n\]\//);
+  assert.match(apiRoute, /MAX_REQUESTS_PER_WINDOW/);
+  assert.match(apiRoute, /status: "sent"/);
 });

@@ -288,7 +288,7 @@ test('labels only the right Selected Works image as a design rendering', () => {
 
   assert.match(leftCard, /src=\{ponteVedraRetreat\}/);
   assert.doesNotMatch(leftCard, /Design rendering/);
-  assert.match(rightCard, /src=\{nocateeResortRealistic\}/);
+  assert.match(rightCard, /src=\{nocateeResortRendering\}/);
   assert.match(rightCard, /Design rendering/);
 });
 
