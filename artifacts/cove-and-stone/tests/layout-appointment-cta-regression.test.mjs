@@ -78,6 +78,27 @@ test('keeps the mobile CTA fixed at the homepage bottom-right only', () => {
   assert.match(homeSource, /mb-8 lg:mb-12 font-light/);
 });
 
+test('makes only the sticky mobile CTA 10% taller and keeps its water flow contained', () => {
+  assert.match(
+    ctaStyles,
+    /\.layout-appointment-cta__dock--mobile \.layout-appointment-cta \{\s*aspect-ratio:\s*2007\s*\/\s*462;/,
+  );
+  assert.doesNotMatch(
+    ctaStyles,
+    /\.layout-appointment-cta \{\s*aspect-ratio:\s*2007\s*\/\s*462;/,
+  );
+  assert.match(
+    ctaStyles,
+    /\.layout-appointment-cta__dock--mobile \.layout-appointment-cta::before \{[\s\S]*?animation-duration:\s*8s;[\s\S]*?radial-gradient\(ellipse 30% 34% at 22% 82%/,
+  );
+  assert.match(
+    ctaStyles,
+    /\.layout-appointment-cta__dock--mobile \.layout-appointment-cta::after \{\s*animation-duration:\s*7s;/,
+  );
+  assert.match(ctaStyles, /mask-size:\s*100% 100%/);
+  assert.match(waterMask, /L2007 420[\s\S]*?Z/);
+});
+
 test('keeps water motion inside the masked area and honors reduced motion', () => {
   assert.match(ctaStyles, /appointment-cta-water-mask\.svg/);
   assert.match(waterMask, /<path/);

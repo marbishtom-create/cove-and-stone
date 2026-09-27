@@ -14,6 +14,43 @@
   width: min(15.12rem, calc(100.8vw - 1.512rem));
 }
 
+.layout-appointment-cta__dock--mobile .layout-appointment-cta {
+  aspect-ratio: 2007 / 462;
+}
+
+.layout-appointment-cta__dock--mobile .layout-appointment-cta::before {
+  animation-duration: 8s;
+  background-image:
+    radial-gradient(ellipse 30% 34% at 22% 82%, rgba(202, 255, 248, 0.3), transparent 78%),
+    repeating-linear-gradient(
+      38deg,
+      transparent 0 17px,
+      rgba(220, 255, 251, 0.28) 18px 19px,
+      transparent 20px 36px
+    ),
+    repeating-linear-gradient(
+      142deg,
+      transparent 0 17px,
+      rgba(202, 255, 249, 0.19) 18px 19px,
+      transparent 20px 36px
+    ),
+    linear-gradient(108deg, #0b8d9b 0%, #07aab5 34%, #12b8b7 53%, #0796a3 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 7px,
+      rgba(220, 255, 251, 0.18) 8px 9px,
+      transparent 10px 18px
+    );
+}
+
+.layout-appointment-cta__dock--mobile .layout-appointment-cta::after {
+  animation-duration: 7s;
+}
+
+.layout-appointment-cta__dock--mobile .layout-appointment-cta__sparkle {
+  animation-duration: 7s;
+}
+
 .layout-appointment-cta {
   aspect-ratio: 2007 / 420;
   align-items: center;
