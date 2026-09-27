@@ -1,0 +1,37 @@
+This is exactly the type of audit I wanted. Thank you.
+
+Let’s move from audit mode into execution now.
+
+Please prioritize the following:
+
+1. Get all 13 updated service-area pages published live.
+2. Fix the contact form immediately so inquiries are actually delivered to us. I do not want any form on the site showing a fake success message.
+3. Add the correct business phone number as a clickable call button throughout the site, especially on mobile.
+4. Enable Replit analytics and make sure the location CTA, appointment request, email and future call events are being recorded.
+5. Verify the www.coveandstonepools.com HTTPS/certificate setup and make sure it redirects properly to the canonical domain.
+6. Fix the Nocatee portfolio image and “completed” label before we use that page as local proof.
+7. Make sure the updated sitemap is live after publication.
+8. Give me the exact steps/access needed to connect Google Search Console and Bing Webmaster Tools.
+9. Tell me exactly what you need from me to review and fully optimize the Google Business Profile.
+10. Create the new 1200 × 630 branded social-sharing image and use it for Open Graph where appropriate.
+
+Once these items are live, I want a second audit of the production website—not the working tree—to confirm everything is actually deployed and functioning.
+
+Then I want a baseline report showing:
+
+* which pages Google has indexed
+* what keywords we are getting impressions for
+* current clicks and CTR
+* average positions
+* which location pages are being discovered
+* appointment conversions
+* email clicks
+* phone clicks
+* pages with impressions but weak CTR
+* pages with traffic but weak lead conversion
+
+I do not want more location pages created just for the sake of creating pages. Let the real data tell us where to expand next.
+
+Our goal remains to build Cove & Stone into one of the strongest online pool and outdoor-living brands in Jacksonville, Ponte Vedra, Nocatee and Northeast Florida across Google organic, Google Maps, Bing and AI search.
+
+Please keep pushing forward and tell me what is blocked by something you need from me versus what you can complete yourself.
