@@ -95,6 +95,10 @@ test('makes only the sticky mobile CTA 10% taller and keeps its water flow conta
     ctaStyles,
     /\.layout-appointment-cta__dock--mobile \.layout-appointment-cta::after \{\s*animation-duration:\s*7s;/,
   );
+  assert.match(
+    ctaStyles,
+    /\.layout-appointment-cta__dock--mobile \.layout-appointment-cta__reference-art,[\s\S]*?clip-path:\s*inset\(0 round 9999px\)/,
+  );
   assert.match(ctaStyles, /mask-size:\s*100% 100%/);
   assert.match(waterMask, /L2007 420[\s\S]*?Z/);
 });

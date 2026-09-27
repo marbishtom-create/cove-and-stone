@@ -51,6 +51,13 @@
   animation-duration: 7s;
 }
 
+.layout-appointment-cta__dock--mobile .layout-appointment-cta__reference-art,
+.layout-appointment-cta__dock--mobile .layout-appointment-cta::before,
+.layout-appointment-cta__dock--mobile .layout-appointment-cta::after,
+.layout-appointment-cta__dock--mobile .layout-appointment-cta__sparkle-layer {
+  clip-path: inset(0 round 9999px);
+}
+
 .layout-appointment-cta {
   aspect-ratio: 2007 / 420;
   align-items: center;
