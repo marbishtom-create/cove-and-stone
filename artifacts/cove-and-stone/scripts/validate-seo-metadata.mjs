@@ -125,6 +125,21 @@ for (const field of ["title", "description"]) {
   }
 }
 
+const locationHeadings = new Map();
+
+for (const route of metadata.filter(({ pathname }) => pathname.startsWith("/locations/"))) {
+  if (route.title.length < 50 || route.title.length > 60) {
+    throw new Error(
+      `Location title must be 50–60 characters for ${route.pathname}; got ${route.title.length}.`,
+    );
+  }
+  if (route.description.length < 150 || route.description.length > 160) {
+    throw new Error(
+      `Location description must be 150–160 characters for ${route.pathname}; got ${route.description.length}.`,
+    );
+  }
+}
+
 for (const route of metadata) {
   const routeFile =
     route.pathname === "/"
@@ -171,6 +186,34 @@ for (const route of metadata) {
   if (!structuredData["@graph"]?.length) {
     throw new Error(`Generated structured data is empty for ${route.pathname}`);
   }
+
+  if (route.pathname.startsWith("/locations/")) {
+    const headings = [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)];
+    if (headings.length !== 1) {
+      throw new Error(
+        `Expected one server-rendered H1 for ${route.pathname}; found ${headings.length}.`,
+      );
+    }
+
+    const heading = decodeHtml(headings[0][1].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim());
+    const duplicateHeading = locationHeadings.get(heading);
+    if (duplicateHeading) {
+      throw new Error(
+        `Location H1 is duplicated between ${duplicateHeading} and ${route.pathname}: ${heading}`,
+      );
+    }
+    locationHeadings.set(heading, route.pathname);
+
+    const expectedFaqCount = routeData.pages[routeKey(route.pathname)]?.faqs?.length ?? 0;
+    const visibleFaqCount = [...html.matchAll(/<details\b/gi)].length;
+    if (visibleFaqCount !== expectedFaqCount) {
+      throw new Error(
+        `Visible FAQ count mismatch for ${route.pathname}: expected ${expectedFaqCount}, got ${visibleFaqCount}.`,
+      );
+    }
+  }
 }
 
-console.log(`Validated unique titles and descriptions for ${routes.length} sitemap routes.`);
+console.log(
+  `Validated unique metadata for ${routes.length} sitemap routes and server-rendered content for ${locationHeadings.size} location routes.`,
+);

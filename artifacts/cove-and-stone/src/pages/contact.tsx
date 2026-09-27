@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CheckCircle2, Phone, Mail, MapPin } from 'lucide-react';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
+import { trackEvent } from '@/lib/analytics';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -44,6 +45,7 @@ export default function Contact() {
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Email</div>
                   <a
                     href={`mailto:${THEME_CONFIG.contact.email}`}
+                    onClick={() => trackEvent('contact_email_clicked', { page: 'contact' })}
                     className="font-serif text-xl text-primary transition-colors hover:text-secondary"
                   >
                     {THEME_CONFIG.contact.email}

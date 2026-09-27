@@ -269,16 +269,68 @@
       "description": "Request a pool design consultation with Cove & Stone in Northeast Florida. Choose a date and time; our team will contact you to confirm your appointment."
     },
     "/locations/jacksonville": {
-      "title": "Jacksonville Pool Builder & Outdoor Living | Cove & Stone",
-      "description": "Plan a custom pool, renovation or complete outdoor-living project in Jacksonville with 3D design, coordinated materials and project planning.",
+      "title": "Jacksonville Pool Renovation & Outdoor Living | Cove & Stone",
+      "description": "Plan a custom pool, renovation or outdoor-living project in Jacksonville with 3D design, coordinated materials and a site-specific plan for your home.",
       "service": {
         "name": "Jacksonville Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
-      }
+      },
+      "faqs": [
+        {
+          "question": "What does a custom pool builder in Jacksonville include in the design process?",
+          "answer": "The design process can coordinate pool geometry, a spa or sun shelf, materials, circulation and outdoor rooms in one 3D-reviewed plan. The final project scope depends on the property and the owner's priorities."
+        },
+        {
+          "question": "Can a Jacksonville pool renovation include outdoor-living changes?",
+          "answer": "A renovation can be reviewed alongside decking, coping, surfaces, equipment, shade, kitchens and lighting when those changes fit the existing property and project scope."
+        },
+        {
+          "question": "Which permitting authority applies to a Jacksonville pool project?",
+          "answer": "The applicable authority and requirements depend on the property address and project scope. Confirm the responsible jurisdiction for the parcel during planning."
+        },
+        {
+          "question": "Can I review a pool design before construction begins?",
+          "answer": "Cove & Stone can develop a photorealistic 3D visualization to review the pool, materials, circulation and outdoor rooms before construction coordination."
+        },
+        {
+          "question": "Where can I review materials for a Jacksonville pool project?",
+          "answer": "Materials can be reviewed at the Cove & Stone Design Studio & Showroom, 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        }
+      ]
+    },
+    "/locations/nocatee": {
+      "title": "Nocatee Pool Builder & Outdoor Living | Cove & Stone",
+      "description": "Plan a custom pool, spa or renovation in Nocatee with 3D design, coordinated materials and early review of your lot and neighborhood guidelines for your home.",
+      "service": {
+        "name": "Nocatee Pool & Outdoor Living Design",
+        "serviceType": "Custom pool, renovation and outdoor-living design-build"
+      },
+      "faqs": [
+        {
+          "question": "Does a Nocatee pool project need HOA approval?",
+          "answer": "Community review may apply depending on the neighborhood and proposed work. Confirm current requirements with the applicable association before finalizing the design; permitting is a separate property-specific check."
+        },
+        {
+          "question": "Can a custom pool fit a Nocatee lot with limited yard space?",
+          "answer": "The design team can assess the available yard, home orientation, access and project requirements before recommending a layout. Whether a pool fits depends on the specific property and applicable review."
+        },
+        {
+          "question": "What can be included in a Nocatee outdoor-living plan?",
+          "answer": "Depending on the site and goals, a plan can coordinate a custom pool, spa, sun shelf, outdoor kitchen, shade structure, decking, planting and lighting."
+        },
+        {
+          "question": "Can I see a 3D design before construction?",
+          "answer": "A photorealistic 3D visualization can help review pool proportions, materials and the relationship to the home before construction coordination."
+        },
+        {
+          "question": "Where can I choose materials for a Nocatee project?",
+          "answer": "Material selections can be reviewed at the Cove & Stone Design Studio & Showroom, 7662 Philips Hwy, Unit 32, Jacksonville, FL 32256."
+        }
+      ]
     },
     "/locations/ponte-vedra-beach": {
-      "title": "Pool Builder Ponte Vedra Beach, FL | Cove & Stone Pools",
-      "description": "Design custom pools, spas, renovations and outdoor living in Ponte Vedra Beach with premium materials and planning shaped around your home.",
+      "title": "Custom Pool Builder Ponte Vedra Beach, FL | Cove & Stone",
+      "description": "Design custom pools, spas, renovations and outdoor living in Ponte Vedra Beach with 3D planning, selected materials and a site-specific approach for your home.",
       "service": {
         "name": "Ponte Vedra Beach Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -319,8 +371,8 @@
       ]
     },
     "/locations/st-johns": {
-      "title": "Pool Builder St. Johns, FL | Cove & Stone Pools",
-      "description": "Plan a custom pool, spa, renovation or outdoor kitchen in St. Johns, Florida, with coordinated design and material selections for your property.",
+      "title": "Pool Builder St. Johns, FL & Outdoor Living | Cove & Stone",
+      "description": "Plan a custom pool, spa, renovation or outdoor kitchen in St. Johns with 3D design and property-specific materials and project planning for your address.",
       "service": {
         "name": "St. Johns Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -357,8 +409,8 @@
       ]
     },
     "/locations/jacksonville-beaches": {
-      "title": "Pool Builder Jacksonville Beaches, FL | Cove & Stone Pools",
-      "description": "Design custom pools, spas and outdoor kitchens in Atlantic Beach, Jacksonville Beach and Neptune Beach, with a coordinated plan for each property.",
+      "title": "Pool Builder Jacksonville Beaches, FL | Cove & Stone",
+      "description": "Plan custom pools, spas and outdoor kitchens across Atlantic Beach, Jacksonville Beach and Neptune Beach, with a separate design path for each city by address.",
       "service": {
         "name": "Jacksonville Beaches Pool & Outdoor Living Design",
         "serviceType": "Custom pool, spa and outdoor-living design-build"
@@ -395,12 +447,16 @@
         {
           "question": "Are financing options available for a Jacksonville Beaches project?",
           "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        },
+        {
+          "question": "Do Atlantic Beach, Jacksonville Beach and Neptune Beach use the same pool permitting process?",
+          "answer": "No. They are separate municipalities, so local review and permitting requirements may differ. Confirm the municipality from the property address and check the current requirements for the project scope."
         }
       ]
     },
     "/locations/atlantic-beach": {
-      "title": "Pool Builder Atlantic Beach, FL | Cove & Stone Pools",
-      "description": "Cove & Stone designs refined coastal-modern custom pools, spas, renovations and complete outdoor living for Atlantic Beach homeowners.",
+      "title": "Custom Pool Builder Atlantic Beach, FL | Cove & Stone",
+      "description": "Design a custom pool, spa, renovation or outdoor living space in Atlantic Beach with site-specific planning, coordinated materials and 3D visualization.",
       "service": {
         "name": "Atlantic Beach Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -437,12 +493,16 @@
         {
           "question": "Are financing options available for an outdoor-living project?",
           "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        },
+        {
+          "question": "What should I check before planning an Atlantic Beach pool?",
+          "answer": "Start with the lot, home access, privacy, shade and existing site conditions. Confirm any current city or community review that applies to the property address before finalizing the layout."
         }
       ]
     },
     "/locations/jacksonville-beach": {
-      "title": "Pool Builder Jacksonville Beach, FL | Cove & Stone Pools",
-      "description": "Plan a custom pool and spa in Jacksonville Beach, from compact courtyards to larger gathering spaces, with coordinated outdoor-living design.",
+      "title": "Pool Builder Jacksonville Beach, FL | Cove & Stone",
+      "description": "Plan a custom pool, spa or renovation in Jacksonville Beach with design shaped around your lot, circulation, shade and outdoor-living goals using 3D design.",
       "service": {
         "name": "Jacksonville Beach Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -479,12 +539,16 @@
         {
           "question": "Are financing options available for a Jacksonville Beach project?",
           "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        },
+        {
+          "question": "Which authority should I contact about pool permits in Jacksonville Beach?",
+          "answer": "Confirm the responsible authority using the property address and project scope. Local requirements can differ by property and work type, so verify them before construction planning."
         }
       ]
     },
     "/locations/neptune-beach": {
-      "title": "Pool Builder Neptune Beach, FL | Cove & Stone Pools",
-      "description": "Cove & Stone creates clean-lined custom pools, spas, renovations and complete outdoor living for Neptune Beach homeowners with an understated design approach.",
+      "title": "Custom Pool Builder Neptune Beach, FL | Cove & Stone",
+      "description": "Design a custom pool, spa or renovation in Neptune Beach with a property-specific layout, coordinated materials and complete outdoor-living plan for your home.",
       "service": {
         "name": "Neptune Beach Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -521,12 +585,16 @@
         {
           "question": "Are financing options available for a Neptune Beach project?",
           "answer": "Financing options may be available through current lender programs and financing partners. Availability is subject to credit approval, lender terms and program requirements; Cove & Stone does not guarantee approval, rates, payments or loan terms."
+        },
+        {
+          "question": "How should I plan a pool for a Neptune Beach lot?",
+          "answer": "Begin with the actual lot dimensions, access, circulation, privacy and shade needs. Pool size and surrounding outdoor rooms depend on the property and any requirements that apply to its address."
         }
       ]
     },
     "/locations/queens-harbour": {
-      "title": "Pool Design Queens Harbour Jacksonville, FL | Cove & Stone Pools",
-      "description": "Explore custom pool, spa and outdoor-living design for Queens Harbour, Jacksonville, shaped around your home’s views and property layout.",
+      "title": "Pool Design Queens Harbour Jacksonville | Cove & Stone",
+      "description": "Explore custom pool, spa and outdoor-living design for Queens Harbour homes, considering available views, property layout and site-specific requirements.",
       "service": {
         "name": "Queens Harbour Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -555,8 +623,8 @@
       ]
     },
     "/locations/deerwood": {
-      "title": "Pool Design Deerwood Jacksonville, FL | Cove & Stone Pools",
-      "description": "Explore refined estate-style custom pool, spa, renovation and outdoor-living design context for Deerwood’s established Jacksonville residential setting.",
+      "title": "Pool Builder Deerwood Jacksonville, FL | Cove & Stone",
+      "description": "Plan a custom pool, spa, renovation or outdoor room for a Deerwood home, coordinating proportions, landscape, architecture and materials in a 3D plan.",
       "service": {
         "name": "Deerwood Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -564,7 +632,7 @@
       "faqs": [
         {
           "question": "How can Deerwood’s established setting shape a backyard design?",
-          "answer": "Deerwood’s mature residential character, larger homes and association with Deerwood Country Club can provide general context for proportion, landscape relationships and a refined outdoor environment."
+          "answer": "Deerwood is an established Jacksonville residential area, but lot size, architecture and landscape vary. Begin with the actual home, existing pool and outdoor space rather than assuming a uniform property type."
         },
         {
           "question": "What can an estate-style pool and outdoor-living plan include?",
@@ -585,8 +653,8 @@
       ]
     },
     "/locations/e-town": {
-      "title": "Pool Design eTown Jacksonville, FL | Cove & Stone Pools",
-      "description": "Explore clean contemporary custom pool, spa and outdoor-living design for eTown’s modern Jacksonville setting, with coordinated materials and backyard planning.",
+      "title": "Custom Pool Builder eTown Jacksonville | Cove & Stone",
+      "description": "Plan a contemporary custom pool, spa or renovation for an eTown Jacksonville home with clean geometry, practical circulation and coordinated materials.",
       "service": {
         "name": "eTown Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
@@ -615,16 +683,16 @@
       ]
     },
     "/locations/tamaya": {
-      "title": "Pool Design Tamaya Jacksonville, FL | Cove & Stone Pools",
-      "description": "Explore cohesive custom pool, spa, renovation and outdoor-living design for Tamaya’s Spanish, Tuscan and Mediterranean-influenced Jacksonville setting.",
+      "title": "Custom Pool Builder Tamaya Jacksonville | Cove & Stone",
+      "description": "Plan a custom pool, spa or renovation for a Tamaya Jacksonville home with a layout, material palette and outdoor rooms tailored to the property for your home.",
       "service": {
         "name": "Tamaya Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"
       },
       "faqs": [
         {
-          "question": "How can Tamaya’s architecture guide pool design?",
-          "answer": "Tamaya’s Spanish, Tuscan and Mediterranean-influenced residential architecture can provide general context for coordinating pool geometry, coping, shade structures, materials and outdoor rooms with the home."
+          "question": "How should a pool design relate to a Tamaya home?",
+          "answer": "Start with the home’s own facade, exterior materials, lot layout and any community requirements. Do not assume one neighborhood-wide style; select pool geometry, shade and materials for the specific property."
         },
         {
           "question": "Can a Tamaya pool plan include a spa and outdoor kitchen?",
@@ -645,8 +713,8 @@
       ]
     },
     "/locations/julington-creek": {
-      "title": "Pool Design Julington Creek, FL | Cove & Stone Pools",
-      "description": "Plan a custom pool, spa or renovation in Julington Creek with outdoor-living design tailored to the property and how your family uses it.",
+      "title": "Pool Builder Julington Creek | Pool Design | Cove & Stone",
+      "description": "Plan a custom pool, spa or renovation in Julington Creek with outdoor-living design tailored to your lot, landscape and everyday family use with 3D design.",
       "service": {
         "name": "Julington Creek Pool & Outdoor Living Design",
         "serviceType": "Custom pool, renovation and outdoor-living design-build"

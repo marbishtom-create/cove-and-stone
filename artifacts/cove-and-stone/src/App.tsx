@@ -67,12 +67,21 @@ export type AppProps = {
 };
 
 function App({ ssrPath }: AppProps = {}) {
+  const routerBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const normalizedSsrPath =
+    ssrPath &&
+    routerBase &&
+    ssrPath !== routerBase &&
+    !ssrPath.startsWith(`${routerBase}/`)
+      ? `${routerBase}${ssrPath.startsWith('/') ? ssrPath : `/${ssrPath}`}`
+      : ssrPath;
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter
-          base={import.meta.env.BASE_URL.replace(/\/$/, '')}
-          ssrPath={ssrPath}
+          base={routerBase}
+          ssrPath={normalizedSsrPath}
         >
           <SiteMetadata />
           <Router />

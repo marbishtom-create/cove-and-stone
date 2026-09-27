@@ -31,7 +31,6 @@ const minimumFeatureImageHeight = 768;
 const approvedLocationAsset = 'generated_images/hero-pool.jpg';
 const approvedLocationConceptAlt =
   'Design visualization of a modern pool and outdoor-living environment';
-const approvedLocationLabel = 'Pool Builder';
 const approvedProjectMedia = [
   {
     importName: 'ponteVedraRetreat',
@@ -179,7 +178,7 @@ async function assertMobileAsset(importedAssetPath, description) {
   );
 }
 
-test('keeps the location hero asset, approved accessibility text, and visible label', async () => {
+test('keeps the location hero asset, accessibility text, and data-driven local heading', async () => {
   const locationAssetPath = getImportedAssetPath(locationSource, 'heroImg');
   assert.equal(
     locationAssetPath,
@@ -200,10 +199,8 @@ test('keeps the location hero asset, approved accessibility text, and visible la
     /Custom pools in \$\{locationInfo\.name\}/,
     'generic concept imagery must not claim a location-specific completed project',
   );
-  assert.match(
-    locationSource,
-    new RegExp(`<br\\s*\\/?>\\s*${approvedLocationLabel}`),
-  );
+  assert.match(locationSource, /<h1[\s\S]*\{content\.h1\}[\s\S]*<\/h1>/);
+  assert.match(locationSource, /<p[\s\S]*\{content\.hero\}[\s\S]*<\/p>/);
 });
 
 test('keeps every project card asset at its approved resolution and copy', async () => {

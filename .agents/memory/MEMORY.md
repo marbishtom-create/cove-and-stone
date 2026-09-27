@@ -1,6 +1,6 @@
 - [Approved logo lockup](approved-logo-lockup.md) — keep the complete monogram, wordmark, and descriptor together as one image.
 - [Ponte Vedra media standard](ponte-vedra-media.md) — never present mismatched or fabricated before/after photography as a completed project.
-- [Prerender metadata validation](prerender-metadata-validation.md) — decode HTML entities before comparing generated title and meta-attribute values.
+- [Prerendered route validation](prerender-metadata-validation.md) — decode metadata entities and verify base-prefixed SSR emits each route's unique body.
 - [Responsive project media](responsive-project-media.md) — derive smaller mobile variants from approved originals while preserving source copy and accessibility text.
 - [Image-edit aspect ratios](image-edit-aspect-ratios.md) — image edits can change source dimensions; check the rendered crop at desktop and mobile breakpoints.
 - [Date-only API fields](openapi-date-fields.md) — use an explicit `YYYY-MM-DD` string pattern when generated clients must preserve browser date-input strings.

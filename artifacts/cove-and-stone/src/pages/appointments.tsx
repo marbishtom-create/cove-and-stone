@@ -5,6 +5,8 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Link } from 'wouter';
+import { THEME_CONFIG } from '@/config/theme';
+import { trackEvent } from '@/lib/analytics';
 import {
   Form,
   FormControl,
@@ -123,6 +125,17 @@ export default function Appointments() {
       { data: values },
       {
         onSuccess: () => {
+          const locationSlug =
+            typeof window === 'undefined'
+              ? null
+              : new URLSearchParams(window.location.search).get('location');
+          const knownLocation = THEME_CONFIG.locations.find(
+            (location) => location.slug === locationSlug,
+          );
+          trackEvent('appointment_request_submitted', {
+            source: knownLocation ? 'service_area_page' : 'appointments_page',
+            location: knownLocation?.slug ?? 'direct',
+          });
           setSubmittedName(values.fullName.trim());
           form.reset();
         },
