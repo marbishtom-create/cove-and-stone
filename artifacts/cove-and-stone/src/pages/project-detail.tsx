@@ -4,6 +4,7 @@ import { CASE_STUDIES, getCaseStudyHeroMedia, type CaseStudyMedia } from './proj
 import { ArrowLeft, ArrowRight, CheckCircle2, HardHat, Image as ImageIcon, Moon, Sun, Video } from 'lucide-react';
 import { BeforeAfter } from '@/components/ui/before-after';
 import { AppointmentCtaSurface } from '@/components/layout/appointment-cta-elements';
+import { trackEvent } from '@/lib/analytics';
 import { ProjectTimelineGallery } from '@/components/projects/project-timeline-gallery';
 import { ProjectAmbientMusic } from '@/components/projects/project-ambient-music';
 import NotFound from '@/pages/not-found';
@@ -63,6 +64,7 @@ export default function ProjectDetail() {
             </p>
             <Link
               href="/appointments/"
+              onClick={() => trackEvent('appointment_cta_clicked', { source: 'project_detail', placement: 'primary_cta' })}
               className="layout-appointment-cta layout-appointment-cta--compact-mobile mx-auto mb-8 w-full max-w-[18.27rem] sm:max-w-[24.948rem]"
               data-testid="link-project-detail-appointment-cta"
             >

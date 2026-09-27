@@ -1,0 +1,55 @@
+Perfect. Let’s move forward with the production side now.
+
+Please do everything you can complete on your side and separate anything that requires me to log into an account or change DNS.
+
+Priority order:
+
+1. Publish the updated Cove & Stone build so the 13 rewritten service-area pages, updated metadata, Nocatee correction, contact-form fix, and new 1200×630 social image are actually live.
+2. After publishing, run another production audit against coveandstonepools.com and confirm the live site—not preview—has:
+
+* all 33 sitemap URLs
+* all 13 updated location pages
+* correct titles and descriptions
+* correct canonicals
+* working appointment CTAs
+* working contact form
+* correct Nocatee labeling
+* correct social-sharing image
+* no accidental noindex tags
+* no broken internal links
+
+3. Give me the exact DNS records Replit requires for:
+    www.coveandstonepools.com
+
+I want the www version secured with SSL and permanently redirected to:
+https://coveandstonepools.com
+
+Please tell me exactly what I need to add or change at GoDaddy and what I should NOT remove.
+
+4. Turn on or walk me through turning on Replit Analytics, then confirm the site is tracking:
+
+* appointment CTA clicks
+* completed appointment requests
+* contact-form submissions
+* email clicks
+* phone clicks once the business phone is added
+
+5. For Google Search Console, give me exact step-by-step instructions for verifying the domain and tell me the exact TXT record I need to add once Google provides it.
+6. Do the same for Bing Webmaster Tools.
+7. Once Search Console is connected, I want to establish a baseline before making additional SEO changes:
+
+* indexed pages
+* excluded/not-indexed pages
+* queries
+* impressions
+* clicks
+* CTR
+* average position
+* top landing pages
+* location-page visibility
+
+8. For Google Business Profile, give me a checklist of exactly what information you need from me and where I can find each item.
+
+Do not create additional location pages or large amounts of new content yet. First get the current improvements live, connect the measurement systems, and establish our real baseline.
+
+After that, we’ll use actual data to decide what Cove & Stone should attack next for Jacksonville, Ponte Vedra, Nocatee, Google Maps, organic search, Bing and AI visibility.

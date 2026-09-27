@@ -14,6 +14,18 @@ const layout = await readFile(
   new URL("../src/components/layout/layout.tsx", import.meta.url),
   "utf8",
 );
+const projectDetail = await readFile(
+  new URL("../src/pages/project-detail.tsx", import.meta.url),
+  "utf8",
+);
+const locationPage = await readFile(
+  new URL("../src/pages/location.tsx", import.meta.url),
+  "utf8",
+);
+const appointmentsPage = await readFile(
+  new URL("../src/pages/appointments.tsx", import.meta.url),
+  "utf8",
+);
 const apiRoute = await readFile(
   new URL("../../api-server/src/routes/contact.ts", import.meta.url),
   "utf8",
@@ -21,10 +33,15 @@ const apiRoute = await readFile(
 
 test("publishes a clickable Sales email on the contact page and footer", () => {
   assert.match(theme, /email:\s*"Sales@coveandstonepools\.com"/);
+  assert.match(theme, /phone:\s*"954-774-6492"/);
+  assert.match(theme, /phoneHref:\s*"tel:\+19547746492"/);
   assert.match(contactPage, /mailto:\$\{THEME_CONFIG\.contact\.email\}/);
   assert.match(contactPage, /THEME_CONFIG\.contact\.email/);
+  assert.match(contactPage, /href=\{THEME_CONFIG\.contact\.phoneHref\}/);
+  assert.match(contactPage, /contact_phone_clicked/);
   assert.match(layout, /mailto:\$\{THEME_CONFIG\.contact\.email\}/);
   assert.match(layout, /THEME_CONFIG\.contact\.email/);
+  assert.match(layout, /contact_email_clicked/);
 });
 
 test("submits contact inquiries through the validated internal Resend route", () => {
@@ -39,4 +56,11 @@ test("submits contact inquiries through the validated internal Resend route", ()
   assert.match(apiRoute, /replace\(\/\[\\r\\n\]\//);
   assert.match(apiRoute, /MAX_REQUESTS_PER_WINDOW/);
   assert.match(apiRoute, /status: "sent"/);
+});
+
+test("tracks appointment calls to action across the site", () => {
+  assert.match(layout, /appointment_cta_clicked/);
+  assert.match(projectDetail, /appointment_cta_clicked/);
+  assert.match(locationPage, /appointment_cta_clicked/);
+  assert.match(appointmentsPage, /appointment_request_submitted/);
 });

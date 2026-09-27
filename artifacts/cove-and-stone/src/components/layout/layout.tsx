@@ -2,6 +2,7 @@ import { ReactNode, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from '@/components/ui/logo';
 import { THEME_CONFIG } from '@/config/theme';
+import { trackEvent } from '@/lib/analytics';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import './appointment-cta.css';
 import { AppointmentCtaSurface } from './appointment-cta-elements';
@@ -115,6 +116,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="layout-appointment-cta__dock fixed z-50 hidden lg:flex">
           <Link
             href="/appointments/"
+            onClick={() => trackEvent('appointment_cta_clicked', { source: 'homepage', placement: 'desktop_sticky' })}
             className="layout-appointment-cta w-full"
             data-testid="link-desktop-appointment-cta"
           >
@@ -133,6 +135,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         >
           <Link
             href="/appointments/"
+            onClick={() => trackEvent('appointment_cta_clicked', { source: 'homepage', placement: 'mobile_sticky' })}
             className="layout-appointment-cta layout-appointment-cta--compact-mobile w-full"
             data-testid="link-mobile-sticky-appointment-cta"
           >
@@ -177,6 +180,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="mt-auto pb-12">
           <Link
             href="/appointments/"
+            onClick={() => trackEvent('appointment_cta_clicked', { source: 'mobile_menu', placement: 'menu_cta' })}
             tabIndex={mobileMenuOpen ? 0 : -1}
             className="layout-appointment-cta mx-auto w-full"
             data-testid="link-mobile-appointment-cta"
@@ -236,6 +240,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <p className="mt-4">{THEME_CONFIG.showroom.hours}</p>
                 <a
                   href={`mailto:${THEME_CONFIG.contact.email}`}
+                  onClick={() => trackEvent('contact_email_clicked', { page: 'footer' })}
                   className="mt-2 text-secondary transition-colors hover:text-white"
                 >
                   {THEME_CONFIG.contact.email}

@@ -138,7 +138,8 @@ export default function LocationPage() {
               <Link
                 href={`/appointments/?location=${locationInfo.slug}`}
                 onClick={() =>
-                  trackEvent('location_consultation_clicked', {
+                  trackEvent('appointment_cta_clicked', {
+                    source: 'service_area_page',
                     location: locationInfo.slug,
                     placement: 'primary_cta',
                   })
@@ -171,7 +172,8 @@ export default function LocationPage() {
               <Link
                 href={`/appointments/?location=${locationInfo.slug}`}
                 onClick={() =>
-                  trackEvent('location_consultation_clicked', {
+                  trackEvent('appointment_cta_clicked', {
+                    source: 'service_area_page',
                     location: locationInfo.slug,
                     placement: 'service_navigation',
                   })

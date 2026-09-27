@@ -39,7 +39,9 @@ export const THEME_CONFIG = {
     hours: "By appointment: Sunday–Thursday, 9:00 AM–10:00 PM • Friday, 9:00 AM–5:00 PM • Saturday: Closed"
   },
   contact: {
-    email: "Sales@coveandstonepools.com"
+    email: "Sales@coveandstonepools.com",
+    phone: "954-774-6492",
+    phoneHref: "tel:+19547746492"
   },
   financing: {
     primaryPartner: "Lyon Financial",

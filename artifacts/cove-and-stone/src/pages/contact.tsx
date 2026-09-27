@@ -42,15 +42,22 @@ export default function Contact() {
             </div>
 
             <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-card border border-border flex items-center justify-center shrink-0">
+              <a
+                href={THEME_CONFIG.contact.phoneHref}
+                onClick={() => trackEvent('contact_phone_clicked', { page: 'contact' })}
+                aria-label={`Call Cove & Stone at ${THEME_CONFIG.contact.phone}`}
+                className="flex items-center gap-4 group"
+              >
+                <div aria-hidden="true" className="w-12 h-12 bg-card border border-border flex items-center justify-center shrink-0">
                   <Phone className="text-secondary w-5 h-5" />
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Call Us</div>
-                  <div className="font-serif text-xl text-primary">Design consultations</div>
+                  <div className="font-serif text-xl text-primary transition-colors group-hover:text-secondary">
+                    {THEME_CONFIG.contact.phone}
+                  </div>
                 </div>
-              </div>
+              </a>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-card border border-border flex items-center justify-center shrink-0">
                   <Mail className="text-secondary w-5 h-5" />
