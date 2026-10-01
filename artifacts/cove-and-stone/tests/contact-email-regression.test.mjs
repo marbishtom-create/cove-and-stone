@@ -33,8 +33,9 @@ const apiRoute = await readFile(
 
 test("publishes a clickable Sales email on the contact page and footer", () => {
   assert.match(theme, /email:\s*"Sales@coveandstonepools\.com"/);
-  assert.match(theme, /phone:\s*"954-774-6492"/);
-  assert.match(theme, /phoneHref:\s*"tel:\+19547746492"/);
+  assert.match(theme, /phone:\s*"\(904\) 63-POOLS"/);
+  assert.match(theme, /phoneHref:\s*"tel:\+19046376657"/);
+  assert.doesNotMatch(theme, /954-774-6492|19547746492/);
   assert.match(contactPage, /mailto:\$\{THEME_CONFIG\.contact\.email\}/);
   assert.match(contactPage, /THEME_CONFIG\.contact\.email/);
   assert.match(contactPage, /href=\{THEME_CONFIG\.contact\.phoneHref\}/);

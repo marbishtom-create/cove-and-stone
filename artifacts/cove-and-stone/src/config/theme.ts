@@ -40,8 +40,8 @@ export const THEME_CONFIG = {
   },
   contact: {
     email: "Sales@coveandstonepools.com",
-    phone: "954-774-6492",
-    phoneHref: "tel:+19547746492"
+    phone: "(904) 63-POOLS",
+    phoneHref: "tel:+19046376657"
   },
   financing: {
     primaryPartner: "Lyon Financial",
