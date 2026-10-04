@@ -28,3 +28,31 @@ mtime_ms = 1790491525666
 storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/84446b27-e0ff-46fd-b149-c791ee7556ed/6b7d8d07-1b05-42f0-9002-16fb80b64054"
 storage_version_token = "1790491915706225"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "SFtnMPanfURu8YsqXz1LX"
+uri = "file://downloads/cove-and-stone-cursor-project-part-1.zip"
+type = "unspecified"
+title = "Cove & Stone Cursor project — Part 1 of 2"
+description = "Project source, configuration, public files, and the first group of app assets. Extract this and Part 2 into the same folder to reconstruct the project."
+logical_id = "fb07d5c6-8146-41e7-9be6-dd1f0bf51b05"
+content_hash = "sha256:8814288dacb82a77226fdef46a8cf49218cbc288ccbdf968f2947d7f7dbce822"
+size = 91011219
+mtime_ms = 1791073274044
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/fb07d5c6-8146-41e7-9be6-dd1f0bf51b05/64868574-ddc4-4d6d-b0dc-1a82c1f9ef20"
+storage_version_token = "1791073283581200"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "Ia-pFn1XqaE_WGJ3B3rAn"
+uri = "file://downloads/cove-and-stone-cursor-project-part-2-assets.zip"
+type = "unspecified"
+title = "Cove & Stone Cursor project — Part 2 of 2"
+description = "Remaining app-imported image and video assets. Extract into the same folder as Part 1, preserving the attached_assets paths."
+logical_id = "6114e278-b285-4f73-8d1a-ddcf92e2b782"
+content_hash = "sha256:31c0074859b4a11392eb558843446398fd3e228ef5535f60f507465f7a4a7618"
+size = 84178822
+mtime_ms = 1791073277320
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/repl:04d7360a-0dad-44d3-8f8d-4cc0546d8b05/6114e278-b285-4f73-8d1a-ddcf92e2b782/f5d6a667-ba0a-46ef-921d-6894d23dd921"
+storage_version_token = "1791073285164234"
+content_type = "application/octet-stream"

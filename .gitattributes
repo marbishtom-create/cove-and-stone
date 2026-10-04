@@ -1,3 +1,5 @@
 attached_assets/IMG_2817_1790274437231.mov filter=lfs diff=lfs merge=lfs -text
 attached_assets/IMG_0255_1790349872601.MOV filter=lfs diff=lfs merge=lfs -text
 downloads/cove-and-stone-cursor-project.zip filter=lfs diff=lfs merge=lfs -text
+downloads/cove-and-stone-cursor-project-part-1.zip filter=lfs diff=lfs merge=lfs -text
+downloads/cove-and-stone-cursor-project-part-2-assets.zip filter=lfs diff=lfs merge=lfs -text
