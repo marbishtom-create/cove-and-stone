@@ -43,6 +43,9 @@ export const THEME_CONFIG = {
     phone: "(904) 63-POOLS",
     phoneHref: "tel:+19046376657"
   },
+  // Tom's Acuity scheduling page. Leave "" until the Starter plan link exists.
+  // https://<name>.as.me/ or https://app.acuityscheduling.com/schedule.php?owner=<id>
+  acuitySchedulingUrl: "",
   financing: {
     primaryPartner: "Lyon Financial",
     disclosure: "Flexible financing options available, including programs through Lyon Financial and other financing partners. Subject to credit approval, lender terms and program availability."

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSubmitContactInquiry } from '@workspace/api-client-react';
 import { CheckCircle2, Phone, Mail, MapPin } from 'lucide-react';
+import { AcuityConsultationBooking } from '@/components/contact/acuity-inline-scheduler';
 import { THEME_CONFIG } from '@/config/theme';
 import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
@@ -183,6 +184,8 @@ export default function Contact() {
             </div>
           </div>
         </div>
+
+        <AcuityConsultationBooking />
       </div>
     </div>
   );
