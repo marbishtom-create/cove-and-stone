@@ -15,6 +15,7 @@
     "test:location-project-media": "node --test tests/location-project-media-regression.test.mjs tests/project-portfolio-regression.test.mjs",
     "test:pool-visualizer": "node --test tests/pool-visualizer-regression.test.mjs",
     "test:contact-email": "node --test tests/contact-email-regression.test.mjs",
+    "test:acuity": "node --experimental-strip-types --test tests/acuity-scheduling-regression.test.mjs",
     "test:appointments": "node --test tests/appointments-regression.test.mjs"
   },
   "devDependencies": {
